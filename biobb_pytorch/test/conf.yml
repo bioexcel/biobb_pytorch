@@ -1,0 +1,43 @@
+
+can_write_console_log: False
+remove_tmp: False
+working_dir_path: /tmp/biobb/unitests
+
+pdb2gmx:
+  paths:
+    input_pdb_path: file:test_data_dir/gromacs/egfr.pdb
+    output_gro_path: output_gro.gro
+    output_top_zip_path: output_top_zip.zip
+    ref_output_top_zip_path: file:test_reference_dir/gromacs/ref_pdb2gmx.zip
+    ref_output_gro_path: file:test_reference_dir/gromacs/ref_pdb2gmx.gro
+  properties:
+    his: 0 0 1 1 0 0 0
+
+pdb2gmx_docker:
+  paths:
+    input_pdb_path: file:test_data_dir/gromacs/egfr.pdb
+    output_gro_path: output_gro.gro
+    output_top_zip_path: output_top_zip.zip
+    ref_output_top_zip_path: file:test_reference_dir/gromacs/ref_pdb2gmx_container.zip
+    ref_output_gro_path: file:test_reference_dir/gromacs/ref_pdb2gmx.gro
+  properties:
+    his: 0 0 1 1 0 0 0
+    container_path: docker
+    #container_image: longr/gromacs-docker:latest
+    container_image: gromacs/gromacs:2022.2
+    #container_image: gromacs/gromacs:2021.4
+    container_volume_path: /inout
+
+pdb2gmx_singularity:
+  paths:
+    input_pdb_path: file:test_data_dir/gromacs/egfr.pdb
+    output_gro_path: output_gro.gro
+    output_top_zip_path: output_top_zip.zip
+    ref_output_top_zip_path: file:test_reference_dir/gromacs/ref_pdb2gmx_container.zip
+    ref_output_gro_path: file:test_reference_dir/gromacs/ref_pdb2gmx.gro
+  properties:
+    his: 0 0 1 1 0 0 0
+    container_path: singularity
+    container_image: gromacs.simg
+    container_volume_path: /inout
+

@@ -1,0 +1,45 @@
+{
+    "_id": "biobb_pytorch",
+    "desc": "Biobb PyTorch is the Biobb module collection to create and train ML & DL models.",
+    "github": "https://github.com/bioexcel/biobb_pytorch",
+    "readthedocs": "https://biobb-pytorch.readthedocs.io/en/latest/",
+    "conda": "https://anaconda.org/bioconda/biobb_pytorch",
+    "docker": "https://quay.io/biocontainers/biobb_pytorch:4.1.0--pyhdfd78af_1",
+    "singularity": "https://depot.galaxyproject.org/singularity/biobb_pytorch:4.1.0--pyhdfd78af_1",
+    "version": "4.1.0",
+    "rest": false,
+    "tools": [
+        {
+            "block": "Pdb2gmx",
+            "tool": "gmx pdb2gmx",
+            "desc": "Creates a compressed (ZIP) GROMACS topology (TOP and ITP files) from a given PDB file.",
+            "exec": "pdb2gmx",
+            "docs": "https://biobb-gromacs.readthedocs.io/en/latest/gromacs.html#module-gromacs.pdb2gmx",
+            "rest": false
+        },
+        {
+            "block": "Editconf",
+            "tool": "gmx editconf",
+            "desc": "Creates a GROMACS structure file (GRO) adding the information of the solvent box to the input structure file.",
+            "exec": "editconf",
+            "docs": "https://biobb-gromacs.readthedocs.io/en/latest/gromacs.html#module-gromacs.editconf",
+            "rest": false
+        }
+
+    ],
+    "dep_pypi": [
+        "install_requires=['biobb_common==4.1.0']",
+        "python_requires='>=3.8'"
+    ],
+    "dep_conda": [
+        "python >=3.8",
+        "biobb_common ==4.1.0"
+    ],
+    "keywords": [
+        "ML",
+        "DL",
+        "Deep Learning",
+        "Machine Learning",
+        "PyTorch"
+    ]
+}

@@ -20,26 +20,68 @@ class TrainMDAE(BiobbObject):
     | Train a Molecular Dynamics AutoEncoder (MDAE) PyTorch model, the resulting Auto-associative Neural Network (AANN) can be applied to reduce the dimensionality of molecular dynamics data and analyze the dynamic properties of the system.
 
     Args:
-        input_model_path (str): Path to the input model file. File type: input. `Sample file <
-        properties:
-            latent_dimensions (int): Minimum dimensionality of the latent space. Default: 2.
-            num_layers (int): Number of layers in the encoder/decoder. Default: 4.
-            num_epochs (int): Number of epochs (iterations of whole dataset) for training. Default: 100.
-            lr (float): Learning rate. Default: 0.001.
-            optimizer (str): Optimizer algorithm. Values: https://pytorch.org/docs/stable/optim.html#algorithms
-            loss_function (str): Loss function. Values: https://pytorch.org/docs/stable/nn.html#loss-functions.
-            input_dimensions (int): Input dimensions. Default: 0.
-            output_dimensions (int): Output dimensions. Default: 0.
-            checkpoint_interval (int): Number of epochs interval to save model checkpoints. Default: 25.
-            partition (float): Partition of the data for training and validation. Default: 0.8.
-            batch_size (int): Number of samples/frames per batch. Default: 1.
+        input_train_npy_path (str): Path to the input train data file. File type: input. `Sample file <https://github.com/bioexcel/biobb_gromacs/raw/master/biobb_gromacs/test/data/gromacs/editconf.gro>`_. Accepted formats: gro (edam:format_2033), pdb (edam:format_1476).
+        output_model_pth_path (str): Path to the output model file. File type: output. `Sample file <https://github.com/bioexcel/biobb_gromacs/raw/master/biobb_gromacs/test/data/gromacs/editconf.gro>`_. Accepted formats: gro (edam:format_2033), pdb (edam:format_1476).
+        input_model_pth_path (str) (Optional): Path to the input model file. File type: input. `Sample file <https://github.com/bioexcel/biobb_gromacs/raw/master/biobb_gromacs/test/data/gromacs/editconf.gro>`_. Accepted formats: gro (edam:format_2033), pdb (edam:format_1476).
+        output_train_data_npy_path (str) (Optional): Path to the output train data file. File type: output. `Sample file <https://github.com/bioexcel/biobb_gromacs/raw/master/biobb_gromacs/test/data/gromacs/editconf.gro>`_. Accepted formats: gro (edam:format_2033), pdb (edam:format_1476).
+        output_performance_npy_path (str) (Optional): Path to the output performance file. File type: output.  `Sample file <https://github.com/bioexcel/biobb_gromacs/raw/master/biobb_gromacs/test/data/gromacs/editconf.gro>`_. Accepted formats: gro (edam:format_2033), pdb (edam:format_1476).
+        properties (dict - Python dictionary object containing the tool parameters, not input/output files):
+            * **latent_dimensions** (*int*) - (2) min dimensionality of the latent space.
+            * **num_layers** (*int*) - (4) number of layers in the encoder/decoder (4 to encode and 4 to decode).
+            * **num_epochs** (*int*) - (100) number of epochs (iterations of whole dataset) for training.
+            * **lr** (*float*) - (0.001) learning rate.
+            * **checkpoint_interval** (*int*) - (25) number of epochs interval to save model checkpoints o 0 to disable.
+            * **output_checkpoint_prefix** (*str*) - ("checkpoint_epoch_") prefix for the checkpoint files.
+            * **partition** (*int*) - (0.8) 0.8 = 80% partition of the data for training and validation.
+            * **batch_size** (*int*) - (1) number of samples/frames per batch.
+            * **log_interval** (*int*) - (10) number of epochs interval to log the training progress.
+            * **input_dimensions** (*int*) - (None) input dimensions by default it should be the number of features in the input data (number of atoms * 3 corresponding to x, y, z coordinates).
+            * **output_dimensions** (*int*) - (None) output dimensions by default it should be the number of features in the input data (number of atoms * 3 corresponding to x, y, z coordinates).
+            * **loss_function** (*str*) - ("MSELoss") Loss function to be used. Values: MSELoss, L1Loss, SmoothL1Loss, BCELoss, BCEWithLogitsLoss, CrossEntropyLoss, CTCLoss, NLLLoss, KLDivLoss, PoissonNLLLoss, NLLLoss2d, CosineEmbeddingLoss, HingeEmbeddingLoss, MarginRankingLoss, MultiLabelMarginLoss, MultiLabelSoftMarginLoss, MultiMarginLoss, TripletMarginLoss, HuberLoss, SoftMarginLoss, MultiLabelSoftMarginLoss, CosineEmbeddingLoss, MultiMarginLoss, TripletMarginLoss, MarginRankingLoss, HingeEmbeddingLoss, CTCLoss, NLLLoss, PoissonNLLLoss, KLDivLoss, CrossEntropyLoss, BCEWithLogitsLoss, BCELoss, SmoothL1Loss, L1Loss, MSELoss.
+            * **optimizer** (*str*) - ("Adam") Optimizer algorithm to be used. Values: Adadelta, Adagrad, Adam, AdamW, SparseAdam, Adamax, ASGD, LBFGS, RMSprop, Rprop, SGD.
+
+    Examples:
+        This is a use case of how to use the building block from Python::
+
+            from biobb_pytorch.mdae.train_mdae import trainMDAE
+            prop = {
+                'latent_dimensions': 2,
+                'num_layers': 4,
+                'num_epochs': 100,
+                'lr': 0.001,
+                'checkpoint_interval': 25,
+                'partition': 0.8,
+                'batch_size': 1,
+                'log_interval': 10,
+                'input_dimensions': 3,
+                'output_dimensions': 3,
+                'loss_function': 'MSELoss',
+                'optimizer': 'Adam'
+            }
+
+            trainMDAE(input_train_npy_path='/path/to/myInputData.npy',
+                      output_model_pth_path='/path/to/newModel.pth',
+                      input_model_pth_path='/path/to/oldModel.pth',
+                      output_train_data_npy_path='/path/to/newTrainData.npy',
+                      output_performance_npy_path='/path/to/newPerformance.npy',
+                      properties=prop)
+
+    Info:
+        * wrapped_software:
+            * name: PyTorch
+            * version: >=1.6.0
+            * license: BSD-3-Clause
+        * ontology:
+            * name: EDAM
+            * schema: http://edamontology.org/EDAM.owl
+
     """
 
     def __init__(self, input_train_npy_path: str,
                  output_model_pth_path: str,
-                 input_model_pth_path: Optional[str],
-                 output_train_data_npy_path: Optional[str],  # npy of  train_losses, valid_losses
-                 output_performance_npy_path: Optional[str],  # npy of  evaluate_losses, latent_space, reconstructed_data
+                 input_model_pth_path: Optional[str] = None,
+                 output_train_data_npy_path: Optional[str] = None,  # npy of  train_losses, valid_losses
+                 output_performance_npy_path: Optional[str] = None,  # npy of  evaluate_losses, latent_space, reconstructed_data
                  properties: Optional[Dict] = None, **kwargs) -> None:
         properties = properties or {}
 
@@ -60,7 +102,7 @@ class TrainMDAE(BiobbObject):
         self.lr: float = float(properties.get('lr', 0.001))  # learning rate
         self.checkpoint_interval: int = int(properties.get('checkpoint_interval', 25))  # number of epochs interval to save model checkpoints o 0 to disable
         self.output_checkpoint_prefix: str = properties.get('output_checkpoint_prefix', 'checkpoint_epoch_')  # prefix for the checkpoint files,
-        self.partition: int = int(properties.get('partition', 0.8))  # 0.8 = 80% partition of the data for training and validation
+        self.partition: float = float(properties.get('partition', 0.8))  # 0.8 = 80% partition of the data for training and validation
         self.batch_size: int = int(properties.get('batch_size', 1))  # number of samples/frames per batch
         self.log_interval: int = int(properties.get('log_interval', 10))  # number of epochs interval to log the training progress
 
@@ -86,9 +128,9 @@ class TrainMDAE(BiobbObject):
         train_tensor = torch.FloatTensor(input_train_data[:index_train_data, :])
         validation_tensor = torch.FloatTensor(input_train_data[-index_validation_data:, :])
         performance_tensor = torch.FloatTensor(input_train_data)
-        train_dataset = torch.data.TensorDataset(train_tensor)
-        validation_dataset = torch.data.TensorDataset(validation_tensor)
-        performance_dataset = torch.data.TensorDataset(performance_tensor)
+        train_dataset = torch.utils.data.TensorDataset(train_tensor)
+        validation_dataset = torch.utils.data.TensorDataset(validation_tensor)
+        performance_dataset = torch.utils.data.TensorDataset(performance_tensor)
 
         self.train_dataloader: torch.utils.data.DataLoader = torch.utils.data.DataLoader(dataset=train_dataset,
                                                                                          batch_size=self.batch_size,
@@ -109,19 +151,21 @@ class TrainMDAE(BiobbObject):
             self.model.load_state_dict(torch.load(self.io_dict['in']['input_model_pth_path']))
 
         # Define loss function and optimizer algorithm
+        loss_function_str: str = properties.get('loss_function', '')
         try:
-            self.loss_function: torch.nn.modules.loss._Loss = get_loss_function(properties.get('loss_function', ''))()
+            self.loss_function: torch.nn.modules.loss._Loss = get_loss_function(loss_function_str)()
             fu.log(f'Using loss function: {self.loss_function}', self.out_log)
         except ValueError:
-            fu.log(f'Invalid loss function: {self.loss_function}', self.out_log)
+            fu.log(f'Invalid loss function: {loss_function_str}', self.out_log)
             fu.log('Using default loss function: MSELoss', self.out_log)
             self.loss_function = torch.nn.MSELoss()
 
+        optimizer_str: str = properties.get('optimizer', '')
         try:
-            self.optimizer: torch.optim.Optimizer = get_optimizer_function(properties.get('optimizer', ''))(self.model.parameters(), lr=self.lr)
+            self.optimizer: torch.optim.Optimizer = get_optimizer_function(optimizer_str)(self.model.parameters(), lr=self.lr)
             fu.log(f'Using optimizer: {self.optimizer}', self.out_log)
         except ValueError:
-            fu.log(f'Invalid optimizer: {self.optimizer}', self.out_log)
+            fu.log(f'Invalid optimizer: {optimizer_str}', self.out_log)
             fu.log('Using default optimizer: Adam', self.out_log)
             self.optimizer = torch.optim.Adam(self.model.parameters(), lr=self.lr)
 
@@ -137,16 +181,17 @@ class TrainMDAE(BiobbObject):
 
         # Train the model
         train_losses, validation_losses = self.train_model()
-        if self.stage_io_dict['out']['output_train_data_npy_path']:
+        if self.stage_io_dict['out'].get('output_train_data_npy_path'):
             np.save(self.stage_io_dict['out']['output_train_data_npy_path'], (np.array(train_losses), np.array(validation_losses)))
 
         # Evaluate the model
-        if self.stage_io_dict['out']['output_performance_npy_path']:
+        if self.stage_io_dict['out'].get('output_performance_npy_path'):
             evaluate_losses, latent_space, reconstructed_data = self.evaluate_model(self.performance_dataloader, self.loss_function)
             denormalized_reconstructed_data = ndarray_denormalization(reconstructed_data, self.input_train_data_max_values, self.input_train_data_min_values)
             self.model.save_model(self.stage_io_dict['out']['output_performance_npy_path'], (evaluate_losses, latent_space, denormalized_reconstructed_data))
 
         # Save the model
+        fu.log(f'Saving model to: {self.stage_io_dict["out"]["output_model_pth_path"]}', self.out_log)
         torch.save(self.model.state_dict(), self.stage_io_dict['out']['output_model_pth_path'])
 
         # Copy files to host
@@ -194,7 +239,7 @@ class TrainMDAE(BiobbObject):
         self.model.train()
         losses: List[float] = []
         for data in dataloader:
-            data = data.to(self.model.device)
+            data = data[0].to(self.model.device)
             _, output = self.model(data)
             loss = loss_function(output, data)
             optimizer.zero_grad()
@@ -211,7 +256,7 @@ class TrainMDAE(BiobbObject):
         x_hat_list: List[float] = []
         with torch.no_grad():
             for data in dataloader:
-                data = data.to(self.model.device)
+                data = data[0].to(self.model.device)
                 latent, output = self.model(data)
                 loss = loss_function(output, data)
                 losses.append(loss.item())
@@ -223,8 +268,8 @@ class TrainMDAE(BiobbObject):
         return loss, latent_space, reconstructed_data
 
 
-def trainMDAE(input_train_npy_path: str, output_model_pth_path: str, input_model_pth_path: Optional[str],
-              output_train_data_npy_path: Optional[str], output_performance_npy_path: Optional[str],
+def trainMDAE(input_train_npy_path: str, output_model_pth_path: str, input_model_pth_path: Optional[str] = None,
+              output_train_data_npy_path: Optional[str] = None, output_performance_npy_path: Optional[str] = None,
               properties: Optional[Dict] = None, **kwargs) -> int:
     """Execute the :class:`TrainMDAE <mdae.train_mdae.TrainMDAE>` class and
     execute the :meth:`launch() <mdae.train_mdae.TrainMDAE.launch>` method."""

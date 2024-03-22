@@ -23,8 +23,8 @@ class TrainMDAE(BiobbObject):
         input_train_npy_path (str): Path to the input train data file. File type: input. `Sample file <https://github.com/bioexcel/biobb_gromacs/raw/master/biobb_gromacs/test/data/gromacs/editconf.gro>`_. Accepted formats: gro (edam:format_2033), pdb (edam:format_1476).
         output_model_pth_path (str): Path to the output model file. File type: output. `Sample file <https://github.com/bioexcel/biobb_gromacs/raw/master/biobb_gromacs/test/data/gromacs/editconf.gro>`_. Accepted formats: gro (edam:format_2033), pdb (edam:format_1476).
         input_model_pth_path (str) (Optional): Path to the input model file. File type: input. `Sample file <https://github.com/bioexcel/biobb_gromacs/raw/master/biobb_gromacs/test/data/gromacs/editconf.gro>`_. Accepted formats: gro (edam:format_2033), pdb (edam:format_1476).
-        output_train_data_npy_path (str) (Optional): Path to the output train data file. File type: output. `Sample file <https://github.com/bioexcel/biobb_gromacs/raw/master/biobb_gromacs/test/data/gromacs/editconf.gro>`_. Accepted formats: gro (edam:format_2033), pdb (edam:format_1476).
-        output_performance_npy_path (str) (Optional): Path to the output performance file. File type: output.  `Sample file <https://github.com/bioexcel/biobb_gromacs/raw/master/biobb_gromacs/test/data/gromacs/editconf.gro>`_. Accepted formats: gro (edam:format_2033), pdb (edam:format_1476).
+        output_train_data_npz_path (str) (Optional): Path to the output train data file. File type: output. `Sample file <>`_. Accepted formats: gro (edam:format_2033), pdb (edam:format_1476).
+        output_performance_npz_path (str) (Optional): Path to the output performance file. File type: output.  `Sample file <https://github.com/bioexcel/biobb_gromacs/raw/master/biobb_gromacs/test/data/gromacs/editconf.gro>`_. Accepted formats: gro (edam:format_2033), pdb (edam:format_1476).
         properties (dict - Python dictionary object containing the tool parameters, not input/output files):
             * **latent_dimensions** (*int*) - (2) min dimensionality of the latent space.
             * **num_layers** (*int*) - (4) number of layers in the encoder/decoder (4 to encode and 4 to decode).
@@ -62,8 +62,8 @@ class TrainMDAE(BiobbObject):
             trainMDAE(input_train_npy_path='/path/to/myInputData.npy',
                       output_model_pth_path='/path/to/newModel.pth',
                       input_model_pth_path='/path/to/oldModel.pth',
-                      output_train_data_npy_path='/path/to/newTrainData.npy',
-                      output_performance_npy_path='/path/to/newPerformance.npy',
+                      output_train_data_npz_path='/path/to/newTrainData.npz',
+                      output_performance_npz_path='/path/to/newPerformance.npz',
                       properties=prop)
 
     Info:
@@ -80,8 +80,8 @@ class TrainMDAE(BiobbObject):
     def __init__(self, input_train_npy_path: str,
                  output_model_pth_path: str,
                  input_model_pth_path: Optional[str] = None,
-                 output_train_data_npy_path: Optional[str] = None,  # npy of  train_losses, valid_losses
-                 output_performance_npy_path: Optional[str] = None,  # npy of  evaluate_losses, latent_space, reconstructed_data
+                 output_train_data_npz_path: Optional[str] = None,  # npz of  train_losses, valid_losses
+                 output_performance_npz_path: Optional[str] = None,  # npz of  evaluate_losses, latent_space, reconstructed_data
                  properties: Optional[Dict] = None, **kwargs) -> None:
         properties = properties or {}
 
@@ -92,7 +92,7 @@ class TrainMDAE(BiobbObject):
         # Input/Output files
         self.io_dict = {
             'in': {'input_train_npy_path': input_train_npy_path, 'input_model_pth_path': input_model_pth_path},
-            'out': {'output_model_pth_path': output_model_pth_path, 'output_train_data_npy_path': output_train_data_npy_path, 'output_performance_npy_path': output_performance_npy_path}
+            'out': {'output_model_pth_path': output_model_pth_path, 'output_train_data_npz_path': output_train_data_npz_path, 'output_performance_npz_path': output_performance_npz_path}
         }
 
         # Properties specific for BB
@@ -181,14 +181,14 @@ class TrainMDAE(BiobbObject):
 
         # Train the model
         train_losses, validation_losses = self.train_model()
-        if self.stage_io_dict['out'].get('output_train_data_npy_path'):
-            np.save(self.stage_io_dict['out']['output_train_data_npy_path'], (np.array(train_losses), np.array(validation_losses)))
+        if self.stage_io_dict['out'].get('output_train_data_npz_path'):
+            np.savez(self.stage_io_dict['out']['output_train_data_npz_path'], train_losses=np.array(train_losses), validation_losses=np.array(validation_losses))
 
         # Evaluate the model
-        if self.stage_io_dict['out'].get('output_performance_npy_path'):
+        if self.stage_io_dict['out'].get('output_performance_npz_path'):
             evaluate_losses, latent_space, reconstructed_data = self.evaluate_model(self.performance_dataloader, self.loss_function)
             denormalized_reconstructed_data = ndarray_denormalization(reconstructed_data, self.input_train_data_max_values, self.input_train_data_min_values)
-            self.model.save_model(self.stage_io_dict['out']['output_performance_npy_path'], (evaluate_losses, latent_space, denormalized_reconstructed_data))
+            np.savez(self.stage_io_dict['out']['output_performance_npz_path'], evaluate_losses=np.array(evaluate_losses), latent_space=np.array(latent_space), denormalized_reconstructed_data=np.array(denormalized_reconstructed_data))
 
         # Save the model
         fu.log(f'Saving model to: {self.stage_io_dict["out"]["output_model_pth_path"]}', self.out_log)
@@ -212,6 +212,8 @@ class TrainMDAE(BiobbObject):
 
         fu.log("Start Training:", self.out_log)
         for epoch_index in range(self.num_epochs):
+            loop_start_time: float = time.time()
+
             # Training step
             avg_train_loss: float = self.training_step(self.train_dataloader, self.optimizer, self.loss_function)
             train_losses.append(avg_train_loss)
@@ -220,18 +222,18 @@ class TrainMDAE(BiobbObject):
             avg_validation_loss, _, _ = self.evaluate_model(self.validation_dataloader, self.loss_function)
             validation_losses.append(avg_validation_loss)
 
-            epoch_duration = time.time() - start_time
-
             # Logging
             if self.log_interval and (epoch_index % self.log_interval == 0 or epoch_index == self.num_epochs-1):
-                fu.log(f'{"Epoch":>4} {epoch_index+1}/{self.num_epochs} - Train Loss: {avg_train_loss:.3f}, Validation Loss: {avg_validation_loss:.3f}, Duration: {epoch_duration:.2f}s')
-                start_time = time.time()
+                fu.log(f'{"Epoch":>4} {epoch_index+1}/{self.num_epochs} - Train Loss: {avg_train_loss:.3f}, Validation Loss: {avg_validation_loss:.3f}, Duration: {time.time() - loop_start_time:.2f}s')
+                loop_start_time = time.time()
 
             # Save checkpoint
             if self.checkpoint_interval and (epoch_index % self.checkpoint_interval == 0 or epoch_index == self.num_epochs-1):
                 checkpoint_path = str(Path(self.stage_io_dict.get("unique_dir", '')).joinpath(f'{self.output_checkpoint_prefix}_{epoch_index}.pth'))
                 fu.log(f'{"Saving: ":>4} {checkpoint_path}', self.out_log)
                 torch.save(self.model.state_dict(), checkpoint_path)
+
+        fu.log(f"End Training, total time: {((time.time() - start_time)/60):.2f} minutes", self.out_log)
 
         return train_losses, validation_losses
 
@@ -269,13 +271,13 @@ class TrainMDAE(BiobbObject):
 
 
 def trainMDAE(input_train_npy_path: str, output_model_pth_path: str, input_model_pth_path: Optional[str] = None,
-              output_train_data_npy_path: Optional[str] = None, output_performance_npy_path: Optional[str] = None,
+              output_train_data_npz_path: Optional[str] = None, output_performance_npz_path: Optional[str] = None,
               properties: Optional[Dict] = None, **kwargs) -> int:
     """Execute the :class:`TrainMDAE <mdae.train_mdae.TrainMDAE>` class and
     execute the :meth:`launch() <mdae.train_mdae.TrainMDAE.launch>` method."""
 
     return TrainMDAE(input_train_npy_path=input_train_npy_path, output_model_pth_path=output_model_pth_path, input_model_pth_path=input_model_pth_path,
-                     output_train_data_npy_path=output_train_data_npy_path, output_performance_npy_path=output_performance_npy_path,
+                     output_train_data_npz_path=output_train_data_npz_path, output_performance_npz_path=output_performance_npz_path,
                      properties=properties, **kwargs).launch()
 
 
@@ -290,16 +292,16 @@ def main():
     required_args.add_argument('--input_train_npy_path', required=True, help='Path to the input train data file. Accepted formats: npy.')
     required_args.add_argument('--output_model_pth_path', required=True, help='Path to the output model file. Accepted formats: pth.')
     parser.add_argument('--input_model_pth_path', required=False, help='Path to the input model file. Accepted formats: pth.')
-    parser.add_argument('--output_train_data_npy_path', required=False, help='Path to the output train data file. Accepted formats: npy.')
-    parser.add_argument('--output_performance_npy_path', required=False, help='Path to the output performance file. Accepted formats: npy.')
+    parser.add_argument('--output_train_data_npz_path', required=False, help='Path to the output train data file. Accepted formats: npz.')
+    parser.add_argument('--output_performance_npz_path', required=False, help='Path to the output performance file. Accepted formats: npz.')
     parser.add_argument('--properties', required=False, help='Additional properties for the MDAE object.')
     args = parser.parse_args()
     config = args.config if args.config else None
     properties = settings.ConfReader(config=config).get_prop_dic()
 
     trainMDAE(input_train_npy_path=args.input_train_npy_path, output_model_pth_path=args.output_model_pth_path,
-              input_model_pth_path=args.input_model_pth_path, output_train_data_npy_path=args.output_train_data_npy_path,
-              output_performance_npy_path=args.output_performance_npy_path, properties=properties)
+              input_model_pth_path=args.input_model_pth_path, output_train_data_npz_path=args.output_train_data_npz_path,
+              output_performance_npz_path=args.output_performance_npz_path, properties=properties)
 
 
 if __name__ == '__main__':

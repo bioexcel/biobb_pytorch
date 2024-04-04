@@ -1,7 +1,7 @@
 """ Common functions for package biobb_pytorch.models """
 import numpy as np
 import torch
-from typing import Callable
+from typing import Callable, List, Optional, Tuple
 
 
 def ndarray_normalization(ndarray: np.ndarray, max_values: np.ndarray, min_values: np.ndarray) -> np.ndarray:
@@ -66,3 +66,23 @@ def get_optimizer_function(optimizer_function: str) -> Callable:
         return optimizer_function_dict[optimizer_function]
     except KeyError:
         raise ValueError(f'Invalid optimizer function: {optimizer_function}')
+
+
+def execute_model(model: torch.nn.Module, dataloader: torch.utils.data.DataLoader, input_dimensions: int, latent_dimensions: int, loss_function: Optional[torch.nn.modules.loss._Loss] = None) -> Tuple[float, np.ndarray, np.ndarray]:
+    model.eval()
+    losses: List[float] = []
+    z_list: List[float] = []
+    x_hat_list: List[float] = []
+    with torch.no_grad():
+        for data in dataloader:
+            data = data[0].to(model.device)
+            latent, output = model(data)
+            if loss_function:
+                loss = loss_function(output, data)
+                losses.append(loss.item())
+            z_list.append(latent.cpu().numpy())
+            x_hat_list.append(output.cpu().numpy())
+    loss = float(np.mean(losses)) if losses else -1.0
+    latent_space: np.ndarray = np.reshape(np.concatenate(z_list, axis=0), (-1, latent_dimensions))
+    reconstructed_data: np.ndarray = np.reshape(np.concatenate(x_hat_list, axis=0), (-1, input_dimensions))
+    return loss, latent_space, reconstructed_data

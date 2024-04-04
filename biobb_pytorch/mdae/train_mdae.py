@@ -9,7 +9,7 @@ from biobb_common.configuration import settings
 from biobb_common.tools import file_utils as fu
 from biobb_common.tools.file_utils import launchlogger
 from biobb_pytorch.mdae.mdae import MDAE
-from biobb_pytorch.mdae.common import get_loss_function, get_optimizer_function, ndarray_normalization, ndarray_denormalization
+from biobb_pytorch.mdae.common import get_loss_function, get_optimizer_function, ndarray_normalization, ndarray_denormalization, execute_model
 from pathlib import Path
 
 
@@ -20,11 +20,11 @@ class TrainMDAE(BiobbObject):
     | Train a Molecular Dynamics AutoEncoder (MDAE) PyTorch model, the resulting Auto-associative Neural Network (AANN) can be applied to reduce the dimensionality of molecular dynamics data and analyze the dynamic properties of the system.
 
     Args:
-        input_train_npy_path (str): Path to the input train data file. File type: input. `Sample file <https://github.com/bioexcel/biobb_gromacs/raw/master/biobb_gromacs/test/data/gromacs/editconf.gro>`_. Accepted formats: gro (edam:format_2033), pdb (edam:format_1476).
-        output_model_pth_path (str): Path to the output model file. File type: output. `Sample file <https://github.com/bioexcel/biobb_gromacs/raw/master/biobb_gromacs/test/data/gromacs/editconf.gro>`_. Accepted formats: gro (edam:format_2033), pdb (edam:format_1476).
-        input_model_pth_path (str) (Optional): Path to the input model file. File type: input. `Sample file <https://github.com/bioexcel/biobb_gromacs/raw/master/biobb_gromacs/test/data/gromacs/editconf.gro>`_. Accepted formats: gro (edam:format_2033), pdb (edam:format_1476).
-        output_train_data_npz_path (str) (Optional): Path to the output train data file. File type: output. `Sample file <>`_. Accepted formats: gro (edam:format_2033), pdb (edam:format_1476).
-        output_performance_npz_path (str) (Optional): Path to the output performance file. File type: output.  `Sample file <https://github.com/bioexcel/biobb_gromacs/raw/master/biobb_gromacs/test/data/gromacs/editconf.gro>`_. Accepted formats: gro (edam:format_2033), pdb (edam:format_1476).
+        input_train_npy_path (str): Path to the input train data file. File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/data/mdae/train_mdae_traj.npy>`_. Accepted formats: npy (edam:format_4003).
+        output_model_pth_path (str): Path to the output model file. File type: output. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_output_model.pth>`_. Accepted formats: pth (edam:format_2333).
+        input_model_pth_path (str) (Optional): Path to the input model file. File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_output_model.pth>`_. Accepted formats: pth (edam:format_2333).
+        output_train_data_npz_path (str) (Optional): Path to the output train data file. File type: output. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_output_train_data.npz>`_. Accepted formats: npz (edam:format_4003).
+        output_performance_npz_path (str) (Optional): Path to the output performance file. File type: output.  `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_output_performance.npz>`_. Accepted formats: npz (edam:format_4003).
         properties (dict - Python dictionary object containing the tool parameters, not input/output files):
             * **latent_dimensions** (*int*) - (2) min dimensionality of the latent space.
             * **num_layers** (*int*) - (4) number of layers in the encoder/decoder (4 to encode and 4 to decode).
@@ -41,7 +41,7 @@ class TrainMDAE(BiobbObject):
             * **optimizer** (*str*) - ("Adam") Optimizer algorithm to be used. Values: Adadelta, Adagrad, Adam, AdamW, SparseAdam, Adamax, ASGD, LBFGS, RMSprop, Rprop, SGD.
 
     Examples:
-        This is a use case of how to use the building block from Python::
+        This is a use case of how to use the building block from Python:
 
             from biobb_pytorch.mdae.train_mdae import trainMDAE
             prop = {
@@ -252,22 +252,7 @@ class TrainMDAE(BiobbObject):
         return float(np.mean(losses))
 
     def evaluate_model(self, dataloader: torch.utils.data.DataLoader, loss_function: torch.nn.modules.loss._Loss) -> Tuple[float, np.ndarray, np.ndarray]:
-        self.model.eval()
-        losses: List[float] = []
-        z_list: List[float] = []
-        x_hat_list: List[float] = []
-        with torch.no_grad():
-            for data in dataloader:
-                data = data[0].to(self.model.device)
-                latent, output = self.model(data)
-                loss = loss_function(output, data)
-                losses.append(loss.item())
-                z_list.append(latent.cpu().numpy())
-                x_hat_list.append(output.cpu().numpy())
-        loss = float(np.mean(losses))
-        latent_space: np.ndarray = np.reshape(np.concatenate(z_list, axis=0), (-1, self.latent_dimensions))
-        reconstructed_data: np.ndarray = np.reshape(np.concatenate(x_hat_list, axis=0), (-1, int(self.input_dimensions)))
-        return loss, latent_space, reconstructed_data
+        return execute_model(self.model, dataloader, self.input_dimensions, self.latent_dimensions, loss_function)
 
 
 def trainMDAE(input_train_npy_path: str, output_model_pth_path: str, input_model_pth_path: Optional[str] = None,

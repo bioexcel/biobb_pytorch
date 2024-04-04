@@ -24,7 +24,7 @@ class MDAE(torch.nn.Module):
 
         # Latent Space
         self.lv = torch.nn.Sequential(
-            torch.nn.Linear(nunits, latent_dimensions),
+            torch.nn.Linear(nunits, self.latent_dimensions),
             torch.nn.Sigmoid())
 
         # Decoder

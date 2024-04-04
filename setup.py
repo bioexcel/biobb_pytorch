@@ -18,11 +18,12 @@ setuptools.setup(
         "Bioexcel": "https://bioexcel.eu/"
     },
     packages=setuptools.find_packages(exclude=['docs', 'test']),
-    install_requires=['biobb_common==4.1.0'],
+    install_requires=['biobb_common==4.1.0', 'pytorch'],
     python_requires='>=3.8',
     entry_points={
         "console_scripts": [
-            "NAME_OF_COMMAND = biobb_pytorch.NAME_OF_PACKAGE.NAME_OF_MODULE:main",
+            "train_mdae = biobb_pytorch.mdae.train_mdae:main",
+            "apply_mdae = biobb_pytorch.mdae.apply_mdae:main"
         ]
     },
     classifiers=[

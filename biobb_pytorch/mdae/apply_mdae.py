@@ -29,7 +29,7 @@ class ApplyMDAE(BiobbObject):
             * **output_dimensions** (*int*) - (None) output dimensions by default it should be the number of features in the input data (number of atoms * 3 corresponding to x, y, z coordinates).
 
     Examples:
-        This is a use case of how to use the building block from Python:
+        This is a use case of how to use the building block from Python::
 
             from biobb_pytorch.mdae.apply_mdae import ApplyMDAE
             prop = {
@@ -49,7 +49,6 @@ class ApplyMDAE(BiobbObject):
         * ontology:
             * name: EDAM
             * schema: http://edamontology.org/EDAM.owl
-
     """
 
     def __init__(self,

@@ -1,4 +1,4 @@
-"""Module containing the MDAutoEncoder class and the command line interface."""
+"""Module containing the TrainMDAE class and the command line interface."""
 import torch
 import numpy as np
 import time
@@ -44,6 +44,7 @@ class TrainMDAE(BiobbObject):
         This is a use case of how to use the building block from Python:
 
             from biobb_pytorch.mdae.train_mdae import trainMDAE
+
             prop = {
                 'latent_dimensions': 2,
                 'num_layers': 4,
@@ -74,7 +75,6 @@ class TrainMDAE(BiobbObject):
         * ontology:
             * name: EDAM
             * schema: http://edamontology.org/EDAM.owl
-
     """
 
     def __init__(self, input_train_npy_path: str,

@@ -31,7 +31,7 @@ class TrainMDAE(BiobbObject):
             * **num_epochs** (*int*) - (100) number of epochs (iterations of whole dataset) for training.
             * **lr** (*float*) - (0.001) learning rate.
             * **checkpoint_interval** (*int*) - (25) number of epochs interval to save model checkpoints o 0 to disable.
-            * **output_checkpoint_prefix** (*str*) - ("checkpoint_epoch_") prefix for the checkpoint files.
+            * **output_checkpoint_prefix** (*str*) - ("checkpoint_epoch") prefix for the checkpoint files.
             * **partition** (*int*) - (0.8) 0.8 = 80% partition of the data for training and validation.
             * **batch_size** (*int*) - (1) number of samples/frames per batch.
             * **log_interval** (*int*) - (10) number of epochs interval to log the training progress.
@@ -41,7 +41,7 @@ class TrainMDAE(BiobbObject):
             * **optimizer** (*str*) - ("Adam") Optimizer algorithm to be used. Values: Adadelta, Adagrad, Adam, AdamW, SparseAdam, Adamax, ASGD, LBFGS, RMSprop, Rprop, SGD.
 
     Examples:
-        This is a use case of how to use the building block from Python:
+        This is a use case of how to use the building block from Python::
 
             from biobb_pytorch.mdae.train_mdae import trainMDAE
 

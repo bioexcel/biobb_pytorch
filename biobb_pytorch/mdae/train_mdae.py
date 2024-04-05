@@ -32,7 +32,7 @@ class TrainMDAE(BiobbObject):
             * **lr** (*float*) - (0.001) learning rate.
             * **checkpoint_interval** (*int*) - (25) number of epochs interval to save model checkpoints o 0 to disable.
             * **output_checkpoint_prefix** (*str*) - ("checkpoint_epoch") prefix for the checkpoint files.
-            * **partition** (*int*) - (0.8) 0.8 = 80% partition of the data for training and validation.
+            * **partition** (*float*) - (0.8) 0.8 = 80% partition of the data for training and validation.
             * **batch_size** (*int*) - (1) number of samples/frames per batch.
             * **log_interval** (*int*) - (10) number of epochs interval to log the training progress.
             * **input_dimensions** (*int*) - (None) input dimensions by default it should be the number of features in the input data (number of atoms * 3 corresponding to x, y, z coordinates).
@@ -71,7 +71,7 @@ class TrainMDAE(BiobbObject):
         * wrapped_software:
             * name: PyTorch
             * version: >=1.6.0
-            * license: BSD-3-Clause
+            * license: BSD 3-Clause
         * ontology:
             * name: EDAM
             * schema: http://edamontology.org/EDAM.owl

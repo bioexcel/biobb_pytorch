@@ -1,0 +1,432 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://bioexcel.eu/biobb_pytorch/json_schemas/1.0/train_mdae",
+    "name": "biobb_pytorch TrainMDAE",
+    "title": "Train a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.",
+    "description": "Train a Molecular Dynamics AutoEncoder (MDAE) PyTorch model, the resulting Auto-associative Neural Network (AANN) can be applied to reduce the dimensionality of molecular dynamics data and analyze the dynamic properties of the system.",
+    "type": "object",
+    "info": {
+        "wrapped_software": {
+            "name": "PyTorch",
+            "version": ">=1.6.0",
+            "license": "BSD 3-Clause"
+        },
+        "ontology": {
+            "name": "EDAM",
+            "schema": "http://edamontology.org/EDAM.owl"
+        }
+    },
+    "required": [
+        "input_train_npy_path",
+        "output_model_pth_path"
+    ],
+    "properties": {
+        "input_train_npy_path": {
+            "type": "string",
+            "description": "Path to the input train data file",
+            "filetype": "input",
+            "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/data/mdae/train_mdae_traj.npy",
+            "enum": [
+                ".*\\.npy$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.npy$",
+                    "description": "Path to the input train data file",
+                    "edam": "format_4003"
+                }
+            ]
+        },
+        "output_model_pth_path": {
+            "type": "string",
+            "description": "Path to the output model file",
+            "filetype": "output",
+            "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_output_model.pth",
+            "enum": [
+                ".*\\.pth$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.pth$",
+                    "description": "Path to the output model file",
+                    "edam": "format_2333"
+                }
+            ]
+        },
+        "input_model_pth_path": {
+            "type": "string",
+            "description": "Path to the input model file",
+            "filetype": "input",
+            "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_output_model.pth",
+            "enum": [
+                ".*\\.pth$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.pth$",
+                    "description": "Path to the input model file",
+                    "edam": "format_2333"
+                }
+            ]
+        },
+        "output_train_data_npz_path": {
+            "type": "string",
+            "description": "Path to the output train data file",
+            "filetype": "output",
+            "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_output_train_data.npz",
+            "enum": [
+                ".*\\.npz$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.npz$",
+                    "description": "Path to the output train data file",
+                    "edam": "format_4003"
+                }
+            ]
+        },
+        "output_performance_npz_path": {
+            "type": "string",
+            "description": "Path to the output performance file",
+            "filetype": "output",
+            "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_output_performance.npz",
+            "enum": [
+                ".*\\.npz$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.npz$",
+                    "description": "Path to the output performance file",
+                    "edam": "format_4003"
+                }
+            ]
+        },
+        "properties": {
+            "type": "object",
+            "properties": {
+                "latent_dimensions": {
+                    "type": "integer",
+                    "default": 2,
+                    "wf_prop": false,
+                    "description": "min dimensionality of the latent space."
+                },
+                "num_layers": {
+                    "type": "integer",
+                    "default": 4,
+                    "wf_prop": false,
+                    "description": "number of layers in the encoder/decoder (4 to encode and 4 to decode)."
+                },
+                "num_epochs": {
+                    "type": "integer",
+                    "default": 100,
+                    "wf_prop": false,
+                    "description": "number of epochs (iterations of whole dataset) for training."
+                },
+                "lr": {
+                    "type": "number",
+                    "default": 0.001,
+                    "wf_prop": false,
+                    "description": "learning rate."
+                },
+                "checkpoint_interval": {
+                    "type": "integer",
+                    "default": 25,
+                    "wf_prop": false,
+                    "description": "number of epochs interval to save model checkpoints o 0 to disable."
+                },
+                "output_checkpoint_prefix": {
+                    "type": "string",
+                    "default": "checkpoint_epoch",
+                    "wf_prop": false,
+                    "description": "prefix for the checkpoint files."
+                },
+                "partition": {
+                    "type": "number",
+                    "default": 0.8,
+                    "wf_prop": false,
+                    "description": "0.8 = 80% partition of the data for training and validation."
+                },
+                "batch_size": {
+                    "type": "integer",
+                    "default": 1,
+                    "wf_prop": false,
+                    "description": "number of samples/frames per batch."
+                },
+                "log_interval": {
+                    "type": "integer",
+                    "default": 10,
+                    "wf_prop": false,
+                    "description": "number of epochs interval to log the training progress."
+                },
+                "input_dimensions": {
+                    "type": "integer",
+                    "default": null,
+                    "wf_prop": false,
+                    "description": "input dimensions by default it should be the number of features in the input data (number of atoms * 3 corresponding to x, y, z coordinates)."
+                },
+                "output_dimensions": {
+                    "type": "integer",
+                    "default": null,
+                    "wf_prop": false,
+                    "description": "output dimensions by default it should be the number of features in the input data (number of atoms * 3 corresponding to x, y, z coordinates)."
+                },
+                "loss_function": {
+                    "type": "string",
+                    "default": "MSELoss",
+                    "wf_prop": false,
+                    "description": "Loss function to be used. ",
+                    "enum": [
+                        "MSELoss",
+                        "L1Loss",
+                        "SmoothL1Loss",
+                        "BCELoss",
+                        "BCEWithLogitsLoss",
+                        "CrossEntropyLoss",
+                        "CTCLoss",
+                        "NLLLoss",
+                        "KLDivLoss",
+                        "PoissonNLLLoss",
+                        "NLLLoss2d",
+                        "CosineEmbeddingLoss",
+                        "HingeEmbeddingLoss",
+                        "MarginRankingLoss",
+                        "MultiLabelMarginLoss",
+                        "MultiLabelSoftMarginLoss",
+                        "MultiMarginLoss",
+                        "TripletMarginLoss",
+                        "HuberLoss",
+                        "SoftMarginLoss",
+                        "MultiLabelSoftMarginLoss",
+                        "CosineEmbeddingLoss",
+                        "MultiMarginLoss",
+                        "TripletMarginLoss",
+                        "MarginRankingLoss",
+                        "HingeEmbeddingLoss",
+                        "CTCLoss",
+                        "NLLLoss",
+                        "PoissonNLLLoss",
+                        "KLDivLoss",
+                        "CrossEntropyLoss",
+                        "BCEWithLogitsLoss",
+                        "BCELoss",
+                        "SmoothL1Loss",
+                        "L1Loss",
+                        "MSELoss"
+                    ],
+                    "property_formats": [
+                        {
+                            "name": "MSELoss",
+                            "description": null
+                        },
+                        {
+                            "name": "L1Loss",
+                            "description": null
+                        },
+                        {
+                            "name": "SmoothL1Loss",
+                            "description": null
+                        },
+                        {
+                            "name": "BCELoss",
+                            "description": null
+                        },
+                        {
+                            "name": "BCEWithLogitsLoss",
+                            "description": null
+                        },
+                        {
+                            "name": "CrossEntropyLoss",
+                            "description": null
+                        },
+                        {
+                            "name": "CTCLoss",
+                            "description": null
+                        },
+                        {
+                            "name": "NLLLoss",
+                            "description": null
+                        },
+                        {
+                            "name": "KLDivLoss",
+                            "description": null
+                        },
+                        {
+                            "name": "PoissonNLLLoss",
+                            "description": null
+                        },
+                        {
+                            "name": "NLLLoss2d",
+                            "description": null
+                        },
+                        {
+                            "name": "CosineEmbeddingLoss",
+                            "description": null
+                        },
+                        {
+                            "name": "HingeEmbeddingLoss",
+                            "description": null
+                        },
+                        {
+                            "name": "MarginRankingLoss",
+                            "description": null
+                        },
+                        {
+                            "name": "MultiLabelMarginLoss",
+                            "description": null
+                        },
+                        {
+                            "name": "MultiLabelSoftMarginLoss",
+                            "description": null
+                        },
+                        {
+                            "name": "MultiMarginLoss",
+                            "description": null
+                        },
+                        {
+                            "name": "TripletMarginLoss",
+                            "description": null
+                        },
+                        {
+                            "name": "HuberLoss",
+                            "description": null
+                        },
+                        {
+                            "name": "SoftMarginLoss",
+                            "description": null
+                        },
+                        {
+                            "name": "MultiLabelSoftMarginLoss",
+                            "description": null
+                        },
+                        {
+                            "name": "CosineEmbeddingLoss",
+                            "description": null
+                        },
+                        {
+                            "name": "MultiMarginLoss",
+                            "description": null
+                        },
+                        {
+                            "name": "TripletMarginLoss",
+                            "description": null
+                        },
+                        {
+                            "name": "MarginRankingLoss",
+                            "description": null
+                        },
+                        {
+                            "name": "HingeEmbeddingLoss",
+                            "description": null
+                        },
+                        {
+                            "name": "CTCLoss",
+                            "description": null
+                        },
+                        {
+                            "name": "NLLLoss",
+                            "description": null
+                        },
+                        {
+                            "name": "PoissonNLLLoss",
+                            "description": null
+                        },
+                        {
+                            "name": "KLDivLoss",
+                            "description": null
+                        },
+                        {
+                            "name": "CrossEntropyLoss",
+                            "description": null
+                        },
+                        {
+                            "name": "BCEWithLogitsLoss",
+                            "description": null
+                        },
+                        {
+                            "name": "BCELoss",
+                            "description": null
+                        },
+                        {
+                            "name": "SmoothL1Loss",
+                            "description": null
+                        },
+                        {
+                            "name": "L1Loss",
+                            "description": null
+                        },
+                        {
+                            "name": "MSELoss",
+                            "description": null
+                        }
+                    ]
+                },
+                "optimizer": {
+                    "type": "string",
+                    "default": "Adam",
+                    "wf_prop": false,
+                    "description": "Optimizer algorithm to be used. ",
+                    "enum": [
+                        "Adadelta",
+                        "Adagrad",
+                        "Adam",
+                        "AdamW",
+                        "SparseAdam",
+                        "Adamax",
+                        "ASGD",
+                        "LBFGS",
+                        "RMSprop",
+                        "Rprop",
+                        "SGD"
+                    ],
+                    "property_formats": [
+                        {
+                            "name": "Adadelta",
+                            "description": null
+                        },
+                        {
+                            "name": "Adagrad",
+                            "description": null
+                        },
+                        {
+                            "name": "Adam",
+                            "description": null
+                        },
+                        {
+                            "name": "AdamW",
+                            "description": null
+                        },
+                        {
+                            "name": "SparseAdam",
+                            "description": null
+                        },
+                        {
+                            "name": "Adamax",
+                            "description": null
+                        },
+                        {
+                            "name": "ASGD",
+                            "description": null
+                        },
+                        {
+                            "name": "LBFGS",
+                            "description": null
+                        },
+                        {
+                            "name": "RMSprop",
+                            "description": null
+                        },
+                        {
+                            "name": "Rprop",
+                            "description": null
+                        },
+                        {
+                            "name": "SGD",
+                            "description": null
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "additionalProperties": false
+}

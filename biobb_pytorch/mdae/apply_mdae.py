@@ -45,7 +45,7 @@ class ApplyMDAE(BiobbObject):
         * wrapped_software:
             * name: PyTorch
             * version: >=1.6.0
-            * license: BSD-3-Clause
+            * license: BSD 3-Clause
         * ontology:
             * name: EDAM
             * schema: http://edamontology.org/EDAM.owl

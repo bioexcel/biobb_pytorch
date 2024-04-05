@@ -1,0 +1,44 @@
+{
+    "_id": "biobb_pytorch",
+    "desc": "biobb_pytorch is the Biobb module collection to train and create ML & DL models using the popular PyTorch Python library.",
+    "github": "https://github.com/bioexcel/biobb_pytorch",
+    "readthedocs": "https://biobb-pytorch.readthedocs.io/en/latest/",
+    "conda": "https://anaconda.org/bioconda/biobb_pytorch",
+    "docker": "https://quay.io/biocontainers/biobb_pytorch:4.1.0--pyhdfd78af_0",
+    "singularity": "https://depot.galaxyproject.org/singularity/biobb_pytorch:4.1.0--pyhdfd78af_0",
+    "version": "4.1.0",
+    "rest": false,
+    "tools": [
+        {
+            "block": "TrainMDAE",
+            "tool": "PyTorch Autoencoder",
+            "desc": "Train a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.",
+            "exec": "train_mdae",
+            "docs": "https://biobb-pytorch.readthedocs.io/en/latest/pytorch.html#module-mdae.train_mdae",
+            "rest": false
+        },
+        {
+            "block": "ApplyMDAE",
+            "tool": "PyTorch Autoencoder",
+            "desc": "Apply a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.",
+            "exec": "apply_mdae",
+            "docs": "https://biobb-pytorch.readthedocs.io/en/latest/pytorch.html#module-mdae.apply_mdae",
+            "rest": false
+        }
+    ],
+    "dep_pypi": [
+        "install_requires=['biobb_common==4.1.0', 'torch']",
+        "python_requires='>=3.8'"
+    ],
+    "dep_conda": [
+        "python >=3.8",
+        "biobb_common ==4.1.0",
+        "pytorch"
+    ],
+    "keywords": [
+        "md",
+        "molecular",
+        "dynamics",
+        "pytorch"
+    ]
+}

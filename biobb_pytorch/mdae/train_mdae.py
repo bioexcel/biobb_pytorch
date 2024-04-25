@@ -148,7 +148,7 @@ class TrainMDAE(BiobbObject):
         # Create the model
         self.model = MDAE(input_dimensions=self.input_dimensions, num_layers=self.num_layers, latent_dimensions=self.latent_dimensions)
         if self.io_dict['in']['input_model_pth_path']:
-            self.model.load_state_dict(torch.load(self.io_dict['in']['input_model_pth_path']))
+            self.model.load_state_dict(torch.load(self.io_dict['in']['input_model_pth_path'], map_location=self.model.device))
 
         # Define loss function and optimizer algorithm
         loss_function_str: str = properties.get('loss_function', '')
@@ -181,6 +181,7 @@ class TrainMDAE(BiobbObject):
 
         # Train the model
         train_losses, validation_losses = self.train_model()
+        print(train_losses)
         if self.stage_io_dict['out'].get('output_train_data_npz_path'):
             np.savez(self.stage_io_dict['out']['output_train_data_npz_path'], train_losses=np.array(train_losses), validation_losses=np.array(validation_losses))
 
@@ -188,7 +189,8 @@ class TrainMDAE(BiobbObject):
         if self.stage_io_dict['out'].get('output_performance_npz_path'):
             evaluate_losses, latent_space, reconstructed_data = self.evaluate_model(self.performance_dataloader, self.loss_function)
             denormalized_reconstructed_data = ndarray_denormalization(reconstructed_data, self.input_train_data_max_values, self.input_train_data_min_values)
-            np.savez(self.stage_io_dict['out']['output_performance_npz_path'], evaluate_losses=np.array(evaluate_losses), latent_space=np.array(latent_space), denormalized_reconstructed_data=np.array(denormalized_reconstructed_data))
+            reshaped_reconstructed_data = np.reshape(denormalized_reconstructed_data, (len(denormalized_reconstructed_data), -1, 3))
+            np.savez(self.stage_io_dict['out']['output_performance_npz_path'], evaluate_losses=np.array(evaluate_losses), latent_space=np.array(latent_space), denormalized_reconstructed_data=np.array(reshaped_reconstructed_data))
 
         # Save the model
         fu.log(f'Saving model to: {self.stage_io_dict["out"]["output_model_pth_path"]}', self.out_log)
@@ -224,7 +226,7 @@ class TrainMDAE(BiobbObject):
 
             # Logging
             if self.log_interval and (epoch_index % self.log_interval == 0 or epoch_index == self.num_epochs-1):
-                fu.log(f'{"Epoch":>4} {epoch_index+1}/{self.num_epochs} - Train Loss: {avg_train_loss:.3f}, Validation Loss: {avg_validation_loss:.3f}, Duration: {time.time() - loop_start_time:.2f}s')
+                fu.log(f'{"Epoch":>4} {epoch_index+1}/{self.num_epochs} - Train Loss: {avg_train_loss:.3f}, Validation Loss: {avg_validation_loss:.3f}, Duration: {time.time() - loop_start_time:.2f}s', self.out_log)
                 loop_start_time = time.time()
 
             # Save checkpoint

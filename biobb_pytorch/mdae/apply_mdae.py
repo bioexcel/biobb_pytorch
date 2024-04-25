@@ -69,8 +69,8 @@ class ApplyMDAE(BiobbObject):
             'out': {'output_reconstructed_data_npy_path': output_reconstructed_data_npy_path, 'output_latent_space_npy_path': output_latent_space_npy_path}
         }
 
+        # Properties specific for BB
         self.batch_size: int = int(properties.get('batch_size', 1))  # number of samples/frames per batch
-
         self.latent_dimensions: int = int(properties.get('latent_dimensions', 2))  # min dimensionality of the latent space
         self.num_layers: int = int(properties.get('num_layers', 4))  # number of layers in the encoder/decoder (4 to encode and 4 to decode)
 
@@ -93,7 +93,7 @@ class ApplyMDAE(BiobbObject):
         tensor_dataset = torch.utils.data.TensorDataset(data_tensor)
         self.data_loader = torch.utils.data.DataLoader(tensor_dataset, batch_size=self.batch_size, shuffle=False)
         self.model = MDAE(input_dimensions=self.input_dimensions, num_layers=self.num_layers, latent_dimensions=self.latent_dimensions)
-        self.model.load_state_dict(torch.load(self.io_dict['in']['input_model_pth_path']))
+        self.model.load_state_dict(torch.load(self.io_dict['in']['input_model_pth_path'], map_location=self.model.device))
 
     @launchlogger
     def launch(self) -> int:
@@ -108,8 +108,9 @@ class ApplyMDAE(BiobbObject):
         fu.log(f'Applying MDAE model reducing dimensionality from {self.input_dimensions} to {self.latent_dimensions} and reconstructing.', self.out_log)
         latent_space, reconstructed_data = self.apply_model(self.data_loader)
         denormalized_reconstructed_data = ndarray_denormalization(reconstructed_data, self.input_data_max_values, self.input_data_min_values)
+        reshaped_reconstructed_data = np.reshape(denormalized_reconstructed_data, (len(denormalized_reconstructed_data), -1, 3))
         fu.log(f'Saving reconstructed data to {self.stage_io_dict["out"]["output_reconstructed_data_npy_path"]}', self.out_log)
-        np.save(self.stage_io_dict['out']['output_reconstructed_data_npy_path'], np.array(denormalized_reconstructed_data))
+        np.save(self.stage_io_dict['out']['output_reconstructed_data_npy_path'], np.array(reshaped_reconstructed_data))
 
         if self.io_dict['out'].get('output_latent_space_npy_path'):
             fu.log(f'Saving latent space to {self.io_dict["out"]["output_latent_space_npy_path"]}', self.out_log)

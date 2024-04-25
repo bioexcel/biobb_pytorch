@@ -118,3 +118,6 @@ traj_comp.xtc
 
 # Pycharm
 .idea
+
+# Jupyter Notebook
+AE.ipynb

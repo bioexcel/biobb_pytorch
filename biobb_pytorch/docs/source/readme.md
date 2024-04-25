@@ -26,7 +26,7 @@
 # biobb_pytorch
 
 ### Introduction
-biobb_pytorch is the Biobb module collection to train and create ML & DL models using the popular [PyTorch](https://pytorch.org/) Python library.
+biobb_pytorch is the Biobb module collection to create and train ML & DL models using the popular [PyTorch](https://pytorch.org/) Python library.
 Biobb (BioExcel building blocks) packages are Python building blocks that
 create new layer of compatibility and interoperability over popular
 bioinformatics tools.

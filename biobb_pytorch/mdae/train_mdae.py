@@ -9,7 +9,7 @@ from biobb_common.configuration import settings
 from biobb_common.tools import file_utils as fu
 from biobb_common.tools.file_utils import launchlogger
 from biobb_pytorch.mdae.mdae import MDAE
-from biobb_pytorch.mdae.common import get_loss_function, get_optimizer_function, ndarray_normalization, ndarray_denormalization, execute_model
+from biobb_pytorch.mdae.common import get_loss_function, get_optimizer_function, ndarray_normalization, ndarray_denormalization, execute_model, format_time, human_readable_file_size
 from pathlib import Path
 
 
@@ -181,9 +181,10 @@ class TrainMDAE(BiobbObject):
 
         # Train the model
         train_losses, validation_losses = self.train_model()
-        print(train_losses)
         if self.stage_io_dict['out'].get('output_train_data_npz_path'):
             np.savez(self.stage_io_dict['out']['output_train_data_npz_path'], train_losses=np.array(train_losses), validation_losses=np.array(validation_losses))
+            fu.log(f'Saving train data to: {self.stage_io_dict["out"]["output_train_data_npz_path"]}', self.out_log)
+            fu.log(f'  File size: {human_readable_file_size(self.stage_io_dict["out"]["output_train_data_npz_path"])}', self.out_log)
 
         # Evaluate the model
         if self.stage_io_dict['out'].get('output_performance_npz_path'):
@@ -191,10 +192,13 @@ class TrainMDAE(BiobbObject):
             denormalized_reconstructed_data = ndarray_denormalization(reconstructed_data, self.input_train_data_max_values, self.input_train_data_min_values)
             reshaped_reconstructed_data = np.reshape(denormalized_reconstructed_data, (len(denormalized_reconstructed_data), -1, 3))
             np.savez(self.stage_io_dict['out']['output_performance_npz_path'], evaluate_losses=np.array(evaluate_losses), latent_space=np.array(latent_space), denormalized_reconstructed_data=np.array(reshaped_reconstructed_data))
+            fu.log(f'Saving evaluation data to: {self.stage_io_dict["out"]["output_performance_npz_path"]}', self.out_log)
+            fu.log(f'  File size: {human_readable_file_size(self.stage_io_dict["out"]["output_performance_npz_path"])}', self.out_log)
 
         # Save the model
-        fu.log(f'Saving model to: {self.stage_io_dict["out"]["output_model_pth_path"]}', self.out_log)
         torch.save(self.model.state_dict(), self.stage_io_dict['out']['output_model_pth_path'])
+        fu.log(f'Saving model to: {self.stage_io_dict["out"]["output_model_pth_path"]}', self.out_log)
+        fu.log(f'  File size: {human_readable_file_size(self.stage_io_dict["out"]["output_model_pth_path"])}', self.out_log)
 
         # Copy files to host
         self.copy_to_host()
@@ -211,8 +215,24 @@ class TrainMDAE(BiobbObject):
         validation_losses: List[float] = []
 
         start_time: float = time.time()
-
         fu.log("Start Training:", self.out_log)
+        fu.log(f"  Device: {self.model.device}", self.out_log)
+        fu.log(f"  Train input file: {self.stage_io_dict['in']['input_train_npy_path']}", self.out_log)
+        fu.log(f"    File size: {human_readable_file_size(self.stage_io_dict['in']['input_train_npy_path'])}", self.out_log)
+        fu.log(f"  Number of atoms: {int(len(next(iter(self.train_dataloader))[0][0])/3)}", self.out_log)
+        fu.log(f"  Number of frames for training: {len(self.train_dataloader)}    Total number of frames: {int((len(self.train_dataloader)*self.train_dataloader.batch_size)/self.partition) if self.partition is not None else 'Unknown'}", self.out_log)  # type: ignore
+        fu.log(f"  Number of epochs: {self.num_epochs}", self.out_log)
+        fu.log(f"  Partition: {self.partition}", self.out_log)
+        fu.log(f"  Batch size: {self.batch_size}", self.out_log)
+        fu.log(f"  Learning rate: {self.lr}", self.out_log)
+        fu.log(f"  Number of layers: {self.num_layers}", self.out_log)
+        fu.log(f"  Input dimensions: {self.input_dimensions}", self.out_log)
+        fu.log(f"  Latent dimensions: {self.latent_dimensions}", self.out_log)
+        fu.log(f"  Loss function: {str(self.loss_function).split('(')[0]}", self.out_log)
+        fu.log(f"  Optimizer: {str(self.optimizer).split('(')[0]}", self.out_log)
+        fu.log(f"  Checkpoint interval: {self.checkpoint_interval}", self.out_log)
+        fu.log(f"  Log interval: {self.log_interval}\n", self.out_log)
+
         for epoch_index in range(self.num_epochs):
             loop_start_time: float = time.time()
 
@@ -226,7 +246,8 @@ class TrainMDAE(BiobbObject):
 
             # Logging
             if self.log_interval and (epoch_index % self.log_interval == 0 or epoch_index == self.num_epochs-1):
-                fu.log(f'{"Epoch":>4} {epoch_index+1}/{self.num_epochs} - Train Loss: {avg_train_loss:.3f}, Validation Loss: {avg_validation_loss:.3f}, Duration: {time.time() - loop_start_time:.2f}s', self.out_log)
+                epoch_time: float = time.time() - loop_start_time
+                fu.log(f'{"Epoch":>4} {epoch_index+1}/{self.num_epochs} - Train Loss: {avg_train_loss:.3f}, Validation Loss: {avg_validation_loss:.3f}, Duration: {format_time(epoch_time)}, Estimated remaining time: {format_time((self.num_epochs-(epoch_index+1))*epoch_time)}', self.out_log)
                 loop_start_time = time.time()
 
             # Save checkpoint
@@ -235,7 +256,7 @@ class TrainMDAE(BiobbObject):
                 fu.log(f'{"Saving: ":>4} {checkpoint_path}', self.out_log)
                 torch.save(self.model.state_dict(), checkpoint_path)
 
-        fu.log(f"End Training, total time: {((time.time() - start_time)/60):.2f} minutes", self.out_log)
+        fu.log(f"End Training, total time: {format_time((time.time() - start_time)/60)} minutes", self.out_log)
 
         return train_losses, validation_losses
 

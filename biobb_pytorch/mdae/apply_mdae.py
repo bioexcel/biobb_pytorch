@@ -1,13 +1,14 @@
 import torch
 import numpy as np
 import argparse
+import time
 from typing import Optional, Tuple, Dict
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.configuration import settings
 from biobb_common.tools import file_utils as fu
 from biobb_common.tools.file_utils import launchlogger
 from biobb_pytorch.mdae.mdae import MDAE
-from biobb_pytorch.mdae.common import ndarray_normalization, ndarray_denormalization, execute_model
+from biobb_pytorch.mdae.common import ndarray_normalization, ndarray_denormalization, execute_model, format_time, human_readable_file_size
 
 
 class ApplyMDAE(BiobbObject):
@@ -109,12 +110,14 @@ class ApplyMDAE(BiobbObject):
         latent_space, reconstructed_data = self.apply_model(self.data_loader)
         denormalized_reconstructed_data = ndarray_denormalization(reconstructed_data, self.input_data_max_values, self.input_data_min_values)
         reshaped_reconstructed_data = np.reshape(denormalized_reconstructed_data, (len(denormalized_reconstructed_data), -1, 3))
-        fu.log(f'Saving reconstructed data to {self.stage_io_dict["out"]["output_reconstructed_data_npy_path"]}', self.out_log)
         np.save(self.stage_io_dict['out']['output_reconstructed_data_npy_path'], np.array(reshaped_reconstructed_data))
+        fu.log(f'Saving reconstructed data to: {self.stage_io_dict["out"]["output_reconstructed_data_npy_path"]}', self.out_log)
+        fu.log(f'  File size: {human_readable_file_size(self.stage_io_dict["out"]["output_reconstructed_data_npy_path"])}', self.out_log)
 
-        if self.io_dict['out'].get('output_latent_space_npy_path'):
-            fu.log(f'Saving latent space to {self.io_dict["out"]["output_latent_space_npy_path"]}', self.out_log)
-            np.save(self.io_dict['out']['output_latent_space_npy_path'], np.array(latent_space))
+        if self.stage_io_dict['out'].get('output_latent_space_npy_path'):
+            np.save(self.stage_io_dict['out']['output_latent_space_npy_path'], np.array(latent_space))
+            fu.log(f'Saving latent space to: {self.stage_io_dict["out"]["output_latent_space_npy_path"]}', self.out_log)
+            fu.log(f'  File size: {human_readable_file_size(self.stage_io_dict["out"]["output_latent_space_npy_path"])}', self.out_log)
 
         # Copy files to host
         self.copy_to_host()
@@ -126,7 +129,23 @@ class ApplyMDAE(BiobbObject):
         return 0
 
     def apply_model(self, dataloader: torch.utils.data.DataLoader) -> Tuple[np.ndarray, np.ndarray]:
-        return execute_model(self.model, dataloader, self.input_dimensions, self.latent_dimensions)[1:]
+        self.model.to(self.model.device)
+        start_time: float = time.time()
+        fu.log("Applying model:", self.out_log)
+        fu.log(f"  Device: {self.model.device}", self.out_log)
+        fu.log(f"  Input file: {self.stage_io_dict['in']['input_data_npy_path']}", self.out_log)
+        fu.log(f"    File size: {human_readable_file_size(self.stage_io_dict['in']['input_data_npy_path'])}", self.out_log)
+        fu.log(f"  Number of atoms: {int(len(next(iter(dataloader))[0][0])/3)}", self.out_log)
+        fu.log(f"  Number of frames: {int(len(dataloader)*dataloader.batch_size)}", self.out_log)  # type: ignore
+        fu.log(f"  Batch size: {self.batch_size}", self.out_log)
+        fu.log(f"  Number of layers: {self.num_layers}", self.out_log)
+        fu.log(f"  Input dimensions: {self.input_dimensions}", self.out_log)
+        fu.log(f"  Latent dimensions: {self.latent_dimensions}", self.out_log)
+
+        execution_tuple = execute_model(self.model, dataloader, self.input_dimensions, self.latent_dimensions)[1:]
+
+        fu.log(f"  Execution time: {format_time(time.time() - start_time)}", self.out_log)
+        return execution_tuple
 
 
 def applyMDAE(input_data_npy_path: str, input_model_pth_path: str,

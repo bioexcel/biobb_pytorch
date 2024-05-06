@@ -1,7 +1,8 @@
 """ Common functions for package biobb_pytorch.models """
 import numpy as np
 import torch
-from typing import Callable, List, Optional, Tuple
+from pathlib import Path
+from typing import Callable, List, Optional, Tuple, Union
 
 
 def ndarray_normalization(ndarray: np.ndarray, max_values: np.ndarray, min_values: np.ndarray) -> np.ndarray:
@@ -86,3 +87,27 @@ def execute_model(model: torch.nn.Module, dataloader: torch.utils.data.DataLoade
     latent_space: np.ndarray = np.reshape(np.concatenate(z_list, axis=0), (-1, latent_dimensions))
     reconstructed_data: np.ndarray = np.reshape(np.concatenate(x_hat_list, axis=0), (-1, input_dimensions))
     return loss, latent_space, reconstructed_data
+
+
+def format_time(seconds: Union[float, int]) -> str:
+    """Converts time in seconds to a string of the format 'HH:MM:SS'."""
+    hours, remainder = divmod(seconds, 3600)
+    minutes, seconds = divmod(remainder, 60)
+    if hours:
+        return "{:02}h {:02}m {:02}s".format(int(hours), int(minutes), int(seconds))
+    elif minutes:
+        return "{:02}m {:02}s".format(int(minutes), int(seconds))
+    else:
+        return "{:02}s".format(int(seconds))
+
+
+def human_readable_file_size(file_path: Union[str, Path]) -> str:
+    """Get the size of a file and return it in a human-readable format."""
+    file_path = Path(file_path)  # Ensure file_path is a Path object
+    size_in_bytes: float = file_path.stat().st_size
+    units = ['Bytes', 'KB', 'MB', 'GB', 'PB']
+    for unit in units:
+        if size_in_bytes < 1024:
+            return f"{size_in_bytes:.2f} {unit}"
+        size_in_bytes /= 1024
+    return f"{size_in_bytes:.2f} {unit}"

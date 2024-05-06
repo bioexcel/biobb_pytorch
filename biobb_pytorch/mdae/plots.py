@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt  # type: ignore
-import matplotlib.gridspec as gridspec
-
-
+import matplotlib.gridspec as gridspec  # type: ignore
+from matplotlib.markers import MarkerStyle  # type: ignore
 import numpy as np
 
 
@@ -19,8 +18,8 @@ def plot_loss(output_train_data_npz_path: str) -> None:
     min_val_loss_idx = np.argmin(val_loss)
     plt.plot(range(len(train_loss)), train_loss, label=f"Training (min.: {min_train_loss_idx})", color='blue')
     plt.plot(range(len(val_loss)), val_loss, label=f"Validation (min.: {min_val_loss_idx})", color='orange')
-    plt.scatter(min_train_loss_idx, train_loss[min_train_loss_idx], color='blue', marker='v', s=50)
-    plt.scatter(min_val_loss_idx, val_loss[min_val_loss_idx], color='orange', marker='v', s=50)
+    plt.scatter(min_train_loss_idx, train_loss[min_train_loss_idx], color='blue', marker=MarkerStyle('v'), s=50)
+    plt.scatter(min_val_loss_idx, val_loss[min_val_loss_idx], color='orange', marker=MarkerStyle('v'), s=50)
     plt.legend()
     plt.ylabel('Total Loss')
     plt.xlabel('Epochs')
@@ -76,8 +75,10 @@ def _numpy_rmsf_by_atom(trajectory):
 
 
 def plot_rmsf(original_traj_npy_file, mutated_reconstructed_traj_npy_file):
-    rmsf_trajectory = _numpy_rmsf_by_atom(original_traj_npy_file)
-    rmsf_output = _numpy_rmsf_by_atom(mutated_reconstructed_traj_npy_file)
+    original_traj = np.load(original_traj_npy_file)
+    mutated_reconstructed_traj = np.load(mutated_reconstructed_traj_npy_file)
+    rmsf_trajectory = _numpy_rmsf_by_atom(original_traj)
+    rmsf_output = _numpy_rmsf_by_atom(mutated_reconstructed_traj)
     fig, ax = plt.subplots(figsize=(20, 6))
     indices = np.arange(len(rmsf_trajectory))
     ax.plot(indices, rmsf_trajectory, color='blue', linewidth=1, label='Original')
@@ -90,8 +91,10 @@ def plot_rmsf(original_traj_npy_file, mutated_reconstructed_traj_npy_file):
 
 
 def plot_rmsf_difference(original_traj_npy_file, mutated_reconstructed_traj_npy_file):
-    rmsf_trajectory = _numpy_rmsf_by_atom(original_traj_npy_file)
-    rmsf_output = _numpy_rmsf_by_atom(mutated_reconstructed_traj_npy_file)
+    original_traj = np.load(original_traj_npy_file)
+    mutated_reconstructed_traj = np.load(mutated_reconstructed_traj_npy_file)
+    rmsf_trajectory = _numpy_rmsf_by_atom(original_traj)
+    rmsf_output = _numpy_rmsf_by_atom(mutated_reconstructed_traj)
     fig, ax = plt.subplots(figsize=(20, 6))
     indices = np.arange(len(rmsf_trajectory))
     # Plot RMSF for diference between input and output

@@ -30,7 +30,9 @@ Config parameters for this building block:
 * **latent_dimensions** (*integer*): (2) min dimensionality of the latent space..
 * **num_layers** (*integer*): (4) number of layers in the encoder/decoder (4 to encode and 4 to decode)..
 * **num_epochs** (*integer*): (100) number of epochs (iterations of whole dataset) for training..
-* **lr** (*number*): (0.001) learning rate..
+* **lr** (*number*): (0.0001) learning rate..
+* **self.lr_step_size** (*integer*): (100) Period of learning rate decay..
+* **self.gamma** (*number*): (0.1) Multiplicative factor of learning rate decay..
 * **checkpoint_interval** (*integer*): (25) number of epochs interval to save model checkpoints o 0 to disable..
 * **output_checkpoint_prefix** (*string*): (checkpoint_epoch) prefix for the checkpoint files..
 * **partition** (*number*): (0.8) 0.8 = 80% partition of the data for training and validation..

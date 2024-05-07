@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="biobb_pytorch",
-    version="4.1.2",
+    version="4.1.3",
     author="Biobb developers",
     author_email="pau.andrio@bsc.es",
     description="biobb_pytorch is the Biobb module collection to create and train ML & DL models.",

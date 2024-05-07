@@ -29,7 +29,9 @@ class TrainMDAE(BiobbObject):
             * **latent_dimensions** (*int*) - (2) min dimensionality of the latent space.
             * **num_layers** (*int*) - (4) number of layers in the encoder/decoder (4 to encode and 4 to decode).
             * **num_epochs** (*int*) - (100) number of epochs (iterations of whole dataset) for training.
-            * **lr** (*float*) - (0.001) learning rate.
+            * **lr** (*float*) - (0.0001) learning rate.
+            * **self.lr_step_size** (*int*) - (100) Period of learning rate decay.
+            * **self.gamma** (*float*) - (0.1) Multiplicative factor of learning rate decay.
             * **checkpoint_interval** (*int*) - (25) number of epochs interval to save model checkpoints o 0 to disable.
             * **output_checkpoint_prefix** (*str*) - ("checkpoint_epoch") prefix for the checkpoint files.
             * **partition** (*float*) - (0.8) 0.8 = 80% partition of the data for training and validation.
@@ -49,7 +51,7 @@ class TrainMDAE(BiobbObject):
                 'latent_dimensions': 2,
                 'num_layers': 4,
                 'num_epochs': 100,
-                'lr': 0.001,
+                'lr': 0.0001,
                 'checkpoint_interval': 25,
                 'partition': 0.8,
                 'batch_size': 1,
@@ -99,7 +101,9 @@ class TrainMDAE(BiobbObject):
         self.latent_dimensions: int = int(properties.get('latent_dimensions', 2))  # min dimensionality of the latent space
         self.num_layers: int = int(properties.get('num_layers', 4))  # number of layers in the encoder/decoder (4 to encode and 4 to decode)
         self.num_epochs: int = int(properties.get('num_epochs', 100))  # number of epochs (iterations of whole dataset) for training
-        self.lr: float = float(properties.get('lr', 0.001))  # learning rate
+        self.lr: float = float(properties.get('lr', 0.0001))  # learning rate
+        self.lr_step_size: int = int(properties.get('lr_step_size', 100))  # Period of learning rate decay
+        self.gamma: float = float(properties.get('gamma', 0.1))  # Multiplicative factor of learning rate decay
         self.checkpoint_interval: int = int(properties.get('checkpoint_interval', 25))  # number of epochs interval to save model checkpoints o 0 to disable
         self.output_checkpoint_prefix: str = properties.get('output_checkpoint_prefix', 'checkpoint_epoch_')  # prefix for the checkpoint files,
         self.partition: float = float(properties.get('partition', 0.8))  # 0.8 = 80% partition of the data for training and validation
@@ -180,7 +184,7 @@ class TrainMDAE(BiobbObject):
         self.stage_files()
 
         # Train the model
-        train_losses, validation_losses = self.train_model()
+        train_losses, validation_losses, best_model, best_model_epoch = self.train_model()
         if self.stage_io_dict['out'].get('output_train_data_npz_path'):
             np.savez(self.stage_io_dict['out']['output_train_data_npz_path'], train_losses=np.array(train_losses), validation_losses=np.array(validation_losses))
             fu.log(f'Saving train data to: {self.stage_io_dict["out"]["output_train_data_npz_path"]}', self.out_log)
@@ -196,8 +200,9 @@ class TrainMDAE(BiobbObject):
             fu.log(f'  File size: {human_readable_file_size(self.stage_io_dict["out"]["output_performance_npz_path"])}', self.out_log)
 
         # Save the model
-        torch.save(self.model.state_dict(), self.stage_io_dict['out']['output_model_pth_path'])
-        fu.log(f'Saving model to: {self.stage_io_dict["out"]["output_model_pth_path"]}', self.out_log)
+        torch.save(best_model, self.stage_io_dict['out']['output_model_pth_path'])
+        fu.log(f'Saving best model to: {self.stage_io_dict["out"]["output_model_pth_path"]}', self.out_log)
+        fu.log(f'  Best model epoch: {best_model_epoch}', self.out_log)
         fu.log(f'  File size: {human_readable_file_size(self.stage_io_dict["out"]["output_model_pth_path"])}', self.out_log)
 
         # Copy files to host
@@ -209,10 +214,11 @@ class TrainMDAE(BiobbObject):
         self.check_arguments(output_files_created=True, raise_exception=False)
         return 0
 
-    def train_model(self) -> Tuple[List[float], List[float]]:
+    def train_model(self) -> Tuple[List[float], List[float], Dict, int]:
         self.model.to(self.model.device)
         train_losses: List[float] = []
         validation_losses: List[float] = []
+        best_valid_loss: float = float('inf')  # Initialize best valid loss to infinity
 
         start_time: float = time.time()
         fu.log("Start Training:", self.out_log)
@@ -225,6 +231,8 @@ class TrainMDAE(BiobbObject):
         fu.log(f"  Partition: {self.partition}", self.out_log)
         fu.log(f"  Batch size: {self.batch_size}", self.out_log)
         fu.log(f"  Learning rate: {self.lr}", self.out_log)
+        fu.log(f"  Learning rate step size: {self.lr_step_size}", self.out_log)
+        fu.log(f"  Learning rate gamma: {self.gamma}", self.out_log)
         fu.log(f"  Number of layers: {self.num_layers}", self.out_log)
         fu.log(f"  Input dimensions: {self.input_dimensions}", self.out_log)
         fu.log(f"  Latent dimensions: {self.latent_dimensions}", self.out_log)
@@ -233,6 +241,7 @@ class TrainMDAE(BiobbObject):
         fu.log(f"  Checkpoint interval: {self.checkpoint_interval}", self.out_log)
         fu.log(f"  Log interval: {self.log_interval}\n", self.out_log)
 
+        scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=self.lr_step_size, gamma=self.gamma)
         for epoch_index in range(self.num_epochs):
             loop_start_time: float = time.time()
 
@@ -247,7 +256,7 @@ class TrainMDAE(BiobbObject):
             # Logging
             if self.log_interval and (epoch_index % self.log_interval == 0 or epoch_index == self.num_epochs-1):
                 epoch_time: float = time.time() - loop_start_time
-                fu.log(f'{"Epoch":>4} {epoch_index+1}/{self.num_epochs} - Train Loss: {avg_train_loss:.3f}, Validation Loss: {avg_validation_loss:.3f}, Duration: {format_time(epoch_time)}, Estimated remaining time: {format_time((self.num_epochs-(epoch_index+1))*epoch_time)}', self.out_log)
+                fu.log(f'{"Epoch":>4} {epoch_index+1}/{self.num_epochs} - Train Loss: {avg_train_loss:.3f}, Validation Loss: {avg_validation_loss:.3f}, LR: {scheduler.get_lr()}, Duration: {format_time(epoch_time)}, ETA: {format_time((self.num_epochs-(epoch_index+1))*epoch_time)}', self.out_log)
                 loop_start_time = time.time()
 
             # Save checkpoint
@@ -256,9 +265,18 @@ class TrainMDAE(BiobbObject):
                 fu.log(f'{"Saving: ":>4} {checkpoint_path}', self.out_log)
                 torch.save(self.model.state_dict(), checkpoint_path)
 
-        fu.log(f"End Training, total time: {format_time((time.time() - start_time)/60)} minutes", self.out_log)
+            # Update learning rate
+            scheduler.step()
 
-        return train_losses, validation_losses
+            # Save best model
+            if avg_validation_loss < best_valid_loss:
+                best_valid_loss = avg_validation_loss
+                best_model: Dict = self.model.state_dict()
+                best_model_epoch: int = epoch_index
+
+        fu.log(f"End Training, total time: {format_time((time.time() - start_time))}", self.out_log)
+
+        return train_losses, validation_losses, best_model, best_model_epoch
 
     def training_step(self, dataloader: torch.utils.data.DataLoader, optimizer: torch.optim.Optimizer, loss_function: torch.nn.modules.loss._Loss) -> float:
         self.model.train()

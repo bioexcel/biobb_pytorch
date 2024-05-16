@@ -34,8 +34,8 @@ def _numpy_rmsd(reference, trajectory):
 def plot_rmsd(traj_file_npy_path, output_reconstructed_traj_npy_path) -> None:
     perf_data = np.load(traj_file_npy_path)
     output = np.load(output_reconstructed_traj_npy_path)
-    rmsd_trajectory = _numpy_rmsd(perf_data[0], perf_data)
-    rmsd_output = _numpy_rmsd(perf_data[0], output)
+    rmsd_trajectory = _numpy_rmsd(perf_data[0], perf_data)*10  # Convert to Å
+    rmsd_output = _numpy_rmsd(perf_data[0], output)*10  # Convert to Å
     frames = np.arange(len(rmsd_trajectory))
     fig, ax = plt.subplots(figsize=(20, 6))
     ax.plot(frames, rmsd_trajectory, color='blue', linewidth=1, label='Original')
@@ -77,8 +77,8 @@ def _numpy_rmsf_by_atom(trajectory):
 def plot_rmsf(original_traj_npy_file, mutated_reconstructed_traj_npy_file):
     original_traj = np.load(original_traj_npy_file)
     mutated_reconstructed_traj = np.load(mutated_reconstructed_traj_npy_file)
-    rmsf_trajectory = _numpy_rmsf_by_atom(original_traj)
-    rmsf_output = _numpy_rmsf_by_atom(mutated_reconstructed_traj)
+    rmsf_trajectory = _numpy_rmsf_by_atom(original_traj)*10  # Convert to Å
+    rmsf_output = _numpy_rmsf_by_atom(mutated_reconstructed_traj)*10  # Convert to Å
     fig, ax = plt.subplots(figsize=(20, 6))
     indices = np.arange(len(rmsf_trajectory))
     ax.plot(indices, rmsf_trajectory, color='blue', linewidth=1, label='Original')
@@ -93,12 +93,13 @@ def plot_rmsf(original_traj_npy_file, mutated_reconstructed_traj_npy_file):
 def plot_rmsf_difference(original_traj_npy_file, mutated_reconstructed_traj_npy_file):
     original_traj = np.load(original_traj_npy_file)
     mutated_reconstructed_traj = np.load(mutated_reconstructed_traj_npy_file)
-    rmsf_trajectory = _numpy_rmsf_by_atom(original_traj)
-    rmsf_output = _numpy_rmsf_by_atom(mutated_reconstructed_traj)
+    rmsf_trajectory = _numpy_rmsf_by_atom(original_traj)*10  # Convert to Å
+    rmsf_output = _numpy_rmsf_by_atom(mutated_reconstructed_traj)*10  # Convert to Å
     fig, ax = plt.subplots(figsize=(20, 6))
     indices = np.arange(len(rmsf_trajectory))
     # Plot RMSF for diference between input and output
     ax.plot(indices, (rmsf_trajectory - rmsf_output), color='orange', linewidth=1, label='DIO')
+    ax.axhline(y=1, color='grey', linestyle='--', linewidth=1)
     ax.set_xlabel('# Atom')
     ax.set_ylabel('RMSD (Å)')
     plt.title('RMSF Plot')

@@ -30,8 +30,8 @@ class TrainMDAE(BiobbObject):
             * **num_layers** (*int*) - (4) number of layers in the encoder/decoder (4 to encode and 4 to decode).
             * **num_epochs** (*int*) - (100) number of epochs (iterations of whole dataset) for training.
             * **lr** (*float*) - (0.0001) learning rate.
-            * **self.lr_step_size** (*int*) - (100) Period of learning rate decay.
-            * **self.gamma** (*float*) - (0.1) Multiplicative factor of learning rate decay.
+            * **lr_step_size** (*int*) - (100) Period of learning rate decay.
+            * **gamma** (*float*) - (0.1) Multiplicative factor of learning rate decay.
             * **checkpoint_interval** (*int*) - (25) number of epochs interval to save model checkpoints o 0 to disable.
             * **output_checkpoint_prefix** (*str*) - ("checkpoint_epoch") prefix for the checkpoint files.
             * **partition** (*float*) - (0.8) 0.8 = 80% partition of the data for training and validation.
@@ -41,6 +41,7 @@ class TrainMDAE(BiobbObject):
             * **output_dimensions** (*int*) - (None) output dimensions by default it should be the number of features in the input data (number of atoms * 3 corresponding to x, y, z coordinates).
             * **loss_function** (*str*) - ("MSELoss") Loss function to be used. Values: MSELoss, L1Loss, SmoothL1Loss, BCELoss, BCEWithLogitsLoss, CrossEntropyLoss, CTCLoss, NLLLoss, KLDivLoss, PoissonNLLLoss, NLLLoss2d, CosineEmbeddingLoss, HingeEmbeddingLoss, MarginRankingLoss, MultiLabelMarginLoss, MultiLabelSoftMarginLoss, MultiMarginLoss, TripletMarginLoss, HuberLoss, SoftMarginLoss, MultiLabelSoftMarginLoss, CosineEmbeddingLoss, MultiMarginLoss, TripletMarginLoss, MarginRankingLoss, HingeEmbeddingLoss, CTCLoss, NLLLoss, PoissonNLLLoss, KLDivLoss, CrossEntropyLoss, BCEWithLogitsLoss, BCELoss, SmoothL1Loss, L1Loss, MSELoss.
             * **optimizer** (*str*) - ("Adam") Optimizer algorithm to be used. Values: Adadelta, Adagrad, Adam, AdamW, SparseAdam, Adamax, ASGD, LBFGS, RMSprop, Rprop, SGD.
+            * **seed** (*int*) - (None) Random seed for reproducibility.
 
     Examples:
         This is a use case of how to use the building block from Python::
@@ -107,6 +108,7 @@ class TrainMDAE(BiobbObject):
         self.checkpoint_interval: int = int(properties.get('checkpoint_interval', 25))  # number of epochs interval to save model checkpoints o 0 to disable
         self.output_checkpoint_prefix: str = properties.get('output_checkpoint_prefix', 'checkpoint_epoch_')  # prefix for the checkpoint files,
         self.partition: float = float(properties.get('partition', 0.8))  # 0.8 = 80% partition of the data for training and validation
+        self.seed: Optional[int] = int(properties.get('seed', '42')) if properties.get('seed', None) else None  # Random seed for reproducibility
         self.batch_size: int = int(properties.get('batch_size', 1))  # number of samples/frames per batch
         self.log_interval: int = int(properties.get('log_interval', 10))  # number of epochs interval to log the training progress
 
@@ -135,6 +137,13 @@ class TrainMDAE(BiobbObject):
         train_dataset = torch.utils.data.TensorDataset(train_tensor)
         validation_dataset = torch.utils.data.TensorDataset(validation_tensor)
         performance_dataset = torch.utils.data.TensorDataset(performance_tensor)
+
+        # Seed
+        if self.seed:
+            torch.manual_seed(self.seed)
+            np.random.seed(self.seed)
+            if torch.cuda.is_available():
+                torch.cuda.manual_seed_all(self.seed)
 
         self.train_dataloader: torch.utils.data.DataLoader = torch.utils.data.DataLoader(dataset=train_dataset,
                                                                                          batch_size=self.batch_size,
@@ -226,7 +235,7 @@ class TrainMDAE(BiobbObject):
         fu.log(f"  Train input file: {self.stage_io_dict['in']['input_train_npy_path']}", self.out_log)
         fu.log(f"    File size: {human_readable_file_size(self.stage_io_dict['in']['input_train_npy_path'])}", self.out_log)
         fu.log(f"  Number of atoms: {int(len(next(iter(self.train_dataloader))[0][0])/3)}", self.out_log)
-        fu.log(f"  Number of frames for training: {len(self.train_dataloader)}    Total number of frames: {int((len(self.train_dataloader)*self.train_dataloader.batch_size)/self.partition) if self.partition is not None else 'Unknown'}", self.out_log)  # type: ignore
+        fu.log(f"  Number of frames for training: {len(self.train_dataloader)*self.train_dataloader.batch_size} Total number of frames: {int((len(self.train_dataloader)*self.train_dataloader.batch_size)/self.partition) if self.partition is not None else 'Unknown'}", self.out_log)  # type: ignore
         fu.log(f"  Number of epochs: {self.num_epochs}", self.out_log)
         fu.log(f"  Partition: {self.partition}", self.out_log)
         fu.log(f"  Batch size: {self.batch_size}", self.out_log)
@@ -238,6 +247,7 @@ class TrainMDAE(BiobbObject):
         fu.log(f"  Latent dimensions: {self.latent_dimensions}", self.out_log)
         fu.log(f"  Loss function: {str(self.loss_function).split('(')[0]}", self.out_log)
         fu.log(f"  Optimizer: {str(self.optimizer).split('(')[0]}", self.out_log)
+        fu.log(f"  Seed: {self.seed}", self.out_log)
         fu.log(f"  Checkpoint interval: {self.checkpoint_interval}", self.out_log)
         fu.log(f"  Log interval: {self.log_interval}\n", self.out_log)
 
@@ -245,18 +255,15 @@ class TrainMDAE(BiobbObject):
         for epoch_index in range(self.num_epochs):
             loop_start_time: float = time.time()
 
-            # Training step
-            avg_train_loss: float = self.training_step(self.train_dataloader, self.optimizer, self.loss_function)
+            # Training & validation step
+            avg_train_loss, avg_validation_loss = self.training_step(self.train_dataloader, self.optimizer, self.loss_function)
             train_losses.append(avg_train_loss)
-
-            # Validation step
-            avg_validation_loss, _, _ = self.evaluate_model(self.validation_dataloader, self.loss_function)
             validation_losses.append(avg_validation_loss)
 
             # Logging
             if self.log_interval and (epoch_index % self.log_interval == 0 or epoch_index == self.num_epochs-1):
                 epoch_time: float = time.time() - loop_start_time
-                fu.log(f'{"Epoch":>4} {epoch_index+1}/{self.num_epochs} - Train Loss: {avg_train_loss:.3f}, Validation Loss: {avg_validation_loss:.3f}, LR: {scheduler.get_last_lr()}, Duration: {format_time(epoch_time)}, ETA: {format_time((self.num_epochs-(epoch_index+1))*epoch_time)}', self.out_log)
+                fu.log(f'{"Epoch":>4} {epoch_index+1}/{self.num_epochs}, Train Loss: {avg_train_loss:.3f}, Validation Loss: {avg_validation_loss:.3f}, LR: {scheduler.get_last_lr()[0]:.5f}, Duration: {format_time(epoch_time)}, ETA: {format_time((self.num_epochs-(epoch_index+1))*epoch_time)}', self.out_log)
                 loop_start_time = time.time()
 
             # Save checkpoint
@@ -278,9 +285,9 @@ class TrainMDAE(BiobbObject):
 
         return train_losses, validation_losses, best_model, best_model_epoch
 
-    def training_step(self, dataloader: torch.utils.data.DataLoader, optimizer: torch.optim.Optimizer, loss_function: torch.nn.modules.loss._Loss) -> float:
+    def training_step(self, dataloader: torch.utils.data.DataLoader, optimizer: torch.optim.Optimizer, loss_function: torch.nn.modules.loss._Loss) -> Tuple[float, float]:
         self.model.train()
-        losses: List[float] = []
+        train_losses: List[float] = []
         for data in dataloader:
             data = data[0].to(self.model.device)
             _, output = self.model(data)
@@ -288,9 +295,18 @@ class TrainMDAE(BiobbObject):
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
-            losses.append(loss.item())
+            train_losses.append(loss.item())
 
-        return float(np.mean(losses))
+        self.model.eval()
+        valid_losses: List[float] = []
+        with torch.no_grad():
+            for data in dataloader:
+                data = data[0].to(self.model.device)
+                _, output = self.model(data)
+                loss = loss_function(output, data)
+                valid_losses.append(loss.item())
+
+        return float(np.mean(train_losses)), float(torch.mean(torch.tensor(valid_losses)))
 
     def evaluate_model(self, dataloader: torch.utils.data.DataLoader, loss_function: torch.nn.modules.loss._Loss) -> Tuple[float, np.ndarray, np.ndarray]:
         return execute_model(self.model, dataloader, self.input_dimensions, self.latent_dimensions, loss_function)

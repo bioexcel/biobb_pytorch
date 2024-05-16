@@ -9,8 +9,11 @@ class TestTrainMdae:
     def teardown_class(self):
         fx.test_teardown(self)
 
-    def test_mdae(self):
+    def test_train_mdae(self):
         trainMDAE(properties=self.properties, **self.paths)  # type: ignore
         assert fx.not_empty(self.paths['output_model_pth_path'])  # type: ignore
         assert fx.not_empty(self.paths['output_train_data_npz_path'])  # type: ignore
         assert fx.not_empty(self.paths['output_performance_npz_path'])  # type: ignore
+        assert fx.equal(self.paths['output_model_pth_path'], self.paths['ref_output_model_pth_path'])   # type: ignore
+        assert fx.equal(self.paths['output_train_data_npz_path'], self.paths['ref_output_train_data_npz_path'])   # type: ignore
+        assert fx.equal(self.paths['output_performance_npz_path'], self.paths['ref_output_performance_npz_path'])   # type: ignore

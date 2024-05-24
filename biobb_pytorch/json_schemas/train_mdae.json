@@ -128,13 +128,13 @@
                     "wf_prop": false,
                     "description": "learning rate."
                 },
-                "self.lr_step_size": {
+                "lr_step_size": {
                     "type": "integer",
                     "default": 100,
                     "wf_prop": false,
                     "description": "Period of learning rate decay."
                 },
-                "self.gamma": {
+                "gamma": {
                     "type": "number",
                     "default": 0.1,
                     "wf_prop": false,
@@ -436,6 +436,12 @@
                             "description": null
                         }
                     ]
+                },
+                "seed": {
+                    "type": "integer",
+                    "default": null,
+                    "wf_prop": false,
+                    "description": "Random seed for reproducibility."
                 }
             }
         }

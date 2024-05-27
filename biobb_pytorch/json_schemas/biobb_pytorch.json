@@ -1,6 +1,6 @@
 {
     "_id": "biobb_pytorch",
-    "desc": "biobb_pytorch is the Biobb module collection to train and create ML & DL models using the popular PyTorch Python library.",
+    "desc": "biobb_pytorch is the Biobb module collection to train and create ML & DL models using the popular PyTorch Python library",
     "github": "https://github.com/bioexcel/biobb_pytorch",
     "readthedocs": "https://biobb-pytorch.readthedocs.io/en/latest/",
     "conda": "https://anaconda.org/bioconda/biobb_pytorch",

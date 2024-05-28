@@ -1,0 +1,18 @@
+{
+  "@context": "http://schema.org",
+  "@id": "https://github.com/bioexcel/biobb_pytorch",
+  "@type": "ItemList",
+  "name": "biobb_pytorch",
+  "itemListElement":[
+    {
+      "@type": "SoftwareApplication",
+      "description": "PyTorch 2: Faster Machine Learning Through Dynamic Python Bytecode Transformation and Graph Compilation",
+      "name": "PyTorch",
+      "url": "https://github.com/pytorch/pytorch",
+      "applicationCategory": "Computational Biology tool",
+      "citation": "https://dl.acm.org/doi/10.1145/3620665.3640366",
+      "license": "Other",
+      "softwareVersion": "2"
+    }
+  ]
+}

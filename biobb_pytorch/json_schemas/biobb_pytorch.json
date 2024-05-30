@@ -1,11 +1,11 @@
 {
     "_id": "biobb_pytorch",
-    "desc": "biobb_pytorch is the Biobb module collection to train and create ML & DL models using the popular PyTorch Python library.",
+    "desc": "biobb_pytorch is the Biobb module collection to train and create ML & DL models using the popular PyTorch Python library",
     "github": "https://github.com/bioexcel/biobb_pytorch",
     "readthedocs": "https://biobb-pytorch.readthedocs.io/en/latest/",
     "conda": "https://anaconda.org/bioconda/biobb_pytorch",
-    "docker": "https://quay.io/biocontainers/biobb_pytorch:4.2.0--pyhdfd78af_0",
-    "singularity": "https://depot.galaxyproject.org/singularity/biobb_pytorch:4.2.0--pyhdfd78af_0",
+    "docker": "https://quay.io/biocontainers/biobb_pytorch:4.2.0--pyhad2cae4_0",
+    "singularity": "https://depot.galaxyproject.org/singularity/biobb_pytorch:4.2.0--pyhad2cae4_0",
     "version": "4.2.0",
     "rest": false,
     "tools": [
@@ -14,7 +14,7 @@
             "tool": "PyTorch Autoencoder",
             "desc": "Train a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.",
             "exec": "train_mdae",
-            "docs": "https://biobb-pytorch.readthedocs.io/en/latest/pytorch.html#module-mdae.train_mdae",
+            "docs": "https://biobb-pytorch.readthedocs.io/en/latest/mdae.html#mdae.train_mdae.TrainMDAE",
             "rest": false
         },
         {
@@ -22,7 +22,7 @@
             "tool": "PyTorch Autoencoder",
             "desc": "Apply a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.",
             "exec": "apply_mdae",
-            "docs": "https://biobb-pytorch.readthedocs.io/en/latest/pytorch.html#module-mdae.apply_mdae",
+            "docs": "https://biobb-pytorch.readthedocs.io/en/latest/mdae.html#module-mdae.apply_mdae",
             "rest": false
         }
     ],

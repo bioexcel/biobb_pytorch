@@ -14,10 +14,10 @@ Command:
 train_mdae -h
 ```
     usage: train_mdae [-h] [-c CONFIG] --input_train_npy_path INPUT_TRAIN_NPY_PATH --output_model_pth_path OUTPUT_MODEL_PTH_PATH [--input_model_pth_path INPUT_MODEL_PTH_PATH] [--output_train_data_npz_path OUTPUT_TRAIN_DATA_NPZ_PATH] [--output_performance_npz_path OUTPUT_PERFORMANCE_NPZ_PATH] [--properties PROPERTIES]
-
+    
     Train a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.
-
-    options:
+    
+    optional arguments:
       -h, --help            show this help message and exit
       -c CONFIG, --config CONFIG
                             This file can be a YAML file, JSON file or JSON string
@@ -29,12 +29,12 @@ train_mdae -h
                             Path to the output performance file. Accepted formats: npz.
       --properties PROPERTIES
                             Additional properties for the MDAE object.
-
+    
     required arguments:
       --input_train_npy_path INPUT_TRAIN_NPY_PATH
                             Path to the input train data file. Accepted formats: npy.
       --output_model_pth_path OUTPUT_MODEL_PTH_PATH
-                        Path to the output model file. Accepted formats: pth.
+                            Path to the output model file. Accepted formats: pth.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
@@ -99,10 +99,10 @@ Command:
 apply_mdae -h
 ```
     usage: apply_mdae [-h] [-c CONFIG] --input_data_npy_path INPUT_DATA_NPY_PATH --input_model_pth_path INPUT_MODEL_PTH_PATH --output_reconstructed_data_npy_path OUTPUT_RECONSTRUCTED_DATA_NPY_PATH [--output_latent_space_npy_path OUTPUT_LATENT_SPACE_NPY_PATH] [--properties PROPERTIES]
-
+    
     Apply a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.
-
-    options:
+    
+    optional arguments:
       -h, --help            show this help message and exit
       -c CONFIG, --config CONFIG
                             This file can be a YAML file, JSON file or JSON string
@@ -110,7 +110,7 @@ apply_mdae -h
                             Path to the reduced dimensionality file.
       --properties PROPERTIES
                             Additional properties for the MDAE object.
-
+    
     required arguments:
       --input_data_npy_path INPUT_DATA_NPY_PATH
                             Path to the input data file.

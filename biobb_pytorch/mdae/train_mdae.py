@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 """Module containing the TrainMDAE class and the command line interface."""
 import torch
 import numpy as np

@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+
+"""Module containing the ApplyMDAE class and the command line interface."""
 import torch
 import numpy as np
 import argparse

@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## What's new in version [4.2.1](https://github.com/bioexcel/biobb_pytorch/releases/tag/v4.2.1)?
+
+### Changes
+
+* [CI/CD] Updating checkout GA action to v4
+* [TESTS] Avoiding type hint checking in test files
+* [CI/CD] Add sync workflow for CASTIEL project
+* [DOCS] Updating command line documentation
+* [FIX] Adding shebang to the file first line
+* [FIX] Adding mypy_cache to gitignore
+* [DOCS] Update Bioschemas
+
 ## What's new in version [4.2.0](https://github.com/bioexcel/biobb_pytorch/releases/tag/v4.2.0)?
 
 ### Changes

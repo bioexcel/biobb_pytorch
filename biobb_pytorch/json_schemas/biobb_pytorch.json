@@ -4,9 +4,9 @@
     "github": "https://github.com/bioexcel/biobb_pytorch",
     "readthedocs": "https://biobb-pytorch.readthedocs.io/en/latest/",
     "conda": "https://anaconda.org/bioconda/biobb_pytorch",
-    "docker": "https://quay.io/biocontainers/biobb_pytorch:4.2.0--pyhad2cae4_0",
-    "singularity": "https://depot.galaxyproject.org/singularity/biobb_pytorch:4.2.0--pyhad2cae4_0",
-    "version": "4.2.0",
+    "docker": "https://quay.io/biocontainers/biobb_pytorch:4.2.1--pyhad2cae4_0",
+    "singularity": "https://depot.galaxyproject.org/singularity/biobb_pytorch:4.2.1--pyhad2cae4_0",
+    "version": "4.2.1",
     "rest": false,
     "tools": [
         {

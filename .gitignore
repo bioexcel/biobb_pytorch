@@ -122,5 +122,8 @@ traj_comp.xtc
 # VS Code
 .vscode
 
+# MyPy
+.mypy_cache/
+
 # Jupyter Notebook
 AE.ipynb

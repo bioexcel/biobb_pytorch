@@ -7,7 +7,6 @@ import numpy as np
 import argparse
 from typing import Optional
 import time
-from typing import Optional
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.configuration import settings
 from biobb_common.tools import file_utils as fu

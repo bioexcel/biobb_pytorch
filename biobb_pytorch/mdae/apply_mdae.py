@@ -2,10 +2,12 @@
 
 """Module containing the ApplyMDAE class and the command line interface."""
 import torch
+import torch.utils.data
 import numpy as np
 import argparse
+from typing import Optional
 import time
-from typing import Optional, Tuple, Dict
+from typing import Optional
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.configuration import settings
 from biobb_common.tools import file_utils as fu
@@ -60,7 +62,7 @@ class ApplyMDAE(BiobbObject):
                  input_model_pth_path: str,
                  output_reconstructed_data_npy_path: str,
                  output_latent_space_npy_path: Optional[str] = None,
-                 properties: Optional[Dict] = None, **kwargs) -> None:
+                 properties: Optional[dict] = None, **kwargs) -> None:
         properties = properties or {}
 
         # Call parent class constructor
@@ -131,7 +133,7 @@ class ApplyMDAE(BiobbObject):
         self.check_arguments(output_files_created=True, raise_exception=False)
         return 0
 
-    def apply_model(self, dataloader: torch.utils.data.DataLoader) -> Tuple[np.ndarray, np.ndarray]:
+    def apply_model(self, dataloader: torch.utils.data.DataLoader) -> tuple[np.ndarray, np.ndarray]:
         self.model.to(self.model.device)
         start_time: float = time.time()
         fu.log("Applying model:", self.out_log)
@@ -153,7 +155,7 @@ class ApplyMDAE(BiobbObject):
 
 def applyMDAE(input_data_npy_path: str, input_model_pth_path: str,
               output_reconstructed_data_npy_path: str, output_latent_space_npy_path: Optional[str] = None,
-              properties: Optional[Dict] = None, **kwargs) -> int:
+              properties: Optional[dict] = None, **kwargs) -> int:
     """Execute the :class:`ApplyMDAE <mdae.apply_mdae.ApplyMDAE>` class and
     execute the :meth:`launch() <mdae.apply_mdae.ApplyMDAE.launch>` method."""
 

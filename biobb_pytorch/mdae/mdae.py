@@ -1,6 +1,5 @@
 """Module containing the MDAutoEncoder class and the command line interface."""
 import torch
-from typing import List
 
 
 class MDAE(torch.nn.Module):
@@ -16,7 +15,7 @@ class MDAE(torch.nn.Module):
         self.leaky_relu: float = leaky_relu
 
         # Encoder
-        encoder: List = []
+        encoder: list = []
         nunits: int = self.input_dimensions
         for _ in range(self.num_layers-1):
             encoder.append(torch.nn.Linear(nunits, nunits - self.delta))
@@ -32,7 +31,7 @@ class MDAE(torch.nn.Module):
             torch.nn.Sigmoid())
 
         # Decoder
-        decoder: List = []
+        decoder: list = []
         nunits = self.latent_dimensions
         for _ in range(self.num_layers-1):
             decoder.append(torch.nn.Linear(nunits, nunits + self.delta))

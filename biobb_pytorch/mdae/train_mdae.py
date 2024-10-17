@@ -2,10 +2,14 @@
 
 """Module containing the TrainMDAE class and the command line interface."""
 import torch
+import torch.utils.data
 import numpy as np
 import time
 import argparse
-from typing import Optional, List, Tuple, Dict
+from typing import Optional
+from typing import Optional
+from torch.optim.optimizer import Optimizer
+from torch.optim.adam import Adam
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.configuration import settings
 from biobb_common.tools import file_utils as fu
@@ -87,7 +91,7 @@ class TrainMDAE(BiobbObject):
                  input_model_pth_path: Optional[str] = None,
                  output_train_data_npz_path: Optional[str] = None,  # npz of  train_losses, valid_losses
                  output_performance_npz_path: Optional[str] = None,  # npz of  evaluate_losses, latent_space, reconstructed_data
-                 properties: Optional[Dict] = None, **kwargs) -> None:
+                 properties: Optional[dict] = None, **kwargs) -> None:
         properties = properties or {}
 
         # Call parent class constructor
@@ -177,12 +181,11 @@ class TrainMDAE(BiobbObject):
 
         optimizer_str: str = properties.get('optimizer', '')
         try:
-            self.optimizer: torch.optim.Optimizer = get_optimizer_function(optimizer_str)(self.model.parameters(), lr=self.lr)
+            self.optimizer = get_optimizer_function(optimizer_str)(self.model.parameters(), lr=self.lr)
             fu.log(f'Using optimizer: {self.optimizer}', self.out_log)
         except ValueError:
             fu.log(f'Invalid optimizer: {optimizer_str}', self.out_log)
-            fu.log('Using default optimizer: Adam', self.out_log)
-            self.optimizer = torch.optim.Adam(self.model.parameters(), lr=self.lr)
+            self.optimizer = Adam(self.model.parameters(), lr=self.lr)
 
     @launchlogger
     def launch(self) -> int:
@@ -225,10 +228,10 @@ class TrainMDAE(BiobbObject):
         self.check_arguments(output_files_created=True, raise_exception=False)
         return 0
 
-    def train_model(self) -> Tuple[List[float], List[float], Dict, int]:
+    def train_model(self) -> tuple[list[float], list[float], dict, int]:
         self.model.to(self.model.device)
-        train_losses: List[float] = []
-        validation_losses: List[float] = []
+        train_losses: list[float] = []
+        validation_losses: list[float] = []
         best_valid_loss: float = float('inf')  # Initialize best valid loss to infinity
 
         start_time: float = time.time()
@@ -280,16 +283,16 @@ class TrainMDAE(BiobbObject):
             # Save best model
             if avg_validation_loss < best_valid_loss:
                 best_valid_loss = avg_validation_loss
-                best_model: Dict = self.model.state_dict()
+                best_model: dict = self.model.state_dict()
                 best_model_epoch: int = epoch_index
 
         fu.log(f"End Training, total time: {format_time((time.time() - start_time))}", self.out_log)
 
         return train_losses, validation_losses, best_model, best_model_epoch
 
-    def training_step(self, dataloader: torch.utils.data.DataLoader, optimizer: torch.optim.Optimizer, loss_function: torch.nn.modules.loss._Loss) -> Tuple[float, float]:
+    def training_step(self, dataloader: torch.utils.data.DataLoader, optimizer: Optimizer, loss_function: torch.nn.modules.loss._Loss) -> tuple[float, float]:
         self.model.train()
-        train_losses: List[float] = []
+        train_losses: list[float] = []
         for data in dataloader:
             data = data[0].to(self.model.device)
             _, output = self.model(data)
@@ -300,7 +303,7 @@ class TrainMDAE(BiobbObject):
             train_losses.append(loss.item())
 
         self.model.eval()
-        valid_losses: List[float] = []
+        valid_losses: list[float] = []
         with torch.no_grad():
             for data in dataloader:
                 data = data[0].to(self.model.device)
@@ -310,13 +313,13 @@ class TrainMDAE(BiobbObject):
 
         return float(np.mean(train_losses)), float(torch.mean(torch.tensor(valid_losses)))
 
-    def evaluate_model(self, dataloader: torch.utils.data.DataLoader, loss_function: torch.nn.modules.loss._Loss) -> Tuple[float, np.ndarray, np.ndarray]:
+    def evaluate_model(self, dataloader: torch.utils.data.DataLoader, loss_function: torch.nn.modules.loss._Loss) -> tuple[float, np.ndarray, np.ndarray]:
         return execute_model(self.model, dataloader, self.input_dimensions, self.latent_dimensions, loss_function)
 
 
 def trainMDAE(input_train_npy_path: str, output_model_pth_path: str, input_model_pth_path: Optional[str] = None,
               output_train_data_npz_path: Optional[str] = None, output_performance_npz_path: Optional[str] = None,
-              properties: Optional[Dict] = None, **kwargs) -> int:
+              properties: Optional[dict] = None, **kwargs) -> int:
     """Execute the :class:`TrainMDAE <mdae.train_mdae.TrainMDAE>` class and
     execute the :meth:`launch() <mdae.train_mdae.TrainMDAE.launch>` method."""
 

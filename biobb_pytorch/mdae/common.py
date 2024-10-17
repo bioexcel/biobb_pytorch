@@ -2,7 +2,7 @@
 import numpy as np
 import torch
 from pathlib import Path
-from typing import Callable, List, Optional, Tuple, Union
+from typing import Callable, Optional, Union
 
 
 def ndarray_normalization(ndarray: np.ndarray, max_values: np.ndarray, min_values: np.ndarray) -> np.ndarray:
@@ -69,11 +69,11 @@ def get_optimizer_function(optimizer_function: str) -> Callable:
         raise ValueError(f'Invalid optimizer function: {optimizer_function}')
 
 
-def execute_model(model: torch.nn.Module, dataloader: torch.utils.data.DataLoader, input_dimensions: int, latent_dimensions: int, loss_function: Optional[torch.nn.modules.loss._Loss] = None) -> Tuple[float, np.ndarray, np.ndarray]:
+def execute_model(model: torch.nn.Module, dataloader: torch.utils.data.DataLoader, input_dimensions: int, latent_dimensions: int, loss_function: Optional[torch.nn.modules.loss._Loss] = None) -> tuple[float, np.ndarray, np.ndarray]:
     model.eval()
-    losses: List[float] = []
-    z_list: List[float] = []
-    x_hat_list: List[float] = []
+    losses: list[float] = []
+    z_list: list[float] = []
+    x_hat_list: list[float] = []
     with torch.no_grad():
         for data in dataloader:
             data = data[0].to(model.device)

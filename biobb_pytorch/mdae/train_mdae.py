@@ -7,7 +7,6 @@ import numpy as np
 import time
 import argparse
 from typing import Optional
-from typing import Optional
 from torch.optim.optimizer import Optimizer
 from torch.optim.adam import Adam
 from biobb_common.generic.biobb_object import BiobbObject

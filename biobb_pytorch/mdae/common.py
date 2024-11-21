@@ -1,11 +1,15 @@
-""" Common functions for package biobb_pytorch.models """
-import numpy as np
-import torch
+"""Common functions for package biobb_pytorch.models"""
+
 from pathlib import Path
 from typing import Callable, Optional, Union
 
+import numpy as np
+import torch
 
-def ndarray_normalization(ndarray: np.ndarray, max_values: np.ndarray, min_values: np.ndarray) -> np.ndarray:
+
+def ndarray_normalization(
+    ndarray: np.ndarray, max_values: np.ndarray, min_values: np.ndarray
+) -> np.ndarray:
     """
     Normalize an ndarray along a specified axis.
 
@@ -20,7 +24,9 @@ def ndarray_normalization(ndarray: np.ndarray, max_values: np.ndarray, min_value
     return (ndarray - min_values) / (max_values - min_values)
 
 
-def ndarray_denormalization(normalized_ndarray: np.ndarray, max_values: np.ndarray, min_values: np.ndarray) -> np.ndarray:
+def ndarray_denormalization(
+    normalized_ndarray: np.ndarray, max_values: np.ndarray, min_values: np.ndarray
+) -> np.ndarray:
     """
     Denormalizes a normalized ndarray using the given max and min values.
 
@@ -45,11 +51,13 @@ def get_loss_function(loss_function: str) -> Callable:
     Returns:
         Callable: The loss function.
     """
-    loss_function_dict = dict(filter(lambda pair: pair[0].endswith('Loss'), vars(torch.nn).items()))
+    loss_function_dict = dict(
+        filter(lambda pair: pair[0].endswith("Loss"), vars(torch.nn).items())
+    )
     try:
         return loss_function_dict[loss_function]
     except KeyError:
-        raise ValueError(f'Invalid loss function: {loss_function}')
+        raise ValueError(f"Invalid loss function: {loss_function}")
 
 
 def get_optimizer_function(optimizer_function: str) -> Callable:
@@ -62,14 +70,22 @@ def get_optimizer_function(optimizer_function: str) -> Callable:
     Returns:
         Callable: The optimizer function.
     """
-    optimizer_function_dict = dict(filter(lambda pair: not pair[0].startswith('_'), vars(torch.optim).items()))
+    optimizer_function_dict = dict(
+        filter(lambda pair: not pair[0].startswith("_"), vars(torch.optim).items())
+    )
     try:
         return optimizer_function_dict[optimizer_function]
     except KeyError:
-        raise ValueError(f'Invalid optimizer function: {optimizer_function}')
+        raise ValueError(f"Invalid optimizer function: {optimizer_function}")
 
 
-def execute_model(model: torch.nn.Module, dataloader: torch.utils.data.DataLoader, input_dimensions: int, latent_dimensions: int, loss_function: Optional[torch.nn.modules.loss._Loss] = None) -> tuple[float, np.ndarray, np.ndarray]:
+def execute_model(
+    model: torch.nn.Module,
+    dataloader: torch.utils.data.DataLoader,
+    input_dimensions: int,
+    latent_dimensions: int,
+    loss_function: Optional[torch.nn.modules.loss._Loss] = None,
+) -> tuple[float, np.ndarray, np.ndarray]:
     model.eval()
     losses: list[float] = []
     z_list: list[float] = []
@@ -84,8 +100,12 @@ def execute_model(model: torch.nn.Module, dataloader: torch.utils.data.DataLoade
             z_list.append(latent.cpu().numpy())
             x_hat_list.append(output.cpu().numpy())
     loss = float(np.mean(losses)) if losses else -1.0
-    latent_space: np.ndarray = np.reshape(np.concatenate(z_list, axis=0), (-1, latent_dimensions))
-    reconstructed_data: np.ndarray = np.reshape(np.concatenate(x_hat_list, axis=0), (-1, input_dimensions))
+    latent_space: np.ndarray = np.reshape(
+        np.concatenate(z_list, axis=0), (-1, latent_dimensions)
+    )
+    reconstructed_data: np.ndarray = np.reshape(
+        np.concatenate(x_hat_list, axis=0), (-1, input_dimensions)
+    )
     return loss, latent_space, reconstructed_data
 
 
@@ -105,7 +125,7 @@ def human_readable_file_size(file_path: Union[str, Path]) -> str:
     """Get the size of a file and return it in a human-readable format."""
     file_path = Path(file_path)  # Ensure file_path is a Path object
     size_in_bytes: float = file_path.stat().st_size
-    units = ['Bytes', 'KB', 'MB', 'GB', 'PB']
+    units = ["Bytes", "KB", "MB", "GB", "PB"]
     for unit in units:
         if size_in_bytes < 1024:
             return f"{size_in_bytes:.2f} {unit}"

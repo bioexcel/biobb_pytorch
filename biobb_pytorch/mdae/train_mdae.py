@@ -416,8 +416,7 @@ class TrainMDAE(BiobbObject):
 
             # Logging
             if self.log_interval and (
-                epoch_index % self.log_interval == 0
-                or epoch_index == self.num_epochs - 1
+                epoch_index % self.log_interval == 0 or epoch_index == self.num_epochs - 1
             ):
                 epoch_time: float = time.time() - loop_start_time
                 fu.log(
@@ -428,8 +427,7 @@ class TrainMDAE(BiobbObject):
 
             # Save checkpoint
             if self.checkpoint_interval and (
-                epoch_index % self.checkpoint_interval == 0
-                or epoch_index == self.num_epochs - 1
+                epoch_index % self.checkpoint_interval == 0 or epoch_index == self.num_epochs - 1
             ):
                 checkpoint_path = str(
                     Path(self.stage_io_dict.get("unique_dir", "")).joinpath(

@@ -266,6 +266,8 @@ def applyMDAE(
         **kwargs,
     ).launch()
 
+    applyMDAE.__doc__ = ApplyMDAE.__doc__
+
 
 def main():
     """Command line execution of this building block. Please check the command line documentation."""

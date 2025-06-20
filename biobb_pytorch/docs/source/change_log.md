@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## What's new in version [5.1.0](https://github.com/bioexcel/biobb_pytorch/releases/tag/v5.1.0)?
+
+### Changes
+
+* [UPDATE]: Update biobb_common to 5.1.0
+
 ## What's new in version [5.0.0](https://github.com/bioexcel/biobb_pytorch/releases/tag/v5.0.0)?
 
 ### Changes

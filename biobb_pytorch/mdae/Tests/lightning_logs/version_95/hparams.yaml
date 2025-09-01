@@ -1,0 +1,24 @@
+decoder_layers:
+- 16
+- 10
+encoder_layers:
+- 804
+- 16
+n_cvs: 2
+options:
+  UpdateLabel: true
+  decoder:
+    activation: relu
+    last_layer_activation: false
+  encoder:
+    activation: relu
+    last_layer_activation: true
+  k: 10
+  optimizer:
+    lr: 0.001
+    weight_decay: 1.0e-05
+  patience: 4
+  refinements: 2
+  threshold: 0.01
+postprocessing: null
+preprocessing: null

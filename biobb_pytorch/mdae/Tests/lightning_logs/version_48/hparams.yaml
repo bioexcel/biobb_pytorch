@@ -1,0 +1,20 @@
+decoder_layers:
+- 16
+- 16
+- 5244
+encoder_layers:
+- 5244
+- 16
+- 16
+n_cvs: 2
+options:
+  decoder:
+    activation: relu
+    last_layer_activation: sigmoid
+  encoder:
+    activation: relu
+    last_layer_activation: relu
+  optimizer:
+    lr: 0.0001
+postprocessing: null
+preprocessing: null

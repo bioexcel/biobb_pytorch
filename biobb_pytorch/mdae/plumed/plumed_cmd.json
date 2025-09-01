@@ -1,0 +1,63 @@
+{
+  "METAD": {
+    "description": "Used to perform metadynamics on one or more collective variables.",
+    "compulsory": ["ARG", "PACE", "HEIGHT", "SIGMA"],
+    "optional": ["BIASFACTOR", "TEMP", "FILE", "GRID_MIN", "GRID_MAX", "GRID_BIN", "CALC_RCT", "RCT_USTRIDE", "ADAPTIVE", "WALKERS_ID", "WALKERS_N", "WALKERS_DIR", "WALKERS_RSTRIDE"]
+  },
+  "RESTRAINT": {
+    "description": "Adds harmonic and/or linear restraints on one or more variables.",
+    "compulsory": ["ARG"],
+    "optional": ["AT", "KAPPA", "SLOPE", "OFFSET"]
+  },
+  "UPPER_WALLS": {
+    "description": "Defines a wall for the value of one or more collective variables, limiting values larger than a threshold.",
+    "compulsory": ["ARG", "AT", "KAPPA"],
+    "optional": ["OFFSET", "FORCE2", "EPS", "EXP"]
+  },
+  "LOWER_WALLS": {
+    "description": "Defines a wall for the value of one or more collective variables, limiting values lower than a threshold.",
+    "compulsory": ["ARG", "AT", "KAPPA"],
+    "optional": ["OFFSET", "FORCE2", "EPS", "EXP"]
+  },
+  "MOVINGRESTRAINT": {
+    "description": "Adds moving restraints on one or more variables.",
+    "compulsory": ["ARG"],
+    "optional": ["STEP0", "AT0", "KAPPA0", "STEP1", "AT1", "KAPPA1"]
+  },
+  "PBMETAD": {
+    "description": "Used to perform Parallel Bias metadynamics.",
+    "compulsory": ["ARG", "PACE", "HEIGHT", "SIGMA"],
+    "optional": ["BIASFACTOR", "TEMP", "FILE", "GRID_MIN", "GRID_MAX", "GRID_BIN"]
+  },
+  "ABMD": {
+    "description": "Adds a ratchet-and-pawl like restraint on one or more variables.",
+    "compulsory": ["ARG", "TO"],
+    "optional": ["KAPPA"]
+  },
+  "EXTERNAL": {
+    "description": "Calculates the component of the managed force in the direction of an external vector.",
+    "compulsory": ["ARG", "ATOM", "FILE"],
+    "optional": []
+  },
+  "OPES_METAD": {
+    "description": "On-the-fly probability enhanced sampling with metadynamics-like target distribution.",
+    "compulsory": ["ARG", "PACE", "SIGMA", "BARRIER"],
+    "optional": ["BIASFACTOR", "TEMP", "FILE", "ADAPTIVE", "WALKERS_MPI", "NLIST", "NLIST_PARAMETER", "SIGMA_MIN", "NO_ZED", "CALC_RCT", "RCT_USTRIDE", "STATE_RFILE", "STATE_WFILE", "STATE_WSTRIDE"]
+  },
+  "OPES_EXPANDED": {
+    "description": "On-the-fly probability enhanced sampling for expanded ensembles.",
+    "compulsory": ["ARG", "PACE"],
+    "optional": ["FILE", "EPSILON", "KERNEL_CUTOFF", "COMPRESSION_THRESHOLD", "FIXED_ALPHA", "ALPHA_MIN", "ADAPTIVE_ALPHA", "FAST_FILLING", "NO_ZED", "STATE_RFILE", "STATE_WSTRIDE", "STATE_WFILE", "NLIST", "NLIST_PARAMETER", "SAFE_NLIST", "WALKERS_MPI", "MPI_AVERAGE", "OBSERVATION_STEPS", "BIAS_SCALING", "SCALING_RFILE"]
+  },
+  "ECV_UMBRELLAS_LINE": {
+    "description": "Target a multiumbrella ensemble, by combining systems each with a parabolic bias potential at a different location.",
+    "compulsory": ["ARG", "CV_MIN", "CV_MAX", "SIGMA"],
+    "optional": ["SPACING", "TEMP", "BARRIER", "ADD_P0", "LOWER_HALF_ONLY"]
+  },
+  "ECV_MULTITHERMAL": {
+    "description": "Expand a simulation to sample multiple temperatures.",
+    "compulsory": ["ARG", "TEMP_MIN", "TEMP_MAX"],
+    "optional": ["TEMP", "TEMP_STEPS", "TEMP_SET_ALL", "NO_GEOM_SPACING", "BARRIER", "ADD_P0", "LOWER_HALF_ONLY", "DIMENSIONLESS"]
+ }
+
+}

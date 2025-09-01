@@ -1,0 +1,19 @@
+decoder_layers:
+- 32
+- 64
+- 10
+encoder_layers:
+- 2
+- 64
+- 32
+n_cvs: 10
+options:
+  k: 10
+  optimizer:
+    lr: 0.001
+  patience: 5
+  refinements: 3
+  threshold: 0.001
+  update_labels: true
+postprocessing: null
+preprocessing: null

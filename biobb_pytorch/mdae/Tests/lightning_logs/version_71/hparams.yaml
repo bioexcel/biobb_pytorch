@@ -1,0 +1,16 @@
+decoder_layers:
+  px_dims:
+  - 128
+  pz_dims:
+  - 16
+  - 16
+encoder_layers:
+  qy_dims:
+  - 804
+  - 32
+  qz_dims:
+  - 16
+  - 16
+n_cvs: 3
+postprocessing: null
+preprocessing: null

@@ -1,0 +1,11 @@
+decoder_layers:
+- 16
+- 16
+- 5244
+encoder_layers:
+- 5244
+- 16
+- 16
+n_cvs: 2
+postprocessing: null
+preprocessing: null

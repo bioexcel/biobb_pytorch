@@ -1,0 +1,9 @@
+decoder_layers:
+- 32
+- 804
+encoder_layers:
+- 804
+- 32
+n_cvs: 3
+postprocessing: null
+preprocessing: null

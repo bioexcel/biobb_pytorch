@@ -1,0 +1,38 @@
+{
+  "@context": "http://schema.org",
+  "@id": "https://github.com/bioexcel/biobb_pytorch",
+  "@type": "ItemList",
+  "name": "biobb_pytorch",
+  "itemListElement":[
+    {
+      "@type": "SoftwareApplication",
+      "description": "PyTorch 2: Faster Machine Learning Through Dynamic Python Bytecode Transformation and Graph Compilation",
+      "name": "PyTorch",
+      "url": "https://github.com/pytorch/pytorch",
+      "applicationCategory": "Computational Biology tool",
+      "citation": "https://dl.acm.org/doi/10.1145/3620665.3640366",
+      "license": "Other",
+      "softwareVersion": "2"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "description": "lightning: The lightweight PyTorch wrapper for high-performance AI research. Scale your models, not the boilerplate.",
+      "name": "PyTorch Lightning",
+      "url": "https://www.pytorchlightning.ai",
+      "applicationCategory": "Computational Biology tool",
+      "citation": "10.5281/zenodo.3828935",
+      "license": "Apache-2.0",
+      "softwareVersion": "1.4"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "description": "A unified framework for machine learning collective variables for enhanced sampling simulations: mlcolvar.",
+      "name": "mlcolvar",
+      "url": "https://github.com/luigibonati/mlcolvar",
+      "applicationCategory": "Computational Biology tool",
+      "citation": "10.1063/5.0156343",
+      "license": "MIT",
+      "softwareVersion": "1.2"
+    }
+  ]
+}

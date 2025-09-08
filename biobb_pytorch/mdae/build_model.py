@@ -286,13 +286,13 @@ class BuildModel(BiobbObject):
         fu.log("Model:", self.out_log)
         fu.log("------", self.out_log)
 
-        for line in str(self.model).splitlines():
+        for line in str(self.model).splitlines():   
            fu.log(line, self.out_log)
         fu.log("", self.out_log)
 
         if self.output_model_pth_path:
             fu.log(f"Model saved in .pth format in "
-                   f"{os.path.abspath(self.io_dict["out"]["output_model_pth_path"])}", 
+                   f'{os.path.abspath(self.io_dict["out"]["output_model_pth_path"])}', 
                    self.out_log,
                    )
             fu.log(f'File size: '

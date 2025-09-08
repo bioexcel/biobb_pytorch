@@ -7,15 +7,17 @@ from mlcolvar.core.transform.utils import Statistics
 class Featurizer:
     """
     A class to extract geometric features (distances, angles, dihedrals) from MD trajectories using MDTraj.
-
-    Physics behind the features:
-      - Distance between atoms i and j: r_ij = |r_i - r_j| = sqrt((x_i-x_j)^2 + (y_i-y_j)^2 + (z_i-z_j)^2)
-      - Angle between atoms i-j-k: θ = arccos((r_ji · r_jk) / (|r_ji| |r_jk|))
-      - Dihedral for atoms i-j-k-l: φ = atan2(( (r_ji · (r_jk × r_kl)) * |r_jk| ), ((r_ji × r_jk) · (r_jk × r_kl)))
-
-    Supports both tuple-based and dict-based feature definitions:
-      - Tuple: e.g. ('name CA', 'name CB') or (0, 5)
-      - Dict: e.g. {57: 'CA', 58: 'CA'} for distances
+    Supports selections by atom indices or MDTraj selection strings.
+    Parameters:
+    -------------
+    trajectory_file : str
+        Path to the trajectory file (e.g., .dcd, .xtc).
+    topology_file : str
+        Path to the topology file (e.g., .pdb, .gro).
+    input_labels_npy_path : str, optional
+        Path to a .npy file containing labels for each frame.
+    input_weights_npy_path : str, optional
+        Path to a .npy file containing weights for each frame.
     """
 
     def __init__(self, trajectory_file, topology_file, input_labels_npy_path=None, input_weights_npy_path=None):

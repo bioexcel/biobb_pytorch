@@ -244,19 +244,3 @@ class MDTopologySelector:
         
         return self.topology_idx
 
-    
-# Example usage:
-# top = md.load("/home/pzanders/Documents/Simulations/GodMD/domini/1NE4.pdb")
-# topology = MDTopologySelector(top)
-
-# # Get all bonded pairs of CA atoms
-# bonded_pairs = topology.get_atom_pairs("name CA", bonded=True)
-# print("Bonded pairs of CA atoms:", bonded_pairs)
-
-# # Get all triplets of CA atoms
-# bonded_triplets = topology.get_triplets("backbone")
-# print("Bonded triplets of CA atoms:", bonded_triplets)
-
-# # Get all quadruplets of CA atoms
-# bonded_quads = topology.get_quads("backbone")
-# print("Bonded quadruplets of backbone atoms:", bonded_quads)

@@ -176,7 +176,8 @@ class TrainModel(BiobbObject):
         return lightning.Trainer(**train_params)
 
     def load_model(self):
-        return torch.load(self.io_dict["in"]["input_model_pth_path"])
+        return torch.load(self.io_dict["in"]["input_model_pth_path"], 
+                          weights_only=False)
 
     def load_dataset(self):
         dataset = torch.load(self.io_dict["in"]["input_dataset_pt_path"])

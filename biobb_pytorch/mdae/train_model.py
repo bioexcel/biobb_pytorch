@@ -180,7 +180,8 @@ class TrainModel(BiobbObject):
                           weights_only=False)
 
     def load_dataset(self):
-        dataset = torch.load(self.io_dict["in"]["input_dataset_pt_path"])
+        dataset = torch.load(self.io_dict["in"]["input_dataset_pt_path"], 
+                             weights_only=False)
         return DictDataset(dataset)
 
     def create_datamodule(self, dataset):

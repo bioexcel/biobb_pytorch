@@ -5,3 +5,5 @@ log*.*
 !logo.png
 .ipynb_checkpoints/
 biobb_pytorch/mdae/notebooks
+biobb_pytorch/mdae/notebooks/*
+

@@ -1,0 +1,7 @@
+guidelines.md
+.ipynb_checkpoints
+.DS_Store
+log*.*
+!logo.png
+.ipynb_checkpoints/
+biobb_pytorch/mdae/notebooks

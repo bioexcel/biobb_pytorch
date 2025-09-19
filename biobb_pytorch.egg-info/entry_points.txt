@@ -1,5 +1,0 @@
-[console_scripts]
-build_model = biobb_pytorch.mdae.build_model:main
-evaluate_model = biobb_pytorch.mdae.evaluate_model:main
-mdfeaturizer = biobb_pytorch.mdae.mdfeaturizer:main
-train_model = biobb_pytorch.mdae.train_model:main

@@ -1,4 +1,0 @@
-biobb_common==5.0.0
-torch
-lightning
-mlcolvar

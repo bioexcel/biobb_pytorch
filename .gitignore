@@ -1,9 +1,31 @@
+# Project-specific ignore patterns
 guidelines.md
+log*.*
+!logo.png
+
+# Jupyter and data files
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+biobb_pytorch/mdae/notebooks/
+biobb_pytorch/mdae/notebooks/*
+
+# Large data files
+*.pt
+*.pth
+*.ptc
+*.xtc
+*.dcd
+*.npy
+*.npz
+
+# System files
+.DS_Store
+.ipynb_checkpointses.md
 .ipynb_checkpoints
 .DS_Store
 log*.*
 !logo.png
 .ipynb_checkpoints/
-biobb_pytorch/mdae/notebooks
-biobb_pytorch/mdae/notebooks/*
+./biobb_pytorch/mdae/notebooks
+./biobb_pytorch/mdae/notebooks/*
 

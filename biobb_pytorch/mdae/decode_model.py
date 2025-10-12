@@ -99,7 +99,8 @@ class EvaluateDecoder(BiobbObject):
         self.check_arguments()
 
     def load_model(self):
-        return torch.load(self.io_dict["in"]["input_model_pth_path"])
+        return torch.load(self.io_dict["in"]["input_model_pth_path"],
+                          weights_only=False)
 
     def load_dataset(self):
         dataset = torch.tensor(np.load(self.io_dict["in"]["input_dataset_npy_path"]))

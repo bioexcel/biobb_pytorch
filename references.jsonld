@@ -33,6 +33,16 @@
       "citation": "10.1063/5.0156343",
       "license": "MIT",
       "softwareVersion": "1.2"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "description": "MDTraj: A Modern Open Library for the Analysis of Molecular Dynamics Trajectories",
+      "name": "MDTraj",
+      "url": "https://mdtraj.org",
+      "applicationCategory": "Computational Biology tool",
+      "citation": "10.1016/j.bpj.2015.08.015",
+      "license": "Other",
+      "softwareVersion": "1.9.5"
     }
   ]
 }

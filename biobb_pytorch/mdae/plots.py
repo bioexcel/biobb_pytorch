@@ -1,9 +1,9 @@
-import torch
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.markers import MarkerStyle
+from re import S
 import os
-import mdtraj as md
+from typing import Union, List
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.markers import MarkerStyle
 
 def plot_loss(output_train_data_npz_path: str) -> None:
     """
@@ -52,297 +52,158 @@ def plot_loss(output_train_data_npz_path: str) -> None:
     plt.title("Training/Validation")
     plt.show()
 
-def _numpy_rmsf_by_atom(traj: np.ndarray) -> np.ndarray:
-    """Compute RMSF by atom from a trajectory numpy array."""
-    mean_structure = np.mean(traj, axis=0)
-    diff = traj - mean_structure
-    squared_diff = np.square(diff)
-    mean_squared_diff = np.mean(squared_diff, axis=0)
-    rmsf = np.sqrt(np.sum(mean_squared_diff, axis=1))
-    return rmsf
-
-
-def plot_rmsf_difference(reference_traj_npy_file, mutated_reconstructed_traj_npy_file):
-    original_traj = np.load(reference_traj_npy_file)
-    mutated_reconstructed_traj = np.load(mutated_reconstructed_traj_npy_file)
-    rmsf_trajectory = _numpy_rmsf_by_atom(original_traj) * 10  # Convert to Å
-    rmsf_output = _numpy_rmsf_by_atom(mutated_reconstructed_traj) * 10  # Convert to Å
-    fig, ax = plt.subplots(figsize=(20, 6))
-    indices = np.arange(len(rmsf_trajectory))
-    # Plot RMSF for diference between input and output
-    ax.plot(
-        indices,
-        (rmsf_trajectory - rmsf_output),
-        color="orange",
-        linewidth=1,
-        label="DIO",
-    )
-    ax.axhline(y=1, color="grey", linestyle="--", linewidth=1)
-    ax.set_xlabel("# Atom")
-    ax.set_ylabel("RMSD (Å)")
-    plt.title("RMSF Plot")
-    plt.legend()
-    plt.show()
-
-
-def plot_rmsd(input_dataset_pt_path: str,
-              input_stats_pt_path: str,
-              input_topology_path: str,
-              output_model_results_file: str | list[str] | None = None,
-             ):
+def plot_rmsd(input_xvg_path: Union[str, List[str]]) -> None:
     """
-    Plots RMSF of the original dataset and reconstructed trajectories if model results are provided.
-    
-    Args:
-        input_dataset_pt_path (str): Path to the dataset .pt file.
-        input_stats_pt_path (str): Path to the stats .pt file.
-        input_topology_path (str): Path to the topology file (e.g., PDB) for mdtraj.
-        output_model_results_file (str | list[str] | None, optional): Path(s) to the model results .npz file(s) containing 'xhat'. Defaults to None.
-        per_residue (bool, optional): If True, average RMSF per residue. Defaults to False.
-    
-    Raises:
-        ValueError: If required data is missing or shapes mismatch.
-    """
-    # Load dataset and stats
-    dataset = torch.load(input_dataset_pt_path, weights_only=False)
-    stats = torch.load(input_stats_pt_path, weights_only=False)
-    
-    if 'cartesian_indices' not in stats:
-        raise ValueError("No 'cartesian_indices' found in stats; cannot compute cartesian coordinates.")
-    
-    cartesian_range = len(stats['cartesian_indices'])
-    cartesian = dataset['data'][:, :cartesian_range * 3].reshape(-1, cartesian_range, 3)
-    
-    # Load topology
-    top = md.load_topology(input_topology_path)
-    
-    # Create original trajectory
-    orig_traj = md.Trajectory(cartesian, top)
-    
-    # Compute RMSF for original (aligns to first frame internally)
-    rmsd_orig = md.rmsd(orig_traj, orig_traj, frame=0)
-    
-    rmsds = [rmsd_orig]
-    labels = ['Original']
-    
-    x_label = 'Number of Frames'
-    x = np.arange(len(rmsd_orig))
-    
-    # If results files provided, compute for each reconstruction
-    if output_model_results_file is not None:
-        if isinstance(output_model_results_file, str):
-            results_files = [output_model_results_file]
-        else:
-            results_files = output_model_results_file
-        
-        for file_path in results_files:
-            if not os.path.exists(file_path):
-                raise FileNotFoundError(f"Results file not found: {file_path}")
-            
-            results = np.load(file_path, allow_pickle=True)
-            
-            if 'xhat' not in results:
-                raise KeyError(f"'xhat' not found in {file_path}")
-            
-            xhat = results['xhat']
-            recon_cartesian = xhat[:, :cartesian_range * 3].reshape(-1, cartesian_range, 3)
-            
-            if recon_cartesian.shape != cartesian.shape:
-                raise ValueError(f"Shape mismatch between original and reconstructed cartesian in {file_path}: {cartesian.shape} vs {recon_cartesian.shape}")
-            
-            recon_traj = md.Trajectory(recon_cartesian, top)
-            rmsd_recon = md.rmsd(recon_traj, recon_traj, frame=0)
-            
-            rmsds.append(rmsd_recon)
-            
-            labels.append(os.path.basename(file_path))
-    
-    # Plotting
-    plt.figure(figsize=(10, 6))
-    for rmsd, label in zip(rmsds, labels):
-        plt.plot(x, rmsd, label=label)
-    
-    plt.xlabel(x_label)
-    plt.ylabel('RMSD (nm)')
-    plt.title('Root Mean Square Fluctuation')
-    if len(rmsds) > 1:
-        plt.legend()
-    plt.show()
+    Plots RMSD from one or more XVG files.
 
-def plot_rmsf(input_dataset_pt_path: str,
-              input_stats_pt_path: str,
-              input_topology_path: str,
-              output_model_results_file: str | list[str] | None = None,
-              per_residue: bool = False):
-    """
-    Plots RMSF of the original dataset and reconstructed trajectories if model results are provided.
-    
-    Args:
-        input_dataset_pt_path (str): Path to the dataset .pt file.
-        input_stats_pt_path (str): Path to the stats .pt file.
-        input_topology_path (str): Path to the topology file (e.g., PDB) for mdtraj.
-        output_model_results_file (str | list[str] | None, optional): Path(s) to the model results .npz file(s) containing 'xhat'. Defaults to None.
-        per_residue (bool, optional): If True, average RMSF per residue. Defaults to False.
-    
-    Raises:
-        ValueError: If required data is missing or shapes mismatch.
-    """
-    # Load dataset and stats
-    dataset = torch.load(input_dataset_pt_path, weights_only=False)
-    stats = torch.load(input_stats_pt_path, weights_only=False)
-    
-    if 'cartesian_indices' not in stats:
-        raise ValueError("No 'cartesian_indices' found in stats; cannot compute cartesian coordinates.")
-    
-    cartesian_range = len(stats['cartesian_indices'])
-    cartesian = dataset['data'][:, :cartesian_range * 3].reshape(-1, cartesian_range, 3)
-    
-    # Load topology
-    top = md.load_topology(input_topology_path)
-    
-    # Create original trajectory
-    orig_traj = md.Trajectory(cartesian, top)
-    
-    # Compute RMSF for original (aligns to first frame internally)
-    rmsf_orig = md.rmsf(orig_traj, orig_traj, frame=0)
-    
-    rmsfs = [rmsf_orig]
-    labels = ['Original']
-    
-    # Process per residue if requested
-    if per_residue:
-        residues = np.array([atom.residue.resSeq for atom in top.atoms])
-        unique_res = np.unique(residues)
-        rmsf_orig_per_res = np.array([np.mean(rmsf_orig[residues == res]) for res in unique_res])
-        rmsfs = [rmsf_orig_per_res]
-        x_label = 'Residue Index'
-        x = unique_res
-    else:
-        x_label = 'Atom Index'
-        x = np.arange(len(rmsf_orig))
-    
-    # If results files provided, compute for each reconstruction
-    if output_model_results_file is not None:
-        if isinstance(output_model_results_file, str):
-            results_files = [output_model_results_file]
-        else:
-            results_files = output_model_results_file
-        
-        for file_path in results_files:
-            if not os.path.exists(file_path):
-                raise FileNotFoundError(f"Results file not found: {file_path}")
-            
-            results = np.load(file_path, allow_pickle=True)
-            
-            if 'xhat' not in results:
-                raise KeyError(f"'xhat' not found in {file_path}")
-            
-            xhat = results['xhat']
-            recon_cartesian = xhat[:, :cartesian_range * 3].reshape(-1, cartesian_range, 3)
-            
-            if recon_cartesian.shape != cartesian.shape:
-                raise ValueError(f"Shape mismatch between original and reconstructed cartesian in {file_path}: {cartesian.shape} vs {recon_cartesian.shape}")
-            
-            recon_traj = md.Trajectory(recon_cartesian, top)
-            rmsf_recon = md.rmsf(recon_traj, recon_traj, frame=0)
-            
-            if per_residue:
-                rmsf_recon_per_res = np.array([np.mean(rmsf_recon[residues == res]) for res in unique_res])
-                rmsfs.append(rmsf_recon_per_res)
-            else:
-                rmsfs.append(rmsf_recon)
-            
-            labels.append(os.path.basename(file_path))
-    
-    # Plotting
-    plt.figure(figsize=(10, 6))
-    for rmsf, label in zip(rmsfs, labels):
-        plt.plot(x, rmsf, label=label)
-    
-    plt.xlabel(x_label)
-    plt.ylabel('RMSF (nm)')
-    plt.title('Root Mean Square Fluctuation')
-    if len(rmsfs) > 1:
-        plt.legend()
-    plt.show()
+    Parameters:
+    input_xvg_path (str or list of str): Path to a single XVG file or list of paths to multiple XVG files.
 
-def plot_latent_space(output_model_results_file: str | list[str],
-                      projection_dim: int = 2):
+    The function parses each XVG file, extracts residue numbers and RMSD values,
+    and plots them on a single figure for comparison.
     """
-    Plots the latent space from model results. Projects to 2D or 3D if necessary using PCA.
-    For multiple files, plots on the same figure with different colors.
-    
-    Args:
-        output_model_results_file (str | list[str]): Path(s) to the model results .npz file(s) containing 'z'.
-    
-    Raises:
-        ValueError: If projection_dim not 2 or 3, or if 'z' missing, or dims mismatch across files.
-    """
-    
-    # Standardize to list
-    if isinstance(output_model_results_file, str):
-        results_files = [output_model_results_file]
-    else:
-        results_files = output_model_results_file
-    
-    zs_projected = []
-    labels = []
-    latent_dim = None
-    num_frames = None
-    
-    for file_path in results_files:
+    if isinstance(input_xvg_path, str):
+        input_xvg_path = [input_xvg_path]
+
+    plt.figure(figsize=(15, 6))
+
+    for file_path in input_xvg_path:
         if not os.path.exists(file_path):
-            raise FileNotFoundError(f"Results file not found: {file_path}")
-        
-        results = np.load(file_path, allow_pickle=True)
-        
-        if 'z' not in results:
-            raise KeyError(f"'z' not found in {file_path}")
-        
-        z = results['z']
-        projection_dim = int(z.shape[1])
+            print(f"Warning: File {file_path} does not exist. Skipping.")
+            continue
 
-        if projection_dim not in (2, 3):
-            projection_dim = 2  
-        
-        if not isinstance(z, np.ndarray):
-            z = np.array(z)
-        
-        if latent_dim is None:
-            latent_dim = z.shape[1]
-        elif z.shape[1] != latent_dim:
-            raise ValueError(f"Latent dimension mismatch in {file_path}: expected {latent_dim}, got {z.shape[1]}")
-        
-        if num_frames is None:
-            num_frames = z.shape[0]
-        elif z.shape[0] != num_frames:
-            raise ValueError(f"Number of frames mismatch in {file_path}: expected {num_frames}, got {z.shape[0]}")
-        
-        # Project if necessary
-        z_proj = z[:, :projection_dim]  # Take first dims if <=
-        
-        zs_projected.append(z_proj)
-        labels.append(os.path.basename(file_path))
-    
-    # Plotting
-    fig = plt.figure(figsize=(8, 6))
-    if projection_dim == 3:
-        ax = fig.add_subplot(111, projection='3d')
-        ax.set_zlabel('Latent Dim 3 (or PC3)')
-    else:
-        ax = fig.add_subplot(111)
-    
-    for z_proj, label in zip(zs_projected, labels):
-        frames = np.arange(z_proj.shape[0])
-        if projection_dim == 2:
-            sc = ax.scatter(z_proj[:, 0], z_proj[:, 1], c=frames, cmap='viridis', label=label)
-        elif projection_dim == 3:
-            sc = ax.scatter(z_proj[:, 0], z_proj[:, 1], z_proj[:, 2], c=frames, cmap='viridis', label=label)
-    
-    ax.set_xlabel('Latent Dim 1')
-    ax.set_ylabel('Latent Dim 2')
-    ax.set_title('Latent Space Projection')
-    if len(zs_projected) > 1:
-        plt.legend()
-    fig.colorbar(sc, ax=ax, label='Frame')
+        # Load data from XVG, skipping comment lines
+        data = np.loadtxt(file_path, comments=['#', '@'])
+
+        # Assume column 0: time, column 1: RMSD
+        time = data[:, 0]
+        rmsd = data[:, 1]
+
+        # Get label from filename
+        label = os.path.basename(file_path).replace('.xvg', '')
+
+        plt.plot(time, rmsd, label=label)
+
+    plt.xlabel('time (ns)')
+    plt.ylabel('RMSD (nm)')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+def plot_rmsf(input_xvg_path: Union[str, List[str]]) -> None:
+    """
+    Plots RMSF from one or more XVG files.
+
+    Parameters:
+    input_xvg_path (str or list of str): Path to a single XVG file or list of paths to multiple XVG files.
+
+    The function parses each XVG file, extracts residue numbers and RMSF values,
+    and plots them on a single figure for comparison.
+    """
+    if isinstance(input_xvg_path, str):
+        input_xvg_path = [input_xvg_path]
+
+    plt.figure(figsize=(15, 6))
+
+    for file_path in input_xvg_path:
+        if not os.path.exists(file_path):
+            print(f"Warning: File {file_path} does not exist. Skipping.")
+            continue
+
+        # Load data from XVG, skipping comment lines
+        data = np.loadtxt(file_path, comments=['#', '@'])
+
+        # Assume column 0: residue, column 1: RMSF
+        residues = data[:, 0]
+        rmsf = data[:, 1]
+
+        # Get label from filename
+        label = os.path.basename(file_path).replace('.xvg', '')
+
+        plt.plot(residues, rmsf, label=label)
+
+    plt.xlabel('Residue Number')
+    plt.ylabel('RMSF (nm)')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+def plot_rmsf_difference(input_xvg_path: Union[str, List[str]]) -> None:
+    """
+    Plots RMSF from one or more XVG files.
+
+    Parameters:
+    input_xvg_path (str or list of str): Path to a single XVG file or list of paths to multiple XVG files.
+
+    The function parses each XVG file, extracts residue numbers and RMSF values,
+    and plots them on a single figure for comparison.
+    """
+    if isinstance(input_xvg_path, str):
+        input_xvg_path = [input_xvg_path]
+
+    rmsfs = []
+    for file_path in input_xvg_path:
+        if not os.path.exists(file_path):
+            print(f"Warning: File {file_path} does not exist. Skipping.")
+            continue
+
+        # Load data from XVG, skipping comment lines
+        data = np.loadtxt(file_path, comments=['#', '@'])
+
+        # Assume column 0: residue, column 1: RMSF
+        residues = data[:, 0]
+        rmsf = data[:, 1]
+
+        # Get label from filename
+        label = f"DIO: {os.path.basename(file_path).replace('xvg', '')} vs {os.path.basename(file_path).replace('xvg', '')}"
+
+        rmsfs.append(rmsf)
+
+    diff_rmsf = abs(rmsfs[0] - rmsfs[1])
+
+    plt.figure(figsize=(10, 6))
+    plt.plot(residues, diff_rmsf, label=label)
+    plt.xlabel('Residue Number')
+    plt.ylabel('RMSF (nm)')
+    plt.title('RMSF Difference')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+def plot_latent_space(results_npz_path: str,
+                      projection_dim: list,
+                      snapshot_freq_ps=10) -> None:
+
+    results = np.load(results_npz_path, allow_pickle=True)
+
+    if 'z' not in results:
+        raise KeyError(f"'z' not found in {results_npz_path}")
+
+    z = results['z']
+
+    if projection_dim is None:
+        projection_dim = [0, 1]
+
+    if len(projection_dim) != 2:
+        raise ValueError(f"projection_dim must have length 2, got {projection_dim}")
+
+    dim1, dim2 = projection_dim
+    n_frames = z.shape[0]
+    n_ticks = int(n_frames/10)
+    timestep_ns = 1 / snapshot_freq_ps
+    norm = plt.Normalize(vmin=0, vmax=n_frames+1)
+
+    plt.figure(figsize=(10, 6))
+    plt.scatter(z[:, dim1], z[:, dim2], c=np.arange(n_frames) * timestep_ns, s=10, alpha=1.0)
+    plt.xlabel(f'latent_dim {dim1}')
+    plt.ylabel(f'latent_dim {dim2}')
+
+    ticks = np.arange(n_frames)[::n_ticks] * timestep_ns
+    if 0 not in ticks:
+        ticks = np.insert(ticks, 0, 0)
+    if (n_frames - 1) * timestep_ns not in ticks:
+        ticks = np.append(ticks, (n_frames - 1) * timestep_ns)
+
+    plt.colorbar(ticks=ticks, label='Time (ns)')
+    plt.title('Latent Space Visualization')
     plt.show()

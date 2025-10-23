@@ -3,7 +3,7 @@
 [![](https://img.shields.io/conda/vn/bioconda/biobb_pytorch?label=Conda)](https://anaconda.org/bioconda/biobb_pytorch)
 [![](https://img.shields.io/conda/dn/bioconda/biobb_pytorch?label=Conda%20Downloads)](https://anaconda.org/bioconda/biobb_pytorch)
 [![](https://img.shields.io/badge/Docker-Quay.io-blue)](https://quay.io/repository/biocontainers/biobb_pytorch?tab=tags)
-[![](https://img.shields.io/badge/Singularity-GalaxyProject-blue)](https://depot.galaxyproject.org/singularity/biobb_pytorch:5.0.0--pyhad2cae4_0)
+[![](https://img.shields.io/badge/Singularity-GalaxyProject-blue)](https://depot.galaxyproject.org/singularity/biobb_pytorch:5.1.1--pyhad2cae4_0)
 
 [![](https://img.shields.io/badge/OS-Unix%20%7C%20MacOS-blue)](https://github.com/bioexcel/biobb_pytorch)
 [![](https://img.shields.io/pypi/pyversions/biobb-pytorch.svg?label=Python%20Versions)](https://pypi.org/project/biobb-pytorch/)
@@ -41,7 +41,7 @@ The latest documentation of this package can be found in our readthedocs site:
 [latest API documentation](http://biobb-pytorch.readthedocs.io/en/latest/).
 
 ### Version
-v5.0.0 2024.2
+v5.1.1 2024.2
 
 ### Installation
 Using PIP:
@@ -51,7 +51,7 @@ Using PIP:
 * Installation:
 
 
-        pip install "biobb_pytorch>=5.0.0"
+        pip install "biobb_pytorch>=5.1.1"
 
 
 * Usage: [Python API documentation](https://biobb-pytorch.readthedocs.io/en/latest/modules.html)
@@ -61,7 +61,7 @@ Using ANACONDA:
 * Installation:
 
 
-        conda install -c bioconda "biobb_pytorch>=5.0.0"
+        conda install -c bioconda "biobb_pytorch>=5.1.1"
 
 
 * Usage: With conda installation BioBBs can be used with the [Python API documentation](https://biobb-pytorch.readthedocs.io/en/latest/modules.html) and the [Command Line documentation](https://biobb-pytorch.readthedocs.io/en/latest/command_line.html)
@@ -71,13 +71,13 @@ Using DOCKER:
 * Installation:
 
 
-        docker pull quay.io/biocontainers/biobb_pytorch:5.0.0--pyhad2cae4_0
+        docker pull quay.io/biocontainers/biobb_pytorch:5.1.1--pyhad2cae4_0
 
 
 * Usage:
 
 
-        docker run quay.io/biocontainers/biobb_pytorch:5.0.0--pyhad2cae4_0 <command>
+        docker run quay.io/biocontainers/biobb_pytorch:5.1.1--pyhad2cae4_0 <command>
 
 
 Using SINGULARITY:
@@ -87,7 +87,7 @@ Using SINGULARITY:
 * Installation:
 
 
-        singularity pull --name biobb_pytorch.sif https://depot.galaxyproject.org/singularity/biobb_pytorch:5.0.0--pyhad2cae4_0
+        singularity pull --name biobb_pytorch.sif https://depot.galaxyproject.org/singularity/biobb_pytorch:5.1.1--pyhad2cae4_0
 
 
 * Usage:

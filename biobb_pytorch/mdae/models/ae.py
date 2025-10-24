@@ -10,7 +10,7 @@
 import torch
 import lightning
 from mlcolvar.cvs import BaseCV
-from .nn.feedforward import FeedForward
+from biobb_pytorch.mdae.models.nn.feedforward import FeedForward
 from biobb_pytorch.mdae.featurization.normalization import Normalization
 from mlcolvar.core.transform.utils import Inverse
 from biobb_pytorch.mdae.loss import MSELoss

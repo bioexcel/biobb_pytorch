@@ -63,7 +63,6 @@ class GaussianMixtureVariationalAutoEncoder(BaseCV, lightning.LightningModule):
 
         self.k = options["k"]
         self.r_nent = options.get('loss_function', {}).get("r_nent", 0.5)
-        n_features = encoder_layers["qy_dims"][0]
 
         qy_dims = encoder_layers["qy_dims"]
         qz_dims = encoder_layers["qz_dims"]

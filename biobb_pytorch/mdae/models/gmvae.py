@@ -77,7 +77,7 @@ class GaussianMixtureVariationalAutoEncoder(BaseCV, lightning.LightningModule):
 
         self.encoder['y_transform'] = nn.Linear(self.k, self.k)
 
-        self.encoder['qy_nn'] = FeedForward([n_features] +qy_dims + [self.k], **options["encoder"]['qy_nn'])
+        self.encoder['qy_nn'] = FeedForward(qy_dims + [self.k], **options["encoder"]['qy_nn'])
 
         self.encoder['qz_nn'] = FeedForward([n_features + self.k] + qz_dims, **options["encoder"]['qz_nn'])
         self.encoder['zm_layer'] = nn.Linear(qz_dims[-1], n_cvs)

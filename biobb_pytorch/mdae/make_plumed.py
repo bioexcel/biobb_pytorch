@@ -167,7 +167,8 @@ class GeneratePlumed(BiobbObject):
     def _load_stats(self) -> Optional[Dict[str, Any]]:
         """Load stats.pt if provided."""
         if self.stats_pt:
-            return torch.load(self.stats_pt)
+            return torch.load(self.stats_pt,
+                              weights_only=False)
         return None
 
     def _generate_features(self) -> str:
@@ -300,7 +301,8 @@ class GeneratePlumed(BiobbObject):
 
     def _convert_model_to_ptc(self) -> None:
         """Convert the PyTorch model to TorchScript format (.ptc)."""
-        model = torch.load(self.model_pth)
+        model = torch.load(self.model_pth, 
+                           weights_only=False)
         self._enable_jit_scripting(model)
         output_path = self.io_dict['out']['output_model_ptc_path']
         try:

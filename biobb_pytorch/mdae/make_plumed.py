@@ -301,8 +301,19 @@ class GeneratePlumed(BiobbObject):
 
     def _convert_model_to_ptc(self) -> None:
         """Convert the PyTorch model to TorchScript format (.ptc)."""
-        model = torch.load(self.model_pth, 
-                           weights_only=False)
+        model = torch.load(self.model_pth, weights_only=False)
+
+        # Add this: Convert numpy.int64 attributes to Python int for JIT compatibility
+        def convert_attributes_to_int(m):
+            if hasattr(m, 'in_features'):
+                m.in_features = int(m.in_features)
+            if hasattr(m, 'out_features'):
+                m.out_features = int(m.out_features)
+            for child in m.children():
+                convert_attributes_to_int(child)
+
+        convert_attributes_to_int(model)
+
         self._enable_jit_scripting(model)
         output_path = self.io_dict['out']['output_model_ptc_path']
         try:
@@ -311,6 +322,8 @@ class GeneratePlumed(BiobbObject):
             fu.log(f'Successfully scripted and saved model to {output_path}', self.out_log)
         except Exception as e:
             fu.log(f'jit.script failed: {e}. Attempting jit.trace instead.', self.out_log)
+            # Add this: Set to eval mode for tracing (required for BatchNorm with batch size 1)
+            model.eval()
             example_input = torch.randn(1, self.n_features)  # Batch size 1, flat input
             traced_model = torch.jit.trace(model, example_input)
             torch.jit.save(traced_model, output_path)

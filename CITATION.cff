@@ -51,6 +51,10 @@ preferred-citation:
   type: "article"
   authors:
     - affiliation: "Barcelona Supercomputing Center (BSC)"
+      family-names: "Zanders"
+      given-names: "Pieter"
+      orcid: "https://orcid.org/0009-0000-3463-6806"
+    - affiliation: "Barcelona Supercomputing Center (BSC)"
       family-names: "Andrio"
       given-names: "Pau"
       orcid: "https://orcid.org/0000-0003-2116-3880"

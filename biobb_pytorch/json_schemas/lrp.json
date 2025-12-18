@@ -1,0 +1,85 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://bioexcel.eu/biobb_pytorch/json_schemas/1.0/lrp_mdae",
+  "name": "biobb_pytorch LRPMDAE",
+  "title": "Layer-wise Relevance Propagation (LRP) for an MDAE encoder.",
+  "description": "Perform Layer-wise Relevance Propagation on the encoder of a trained MDAE model to obtain global feature importance scores.",
+  "type": "object",
+  "info": {
+    "wrapped_software": {
+      "name": "PyTorch",
+      "version": ">=1.6.0",
+      "license": "BSD 3-Clause"
+    },
+    "ontology": {
+      "name": "EDAM",
+      "schema": "http://edamontology.org/EDAM.owl"
+    }
+  },
+  "required": [
+    "input_model_pth_path",
+    "input_dataset_pt_path"
+  ],
+  "properties": {
+    "input_model_pth_path": {
+      "type": "string",
+      "description": "Path to the trained model file whose encoder is analyzed.",
+      "filetype": "input",
+      "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pth",
+      "enum": [
+        ".*\\.pth$"
+      ],
+      "file_formats": [
+        {
+          "extension": ".*\\.pth$",
+          "description": "PyTorch model file",
+          "edam": "format_2333"
+        }
+      ]
+    },
+    "input_dataset_pt_path": {
+      "type": "string",
+      "description": "Path to the input dataset file (.pt) used for computing relevance scores.",
+      "filetype": "input",
+      "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_output_model.pt",
+      "enum": [
+        ".*\\.pt$"
+      ],
+      "file_formats": [
+        {
+          "extension": ".*\\.pt$",
+          "description": "PyTorch dataset file",
+          "edam": "format_2333"
+        }
+      ]
+    },
+    "output_results_npz_path": {
+      "type": "string",
+      "description": "Optional path to the output results file containing relevance scores (compressed NumPy archive).",
+      "filetype": "output",
+      "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_output_lrp_results.npz",
+      "enum": [
+        ".*\\.npz$"
+      ],
+      "file_formats": [
+        {
+          "extension": ".*\\.npz$",
+          "description": "Compressed NumPy archive",
+          "edam": "format_2333"
+        }
+      ]
+    },
+    "properties": {
+      "type": "object",
+      "properties": {
+        "Dataset": {
+          "type": "object",
+          "description": "Dataset/DataLoader options (e.g. batch_size and optional indices to subset the dataset)."
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}
+
+

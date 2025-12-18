@@ -1,0 +1,96 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://bioexcel.eu/biobb_pytorch/json_schemas/1.0/build_mdae",
+    "name": "biobb_pytorch BuildMDAE",
+    "title": "Build a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.",
+    "description": "Build a PyTorch autoencoder model (MDAE) from input statistics and hyperparameters.",
+    "type": "object",
+    "info": {
+      "wrapped_software": {
+        "name": "PyTorch",
+        "version": ">=1.6.0",
+        "license": "BSD 3-Clause"
+      },
+      "ontology": {
+        "name": "EDAM",
+        "schema": "http://edamontology.org/EDAM.owl"
+      }
+    },
+    "required": [
+      "input_stats_pt_path"
+    ],
+    "properties": {
+      "input_stats_pt_path": {
+        "type": "string",
+        "description": "Path to the input model statistics file.",
+        "filetype": "input",
+        "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_input_model.pt",
+        "enum": [
+          ".*\\.pt$"
+        ],
+        "file_formats": [
+          {
+            "extension": ".*\\.pt$",
+            "description": "PyTorch statistics file",
+            "edam": "format_2333"
+          }
+        ]
+      },
+      "output_model_pth_path": {
+        "type": "string",
+        "description": "Optional path to save the built model (.pth). If omitted, the model is kept in memory only.",
+        "filetype": "output",
+        "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pth",
+        "enum": [
+          ".*\\.pth$"
+        ],
+        "file_formats": [
+          {
+            "extension": ".*\\.pth$",
+            "description": "PyTorch model file",
+            "edam": "format_2333"
+          }
+        ]
+      },
+      "properties": {
+        "type": "object",
+        "properties": {
+          "model_type": {
+            "type": "string",
+            "default": "AutoEncoder",
+            "description": "Name of the model class to instantiate (must exist in biobb_pytorch.mdae.models)."
+          },
+          "n_cvs": {
+            "type": "integer",
+            "default": 1,
+            "description": "Dimensionality of the latent space."
+          },
+          "encoder_layers": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "default": [
+              16
+            ],
+            "description": "Number of neurons in each encoder layer."
+          },
+          "decoder_layers": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "default": [
+              16
+            ],
+            "description": "Number of neurons in each decoder layer."
+          },
+          "options": {
+            "type": "object",
+            "description": "Additional options (e.g. norm_in, optimizer, loss_function, device, etc.)."
+          }
+        }
+      }
+    },
+    "additionalProperties": false
+  }

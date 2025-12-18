@@ -1,0 +1,134 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://bioexcel.eu/biobb_pytorch/json_schemas/1.0/apply_mdae",
+  "name": "biobb_pytorch ApplyMDAE",
+  "title": "Apply a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.",
+  "description": "Apply a Molecular Dynamics AutoEncoder (MDAE) PyTorch model; the resulting denoised molecular dynamics or reduced dimensionality of molecular dynamics data can be used to analyze the dynamic properties of the system.",
+  "type": "object",
+  "info": {
+    "wrapped_software": {
+      "name": "PyTorch",
+      "version": ">=1.6.0",
+      "license": "BSD 3-Clause"
+    },
+    "ontology": {
+      "name": "EDAM",
+      "schema": "http://edamontology.org/EDAM.owl"
+    }
+  },
+  "required": [
+    "input_data_npy_path",
+    "input_model_pth_path",
+    "output_reconstructed_data_npy_path"
+  ],
+  "properties": {
+    "input_data_npy_path": {
+      "type": "string",
+      "description": "Path to the input data file.",
+      "filetype": "input",
+      "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/data/mdae/train_mdae_traj.npy",
+      "enum": [
+        ".*\\.npy$"
+      ],
+      "file_formats": [
+        {
+          "extension": ".*\\.npy$",
+          "description": "Path to the input data file",
+          "edam": "format_4003"
+        }
+      ]
+    },
+    "input_model_pth_path": {
+      "type": "string",
+      "description": "Path to the input model file.",
+      "filetype": "input",
+      "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_output_model.pth",
+      "enum": [
+        ".*\\.pth$"
+      ],
+      "file_formats": [
+        {
+          "extension": ".*\\.pth$",
+          "description": "Path to the input model file",
+          "edam": "format_2333"
+        }
+      ]
+    },
+    "output_reconstructed_data_npy_path": {
+      "type": "string",
+      "description": "Path to the output reconstructed data file.",
+      "filetype": "output",
+      "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_output_reconstructed_data.npy",
+      "enum": [
+        ".*\\.npy$"
+      ],
+      "file_formats": [
+        {
+          "extension": ".*\\.npy$",
+          "description": "Path to the output reconstructed data file",
+          "edam": "format_4003"
+        }
+      ]
+    },
+    "output_latent_space_npy_path": {
+      "type": "string",
+      "description": "Path to the reduced dimensionality file.",
+      "filetype": "output",
+      "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_output_latent_space.npy",
+      "enum": [
+        ".*\\.npy$"
+      ],
+      "file_formats": [
+        {
+          "extension": ".*\\.npy$",
+          "description": "Path to the reduced dimensionality file",
+          "edam": "format_4003"
+        }
+      ]
+    },
+    "properties": {
+      "type": "object",
+      "properties": {
+        "batch_size": {
+          "type": "integer",
+          "default": 1,
+          "wf_prop": false,
+          "description": "Number of samples/frames per batch."
+        },
+        "latent_dimensions": {
+          "type": "integer",
+          "default": 2,
+          "wf_prop": false,
+          "description": "Dimensionality of the latent space used for encoding."
+        },
+        "num_layers": {
+          "type": "integer",
+          "default": 4,
+          "wf_prop": false,
+          "description": "Number of layers in the encoder/decoder (4 to encode and 4 to decode)."
+        },
+        "input_dimensions": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "default": null,
+          "wf_prop": false,
+          "description": "Input dimensionality; by default it should match the number of features in the input data (number of atoms × 3 for x, y, z coordinates)."
+        },
+        "output_dimensions": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "default": null,
+          "wf_prop": false,
+          "description": "Output dimensionality; by default it should match the number of features in the input data (number of atoms × 3 for x, y, z coordinates)."
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}
+
+

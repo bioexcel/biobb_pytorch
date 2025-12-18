@@ -1,0 +1,123 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://bioexcel.eu/biobb_pytorch/json_schemas/1.0/feat2traj_mdae",
+  "name": "biobb_pytorch Feat2TrajMDAE",
+  "title": "Convert reconstructed features to a trajectory.",
+  "description": "Convert reconstructed molecular dynamics features (e.g. decoded coordinates) into an MD trajectory file using topology information from the stats file and/or a topology file.",
+  "type": "object",
+  "info": {
+    "wrapped_software": {
+      "name": "PyTorch / MDTraj",
+      "version": ">=1.6.0",
+      "license": "BSD 3-Clause"
+    },
+    "ontology": {
+      "name": "EDAM",
+      "schema": "http://edamontology.org/EDAM.owl"
+    }
+  },
+  "required": [
+    "input_results_npz_path",
+    "input_stats_pt_path",
+    "output_traj_path"
+  ],
+  "properties": {
+    "input_results_npz_path": {
+      "type": "string",
+      "description": "Path to the input reconstructed results file (.npz), typically containing an 'xhat' array.",
+      "filetype": "input",
+      "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_input_results.npz",
+      "enum": [
+        ".*\\.npz$"
+      ],
+      "file_formats": [
+        {
+          "extension": ".*\\.npz$",
+          "description": "Compressed NumPy archive",
+          "edam": "format_2333"
+        }
+      ]
+    },
+    "input_stats_pt_path": {
+      "type": "string",
+      "description": "Path to the input model statistics file (.pt) containing cartesian indices and optionally topology.",
+      "filetype": "input",
+      "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_input_model.pt",
+      "enum": [
+        ".*\\.pt$"
+      ],
+      "file_formats": [
+        {
+          "extension": ".*\\.pt$",
+          "description": "PyTorch statistics file",
+          "edam": "format_2333"
+        }
+      ]
+    },
+    "input_topology_path": {
+      "type": "string",
+      "description": "Optional topology file (PDB) used if no suitable topology is found in the stats file.",
+      "filetype": "input",
+      "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_output_model.pdb",
+      "enum": [
+        ".*\\.pdb$"
+      ],
+      "file_formats": [
+        {
+          "extension": ".*\\.pdb$",
+          "description": "Topology file in PDB format",
+          "edam": "format_1476"
+        }
+      ]
+    },
+    "output_traj_path": {
+      "type": "string",
+      "description": "Path to the output trajectory file (xtc, dcd or pdb).",
+      "filetype": "output",
+      "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.xtc",
+      "enum": [
+        ".*\\.(xtc|dcd|pdb)$"
+      ],
+      "file_formats": [
+        {
+          "extension": ".*\\.xtc$",
+          "description": "MD trajectory file in XTC format",
+          "edam": "format_3875"
+        },
+        {
+          "extension": ".*\\.dcd$",
+          "description": "MD trajectory file in DCD format",
+          "edam": "format_2330"
+        },
+        {
+          "extension": ".*\\.pdb$",
+          "description": "Trajectory/topology in PDB format",
+          "edam": "format_1476"
+        }
+      ]
+    },
+    "output_top_path": {
+      "type": "string",
+      "description": "Optional PDB topology file to write when the trajectory format requires a separate topology (e.g. xtc or dcd).",
+      "filetype": "output",
+      "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pdb",
+      "enum": [
+        ".*\\.pdb$"
+      ],
+      "file_formats": [
+        {
+          "extension": ".*\\.pdb$",
+          "description": "Topology file in PDB format",
+          "edam": "format_1476"
+        }
+      ]
+    },
+    "properties": {
+      "type": "object",
+      "description": "No additional properties are currently used."
+    }
+  },
+  "additionalProperties": false
+}
+
+

@@ -1,0 +1,181 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://bioexcel.eu/biobb_pytorch/json_schemas/1.0/generate_plumed_mdae",
+  "name": "biobb_pytorch GeneratePlumedMDAE",
+  "title": "Generate PLUMED input for biased dynamics using an MDAE model.",
+  "description": "Generate a PLUMED input file, a features.dat file and a TorchScript (.ptc) model from a trained MDAE model and feature statistics, suitable for biased molecular dynamics simulations.",
+  "type": "object",
+  "info": {
+    "wrapped_software": {
+      "name": "PLUMED with PyTorch",
+      "version": ">=2.0",
+      "license": "LGPL"
+    },
+    "ontology": {
+      "name": "EDAM",
+      "schema": "http://edamontology.org/EDAM.owl"
+    }
+  },
+  "required": [
+    "input_model_pth_path",
+    "output_plumed_dat_path",
+    "output_features_dat_path",
+    "output_model_ptc_path"
+  ],
+  "properties": {
+    "input_model_pth_path": {
+      "type": "string",
+      "description": "Path to the trained PyTorch model (.pth) to be converted to TorchScript and used in PLUMED.",
+      "filetype": "input",
+      "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pth",
+      "enum": [
+        ".*\\.pth$"
+      ],
+      "file_formats": [
+        {
+          "extension": ".*\\.pth$",
+          "description": "PyTorch model file",
+          "edam": "format_2333"
+        }
+      ]
+    },
+    "input_stats_pt_path": {
+      "type": "string",
+      "description": "Optional statistics file (.pt) produced during featurization, used to derive the PLUMED features.dat content.",
+      "filetype": "input",
+      "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_input_model.pt",
+      "enum": [
+        ".*\\.pt$"
+      ],
+      "file_formats": [
+        {
+          "extension": ".*\\.pt$",
+          "description": "PyTorch statistics file",
+          "edam": "format_2333"
+        }
+      ]
+    },
+    "input_reference_pdb_path": {
+      "type": "string",
+      "description": "Optional reference PDB used for FIT_TO_TEMPLATE actions when Cartesian features are present.",
+      "filetype": "input",
+      "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_output_model.pdb",
+      "enum": [
+        ".*\\.pdb$"
+      ],
+      "file_formats": [
+        {
+          "extension": ".*\\.pdb$",
+          "description": "Topology file in PDB format",
+          "edam": "format_1476"
+        }
+      ]
+    },
+    "input_ndx_path": {
+      "type": "string",
+      "description": "Optional GROMACS index (NDX) file used to define groups when required by PLUMED.",
+      "filetype": "input",
+      "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_input_index.ndx",
+      "enum": [
+        ".*\\.ndx$"
+      ],
+      "file_formats": [
+        {
+          "extension": ".*\\.ndx$",
+          "description": "GROMACS index file",
+          "edam": "format_2033"
+        }
+      ]
+    },
+    "output_plumed_dat_path": {
+      "type": "string",
+      "description": "Path to the output PLUMED input file.",
+      "filetype": "output",
+      "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_plumed.dat",
+      "enum": [
+        ".*\\.dat$"
+      ],
+      "file_formats": [
+        {
+          "extension": ".*\\.dat$",
+          "description": "PLUMED input file",
+          "edam": "format_2330"
+        }
+      ]
+    },
+    "output_features_dat_path": {
+      "type": "string",
+      "description": "Path to the output features.dat file describing the CVs to PLUMED.",
+      "filetype": "output",
+      "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_features.dat",
+      "enum": [
+        ".*\\.dat$"
+      ],
+      "file_formats": [
+        {
+          "extension": ".*\\.dat$",
+          "description": "PLUMED auxiliary input file",
+          "edam": "format_2330"
+        }
+      ]
+    },
+    "output_model_ptc_path": {
+      "type": "string",
+      "description": "Path to the output TorchScript model file (.ptc) for PLUMED's PYTORCH_MODEL action.",
+      "filetype": "output",
+      "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.ptc",
+      "enum": [
+        ".*\\.ptc$"
+      ],
+      "file_formats": [
+        {
+          "extension": ".*\\.ptc$",
+          "description": "TorchScript model file",
+          "edam": "format_2333"
+        }
+      ]
+    },
+    "properties": {
+      "type": "object",
+      "properties": {
+        "additional_actions": {
+          "type": "array",
+          "description": "Additional PLUMED actions to prepend (e.g. ENERGY, RMSD).",
+          "items": {
+            "type": "object"
+          }
+        },
+        "group": {
+          "type": "object",
+          "description": "GROUP definition options (label, NDX group or atom selection parameters)."
+        },
+        "wholemolecules": {
+          "type": "object",
+          "description": "WHOLEMOLECULES options when using Cartesian coordinates."
+        },
+        "fit_to_template": {
+          "type": "object",
+          "description": "FIT_TO_TEMPLATE options (e.g. STRIDE, TYPE, etc.)."
+        },
+        "pytorch_model": {
+          "type": "object",
+          "description": "PYTORCH_MODEL options (label, PACE and other parameters)."
+        },
+        "bias": {
+          "type": "array",
+          "description": "List of biasing actions (e.g. METAD) to be added to the PLUMED file.",
+          "items": {
+            "type": "object"
+          }
+        },
+        "prints": {
+          "type": "object",
+          "description": "PRINT command parameters (e.g. ARG, STRIDE, FILE)."
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}
+
+

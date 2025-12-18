@@ -58,12 +58,12 @@ build_mdae --config config_build_mdae.yml --input_stats_pt_path ref_input_model.
 build_mdae --config config_build_mdae.json --input_stats_pt_path ref_input_model.pt --output_model_pth_path output_model.pth
 ```
 
-## Md_feature_pipeline
+## MDFeaturizer
 Build Molecular Dynamics features for MDAE.
 ### Get help
 Command:
 ```python
-md_feature_pipeline -h
+mdfeaturizer -h
 ```
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
@@ -101,7 +101,7 @@ properties:
 ```
 #### Command line
 ```python
-md_feature_pipeline --config config_md_feature_pipeline.yml --input_topology_path ref_output_model.pdb --output_dataset_pt_path ref_output_model.pt --output_stats_pt_path ref_output_model.pt
+mdfeaturizer --config config_md_feature_pipeline.yml --input_topology_path ref_output_model.pdb --output_dataset_pt_path ref_output_model.pt --output_stats_pt_path ref_output_model.pt
 ```
 ### JSON
 #### [Common config file](https://github.com/bioexcel/biobb_pytorch/blob/master/biobb_pytorch/test/data/config/config_md_feature_pipeline.json)

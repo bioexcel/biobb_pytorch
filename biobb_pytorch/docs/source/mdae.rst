@@ -11,14 +11,6 @@ mdae.build_model module
     :members:
     :undoc-members:
     :show-inheritance:
-    :special-members: __init__
-
-.. autoclass:: biobb_pytorch.mdae.build_model.BuildModel
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-.. autofunction:: biobb_pytorch.mdae.build_model.buildModel
 
 mdae.mdfeaturizer module
 ---------------------------
@@ -28,13 +20,6 @@ mdae.mdfeaturizer module
     :undoc-members:
     :show-inheritance:
 
-.. autoclass:: biobb_pytorch.mdae.mdfeaturizer.MDFeaturePipeline
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-.. autofunction:: biobb_pytorch.mdae.mdfeaturizer.MDFeaturizer
-
 mdae.train_model module
 ---------------------------
 
@@ -42,13 +27,6 @@ mdae.train_model module
     :members:
     :undoc-members:
     :show-inheritance:
-
-.. autoclass:: biobb_pytorch.mdae.train_model.TrainModel
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-.. autofunction:: biobb_pytorch.mdae.train_model.trainModel
 
 mdae.evaluate_model module
 ---------------------------
@@ -58,13 +36,6 @@ mdae.evaluate_model module
     :undoc-members:
     :show-inheritance:
 
-.. autoclass:: biobb_pytorch.mdae.evaluate_model.EvaluateModel
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-.. autofunction:: biobb_pytorch.mdae.evaluate_model.evaluateModel
-
 mdae.encode_model module
 ---------------------------
 
@@ -72,13 +43,6 @@ mdae.encode_model module
     :members:
     :undoc-members:
     :show-inheritance:
-
-.. autoclass:: biobb_pytorch.mdae.encode_model.EvaluateEncoder
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-.. autofunction:: biobb_pytorch.mdae.encode_model.evaluateEncoder
 
 mdae.decode_model module
 ---------------------------
@@ -88,13 +52,6 @@ mdae.decode_model module
     :undoc-members:
     :show-inheritance:
 
-.. autoclass:: biobb_pytorch.mdae.decode_model.EvaluateDecoder
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-.. autofunction:: biobb_pytorch.mdae.decode_model.evaluateDecoder
-
 mdae.make_plumed module
 ---------------------------
 
@@ -102,13 +59,6 @@ mdae.make_plumed module
     :members:
     :undoc-members:
     :show-inheritance:
-
-.. autoclass:: biobb_pytorch.mdae.make_plumed.GeneratePlumed
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-.. autofunction:: biobb_pytorch.mdae.make_plumed.generatePlumed
 
 mdae.feat2traj module
 ---------------------------
@@ -118,13 +68,6 @@ mdae.feat2traj module
     :undoc-members:
     :show-inheritance:
 
-.. autoclass:: biobb_pytorch.mdae.feat2traj.Feat2Traj
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-.. autofunction:: biobb_pytorch.mdae.feat2traj.feat2traj
-
 mdae.explainability.LRP module
 ---------------------------
 
@@ -132,10 +75,3 @@ mdae.explainability.LRP module
     :members:
     :undoc-members:
     :show-inheritance:
-
-.. autoclass:: biobb_pytorch.mdae.explainability.LRP.LRP
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-.. autofunction:: biobb_pytorch.mdae.explainability.LRP.relevancePropagation

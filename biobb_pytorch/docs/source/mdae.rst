@@ -7,7 +7,7 @@ Submodules
 mdae.build_model module
 ---------------------------
 
-.. automodule:: mdae.build_model
+.. automodule:: biobb_pytorch.mdae.build_model
     :members:
     :undoc-members:
     :show-inheritance:
@@ -15,7 +15,7 @@ mdae.build_model module
 mdae.mdfeaturizer module
 ---------------------------
 
-.. automodule:: mdae.mdfeaturizer
+.. automodule:: biobb_pytorch.mdae.mdfeaturizer
     :members:
     :undoc-members:
     :show-inheritance:
@@ -23,7 +23,7 @@ mdae.mdfeaturizer module
 mdae.train_model module
 ---------------------------
 
-.. automodule:: mdae.train_model
+.. automodule:: biobb_pytorch.mdae.train_model
     :members:
     :undoc-members:
     :show-inheritance:
@@ -31,7 +31,7 @@ mdae.train_model module
 mdae.evaluate_model module
 ---------------------------
 
-.. automodule:: mdae.evaluate_model
+.. automodule:: biobb_pytorch.mdae.evaluate_model
     :members:
     :undoc-members:
     :show-inheritance:
@@ -39,7 +39,7 @@ mdae.evaluate_model module
 mdae.encode_model module
 ---------------------------
 
-.. automodule:: mdae.encode_model
+.. automodule:: biobb_pytorch.mdae.encode_model
     :members:
     :undoc-members:
     :show-inheritance:
@@ -47,7 +47,7 @@ mdae.encode_model module
 mdae.decode_model module
 ---------------------------
 
-.. automodule:: mdae.decode_model
+.. automodule:: biobb_pytorch.mdae.decode_model
     :members:
     :undoc-members:
     :show-inheritance:
@@ -55,7 +55,7 @@ mdae.decode_model module
 mdae.make_plumed module
 ---------------------------
 
-.. automodule:: mdae.make_plumed
+.. automodule:: biobb_pytorch.mdae.make_plumed
     :members:
     :undoc-members:
     :show-inheritance:
@@ -63,7 +63,7 @@ mdae.make_plumed module
 mdae.feat2traj module
 ---------------------------
 
-.. automodule:: mdae.feat2traj
+.. automodule:: biobb_pytorch.mdae.feat2traj
     :members:
     :undoc-members:
     :show-inheritance:
@@ -71,7 +71,7 @@ mdae.feat2traj module
 mdae.explainability.LRP module
 ---------------------------
 
-.. automodule:: mdae.explainability.LRP
+.. automodule:: biobb_pytorch.mdae.explainability.LRP
     :members:
     :undoc-members:
     :show-inheritance:

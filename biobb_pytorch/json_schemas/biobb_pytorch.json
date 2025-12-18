@@ -1,0 +1,115 @@
+{
+    "_id": "biobb_pytorch",
+    "desc": "Biobb_pytorch is a BioBB category for creating and training Machine Learning and Deep Learning models using PyTorch. It allows building, training, and evaluating Molecular Dynamics AutoEncoders (MDAE) and other PyTorch-based models for analyzing molecular dynamics trajectories.",
+    "github": "https://github.com/bioexcel/biobb_pytorch",
+    "readthedocs": "https://biobb-pytorch.readthedocs.io/en/latest/",
+    "conda": "https://anaconda.org/bioconda/biobb_pytorch",
+    "docker": "https://quay.io/biocontainers/biobb_pytorch:5.1.1--pyhad2cae4_0",
+    "singularity": "https://depot.galaxyproject.org/singularity/biobb_pytorch:5.1.1--pyhad2cae4_0",
+    "version": "5.1.1",
+    "rest": true,
+    "tools": [
+        {
+            "block": "BuildMDAE",
+            "tool": "build_mdae",
+            "desc": "Build a PyTorch autoencoder model (MDAE) from input statistics and hyperparameters.",
+            "exec": "build_mdae",
+            "docs": "https://biobb-pytorch.readthedocs.io/en/latest/mdae.html#module-biobb_pytorch.mdae.build_model",
+            "rest": true
+        },
+        {
+            "block": "MDFeaturePipeline",
+            "tool": "md_feature_pipeline",
+            "desc": "Obtain Molecular Dynamics features for PyTorch MDAE model training (dataset and statistics).",
+            "exec": "mdfeaturizer",
+            "docs": "https://biobb-pytorch.readthedocs.io/en/latest/mdae.html#module-biobb_pytorch.mdae.mdfeaturizer",
+            "rest": true
+        },
+        {
+            "block": "TrainMDAE",
+            "tool": "train_mdae",
+            "desc": "Train a PyTorch autoencoder model (MDAE) from an input dataset and initial model, optionally saving the trained model and training metrics.",
+            "exec": "train_mdae",
+            "docs": "https://biobb-pytorch.readthedocs.io/en/latest/mdae.html#module-biobb_pytorch.mdae.train_model",
+            "rest": true
+        },
+        {
+            "block": "EvaluateMDAE",
+            "tool": "evaluate_mdae",
+            "desc": "Evaluate a trained PyTorch autoencoder model (MDAE) on a dataset, computing loss and collecting model evaluation variables.",
+            "exec": "evaluate_mdae",
+            "docs": "https://biobb-pytorch.readthedocs.io/en/latest/mdae.html#module-biobb_pytorch.mdae.evaluate_model",
+            "rest": true
+        },
+        {
+            "block": "EncodeMDAE",
+            "tool": "encode_mdae",
+            "desc": "Apply the encoder part of a trained MDAE model to a dataset, producing latent variables (collective variables).",
+            "exec": "encode_mdae",
+            "docs": "https://biobb-pytorch.readthedocs.io/en/latest/mdae.html#module-biobb_pytorch.mdae.encode_model",
+            "rest": true
+        },
+        {
+            "block": "DecodeMDAE",
+            "tool": "decode_mdae",
+            "desc": "Apply the decoder part of a trained MDAE model to latent variables, reconstructing molecular dynamics features.",
+            "exec": "decode_mdae",
+            "docs": "https://biobb-pytorch.readthedocs.io/en/latest/mdae.html#module-biobb_pytorch.mdae.decode_model",
+            "rest": true
+        },
+        {
+            "block": "GeneratePlumedMDAE",
+            "tool": "generate_plumed_mdae",
+            "desc": "Generate a PLUMED input file, a features.dat file and a TorchScript (.ptc) model from a trained MDAE model and feature statistics, suitable for biased molecular dynamics simulations.",
+            "exec": "generate_plumed_mdae",
+            "docs": "https://biobb-pytorch.readthedocs.io/en/latest/mdae.html#module-biobb_pytorch.mdae.make_plumed",
+            "rest": true
+        },
+        {
+            "block": "Feat2TrajMDAE",
+            "tool": "feat2traj_mdae",
+            "desc": "Convert reconstructed molecular dynamics features (e.g. decoded coordinates) into an MD trajectory file using topology information from the stats file and/or a topology file.",
+            "exec": "feat2traj_mdae",
+            "docs": "https://biobb-pytorch.readthedocs.io/en/latest/mdae.html#module-biobb_pytorch.mdae.feat2traj",
+            "rest": true
+        },
+        {
+            "block": "LRPMDAE",
+            "tool": "lrp_mdae",
+            "desc": "Perform Layer-wise Relevance Propagation on the encoder of a trained MDAE model to obtain global feature importance scores.",
+            "exec": "lrp_mdae",
+            "docs": "https://biobb-pytorch.readthedocs.io/en/latest/mdae.html#module-biobb_pytorch.mdae.explainability.LRP",
+            "rest": true
+        },
+        {
+            "block": "ApplyMDAE",
+            "tool": "apply_mdae",
+            "desc": "Apply a Molecular Dynamics AutoEncoder (MDAE) PyTorch model, the resulting denoised molecular dynamics or the reduced the dimensionality of molecular dynamics data can be used to analyze the dynamic properties of the system.",
+            "exec": "apply_mdae",
+            "docs": "https://biobb-pytorch.readthedocs.io/en/latest/command_line.html#apply_mdae",
+            "rest": true
+        }
+    ],
+    "dep_pypi": [
+        "install_requires=['biobb_common==5.1.1', 'torch', 'lightning', 'mlcolvar', 'mdtraj']",
+        "python_requires='>=3.9'"
+    ],
+    "dep_conda": [
+        "python >=3.9",
+        "biobb_common ==5.1.1",
+        "pytorch",
+        "pytorch-lightning",
+        "mlcolvar",
+        "mdtraj"
+    ],
+    "keywords": [
+        "pytorch",
+        "machine learning",
+        "deep learning",
+        "autoencoder",
+        "molecular dynamics",
+        "neural networks",
+        "MDAE"
+    ]
+}
+

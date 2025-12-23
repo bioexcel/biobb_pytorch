@@ -13,13 +13,13 @@ import numpy as np
 import torch
 from copy import deepcopy
 import os
-import pkg_resources
+from importlib.resources import files
 
 
 def read_lib_file(file_name, amber_atoms, atom_charge, connectivity):
     try:
-        f_location = pkg_resources.resource_filename('mdae', 'loss/parameters')
-        f_in = open(f'{f_location}/{file_name}')
+        f_location = files('mdae').joinpath('loss/parameters')
+        f_in = open(f'{str(f_location)}/{file_name}')
         print(f'File {f_location}/{file_name} opened')
     except Exception:
         raise Exception(f'ERROR: file {file_name} not found!')
@@ -116,8 +116,8 @@ def get_amber_parameters(order=False, radians=True):
     read_lib_file(file_names[0],amber_atoms,other_parameters['charge'], other_parameters['connectivity'])
 
     try:
-        f_location = pkg_resources.resource_filename('mdae', 'loss/parameters')
-        f_in = open(f'{f_location}/{file_names[1]}')
+        f_location = files('mdae').joinpath('loss/parameters')
+        f_in = open(f'{str(f_location)}/{file_names[1]}')
         print('File %s opened' % file_names[1])
     except Exception:
         raise Exception('ERROR: file %s not found!' % file_names[1])
@@ -145,8 +145,8 @@ def get_amber_parameters(order=False, radians=True):
 
     # pen frcmod file, should be identifcal format but missing any or all cards
     try:
-        f_location = pkg_resources.resource_filename('mdae', 'loss/parameters')
-        f_in = open(f'{f_location}/{file_names[2]}')
+        f_location = files('mdae').joinpath('loss/parameters')
+        f_in = open(f'{str(f_location)}/{file_names[2]}')
         print('File %s opened' % file_names[2])
     except Exception:
         raise Exception('ERROR: file %s not found!' % file_names[2])

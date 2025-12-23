@@ -1,0 +1,10 @@
+properties:
+  cartesian:
+    selection: name CA
+  distances:
+    cutoff: 0.4
+    periodic: true
+    selection: name CA
+  options:
+    norm_in:
+      mode: min_max

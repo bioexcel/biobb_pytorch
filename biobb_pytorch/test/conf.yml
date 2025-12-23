@@ -1,0 +1,22 @@
+global_properties:
+  can_write_console_log: False
+  remove_tmp: False
+  working_dir_path: /tmp/biobb/unitests
+
+mdfeaturizer:
+  paths:
+    input_topology_path: file:test_data_dir/mdae/MCV1900209.pdb
+    output_dataset_pt_path: output_dataset.pt
+    output_stats_pt_path: output_stats.pt
+    ref_output_dataset_pt_path: file:test_reference_dir/mdae/ref_output_dataset.pt
+    ref_output_stats_pt_path: file:test_reference_dir/mdae/ref_output_stats.pt
+  properties:
+    cartesian:
+      selection: 'name CA'
+    distances:
+      selection: 'name CA'
+      cutoff: 0.4
+      periodic: true
+    options:
+      norm_in:
+        mode: 'min_max'

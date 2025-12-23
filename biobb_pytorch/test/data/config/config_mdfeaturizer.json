@@ -1,0 +1,17 @@
+{
+  "properties": {
+    "cartesian": {
+      "selection": "name CA"
+    },
+    "distances": {
+      "selection": "name CA",
+      "cutoff": 0.4,
+      "periodic": true
+    },
+    "options": {
+      "norm_in": {
+        "mode": "min_max"
+      }
+    }
+  }
+}

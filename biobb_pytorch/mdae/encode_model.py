@@ -1,43 +1,32 @@
 import torch
 from torch.utils.data import DataLoader
-import importlib
-import torch
-from typing import Dict, Any, Type
 import os
-import argparse
-from typing import Optional
-from biobb_common.configuration import settings
 from biobb_common.tools.file_utils import launchlogger
 from biobb_common.tools import file_utils as fu
 from biobb_pytorch.mdae.utils.log_utils import get_size
 from biobb_common.generic.biobb_object import BiobbObject
-import lightning.pytorch.callbacks as _cbs
-import lightning.pytorch.loggers as _loggers
-import lightning.pytorch.profilers as _profiler
-from mlcolvar.utils.trainer import MetricsCallback
-import lightning
-from mlcolvar.data import DictModule
 from mlcolvar.data import DictDataset
 import numpy as np
+
 
 class EvaluateEncoder(BiobbObject):
     """
     | biobb_pytorch EvaluateEncoder
-    | Evaluates a PyTorch autoencoder from the given properties.
+    | Encode data with a Molecular Dynamics AutoEncoder (MDAE) model.
     | Evaluates a PyTorch autoencoder from the given properties.
 
     Args:
-        input_model_pth_path (str): Path to the input model file. File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pth>`_. Accepted formats: pth (edam:format_2333).
-        input_dataset_pt_path (str): Path to the input dataset file. File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pt>`_. Accepted formats: pt (edam:format_2333).
-        output_results_npz_path (str): Path to the output results file. File type: output. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_results.npz>`_. Accepted formats: npz (edam:format_2333).
+        input_model_pth_path (str): Path to the trained model file whose encoder will be used. File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pth>`_. Accepted formats: pth (edam:format_2333).
+        input_dataset_pt_path (str): Path to the input dataset file (.pt) to encode. File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pt>`_. Accepted formats: pt (edam:format_2333).
+        output_results_npz_path (str): Path to the output latent-space results file (compressed NumPy archive, typically containing 'z'). File type: output. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_results.npz>`_. Accepted formats: npz (edam:format_2333).
         properties (dict - Python dictionary object containing the tool parameters, not input/output files):
-            * **Dataset** (*dict*) - ({}) Dataset options from mlcolvar.
+            * **Dataset** (*dict*) - ({}) mlcolvar DictDataset / DataLoader options (e.g. batch_size, shuffle).
 
     Examples:
         This example shows how to use the EvaluateEncoder class to evaluate a PyTorch autoencoder model::
 
             from biobb_pytorch.mdae.evaluate_model import evaluateEncoder
-            
+
             input_model_pth_path='input_model.pth'
             input_dataset_pt_path='input_dataset.npy'
             output_results_npz_path='output_results.npz'
@@ -47,12 +36,12 @@ class EvaluateEncoder(BiobbObject):
                     'batch_size': 32
                 }
             }
-            
+
             evaluateEncoder(input_model_pth_path=input_model.pth,
                     input_dataset_pt_path=input_dataset.npy,
                     output_results_npz_path=output_results.npz,
                     properties=prop)
-    
+
     Info:
         * wrapped_software:
             * name: PyTorch
@@ -68,8 +57,9 @@ class EvaluateEncoder(BiobbObject):
         input_dataset_pt_path: str,
         output_results_npz_path: str,
         properties: dict,
+        **kwargs,
     ) -> None:
-        
+
         properties = properties or {}
 
         super().__init__(properties)
@@ -131,7 +121,7 @@ class EvaluateEncoder(BiobbObject):
         Execute the :class:`EvaluateEncoder` class and its `.launch()` method.
         """
 
-        fu.log(f'## BioBB Model Evaluator ##', self.out_log)
+        fu.log('## BioBB Model Evaluator ##', self.out_log)
 
         # Setup Biobb
         if self.check_restart():
@@ -148,14 +138,14 @@ class EvaluateEncoder(BiobbObject):
         # load the dataset
         fu.log(f'Load dataset from {os.path.abspath(self.io_dict["in"]["input_dataset_pt_path"])}', self.out_log)
         dataset = self.load_dataset()
-        
+
         # create the dataloader
-        fu.log(f'Start evaluating...', self.out_log)
+        fu.log('Start evaluating...', self.out_log)
         dataloader = self.create_dataloader(dataset)
 
         # evaluate the model
         results = self.evaluate_encoder(model, dataloader)
-        
+
         # Save the results
         np.savez_compressed(self.io_dict["out"]["output_results_npz_path"], **results)
         fu.log(f'Evaluation Results saved to {os.path.abspath(self.io_dict["out"]["output_results_npz_path"])}', self.out_log)
@@ -169,82 +159,23 @@ class EvaluateEncoder(BiobbObject):
 
         self.check_arguments(output_files_created=True, raise_exception=False)
 
-        return 0 
-        
-def evaluateEncoder(
+        return 0
+
+
+def evaluate_encoder(
     properties: dict,
     input_model_pth_path: str,
     input_dataset_pt_path: str,
     output_results_npz_path: str,
+    **kwargs,
 ) -> int:
-    """
-    Execute the :class:`EvaluateEncoder <EvaluateEncoder.EvaluateEncoder>` class and
-    execute the :meth:`launch() <EvaluateEncoder.evaluateEncoder.launch>` method.
-    """
-    return EvaluateEncoder(
-        input_model_pth_path=input_model_pth_path,
-        input_dataset_pt_path=input_dataset_pt_path,
-        output_results_npz_path=output_results_npz_path,
-        properties=properties,
-    ).launch()
+    """Create the :class:`EvaluateEncoder <EvaluateEncoder.EvaluateEncoder>` class and
+    execute the :meth:`launch() <EvaluateEncoder.evaluateEncoder.launch>` method."""
+    return EvaluateEncoder(**dict(locals())).launch()
 
-evaluateEncoder.__doc__ = EvaluateEncoder.__doc__
 
-def main():
-    """Command line execution of this building block. Please check the command line documentation."""
-
-    parser = argparse.ArgumentParser(
-        description="",
-        formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999),
-    )
-
-    parser.add_argument(
-    "-c",
-    "--config",
-    required=False,
-    help="This file can be a YAML file, JSON file or JSON string",
-    )
-
-    required_args = parser.add_argument_group("required arguments")
-
-    required_args.add_argument(
-        "-m",
-        "--input_model_pth_path",
-        required=True,
-        help="Model file path"
-    )
-
-    required_args.add_argument(
-        "-f",
-        "--input_dataset_pt_path",
-        required=True,
-        help="Dataset file path"
-    )
-
-    required_args.add_argument(
-        "-or",
-        "--output_results_npz_path",
-        required=False,
-        help="Results file path"
-    )
-
-    parser.add_argument(
-        "-p",
-        "--properties",
-        required=False,
-        help="Additional properties for the MDFeaturizer object.",
-    )
-
-    args = parser.parse_args()
-    config = args.config if args.config else None
-    properties = settings.ConfReader(config=config).get_prop_dic()
-
-    evaluateEncoder(
-        input_model_pth_path=args.input_model_pth_path,
-        input_dataset_pt_path=args.input_dataset_pt_path,
-        output_results_npz_path=args.output_results_npz_path,
-        properties=properties,
-    )
+evaluate_encoder.__doc__ = EvaluateEncoder.__doc__
+main = EvaluateEncoder.get_main(evaluate_encoder, "Encode data with a Molecular Dynamics AutoEncoder (MDAE) model.")
 
 if __name__ == "__main__":
     main()

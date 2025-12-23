@@ -1,146 +1,149 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "http://bioexcel.eu/biobb_pytorch/json_schemas/1.0/md_feature_pipeline",
+    "$id": "http://bioexcel.eu/biobb_pytorch/json_schemas/1.0/mdfeaturizer",
     "name": "biobb_pytorch MDFeaturePipeline",
-    "title": "Build Molecular Dynamics features for MDAE.",
-    "description": "Obtain Molecular Dynamics features for PyTorch MDAE model training (dataset and statistics).",
+    "title": "Obtain the Molecular Dynamics Features for PyTorch model training.",
+    "description": "Obtain the Molecular Dynamics Features for PyTorch model training.",
     "type": "object",
     "info": {
-      "wrapped_software": {
-        "name": "PyTorch",
-        "version": ">=1.6.0",
-        "license": "BSD 3-Clause"
-      },
-      "ontology": {
-        "name": "EDAM",
-        "schema": "http://edamontology.org/EDAM.owl"
-      }
+        "wrapped_software": {
+            "name": "PyTorch",
+            "version": ">=1.6.0",
+            "license": "BSD 3-Clause"
+        },
+        "ontology": {
+            "name": "EDAM",
+            "schema": "http://edamontology.org/EDAM.owl"
+        }
     },
     "required": [
-      "input_topology_path",
-      "output_dataset_pt_path",
-      "output_stats_pt_path"
+        "input_topology_path",
+        "output_dataset_pt_path",
+        "output_stats_pt_path"
     ],
     "properties": {
-      "input_trajectory_path": {
-        "type": "string",
-        "description": "Path to the input trajectory file (optional, if omitted topology file is used as trajectory).",
-        "filetype": "input",
-        "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/data/mdae/train_mdae_traj.xtc",
-        "enum": [
-          ".*\\.(xtc|dcd)$"
-        ],
-        "file_formats": [
-          {
-            "extension": ".*\\.(xtc|dcd)$",
-            "description": "Molecular dynamics trajectory file",
-            "edam": "format_4003"
-          }
-        ]
-      },
-      "input_topology_path": {
-        "type": "string",
-        "description": "Path to the input topology file.",
-        "filetype": "input",
-        "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_output_model.pdb",
-        "enum": [
-          ".*\\.pdb$"
-        ],
-        "file_formats": [
-          {
-            "extension": ".*\\.pdb$",
-            "description": "Topology file in PDB format",
-            "edam": "format_1476"
-          }
-        ]
-      },
-      "input_labels_npy_path": {
-        "type": "string",
-        "description": "Optional labels file in NumPy format.",
-        "filetype": "input",
-        "enum": [
-          ".*\\.npy$"
-        ],
-        "file_formats": [
-          {
-            "extension": ".*\\.npy$",
-            "description": "Labels in NumPy format",
-            "edam": "format_4003"
-          }
-        ]
-      },
-      "input_weights_npy_path": {
-        "type": "string",
-        "description": "Optional weights file in NumPy format.",
-        "filetype": "input",
-        "enum": [
-          ".*\\.npy$"
-        ],
-        "file_formats": [
-          {
-            "extension": ".*\\.npy$",
-            "description": "Weights in NumPy format",
-            "edam": "format_4003"
-          }
-        ]
-      },
-      "output_dataset_pt_path": {
-        "type": "string",
-        "description": "Path to the output dataset file (.pt).",
-        "filetype": "output",
-        "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_output_model.pt",
-        "enum": [
-          ".*\\.pt$"
-        ],
-        "file_formats": [
-          {
-            "extension": ".*\\.pt$",
-            "description": "PyTorch dataset file",
-            "edam": "format_2333"
-          }
-        ]
-      },
-      "output_stats_pt_path": {
-        "type": "string",
-        "description": "Path to the output statistics file (.pt).",
-        "filetype": "output",
-        "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_output_model.pt",
-        "enum": [
-          ".*\\.pt$"
-        ],
-        "file_formats": [
-          {
-            "extension": ".*\\.pt$",
-            "description": "PyTorch statistics file",
-            "edam": "format_2333"
-          }
-        ]
-      },
-      "properties": {
-        "type": "object",
+        "input_trajectory_path": {
+            "type": "string",
+            "description": "Path to the input trajectory file (if omitted topology file is used as trajectory)",
+            "filetype": "input",
+            "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/data/mdae/train_mdae_traj.xtc",
+            "enum": [
+                ".*\\.xtc$",
+                ".*\\.dcd$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.xtc$",
+                    "description": "Path to the input trajectory file (if omitted topology file is used as trajectory)",
+                    "edam": "format_3875"
+                },
+                {
+                    "extension": ".*\\.dcd$",
+                    "description": "Path to the input trajectory file (if omitted topology file is used as trajectory)",
+                    "edam": "format_3878"
+                }
+            ]
+        },
+        "input_topology_path": {
+            "type": "string",
+            "description": "Path to the input topology file",
+            "filetype": "input",
+            "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/data/mdae/MCV1900209.pdb",
+            "enum": [
+                ".*\\.pdb$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.pdb$",
+                    "description": "Path to the input topology file",
+                    "edam": "format_2333"
+                }
+            ]
+        },
+        "output_dataset_pt_path": {
+            "type": "string",
+            "description": "Path to the output dataset model file",
+            "filetype": "output",
+            "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_output_dataset.pt",
+            "enum": [
+                ".*\\.pt$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.pt$",
+                    "description": "Path to the output dataset model file",
+                    "edam": "format_2333"
+                }
+            ]
+        },
+        "output_stats_pt_path": {
+            "type": "string",
+            "description": "Path to the output model statistics file",
+            "filetype": "output",
+            "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_output_stats.pt",
+            "enum": [
+                ".*\\.pt$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.pt$",
+                    "description": "Path to the output model statistics file",
+                    "edam": "format_2333"
+                }
+            ]
+        },
         "properties": {
-          "cartesian": {
             "type": "object",
-            "description": "Options for Cartesian coordinates feature generation (e.g. selection, fit_selection)."
-          },
-          "distances": {
-            "type": "object",
-            "description": "Options for pairwise distance features (selection, cutoff, periodic, bonded, etc.)."
-          },
-          "angles": {
-            "type": "object",
-            "description": "Options for angle features (selection, periodic, bonded, etc.)."
-          },
-          "dihedrals": {
-            "type": "object",
-            "description": "Options for dihedral features (selection, periodic, bonded, etc.)."
-          },
-          "options": {
-            "type": "object",
-            "description": "General processing options (e.g. timelag, norm_in)."
-          }
+            "properties": {
+                "cartesian": {
+                    "type": "object",
+                    "default": {
+                        "selection": "name CA"
+                    },
+                    "wf_prop": false,
+                    "description": "Atom selection options for Cartesian coordinates feature generation (e.g. selection, fit_selection)."
+                },
+                "distances": {
+                    "type": "object",
+                    "default": {
+                        "selection": "name CA",
+                        "cutoff": 0.4,
+                        "periodic": true,
+                        "bonded": false
+                    },
+                    "wf_prop": false,
+                    "description": "Atom selection options for pairwise distance features (selection, cutoff, periodic, bonded, etc.)."
+                },
+                "angles": {
+                    "type": "object",
+                    "default": {
+                        "selection": "backbone",
+                        "periodic": true,
+                        "bonded": true
+                    },
+                    "wf_prop": false,
+                    "description": "Atom selection options for angle features (selection, periodic, bonded, etc.)."
+                },
+                "dihedrals": {
+                    "type": "object",
+                    "default": {
+                        "selection": "backbone",
+                        "periodic": true,
+                        "bonded": true
+                    },
+                    "wf_prop": false,
+                    "description": "Atom selection options for dihedral features (selection, periodic, bonded, etc.)."
+                },
+                "options": {
+                    "type": "object",
+                    "default": {
+                        "norm_in": "min_max"
+                    },
+                    "wf_prop": false,
+                    "description": "General processing options (e.g. timelag, norm_in)."
+                }
+            }
         }
-      }
     },
     "additionalProperties": false
-  }
+}

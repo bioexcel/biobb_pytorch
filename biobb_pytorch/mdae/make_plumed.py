@@ -1,11 +1,8 @@
 
-from genericpath import getsize
 import torch
 from typing import Dict, Any, Optional, List
 import os
-import argparse
 from biobb_pytorch.mdae.utils.log_utils import get_size
-from biobb_common.configuration import settings
 from biobb_common.tools.file_utils import launchlogger
 from biobb_common.tools import file_utils as fu
 from biobb_common.generic.biobb_object import BiobbObject
@@ -14,25 +11,25 @@ from biobb_common.generic.biobb_object import BiobbObject
 class GeneratePlumed(BiobbObject):
     """
     | biobb_plumed GeneratePlumed
-    | Generates a PLUMED input file for biased dynamics using a PyTorch model.
+    | Generate PLUMED input for biased dynamics using an MDAE model.
     | Generates a PLUMED input file, features.dat, and converts the model to .ptc format.
 
     Args:
-        input_model_pth_path (str): Path to the input PyTorch model file (.pth). File type: input. Accepted formats: pth (edam:format_2333).
-        input_stats_pt_path (str) (Optional): Path to the input statistics file (.pt) for non-Cartesian features. File type: input. Accepted formats: pt (edam:format_2333).
-        input_reference_pdb_path (str) (Optional): Path to the reference PDB file for Cartesian mode. File type: input. Accepted formats: pdb (edam:format_1476).
-        input_ndx_path (str) (Optional): Path to the GROMACS NDX file. File type: input. Accepted formats: ndx (edam:format_2033).
-        output_plumed_dat_path (str): Path to the output PLUMED file. File type: output. Accepted formats: dat (edam:format_2330).
-        output_features_dat_path (str): Path to the output features.dat file. File type: output. Accepted formats: dat (edam:format_2330).
-        output_model_ptc_path (str): Path to the output TorchScript model file (.ptc). File type: output. Accepted formats: ptc (edam:format_2333).
+        input_model_pth_path (str): Path to the trained PyTorch model (.pth) to be converted to TorchScript and used in PLUMED. File type: input. Accepted formats: pth (edam:format_2333).
+        input_stats_pt_path (str) (Optional): Path to statistics file (.pt) produced during featurization, used to derive the PLUMED features.dat content. File type: input. Accepted formats: pt (edam:format_2333).
+        input_reference_pdb_path (str) (Optional): Path to reference PDB used for FIT_TO_TEMPLATE actions when Cartesian features are present. File type: input. Accepted formats: pdb (edam:format_1476).
+        input_ndx_path (str) (Optional): Path to GROMACS index (NDX) file used to define groups when required by PLUMED. File type: input. Accepted formats: ndx (edam:format_2033).
+        output_plumed_dat_path (str): Path to the output PLUMED input file. File type: output. Accepted formats: dat (edam:format_2330).
+        output_features_dat_path (str): Path to the output features.dat file describing the CVs to PLUMED. File type: output. Accepted formats: dat (edam:format_2330).
+        output_model_ptc_path (str): Path to the output TorchScript model file (.ptc) for PLUMED's PYTORCH_MODEL action. File type: output. Accepted formats: ptc (edam:format_2333).
         properties (dict - Python dictionary object containing the tool parameters, not input/output files):
             * **include_energy** (*bool*) - (True) Whether to include ENERGY in PLUMED.
-            * **biased** (*list*) - ([]) List of biased dynamics commands.
-            * **prints** (*dict*) - ({"ARG": "*", "STRIDE": 1, "FILE": "COLVAR"}) PRINT command parameters.
-            * **group** (*dict*) - (None) GROUP command parameters.
-            * **wholemolecules** (*dict*) - (None) WHOLEMOLECULES command parameters.
-            * **fit_to_template** (*dict*) - (None) FIT_TO_TEMPLATE command parameters.
-            * **pytorch_model** (*dict*) - (None) PYTORCH_MODEL command parameters.
+            * **bias** (*list*) - ([]) List of biasing actions (e.g. METAD) to be added to the PLUMED file.
+            * **prints** (*dict*) - ({"ARG": "*", "STRIDE": 1, "FILE": "COLVAR"}) PRINT command parameters (e.g. ARG, STRIDE, FILE).
+            * **group** (*dict*) - (None) GROUP definition options (label, NDX group or atom selection parameters).
+            * **wholemolecules** (*dict*) - (None) WHOLEMOLECULES options when using Cartesian coordinates.
+            * **fit_to_template** (*dict*) - (None) FIT_TO_TEMPLATE options (e.g. STRIDE, TYPE, etc.).
+            * **pytorch_model** (*dict*) - (None) PYTORCH_MODEL options (label, PACE and other parameters).
 
     Examples:
         This is a use case of how to use the building block from Python:
@@ -102,7 +99,7 @@ class GeneratePlumed(BiobbObject):
         * wrapped_software:
             * name: PLUMED with PyTorch
             * version: >=2.0
-            * license: LGPL
+            * license: LGPL 3.0
         * ontology:
             * name: EDAM
             * schema: http://edamontology.org/EDAM.owl
@@ -118,6 +115,7 @@ class GeneratePlumed(BiobbObject):
         output_features_dat_path: str = 'features.dat',
         output_model_ptc_path: str = 'model.ptc',
         properties: Optional[Dict[str, Any]] = None,
+        **kwargs,
     ) -> None:
         properties = properties or {}
 
@@ -359,7 +357,7 @@ class GeneratePlumed(BiobbObject):
             params = ' '.join(f'{k}={v}' for k, v in g.items() if k not in ['label', 'name'])
             lines.append(f"{group_label}: GROUP {params}")
             fu.log(f'Using GROUP: {group_label}', self.out_log)
-            fu.log(f'   Parameters:', self.out_log)
+            fu.log('   Parameters:', self.out_log)
             for k, v in g.items():
                 if k not in ['label', 'name']:
                     fu.log(f'    > {k.upper()}: {v}', self.out_log)
@@ -367,7 +365,7 @@ class GeneratePlumed(BiobbObject):
         # WHOLEMOLECULES
         uses_positions = True if 'cartesian_indices' in self.stats else False
         if uses_positions:
-            if self.wholemolecules: 
+            if self.wholemolecules:
                 w = self.wholemolecules
                 params = ' '.join(f'{k}={v}' for k, v in w.items())
                 lines.append(f'WHOLEMOLECULES {params}')
@@ -384,9 +382,9 @@ class GeneratePlumed(BiobbObject):
                 f = self.fit_to_template
                 params = ' '.join(f'{k}={v}' for k, v in f.items())
                 lines.append(f'FIT_TO_TEMPLATE REFERENCE={os.path.abspath(self.ref_pdb)} {params}')
-                fu.log(f'Using FIT_TO_TEMPLATE', self.out_log)
+                fu.log('Using FIT_TO_TEMPLATE', self.out_log)
                 fu.log(f'   Reference PDB: {os.path.abspath(self.ref_pdb)}', self.out_log)
-                fu.log(f'   Parameters:', self.out_log)
+                fu.log('   Parameters:', self.out_log)
                 for k, v in f.items():
                     fu.log(f'    > {k.upper()}: {v}', self.out_log)
             else:
@@ -409,7 +407,7 @@ class GeneratePlumed(BiobbObject):
         fu.log(f'   Model ptc file: {os.path.abspath(self.io_dict["out"]["output_model_ptc_path"])}', self.out_log)
         for param in params_non_args:
             if not param.startswith('FILE'):
-                fu.log(f'   Parameters:', self.out_log)
+                fu.log('   Parameters:', self.out_log)
                 fu.log(f'    > {param}', self.out_log)
 
         # Bias actions
@@ -420,9 +418,9 @@ class GeneratePlumed(BiobbObject):
             name = command['name']
             params_str = ' '.join(f'{k}={v}' for k, v in command.get('params', {}).items())
             lines.append(f'{label}{name} {params_str}')
-            fu.log(f'Using Bias:', self.out_log)
+            fu.log('Using Bias:', self.out_log)
             fu.log(f'   Command: {name}', self.out_log)
-            fu.log(f'   Parameters:', self.out_log)
+            fu.log('   Parameters:', self.out_log)
             for param in command.get('params', {}).items():
                 fu.log(f'    > {param[0]}: {param[1]}', self.out_log)
         # PRINT
@@ -447,10 +445,10 @@ class GeneratePlumed(BiobbObject):
         has_cartesian = True if 'cartesian_indices' in self.stats else False
         if self.ndx is None:
             if has_cartesian:
-                fu.log('WARNING: When employing Cartesian coordinates as collective variables (CVs) for biasing in PLUMED, ' \
-                    'an NDX index file is required to properly define atom groups for fitting and alignment purposes, ' \
-                    'make sure to provide a NDX file.', self.out_log)
-        
+                fu.log('WARNING: When employing Cartesian coordinates as collective variables (CVs) for biasing in PLUMED, '
+                       'an NDX index file is required to properly define atom groups for fitting and alignment purposes, '
+                       'make sure to provide a NDX file.', self.out_log)
+
         with open(self.io_dict['out']['output_features_dat_path'], 'w') as f:
             for line in features_lines:
                 f.write(line + '\n')
@@ -472,7 +470,8 @@ class GeneratePlumed(BiobbObject):
 
         return 0
 
-def generatePlumed(
+
+def generate_plumed(
     input_model_pth_path: str,
     input_stats_pt_path: Optional[str] = None,
     input_reference_pdb_path: Optional[str] = None,
@@ -481,90 +480,15 @@ def generatePlumed(
     output_features_dat_path: str = 'features.dat',
     output_model_ptc_path: str = 'model.ptc',
     properties: Optional[Dict[str, Any]] = None,
+    **kwargs,
 ) -> int:
-    """
-    Execute the :class:`GeneratePlumed <generate_plumed.GeneratePlumed>` class and
-    execute the :meth:`launch() <generate_plumed.GeneratePlumed.launch>` method.
-    """
-    return GeneratePlumed(
-        input_model_pth_path=input_model_pth_path,
-        input_stats_pt_path=input_stats_pt_path,
-        input_reference_pdb_path=input_reference_pdb_path,
-        input_ndx_path=input_ndx_path,
-        output_plumed_dat_path=output_plumed_dat_path,
-        output_features_dat_path=output_features_dat_path,
-        output_model_ptc_path=output_model_ptc_path,
-        properties=properties,
-    ).launch()
+    """Create the :class:`GeneratePlumed <generate_plumed.GeneratePlumed>` class and
+    execute the :meth:`launch() <generate_plumed.GeneratePlumed.launch>` method."""
+    return GeneratePlumed(**dict(locals())).launch()
 
-generatePlumed.__doc__ = GeneratePlumed.__doc__
 
-def main():
-    """Command line execution of this building block. Please check the command line documentation."""
-
-    parser = argparse.ArgumentParser(
-        description="Generates PLUMED files for biased dynamics.",
-        formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999),
-    )
-
-    parser.add_argument(
-        "-c",
-        "--config",
-        required=False,
-        help="This file can be a YAML file, JSON file or JSON string",
-    )
-
-    required_args = parser.add_argument_group("required arguments")
-    required_args.add_argument(
-        "--input_model_pth_path",
-        required=True,
-        help="Input PyTorch model file path (.pth)"
-    )
-    parser.add_argument(
-        "--input_stats_pt_path",
-        required=False,
-        help="Input statistics file path (.pt)"
-    )
-    parser.add_argument(
-        "--input_reference_pdb_path",
-        required=False,
-        help="Reference PDB file path"
-    )
-    parser.add_argument(
-        "--input_ndx_path",
-        required=False,
-        help="GROMACS NDX file path"
-    )
-    required_args.add_argument(
-        "--output_plumed_dat_path",
-        required=True,
-        help="Output PLUMED file path"
-    )
-    required_args.add_argument(
-        "--output_features_dat_path",
-        required=True,
-        help="Output features.dat file path"
-    )
-    required_args.add_argument(
-        "--output_model_ptc_path",
-        required=True,
-        help="Output TorchScript model file path (.ptc)"
-    )
-
-    args = parser.parse_args()
-    config = args.config if args.config else None
-    properties = settings.ConfReader(config=config).get_prop_dic()
-
-    generatePlumed(
-        input_model_pth_path=args.input_model_pth_path,
-        input_stats_pt_path=args.input_stats_pt_path,
-        input_reference_pdb_path=args.input_reference_pdb_path,
-        input_ndx_path=args.input_ndx_path,
-        output_plumed_dat_path=args.output_plumed_dat_path,
-        output_features_dat_path=args.output_features_dat_path,
-        output_model_ptc_path=args.output_model_ptc_path,
-        properties=properties,
-    )
+generate_plumed.__doc__ = GeneratePlumed.__doc__
+main = GeneratePlumed.get_main(generate_plumed, "Generate PLUMED input for biased dynamics using an MDAE model.")
 
 if __name__ == "__main__":
     main()

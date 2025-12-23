@@ -4,9 +4,7 @@ import torch
 from biobb_pytorch.mdae.models import __all__ as AVAILABLE_MODELS
 from typing import Dict, Any, Type, Optional
 import os
-import argparse
 from biobb_pytorch.mdae.utils.log_utils import get_size
-from biobb_common.configuration import settings
 from biobb_common.tools.file_utils import launchlogger
 from biobb_common.tools import file_utils as fu
 from biobb_common.generic.biobb_object import BiobbObject
@@ -38,23 +36,23 @@ def assert_valid_kwargs(target_cls, kwargs, context=""):
 class BuildModel(BiobbObject):
     """
     | biobb_pytorch BuildModel
-    | Builds a PyTorch autoencoder from the given properties.
+    | Build a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.
     | Builds a PyTorch autoencoder from the given properties.
 
     Args:
-        output_model_pth_path (str) (Optional): Path to save the model in .pth format. File type: output. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pth>`_. Accepted formats: pth (edam:format_2333).
         input_stats_pt_path (str): Path to the input model statistics file. File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_input_model.pt>`_. Accepted formats: pt (edam:format_2333).
+        output_model_pth_path (str) (Optional): Path to save the model in .pth format. File type: output. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pth>`_. Accepted formats: pth (edam:format_2333).
         properties (dict - Python dictionary object containing the tool parameters, not input/output files):
-            * **model_type** (*str*) - ("AutoEncoder") Name of the model class to instantiate.
+            * **model_type** (*str*) - ("AutoEncoder") Name of the model class to instantiate (must exist in biobb_pytorch.mdae.models).
             * **n_cvs** (*int*) - (1) Dimensionality of the latent space.
             * **encoder_layers** (*list*) - ([16]) List of integers representing the number of neurons in each encoder layer.
             * **decoder_layers** (*list*) - ([16]) List of integers representing the number of neurons in each decoder layer.
-            * **options** (*dict*) - ({'norm_in': {'mode': 'min_max'}}) Additional options for the model, including:
+            * **options** (*dict*) - ({"norm_in": {"mode": "min_max"}}) Additional options (e.g. norm_in, optimizer, loss_function, device, etc.).
 
     Examples:
         This is a use case of how to use the building block from Python:
 
-            from biobb_pytorch.mdae.build_model import buildModel
+            from biobb_pytorch.mdae.build_model import BuildModel
 
             input_stats_pt_path = "input_stats.pt"
             output_model_pth_file = "model.pth"
@@ -63,7 +61,7 @@ class BuildModel(BiobbObject):
             prop = {
                 'model_type': 'AutoEncoder',
                 'n_cvs': 10,
-                'encoder_layers': [n_features, 64, 32],        
+                'encoder_layers': [n_features, 64, 32],
                 'decoder_layers': [32, 64, n_features],
                 'options': {
                     'norm_in': {"mode": "min_max"},
@@ -99,8 +97,9 @@ class BuildModel(BiobbObject):
         input_stats_pt_path: str,
         output_model_pth_path: Optional[str] = None,
         properties: dict = None,
-    )-> None:
-        
+        **kwargs,
+    ) -> None:
+
         properties = properties or {}
 
         super().__init__(properties)
@@ -130,8 +129,8 @@ class BuildModel(BiobbObject):
         self.device = self.options['device'] if 'device' in self.options else 'cpu'
 
         # load the input files
-        self.stats = torch.load(self.io_dict['in']['input_stats_pt_path'], 
-                            weights_only=False)
+        self.stats = torch.load(self.io_dict['in']['input_stats_pt_path'],
+                                weights_only=False)
 
         # Check the properties
         self.check_properties(properties)
@@ -181,7 +180,7 @@ class BuildModel(BiobbObject):
         }
 
         if 'norm_in' in self.props.get('options', {}):
-         
+
             init_args['options']['norm_in'] = {
                 'stats': self.stats,
                 'mode': self.props['options']['norm_in'].get('mode')
@@ -194,7 +193,7 @@ class BuildModel(BiobbObject):
     def _build_loss(self) -> torch.nn.Module:
         loss_config = self.props['options'].get('loss_function')
         if loss_config and 'loss_type' in loss_config and loss_config['loss_type'] == 'PhysicsLoss':
-            loss_config['stats'] = self.stats 
+            loss_config['stats'] = self.stats
 
         if not loss_config:
             # Use model's default
@@ -208,11 +207,11 @@ class BuildModel(BiobbObject):
         LossClass = getattr(loss_module, loss_type)
 
         kwargs = {k: v for k, v in loss_config.items() if k != 'loss_type'}
-        
+
         assert_valid_kwargs(LossClass, kwargs, context="loss init")
         try:
             return LossClass(**kwargs)
-        except Exception as e:
+        except Exception:
             kwargs = {k: v for k, v in kwargs.items() if k != 'stats'}
             return LossClass(**kwargs)
 
@@ -286,20 +285,20 @@ class BuildModel(BiobbObject):
         fu.log("Model:", self.out_log)
         fu.log("------", self.out_log)
 
-        for line in str(self.model).splitlines():   
-           fu.log(line, self.out_log)
+        for line in str(self.model).splitlines():
+            fu.log(line, self.out_log)
         fu.log("", self.out_log)
 
         if self.output_model_pth_path:
             fu.log(f"Model saved in .pth format in "
-                   f'{os.path.abspath(self.io_dict["out"]["output_model_pth_path"])}', 
+                   f'{os.path.abspath(self.io_dict["out"]["output_model_pth_path"])}',
                    self.out_log,
                    )
             fu.log(f'File size: '
-                   f'{get_size(self.io_dict["out"]["output_model_pth_path"])}', 
+                   f'{get_size(self.io_dict["out"]["output_model_pth_path"])}',
                    self.out_log,
                    )
-        
+
         # Copy files to host
         self.copy_to_host()
 
@@ -308,70 +307,23 @@ class BuildModel(BiobbObject):
 
         self.check_arguments(output_files_created=bool(self.output_model_pth_path), raise_exception=False)
 
-        return 0 
-        
-def buildModel(
+        return 0
+
+
+def build_model(
     properties: dict,
     input_stats_pt_path: str,
     output_model_pth_path: Optional[str] = None,
+    **kwargs,
 ) -> int:
-    """
-    Execute the :class:`BuildModel <BuildModel.BuildModel>` class and
-    execute the :meth:`launch() <BuildModel.buildModel.launch>` method.
-    """
-    return BuildModel(
-            input_stats_pt_path=input_stats_pt_path,
-            output_model_pth_path=output_model_pth_path,
-            properties=properties,
-    ).launch()
+    """Create the :class:`BuildModel <BuildModel.BuildModel>` class and
+    execute the :meth:`launch() <BuildModel.BuildModel.launch>` method."""
+    return BuildModel(**dict(locals())).launch()
 
-buildModel.__doc__ = BuildModel.__doc__
 
-def main():
-    """Command line execution of this building block. Please check the command line documentation."""
+build_model.__doc__ = BuildModel.__doc__
+main = BuildModel.get_main(build_model, "Build a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.")
 
-    parser = argparse.ArgumentParser(
-        description="",
-        formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999),
-    )
-
-    parser.add_argument(
-    "-c",
-    "--config",
-    required=False,
-    help="This file can be a YAML file, JSON file or JSON string",
-    )
-
-    required_args = parser.add_argument_group("required arguments")
-    required_args.add_argument(
-        "-i",
-        "--input_stats_pt_path",
-        required=True,
-        help="Input statistics file path"
-    )
-
-    required_args.add_argument(
-        "-o",
-        "--output_model_pth_path",
-        required=False,
-        help="Trajectory file path"
-    )
-
-    parser.add_argument(
-        "-p",
-        "--properties",
-        required=False,
-        help="Additional properties for the MDFeaturizer object.",
-    )
-
-    args = parser.parse_args()
-    config = args.config if args.config else None
-    properties = settings.ConfReader(config=config).get_prop_dic()
-
-    buildModel(input_stats_pt_path=args.input_stats_pt_path, 
-               output_model_pth_path=args.output_model_pth_path,
-               properties=properties,
-        )
 
 if __name__ == "__main__":
     main()
@@ -392,7 +344,6 @@ if __name__ == "__main__":
 #                     'beta': 1.0,
 #                     'reconstruction': 'mse',
 #                     'reduction': 'sum'},
-                    
 #                 'optimizer': {
 #                     'lr': 0.001
 #                 }

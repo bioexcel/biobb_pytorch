@@ -10,13 +10,13 @@ from .explainability import LRP
 
 name = 'mdae'
 __all__ = [
-           'build_model', 
-           'mdfeaturizer', 
-           'train_model', 
-           'evaluate_model', 
-           'decode_model', 
-           'encode_model', 
-           'LRP', 
-           'make_plumed',
-           'feat2traj',
-           ]
+    'build_model',
+    'mdfeaturizer',
+    'train_model',
+    'evaluate_model',
+    'decode_model',
+    'encode_model',
+    'LRP',
+    'make_plumed',
+    'feat2traj',
+]

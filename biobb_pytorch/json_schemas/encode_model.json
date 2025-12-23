@@ -1,86 +1,86 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://bioexcel.eu/biobb_pytorch/json_schemas/1.0/encode_mdae",
-  "name": "biobb_pytorch EncodeMDAE",
-  "title": "Encode data with a Molecular Dynamics AutoEncoder (MDAE) model.",
-  "description": "Apply the encoder part of a trained MDAE model to a dataset, producing latent variables (collective variables).",
-  "type": "object",
-  "info": {
-    "wrapped_software": {
-      "name": "PyTorch",
-      "version": ">=1.6.0",
-      "license": "BSD 3-Clause"
-    },
-    "ontology": {
-      "name": "EDAM",
-      "schema": "http://edamontology.org/EDAM.owl"
-    }
-  },
-  "required": [
-    "input_model_pth_path",
-    "input_dataset_pt_path",
-    "output_results_npz_path"
-  ],
-  "properties": {
-    "input_model_pth_path": {
-      "type": "string",
-      "description": "Path to the trained model file whose encoder will be used.",
-      "filetype": "input",
-      "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pth",
-      "enum": [
-        ".*\\.pth$"
-      ],
-      "file_formats": [
-        {
-          "extension": ".*\\.pth$",
-          "description": "PyTorch model file",
-          "edam": "format_2333"
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://bioexcel.eu/biobb_pytorch/json_schemas/1.0/encode_model",
+    "name": "biobb_pytorch EvaluateEncoder",
+    "title": "Encode data with a Molecular Dynamics AutoEncoder (MDAE) model.",
+    "description": "Evaluates a PyTorch autoencoder from the given properties.",
+    "type": "object",
+    "info": {
+        "wrapped_software": {
+            "name": "PyTorch",
+            "version": ">=1.6.0",
+            "license": "BSD 3-Clause"
+        },
+        "ontology": {
+            "name": "EDAM",
+            "schema": "http://edamontology.org/EDAM.owl"
         }
-      ]
     },
-    "input_dataset_pt_path": {
-      "type": "string",
-      "description": "Path to the input dataset file (.pt) to encode.",
-      "filetype": "input",
-      "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_output_model.pt",
-      "enum": [
-        ".*\\.pt$"
-      ],
-      "file_formats": [
-        {
-          "extension": ".*\\.pt$",
-          "description": "PyTorch dataset file",
-          "edam": "format_2333"
-        }
-      ]
-    },
-    "output_results_npz_path": {
-      "type": "string",
-      "description": "Path to the output latent-space results file (compressed NumPy archive, typically containing 'z').",
-      "filetype": "output",
-      "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_output_latent_space.npz",
-      "enum": [
-        ".*\\.npz$"
-      ],
-      "file_formats": [
-        {
-          "extension": ".*\\.npz$",
-          "description": "Compressed NumPy archive with latent variables",
-          "edam": "format_2333"
-        }
-      ]
-    },
+    "required": [
+        "input_model_pth_path",
+        "input_dataset_pt_path",
+        "output_results_npz_path"
+    ],
     "properties": {
-      "type": "object",
-      "properties": {
-        "Dataset": {
-          "type": "object",
-          "description": "mlcolvar DictDataset / DataLoader options (e.g. batch_size, shuffle)."
+        "input_model_pth_path": {
+            "type": "string",
+            "description": "Path to the trained model file whose encoder will be used",
+            "filetype": "input",
+            "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pth",
+            "enum": [
+                ".*\\.pth$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.pth$",
+                    "description": "Path to the trained model file whose encoder will be used",
+                    "edam": "format_2333"
+                }
+            ]
+        },
+        "input_dataset_pt_path": {
+            "type": "string",
+            "description": "Path to the input dataset file (.pt) to encode",
+            "filetype": "input",
+            "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pt",
+            "enum": [
+                ".*\\.pt$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.pt$",
+                    "description": "Path to the input dataset file (.pt) to encode",
+                    "edam": "format_2333"
+                }
+            ]
+        },
+        "output_results_npz_path": {
+            "type": "string",
+            "description": "Path to the output latent-space results file (compressed NumPy archive, typically containing 'z')",
+            "filetype": "output",
+            "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_results.npz",
+            "enum": [
+                ".*\\.npz$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.npz$",
+                    "description": "Path to the output latent-space results file (compressed NumPy archive, typically containing 'z')",
+                    "edam": "format_2333"
+                }
+            ]
+        },
+        "properties": {
+            "type": "object",
+            "properties": {
+                "Dataset": {
+                    "type": "object",
+                    "default": {},
+                    "wf_prop": false,
+                    "description": "mlcolvar DictDataset / DataLoader options (e.g. batch_size, shuffle)."
+                }
+            }
         }
-      }
-    }
-  },
-  "additionalProperties": false
+    },
+    "additionalProperties": false
 }
-
-

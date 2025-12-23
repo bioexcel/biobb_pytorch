@@ -1,11 +1,10 @@
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.tools.file_utils import launchlogger
-from biobb_common.configuration import settings
 import torch
 import numpy as np
 import mdtraj as md
 import os
-import argparse
+
 
 class Feat2Traj(BiobbObject):
     """
@@ -14,18 +13,18 @@ class Feat2Traj(BiobbObject):
     | Converts a .pt file (features) to a trajectory using cartesian indices and topology from the stats file.
 
     Args:
-        input_results_npz_path (str): Path to the input results .npz file. File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_input_results.npz>`_. Accepted formats: npz (edam:format_2333).
-        input_stats_pt_path (str): Path to the input model statistics file. File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_input_model.pt>`_. Accepted formats: pt (edam:format_2333).
-        input_topology_path (str) (optional): Path to the input topology file (pdb). Used if no topology is found in stats. File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/mdae/ref_input_topology.pdb>`_. Accepted formats: pdb (edam:format_2333).
-        output_traj_path (str): Path to save the trajectory in xtc/pdb/dcd format. File type: output. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.xtc>`_. Accepted formats: xtc, pdb, dcd (edam:format_2333).
-        output_top_path (str) (optional): Path to save the output topology file (pdb). Used if trajectory format requires separate topology. File type: output. `Sample file <https://github.com/bioexcel/biobb_pytorch/mdae/output_model.pdb>`_. Accepted formats: pdb (edam:format_2333).
+        input_results_npz_path (str): Path to the input reconstructed results file (.npz), typically containing an 'xhat' array. File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_input_results.npz>`_. Accepted formats: npz (edam:format_2333).
+        input_stats_pt_path (str): Path to the input model statistics file (.pt) containing cartesian indices and optionally topology. File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_input_model.pt>`_. Accepted formats: pt (edam:format_2333).
+        input_topology_path (str) (optional): Path to the topology file (PDB) used if no suitable topology is found in the stats file. Used if no topology is found in stats. File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/mdae/ref_input_topology.pdb>`_. Accepted formats: pdb (edam:format_1476).
+        output_traj_path (str): Path to save the trajectory in xtc/pdb/dcd format. File type: output. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.xtc>`_. Accepted formats: xtc (edam:format_3875), pdb (edam:format_1476), dcd (edam:format_3878).
+        output_top_path (str) (optional): Path to save the output topology file (pdb). Used if trajectory format requires separate topology. File type: output. `Sample file <https://github.com/bioexcel/biobb_pytorch/mdae/output_model.pdb>`_. Accepted formats: pdb (edam:format_1476).
         properties (dict - Python dictionary object containing the tool parameters, not input/output files):
-            
+            * **restart** (*bool*) - (False) [WF property] Do not execute if output files exist.
     Examples:
         This is a use case of how to use the building block from Python:
 
             from biobb_pytorch.mdae.feat2traj import feat2traj
-            
+
             input_results_npz_path='input_results.npz'
             input_stats_pt_path='input_model.pt'
             input_topology_path='input_topology.pdb'
@@ -58,6 +57,7 @@ class Feat2Traj(BiobbObject):
         output_traj_path: str = None,
         output_top_path: str = None,
         properties: dict = None,
+        **kwargs,
     ) -> None:
         properties = properties or {}
         super().__init__(properties)
@@ -93,14 +93,14 @@ class Feat2Traj(BiobbObject):
         features = features['xhat']
 
         # Load stats and extract cartesian indices and topology
-        stats = torch.load(self.input_stats_pt_path, 
+        stats = torch.load(self.input_stats_pt_path,
                            weights_only=False)
         cartesian_indices = None
         topology = None
         if isinstance(stats, dict):
             if 'cartesian_indices' in stats:
                 cartesian_indices = stats['cartesian_indices']
-                topology = stats['topology'] 
+                topology = stats['topology']
 
         else:
             raise ValueError('No cartesian indices found in stats file.')
@@ -125,7 +125,7 @@ class Feat2Traj(BiobbObject):
             except Exception as e:
                 print(f"Warning: Could not load topology from stats file: {e}")
                 top = None
-          
+
         # If not found, try input_topology_path
         if top is None and self.input_topology_path is not None and os.path.exists(self.input_topology_path):
             top = md.load_topology(self.input_topology_path)
@@ -147,79 +147,28 @@ class Feat2Traj(BiobbObject):
                 traj.save_dcd(self.output_traj_path)
                 traj[0].save_pdb(self.output_top_path)
             elif ext == '.pdb':
-                traj.save_pdb(self.output_traj_path)   
+                traj.save_pdb(self.output_traj_path)
             else:
                 raise ValueError(f'Unknown trajectory extension: {ext}')
         return 0
 
-def feat2traj(input_results_npz_path: str,
-              input_stats_pt_path: str,
-              input_topology_path: str = None,
-              output_traj_path: str = None,
-              output_top_path: str = None,
-              properties: dict = None
+
+def feat2traj(
+    input_results_npz_path: str,
+    input_stats_pt_path: str,
+    input_topology_path: str = None,
+    output_traj_path: str = None,
+    output_top_path: str = None,
+    properties: dict = None,
+    **kwargs,
 ) -> int:
-    """
-    Execute the :class:`Feat2Traj <Feat2Traj.Feat2Traj>` class and
-    execute the :meth:`launch() <Feat2Traj.feat2traj.launch>` method.
-    """
-    return Feat2Traj(
-        input_results_npz_path=input_results_npz_path,
-        input_stats_pt_path=input_stats_pt_path,
-        input_topology_path=input_topology_path,
-        output_traj_path=output_traj_path,
-        output_top_path=output_top_path,
-        properties=properties
-    ).launch()
+    """Create the :class:`Feat2Traj <Feat2Traj.Feat2Traj>` class and
+    execute the :meth:`launch() <Feat2Traj.feat2traj.launch>` method."""
+    return Feat2Traj(**dict(locals())).launch()
+
 
 feat2traj.__doc__ = Feat2Traj.__doc__
+main = Feat2Traj.get_main(feat2traj, "Converts a .pt file (features) to a trajectory using cartesian indices and topology from the stats file.")
 
-def main():
-    """Command line execution of this building block. Please check the command line documentation."""
-
-    parser = argparse.ArgumentParser(description="Converts a .pt file (features) to a trajectory using cartesian indices and topology from the stats file.", formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999))
-
-    parser.add_argument('-i', 
-                        '--input_results_npz_path', 
-                        required=True, 
-                        help='Path to the input results .npz file. Accepted formats: npz (edam:format_2333).')
-
-    parser.add_argument('-s', 
-                        '--input_stats_pt_path', 
-                        required=True, 
-                        help='Path to the input model statistics file. Accepted formats: pt (edam:format_2333).')
-
-    parser.add_argument('-t', 
-                        '--input_topology_path', 
-                        required=False, 
-                        help='Path to the input topology file (pdb). Used if no topology is found in stats. Accepted formats: pdb (edam:format_1476).')
-
-    parser.add_argument('-o', 
-                        '--output_traj_path', 
-                        required=False, 
-                        help='Path to save the trajectory in xtc/pdb/dcd format. Accepted formats: xtc, pdb, dcd (edam:format_2333).')
-    parser.add_argument('-ot',
-                        '--output_top_path', 
-                        required=False, 
-                        help='Path to save the output topology file (pdb). Used if trajectory format requires separate topology. Accepted formats: pdb (edam:format_1476).')
-
-    parser.add_argument('-c', 
-                        '--config', 
-                        required=False, 
-                        help='Configuration file in JSON format.')
-    
-    args = parser.parse_args()
-    config = args.config if args.config else None
-    properties = settings.ConfReader(config=config).get_prop_dic()
-
-    feat2traj(
-        input_results_npz_path=args.input_results_npz_path,
-        input_stats_pt_path=args.input_stats_pt_path,
-        input_topology_path=args.input_topology_path,
-        output_traj_path=args.output_traj_path,
-        output_top_path=args.output_top_path,
-        properties=properties
-    )
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

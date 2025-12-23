@@ -1,105 +1,107 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://bioexcel.eu/biobb_pytorch/json_schemas/1.0/train_mdae",
-  "name": "biobb_pytorch TrainMDAE",
-  "title": "Train a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.",
-  "description": "Train a PyTorch autoencoder model (MDAE) from an input dataset and initial model, optionally saving the trained model and training metrics.",
-  "type": "object",
-  "info": {
-    "wrapped_software": {
-      "name": "PyTorch Lightning / mlcolvar",
-      "version": ">=1.6.0",
-      "license": "BSD 3-Clause"
-    },
-    "ontology": {
-      "name": "EDAM",
-      "schema": "http://edamontology.org/EDAM.owl"
-    }
-  },
-  "required": [
-    "input_model_pth_path",
-    "input_dataset_pt_path"
-  ],
-  "properties": {
-    "input_model_pth_path": {
-      "type": "string",
-      "description": "Path to the input (initial) model file.",
-      "filetype": "input",
-      "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pth",
-      "enum": [
-        ".*\\.pth$"
-      ],
-      "file_formats": [
-        {
-          "extension": ".*\\.pth$",
-          "description": "PyTorch model file",
-          "edam": "format_2333"
-        }
-      ]
-    },
-    "input_dataset_pt_path": {
-      "type": "string",
-      "description": "Path to the input dataset file (.pt) produced by the MD feature pipeline.",
-      "filetype": "input",
-      "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_output_model.pt",
-      "enum": [
-        ".*\\.pt$"
-      ],
-      "file_formats": [
-        {
-          "extension": ".*\\.pt$",
-          "description": "PyTorch dataset file",
-          "edam": "format_2333"
-        }
-      ]
-    },
-    "output_model_pth_path": {
-      "type": "string",
-      "description": "Optional path to save the trained model (.pth). If omitted, the trained model is only available in memory.",
-      "filetype": "output",
-      "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pth",
-      "enum": [
-        ".*\\.pth$"
-      ],
-      "file_formats": [
-        {
-          "extension": ".*\\.pth$",
-          "description": "PyTorch model file",
-          "edam": "format_2333"
-        }
-      ]
-    },
-    "output_metrics_npz_path": {
-      "type": "string",
-      "description": "Optional path to save training metrics in compressed NumPy format (.npz).",
-      "filetype": "output",
-      "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_output_metrics.npz",
-      "enum": [
-        ".*\\.npz$"
-      ],
-      "file_formats": [
-        {
-          "extension": ".*\\.npz$",
-          "description": "Compressed NumPy archive",
-          "edam": "format_2333"
-        }
-      ]
-    },
-    "properties": {
-      "type": "object",
-      "properties": {
-        "Trainer": {
-          "type": "object",
-          "description": "PyTorch Lightning Trainer options (e.g. max_epochs, callbacks, logger, profiler, accelerator, devices, etc.)."
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://bioexcel.eu/biobb_pytorch/json_schemas/1.0/train_model",
+    "name": "biobb_pytorch TrainModel",
+    "title": "Trains a PyTorch autoencoder using the given properties.",
+    "description": "Trains a PyTorch autoencoder using the given properties.",
+    "type": "object",
+    "info": {
+        "wrapped_software": {
+            "name": "PyTorch",
+            "version": ">=1.6.0",
+            "license": "BSD 3-Clause"
         },
-        "Dataset": {
-          "type": "object",
-          "description": "mlcolvar DictDataset / DictModule options (e.g. batch_size, split proportions and shuffling flags)."
+        "ontology": {
+            "name": "EDAM",
+            "schema": "http://edamontology.org/EDAM.owl"
         }
-      }
-    }
-  },
-  "additionalProperties": false
+    },
+    "required": [
+        "input_model_pth_path",
+        "input_dataset_pt_path"
+    ],
+    "properties": {
+        "input_model_pth_path": {
+            "type": "string",
+            "description": "Path to the input model file",
+            "filetype": "input",
+            "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pth",
+            "enum": [
+                ".*\\.pth$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.pth$",
+                    "description": "Path to the input model file",
+                    "edam": "format_2333"
+                }
+            ]
+        },
+        "input_dataset_pt_path": {
+            "type": "string",
+            "description": "Path to the input dataset file (.pt) produced by the MD feature pipeline",
+            "filetype": "input",
+            "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pt",
+            "enum": [
+                ".*\\.pt$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.pt$",
+                    "description": "Path to the input dataset file (.pt) produced by the MD feature pipeline",
+                    "edam": "format_2333"
+                }
+            ]
+        },
+        "output_model_pth_path": {
+            "type": "string",
+            "description": "Path to save the trained model (.pth). If omitted, the trained model is only available in memory",
+            "filetype": "output",
+            "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pth",
+            "enum": [
+                ".*\\.pth$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.pth$",
+                    "description": "Path to save the trained model (.pth). If omitted, the trained model is only available in memory",
+                    "edam": "format_2333"
+                }
+            ]
+        },
+        "output_metrics_npz_path": {
+            "type": "string",
+            "description": "Path save training metrics in compressed NumPy format (.npz)",
+            "filetype": "output",
+            "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.npz",
+            "enum": [
+                ".*\\.npz$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.npz$",
+                    "description": "Path save training metrics in compressed NumPy format (.npz)",
+                    "edam": "format_2333"
+                }
+            ]
+        },
+        "properties": {
+            "type": "object",
+            "properties": {
+                "Trainer": {
+                    "type": "object",
+                    "default": {},
+                    "wf_prop": false,
+                    "description": "PyTorch Lightning Trainer options (e.g. max_epochs, callbacks, logger, profiler, accelerator, devices, etc.)."
+                },
+                "Dataset": {
+                    "type": "object",
+                    "default": {},
+                    "wf_prop": false,
+                    "description": "mlcolvar DictDataset / DictModule options (e.g. batch_size, split proportions and shuffling flags)."
+                }
+            }
+        }
+    },
+    "additionalProperties": false
 }
-
-

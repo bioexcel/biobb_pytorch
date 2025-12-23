@@ -1,9 +1,9 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "http://bioexcel.eu/biobb_pytorch/json_schemas/1.0/evaluate_model",
-    "name": "biobb_pytorch EvaluateModel",
-    "title": "Evaluate a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.",
-    "description": "Evaluates a PyTorch autoencoder from the given properties.",
+    "$id": "http://bioexcel.eu/biobb_pytorch/json_schemas/1.0/LRP",
+    "name": "biobb_pytorch LRP",
+    "title": "Performs Layer-wise Relevance Propagation on a trained autoencoder encoder.",
+    "description": "Performs Layer-wise Relevance Propagation on a trained autoencoder encoder.",
     "type": "object",
     "info": {
         "wrapped_software": {
@@ -18,13 +18,12 @@
     },
     "required": [
         "input_model_pth_path",
-        "input_dataset_pt_path",
-        "output_results_npz_path"
+        "input_dataset_pt_path"
     ],
     "properties": {
         "input_model_pth_path": {
             "type": "string",
-            "description": "Path to the trained model file",
+            "description": "Path to the trained model file whose encoder is analyzed",
             "filetype": "input",
             "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pth",
             "enum": [
@@ -33,14 +32,14 @@
             "file_formats": [
                 {
                     "extension": ".*\\.pth$",
-                    "description": "Path to the trained model file",
+                    "description": "Path to the trained model file whose encoder is analyzed",
                     "edam": "format_2333"
                 }
             ]
         },
         "input_dataset_pt_path": {
             "type": "string",
-            "description": "Path to the input dataset file (.pt) to evaluate on",
+            "description": "Path to the input dataset file (.pt) used for computing relevance scores",
             "filetype": "input",
             "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pt",
             "enum": [
@@ -49,14 +48,14 @@
             "file_formats": [
                 {
                     "extension": ".*\\.pt$",
-                    "description": "Path to the input dataset file (.pt) to evaluate on",
+                    "description": "Path to the input dataset file (.pt) used for computing relevance scores",
                     "edam": "format_2333"
                 }
             ]
         },
         "output_results_npz_path": {
             "type": "string",
-            "description": "Path to the output evaluation results file (compressed NumPy archive)",
+            "description": "Path to the output results file containing relevance scores (compressed NumPy archive)",
             "filetype": "output",
             "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_results.npz",
             "enum": [
@@ -65,7 +64,7 @@
             "file_formats": [
                 {
                     "extension": ".*\\.npz$",
-                    "description": "Path to the output evaluation results file (compressed NumPy archive)",
+                    "description": "Path to the output results file containing relevance scores (compressed NumPy archive)",
                     "edam": "format_2333"
                 }
             ]
@@ -77,7 +76,7 @@
                     "type": "object",
                     "default": {},
                     "wf_prop": false,
-                    "description": "mlcolvar DictDataset / DataLoader options (e.g. batch_size, shuffle)."
+                    "description": "Dataset/DataLoader options (e.g. batch_size and optional indices to subset the dataset)."
                 }
             }
         }

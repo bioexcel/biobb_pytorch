@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## What's new in version [5.2.0](https://github.com/bioexcel/biobb_amber/releases/tag/v5.2.0)?
+
+### Changes
+
+* [UPDATE] Update to biobb_common 5.2.0
+* [FEATURE] Add new blocks: build_mdae, decode_model, enconde_model, train_mdae, feat2traj, LRP, make_plumed and mdfeaturizer.
+
 ## What's new in version [5.1.0](https://github.com/bioexcel/biobb_pytorch/releases/tag/v5.1.0)?
 
 ### Changes

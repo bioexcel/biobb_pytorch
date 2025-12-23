@@ -1,10 +1,6 @@
-import importlib
 import torch
-from typing import Dict, Any, Type
 import os
-import argparse
 from typing import Optional
-from biobb_common.configuration import settings
 from biobb_common.tools.file_utils import launchlogger
 from biobb_common.tools import file_utils as fu
 from biobb_pytorch.mdae.utils.log_utils import get_size
@@ -18,6 +14,7 @@ from mlcolvar.data import DictModule
 from mlcolvar.data import DictDataset
 import numpy as np
 
+
 class TrainModel(BiobbObject):
     """
     | biobb_pytorch TrainModel
@@ -26,18 +23,18 @@ class TrainModel(BiobbObject):
 
     Args:
         input_model_pth_path (str): Path to the input model file. File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pth>`_. Accepted formats: pth (edam:format_2333).
-        input_dataset_pt_path (str): Path to the input dataset file. File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pt>`_. Accepted formats: pt (edam:format_2333).
-        output_model_pth_path (str) (Optional): Path to the output model file. File type: output. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pth>`_. Accepted formats: pth (edam:format_2333).
-        output_metrics_npz_path (str) (Optional): Path to the output metrics file. File type: output. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.npz>`_. Accepted formats: npz (edam:format_2333).
+        input_dataset_pt_path (str): Path to the input dataset file (.pt) produced by the MD feature pipeline. File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pt>`_. Accepted formats: pt (edam:format_2333).
+        output_model_pth_path (str) (Optional): Path to save the trained model (.pth). If omitted, the trained model is only available in memory. File type: output. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pth>`_. Accepted formats: pth (edam:format_2333).
+        output_metrics_npz_path (str) (Optional): Path save training metrics in compressed NumPy format (.npz). File type: output. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.npz>`_. Accepted formats: npz (edam:format_2333).
         properties (dict - Python dictionary object containing the tool parameters, not input/output files):
-            * **Trainer** (*dict*) - ({}) Trainer options from PyTorch Lightning.
-            * **Dataset** (*dict*) - ({}) Dataset options from mlcolvar.
+            * **Trainer** (*dict*) - ({}) PyTorch Lightning Trainer options (e.g. max_epochs, callbacks, logger, profiler, accelerator, devices, etc.).
+            * **Dataset** (*dict*) - ({})  mlcolvar DictDataset / DictModule options (e.g. batch_size, split proportions and shuffling flags).
 
     Examples:
         This example shows how to use the TrainModel class to train a PyTorch autoencoder model::
 
             from biobb_pytorch.mdae.train_model import TrainModel
-            
+
             input_model_pth_path='input_model.pth'
             input_dataset_pt_path='input_dataset.pt'
             output_model_pth_path='output_model.pth'
@@ -59,7 +56,7 @@ class TrainModel(BiobbObject):
                     }
                 }
             }
-            
+
             # For API usage, outputs can be None to avoid saving
             instance = TrainModel(input_model_pth_path=input_model_pth_path,
                                   input_dataset_pt_path=input_dataset_pt_path,
@@ -77,7 +74,7 @@ class TrainModel(BiobbObject):
                                   output_metrics_npz_path=output_metrics_npz_path,
                                   properties=prop)
             instance.launch()
-    
+
     Info:
         * wrapped_software:
             * name: PyTorch
@@ -94,8 +91,9 @@ class TrainModel(BiobbObject):
         output_model_pth_path: Optional[str] = None,
         output_metrics_npz_path: Optional[str] = None,
         properties: dict = None,
-    )-> None:
-        
+        **kwargs,
+    ) -> None:
+
         properties = properties or {}
 
         super().__init__(properties)
@@ -176,11 +174,11 @@ class TrainModel(BiobbObject):
         return lightning.Trainer(**train_params)
 
     def load_model(self):
-        return torch.load(self.io_dict["in"]["input_model_pth_path"], 
+        return torch.load(self.io_dict["in"]["input_model_pth_path"],
                           weights_only=False)
 
     def load_dataset(self):
-        dataset = torch.load(self.io_dict["in"]["input_dataset_pt_path"], 
+        dataset = torch.load(self.io_dict["in"]["input_dataset_pt_path"],
                              weights_only=False)
         return DictDataset(dataset)
 
@@ -214,7 +212,7 @@ class TrainModel(BiobbObject):
         Execute the :class:`TrainModel` class and its `.launch()` method.
         """
 
-        fu.log(f'## BioBB Model Trainer ##', self.out_log)
+        fu.log('## BioBB Model Trainer ##', self.out_log)
 
         # Setup Biobb
         if self.check_restart():
@@ -231,9 +229,9 @@ class TrainModel(BiobbObject):
         # load the dataset
         fu.log(f'Load dataset from {os.path.abspath(self.io_dict["in"]["input_dataset_pt_path"])}', self.out_log)
         self.dataset = self.load_dataset()
-        
+
         # create the datamodule
-        fu.log(f'Start training...', self.out_log)
+        fu.log('Start training...', self.out_log)
         self.datamodule = self.create_datamodule(self.dataset)
 
         # get the trainer
@@ -241,7 +239,7 @@ class TrainModel(BiobbObject):
 
         # fit the model
         self.fit_model(self.trainer, self.model, self.datamodule)
-        
+
         # Set the metrics
         self.metrics = self.colvars_metrics.metrics
 
@@ -266,92 +264,24 @@ class TrainModel(BiobbObject):
         output_created = bool(self.output_model_pth_path or self.output_metrics_npz_path)
         self.check_arguments(output_files_created=output_created, raise_exception=False)
 
-        return 0 
-        
-def trainModel(
+        return 0
+
+
+def train_model(
     properties: dict,
     input_model_pth_path: str,
     input_dataset_pt_path: str,
     output_model_pth_path: Optional[str] = None,
     output_metrics_npz_path: Optional[str] = None,
+    **kwargs,
 ) -> int:
-    """
-    Execute the :class:`TrainModel <TrainModel.TrainModel>` class and
-    execute the :meth:`launch() <TrainModel.trainModel.launch>` method.
-    """
-    return TrainModel(
-        input_model_pth_path=input_model_pth_path,
-        input_dataset_pt_path=input_dataset_pt_path,
-        output_model_pth_path=output_model_pth_path,
-        output_metrics_npz_path=output_metrics_npz_path,
-        properties=properties,
-    ).launch()
+    """Create the :class:`TrainModel <TrainModel.TrainModel>` class and
+    execute the :meth:`launch() <TrainModel.TrainModel.launch>` method."""
+    return TrainModel(**dict(locals())).launch()
 
-trainModel.__doc__ = TrainModel.__doc__
 
-def main():
-    """Command line execution of this building block. Please check the command line documentation."""
-
-    parser = argparse.ArgumentParser(
-        description="",
-        formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999),
-    )
-
-    parser.add_argument(
-    "-c",
-    "--config",
-    required=False,
-    help="This file can be a YAML file, JSON file or JSON string",
-    )
-
-    required_args = parser.add_argument_group("required arguments")
-
-    required_args.add_argument(
-        "-m",
-        "--input_model_pth_path",
-        required=True,
-        help="Model file path"
-    )
-
-    required_args.add_argument(
-        "-f",
-        "--input_dataset_pt_path",
-        required=True,
-        help="Dataset file path"
-    )
-
-    required_args.add_argument(
-        "-o",
-        "--output_model_pth_path",
-        required=False,
-        help="Trajectory file path"
-    )
-
-    required_args.add_argument(
-        "-om",
-        "--output_metrics_npz_path",
-        required=False,
-        help="Trajectory file path"
-    )
-
-    parser.add_argument(
-        "-p",
-        "--properties",
-        required=False,
-        help="Additional properties for the MDFeaturizer object.",
-    )
-
-    args = parser.parse_args()
-    config = args.config if args.config else None
-    properties = settings.ConfReader(config=config).get_prop_dic()
-
-    trainModel(
-        input_model_pth_path=args.input_model_pth_path,
-        input_dataset_pt_path=args.input_dataset_pt_path,
-        output_model_pth_path=args.output_model_pth_path,
-        output_metrics_npz_path=args.output_metrics_npz_path,
-        properties=properties,
-    )
+train_model.__doc__ = TrainModel.__doc__
+main = TrainModel.get_main(train_model, "Trains a PyTorch autoencoder using the given properties.")
 
 if __name__ == "__main__":
     main()

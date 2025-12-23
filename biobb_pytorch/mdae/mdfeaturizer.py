@@ -4,14 +4,13 @@ import os
 import torch
 from biobb_pytorch.mdae.featurization.topology_selector import MDTopologySelector
 from biobb_pytorch.mdae.featurization.featurizer import Featurizer
-from biobb_common.configuration import settings
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.tools import file_utils as fu
 from biobb_common.tools.file_utils import launchlogger
-import argparse
 import numpy as np
 from typing import Optional, Dict, Any
 from biobb_pytorch.mdae.utils.log_utils import get_size
+
 
 class MDFeaturePipeline(BiobbObject):
     """
@@ -20,45 +19,45 @@ class MDFeaturePipeline(BiobbObject):
     | Obtain the Molecular Dynamics Features for PyTorch model training.
 
     Args:
-        input_trajectory_path (str) (Optional): Path to the input train data file. File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/data/mdae/train_mdae_traj.xtc>`_. Accepted formats: xtc,dcd (edam:format_4003).
-        input_topology_path (str): Path to the input model file. File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_output_model.pdb>`_. Accepted formats: pdb (edam:format_2333).
-        output_dataset_pt_path (str): Path to the output model file. File type: output. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_output_model.pt>`_. Accepted formats: pt (edam:format_2333).
-        output_stats_pt_path (str): Path to the output model statistics file. File type: output. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_output_model.pt>`_. Accepted formats: pt (edam:format_2333).
+        input_trajectory_path (str) (Optional): Path to the input trajectory file (if omitted topology file is used as trajectory). File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/data/mdae/train_mdae_traj.xtc>`_. Accepted formats: xtc (edam:format_3875), dcd (edam:format_3878).
+        input_topology_path (str): Path to the input topology file. File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/data/mdae/MCV1900209.pdb>`_. Accepted formats: pdb (edam:format_2333).
+        output_dataset_pt_path (str): Path to the output dataset model file. File type: output. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_output_dataset.pt>`_. Accepted formats: pt (edam:format_2333).
+        output_stats_pt_path (str): Path to the output model statistics file. File type: output. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_output_stats.pt>`_. Accepted formats: pt (edam:format_2333).
         properties (dict - Python dictionary object containing the tool parameters, not input/output files):
-            * **cartesian** (*dict*) - ({'selection': str, 'fit_selection': str}) select the atoms for obtaining cartesian coordinates
-            * **distances** (*dict*) - ({'selection': str, 'cutoff': float, 'periodic': bool}) select the atoms for obtaining distances
-            * **angles** (*dict*) - ({'selection': str, 'periodic': bool}) select the atoms for obtaining angles
-            * **dihedrals** (*dict*) - ({'selection': str, 'periodic': bool}) select the atoms for obtaining dihedrals
-            * **options** (*dict*) - ({ 'timelag': int, 'norm_in': {'min_max'}}) options for dataset processing
+            * **cartesian** (*dict*) - ({"selection": "name CA"}) Atom selection options for Cartesian coordinates feature generation (e.g. selection, fit_selection).
+            * **distances** (*dict*) - ({"selection": "name CA", "cutoff": 0.4, "periodic": True, "bonded": False}) Atom selection options for pairwise distance features (selection, cutoff, periodic, bonded, etc.).
+            * **angles** (*dict*) - ({"selection": "backbone", "periodic": True, "bonded": True}) Atom selection options for angle features (selection, periodic, bonded, etc.).
+            * **dihedrals** (*dict*) - ({"selection": "backbone", "periodic": True, "bonded": True}) Atom selection options for dihedral features (selection, periodic, bonded, etc.).
+            * **options** (*dict*) - ({"norm_in": "min_max"}) General processing options (e.g. timelag, norm_in).
 
     Examples:
         This is a use case of how to use the building block from Python::
 
-            from biobb_pytorch.mdae.MDFeaturePipeline import MDFeaturizer
+            from biobb_pytorch.mdae.MDFeaturePipeline import mdfeaturizer
 
             prop = {
                 'cartesian': {'selection': 'name CA'},
-                'distances': {'selection': 'name CA', 
-                              'cutoff': 0.4, 
+                'distances': {'selection': 'name CA',
+                              'cutoff': 0.4,
                               'periodic': True,
                               'bonded': False},
-                'angles': {'selection': 'backbone', 
-                           'periodic': True, 
+                'angles': {'selection': 'backbone',
+                           'periodic': True,
                            'bonded': True},
-                'dihedrals': {'selection': 'backbone', 
-                              'periodic': True, 
+                'dihedrals': {'selection': 'backbone',
+                              'periodic': True,
                               'bonded': True},
-                'options': {'timelag': 10, 
+                'options': {'timelag': 10,
                             'norm_in': {'mode': 'min_max'}
                            }
             }
-            
-            MDFeaturizer(input_trajectory_path=trajectory_file,
+
+            mdfeaturizer(input_trajectory_path=trajectory_file,
                          input_topology_path=topology_file,
                          output_dataset_pt_path=output_file,
                          output_stats_pt_path=output_stats_file,
                          properties=prop)
-                    
+
     Info:
         * wrapped_software:
             * name: PyTorch
@@ -68,21 +67,23 @@ class MDFeaturePipeline(BiobbObject):
             * name: EDAM
             * schema: http://edamontology.org/EDAM.owl
     """
-    def __init__(self,
-                 input_topology_path:   str,
-                 output_dataset_pt_path:    str,
-                 output_stats_pt_path: str,
-                 properties: dict,
-                 input_trajectory_path: Optional[str] = None,
-                 input_labels_npy_path: Optional[str] = None,
-                 input_weights_npy_path: Optional[str] = None
+    def __init__(
+        self,
+        input_topology_path: str,
+        output_dataset_pt_path: str,
+        output_stats_pt_path: str,
+        properties: dict,
+        input_trajectory_path: Optional[str] = None,
+        input_labels_npy_path: Optional[str] = None,
+        input_weights_npy_path: Optional[str] = None,
+        **kwargs,
     ) -> None:
 
         properties = properties or {}
-                
+
         super().__init__(properties)
-        
-        self.input_trajectory_path   = input_trajectory_path if input_trajectory_path else input_topology_path
+
+        self.input_trajectory_path   = input_trajectory_path or input_topology_path
         self.input_topology_path     = input_topology_path
         self.input_labels_npy_path   = input_labels_npy_path
         self.input_weights_npy_path  = input_weights_npy_path
@@ -107,17 +108,17 @@ class MDFeaturePipeline(BiobbObject):
 
         # build the per-feature arguments
         self.feature_types = ["cartesian", "distances", "angles", "dihedrals"]
-        self.cartesian: dict = properties.get("cartesian", {})
-        self.distances: dict = properties.get("distances", {})
-        self.angles:    dict = properties.get("angles", {})
-        self.dihedrals: dict = properties.get("dihedrals", {})
-        self.options:   dict = properties.get("options", {})
+        self.cartesian: dict = properties.get("cartesian", {"selection": "name CA"})
+        self.distances: dict = properties.get("distances", {"selection": "name CA", "cutoff": 0.4, "periodic": True, "bonded": False})
+        self.angles:    dict = properties.get("angles", {"selection": "backbone", "periodic": True, "bonded": True})
+        self.dihedrals: dict = properties.get("dihedrals", {"selection": "backbone", "periodic": True, "bonded": True})
+        self.options:   dict = properties.get("options", {"norm_in": "min_max"})
 
         # Check the properties
         self.check_properties(properties)
         self.check_arguments()
 
-        # Topology indices  
+        # Topology indices
         self.topology_indices()
 
         # Featurizer
@@ -158,17 +159,17 @@ class MDFeaturePipeline(BiobbObject):
                                      self.input_labels_npy_path,
                                      self.input_weights_npy_path,
                                      )
-        
-        fu.log(f"Available Trajectory Properties:", self.out_log)
+
+        fu.log("Available Trajectory Properties:", self.out_log)
         fu.log(f"   - Number of frames: {self.featurizer.trajectory.n_frames}", self.out_log)
-        
+
         fu.log(f"Featurizing the trajectory {self.input_trajectory_path}", self.out_log)
 
         self.dataset, self.stats = self.featurizer.compute_features(self.features_idx_dict)
 
         if self.input_labels_npy_path:
             fu.log(f"Loading labels from {self.input_labels_npy_path}", self.out_log)
-            self.dataset['labels'] =  np.load(self.input_labels_npy_path)
+            self.dataset['labels'] = np.load(self.input_labels_npy_path)
 
         if self.input_weights_npy_path:
             fu.log(f"Loading weights from {self.input_weights_npy_path}", self.out_log)
@@ -186,13 +187,12 @@ class MDFeaturePipeline(BiobbObject):
                 pass
 
         fu.log("Postprocessing:", self.out_log)
-        fu.log(f"   - Normalization: {self.options.get("norm_in", {}).get("mode")}", self.out_log)
-        fu.log(f"   - Timelag: {self.options.get("timelag", {})}", self.out_log)
-        fu.log(f"Dataset Properties:", self.out_log)
+        fu.log(f"   - Normalization: {self.options.get('norm_in', {}).get('mode')}", self.out_log)
+        fu.log(f"   - Timelag: {self.options.get('timelag', {})}", self.out_log)
+        fu.log("Dataset Properties:", self.out_log)
         fu.log(f"   - Dataset: {self.dataset.keys()}", self.out_log)
-        fu.log(f"   - Number of frames: {self.dataset["data"].shape[0]}", self.out_log)
-        fu.log(f"   - Number of features: {self.dataset["data"].shape[1]}", self.out_log)
-        
+        fu.log(f"   - Number of frames: {self.dataset['data'].shape[0]}", self.out_log)
+        fu.log(f"   - Number of features: {self.dataset['data'].shape[1]}", self.out_log)
 
     @launchlogger
     def launch(self) -> int:
@@ -206,26 +206,26 @@ class MDFeaturePipeline(BiobbObject):
 
         self.stage_files()
 
-        torch.save(self.dataset, 
+        torch.save(self.dataset,
                    self.output_dataset_pt_path)
-        
-        fu.log(f"Dataset saved in .pt format in {os.path.abspath(self.io_dict["out"]["output_dataset_pt_path"])}", 
+
+        fu.log(f'Dataset saved in .pt format in {os.path.abspath(self.io_dict["out"]["output_dataset_pt_path"])}',
                self.out_log,
                )
-        fu.log(f'File size: {get_size(self.io_dict["out"]["output_dataset_pt_path"])}', 
+        fu.log(f'File size: {get_size(self.io_dict["out"]["output_dataset_pt_path"])}',
                self.out_log,
                )
-        
+
         torch.save(self.stats,
                    os.path.splitext(self.output_stats_pt_path)[0] + ".pt")
-        
-        fu.log(f"Dataset statistics saved in .pt format in {os.path.abspath(self.io_dict["out"]["output_stats_pt_path"])}",
+
+        fu.log(f'Dataset statistics saved in .pt format in {os.path.abspath(self.io_dict["out"]["output_stats_pt_path"])}',
                self.out_log,
                )
         fu.log(f'File size: {get_size(self.io_dict["out"]["output_stats_pt_path"])}',
-                self.out_log,
-                )
-        
+               self.out_log,
+               )
+
         # Copy files to host
         self.copy_to_host()
 
@@ -234,104 +234,26 @@ class MDFeaturePipeline(BiobbObject):
 
         self.check_arguments(output_files_created=True, raise_exception=False)
 
-        return 0 
-        
-def MDFeaturizer(
+        return 0
+
+
+def mdfeaturizer(
     input_topology_path: str,
     output_dataset_pt_path: str,
     output_stats_pt_path: str,
     properties: dict,
     input_trajectory_path: Optional[str] = None,
     input_labels_npy_path: Optional[str] = None,
-    input_weights_npy_path: Optional[str] = None
+    input_weights_npy_path: Optional[str] = None,
+    **kwargs,
 ) -> int:
-    """
-    Execute the :class:`MDFeaturePipeline <MDFeaturePipeline.MDFeaturePipeline>` class and
-    execute the :meth:`launch() <MDFeaturePipeline.MDFeaturizer.launch>` method.
-    """
-    input_trajectory_path = input_trajectory_path if input_trajectory_path else input_topology_path
-    return MDFeaturePipeline(
-            input_trajectory_path=input_trajectory_path,
-            input_topology_path=input_topology_path,  
-            input_labels_npy_path=input_labels_npy_path,
-            input_weights_npy_path=input_weights_npy_path,
-            output_dataset_pt_path=output_dataset_pt_path,
-            output_stats_pt_path=output_stats_pt_path,
-            properties=properties,
-    ).launch()
+    """Create the :class:`MDFeaturePipeline <MDFeaturePipeline.MDFeaturePipeline>` class and
+    execute the :meth:`launch() <MDFeaturePipeline.MDFeaturizer.launch>` method."""
+    return MDFeaturePipeline(**dict(locals())).launch()
 
-    MDFeaturizer.__doc__ = MDFeaturePipeline.__doc__
 
-def main():
-    """Command line execution of this building block. Please check the command line documentation."""
-
-    parser = argparse.ArgumentParser(
-        description="",
-        formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999),
-    )
-
-    parser.add_argument(
-    "-c",
-    "--config",
-    required=False,
-    help="This file can be a YAML file, JSON file or JSON string",
-    )
-
-    required_args = parser.add_argument_group("required arguments")
-    parser.add_argument(
-        "-f",
-        "--input_trajectory_path",
-        required=False,
-        help="Trajectory file path"
-    )
-
-    required_args.add_argument(
-        "-s",
-        "--input_topology_path",
-        required=True,
-        help="topology file path"
-    )
-
-    required_args.add_argument(
-        "-o",
-        "--output_dataset_pt_path",
-        required=True,
-        help="Output pt file path"
-    )
-
-    parser.add_argument(
-        "-p",
-        "--properties",
-        required=False,
-        help="Additional properties for the MDFeaturizer object.",
-    )
-
-    parser.add_argument(
-        "-l",
-        "--input_labels_npy_path",
-        required=True,
-        help="Input labels .npy file path"
-    )
-
-    parser.add_argument(
-        "-w",
-        "--input_weights_npy_path",
-        required=False,
-        help="Input weights .npy file path"
-    )
-
-    args = parser.parse_args()
-    config = args.config if args.config else None
-    properties = settings.ConfReader(config=config).get_prop_dic()
-
-    MDFeaturizer(
-                input_trajectory_path=args.input_trajectory_path,
-                input_labels_npy_path=args.input_labels_npy_path,
-                input_weights_npy_path=args.input_weights_npy_path,
-                input_topology_path=args.input_topology_path,  
-                output_dataset_pt_path=args.output_dataset_pt_path,  
-                properties=properties,
-        )
+mdfeaturizer.__doc__ = MDFeaturePipeline.__doc__
+main = MDFeaturePipeline.get_main(mdfeaturizer, "Obtain the Molecular Dynamics Features for PyTorch model training.")
 
 if __name__ == "__main__":
     main()

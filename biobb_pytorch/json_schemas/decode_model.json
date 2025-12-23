@@ -1,86 +1,86 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://bioexcel.eu/biobb_pytorch/json_schemas/1.0/decode_mdae",
-  "name": "biobb_pytorch DecodeMDAE",
-  "title": "Decode latent variables with a Molecular Dynamics AutoEncoder (MDAE) model.",
-  "description": "Apply the decoder part of a trained MDAE model to latent variables, reconstructing molecular dynamics features.",
-  "type": "object",
-  "info": {
-    "wrapped_software": {
-      "name": "PyTorch",
-      "version": ">=1.6.0",
-      "license": "BSD 3-Clause"
-    },
-    "ontology": {
-      "name": "EDAM",
-      "schema": "http://edamontology.org/EDAM.owl"
-    }
-  },
-  "required": [
-    "input_model_pth_path",
-    "input_dataset_npy_path",
-    "output_results_npz_path"
-  ],
-  "properties": {
-    "input_model_pth_path": {
-      "type": "string",
-      "description": "Path to the trained model file whose decoder will be used.",
-      "filetype": "input",
-      "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pth",
-      "enum": [
-        ".*\\.pth$"
-      ],
-      "file_formats": [
-        {
-          "extension": ".*\\.pth$",
-          "description": "PyTorch model file",
-          "edam": "format_2333"
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://bioexcel.eu/biobb_pytorch/json_schemas/1.0/decode_model",
+    "name": "biobb_pytorch EvaluateDecoder",
+    "title": "Evaluates a PyTorch autoencoder from the given properties.",
+    "description": "Evaluates a PyTorch autoencoder from the given properties.",
+    "type": "object",
+    "info": {
+        "wrapped_software": {
+            "name": "PyTorch",
+            "version": ">=1.6.0",
+            "license": "BSD 3-Clause"
+        },
+        "ontology": {
+            "name": "EDAM",
+            "schema": "http://edamontology.org/EDAM.owl"
         }
-      ]
     },
-    "input_dataset_npy_path": {
-      "type": "string",
-      "description": "Path to the input latent variables file in NumPy format (e.g. encoded 'z').",
-      "filetype": "input",
-      "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_input_latent_space.npy",
-      "enum": [
-        ".*\\.npy$"
-      ],
-      "file_formats": [
-        {
-          "extension": ".*\\.npy$",
-          "description": "Latent variables in NumPy format",
-          "edam": "format_4003"
-        }
-      ]
-    },
-    "output_results_npz_path": {
-      "type": "string",
-      "description": "Path to the output reconstructed data file (compressed NumPy archive, typically containing 'xhat').",
-      "filetype": "output",
-      "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_output_reconstructed_data.npz",
-      "enum": [
-        ".*\\.npz$"
-      ],
-      "file_formats": [
-        {
-          "extension": ".*\\.npz$",
-          "description": "Compressed NumPy archive with reconstructed data",
-          "edam": "format_2333"
-        }
-      ]
-    },
+    "required": [
+        "input_model_pth_path",
+        "input_dataset_npy_path",
+        "output_results_npz_path"
+    ],
     "properties": {
-      "type": "object",
-      "properties": {
-        "Dataset": {
-          "type": "object",
-          "description": "DataLoader options (e.g. batch_size, shuffle) for batching the latent variables."
+        "input_model_pth_path": {
+            "type": "string",
+            "description": "Path to the trained model file whose decoder will be used",
+            "filetype": "input",
+            "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pth",
+            "enum": [
+                ".*\\.pth$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.pth$",
+                    "description": "Path to the trained model file whose decoder will be used",
+                    "edam": "format_2333"
+                }
+            ]
+        },
+        "input_dataset_npy_path": {
+            "type": "string",
+            "description": "Path to the input latent variables file in NumPy format (e.g. encoded 'z')",
+            "filetype": "input",
+            "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.npy",
+            "enum": [
+                ".*\\.npy$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.npy$",
+                    "description": "Path to the input latent variables file in NumPy format (e.g. encoded 'z')",
+                    "edam": "format_2333"
+                }
+            ]
+        },
+        "output_results_npz_path": {
+            "type": "string",
+            "description": "Path to the output reconstructed data file (compressed NumPy archive, typically containing 'xhat')",
+            "filetype": "output",
+            "sample": "https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_results.npz",
+            "enum": [
+                ".*\\.npz$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.npz$",
+                    "description": "Path to the output reconstructed data file (compressed NumPy archive, typically containing 'xhat')",
+                    "edam": "format_2333"
+                }
+            ]
+        },
+        "properties": {
+            "type": "object",
+            "properties": {
+                "Dataset": {
+                    "type": "object",
+                    "default": {},
+                    "wf_prop": false,
+                    "description": "DataLoader options (e.g. batch_size, shuffle) for batching the latent variables."
+                }
+            }
         }
-      }
-    }
-  },
-  "additionalProperties": false
+    },
+    "additionalProperties": false
 }
-
-

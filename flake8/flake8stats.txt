@@ -1,0 +1,41 @@
+1     E111 indentation is not a multiple of 4
+1     E117 over-indented
+1     E122 continuation line missing indentation or outdented
+5     E124 closing bracket does not match visual indentation
+1     E125 continuation line with same indent as next logical line
+4     E126 continuation line over-indented for hanging indent
+36    E127 continuation line over-indented for visual indent
+46    E128 continuation line under-indented for visual indent
+1     E129 visually indented line with same indent as next logical line
+9     E201 whitespace after '('
+13    E202 whitespace before ')'
+20    E203 whitespace before ':'
+60    E221 multiple spaces before operator
+3     E222 multiple spaces after operator
+167   E225 missing whitespace around operator
+197   E231 missing whitespace after ','
+38    E241 multiple spaces after ':'
+6     E251 unexpected spaces around keyword / parameter equals
+11    E261 at least two spaces before inline comment
+2     E265 block comment should start with '# '
+6     E266 too many leading '#' for block comment
+1     E272 multiple spaces before keyword
+13    E275 missing whitespace after keyword
+1     E301 expected 1 blank line, found 0
+36    E302 expected 2 blank lines, found 1
+4     E303 too many blank lines (3)
+3     E305 expected 2 blank lines after class or function definition, found 1
+1     E402 module level import not at top of file
+1     E701 multiple statements on one line (colon)
+5     E741 ambiguous variable name 'l'
+16    F401 'biobb_pytorch.mdae.explainability.LRP.*' imported but unused
+1     F403 'from biobb_pytorch.mdae.explainability.LRP import *' used; unable to detect undefined names
+1     F811 redefinition of unused 'lrp_encoder' from line 104
+1     F821 undefined name 'pd'
+3     F841 local variable 'line' is assigned to but never used
+79    W291 trailing whitespace
+19    W292 no newline at end of file
+134   W293 blank line contains whitespace
+4     W391 blank line at end of file
+8     W503 line break before binary operator
+1     W504 line break after binary operator

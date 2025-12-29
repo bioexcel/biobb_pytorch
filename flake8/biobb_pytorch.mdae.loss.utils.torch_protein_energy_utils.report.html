@@ -1,0 +1,2071 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>flake8 violations: biobb_pytorch/mdae/loss/utils/torch_protein_energy_utils.py</title>
+      <meta http-equiv="Content-Type" value="text/html; charset=UTF-8">
+      <link rel="stylesheet" href="styles.css">
+<script>
+function bindHandler(link) {
+   var code = link.getAttribute('data-code');
+   var key = location.pathname + '#' + code;
+
+   var ul = link.parentNode.querySelector('.details');
+   if (sessionStorage[key] != 'open') {
+      ul.style.display = 'none';
+   }
+   link.addEventListener('click', function (event) {
+      if (!ul.style.display || ul.style.display == 'none') {
+         ul.style.display = 'block';
+         sessionStorage[key] = 'open';
+      } else {
+         ul.style.display = 'none';
+         sessionStorage[key] = 'closed';
+      }
+   });
+}
+
+window.addEventListener('DOMContentLoaded', function () {
+   var links = document.querySelectorAll('#index > li > a');
+   for (var i = 0; i < links.length; i++) {
+      bindHandler(links[i]);
+   }
+});
+</script>
+   </head>
+   <body>
+      <div id="masthead" class="sev-1"></div>
+      <div id="page">
+         <p id="srclink">
+            <a title="View full annotated source"
+               href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html">
+               <img src="file.svg" alt="&#x2261;">
+            </a></p>
+         <h1>
+            <a href="index.html">
+               <img src="back.svg" alt="&#x2B05;">
+               biobb_pytorch/mdae/loss/utils/torch_protein_energy_utils.py
+            </a>
+         </h1>
+
+         <ul id="index">
+         
+         <li>
+            <a data-code="F841">
+               <span class="count sev-1">
+                  1
+               </span>
+               <strong>F841:</strong> local variable 'line' is assigned to but never used
+               
+            </a>
+            <ul class="details">
+            <li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l214">
+                  <tt><i>214</i>     <span class="n">line</span> <span class="o">=</span> <span class="n">f_in</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span></tt>
+               </a>
+            </li>
+            </ul>
+         </li>
+         
+         <li>
+            <a data-code="E225">
+               <span class="count sev-2">
+                  134
+               </span>
+               <strong>E225:</strong> missing whitespace around operator
+               
+            </a>
+            <ul class="details">
+            <li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l32">
+                  <tt><i>32</i>             <span class="n">depth</span><span class="o">+=</span><span class="mi">1</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator (in 2 places):</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l37">
+                  <tt><i>37</i>                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">contents</span><span class="p">)</span><span class="o">!=</span><span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">contents</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">!=</span><span class="mi">5</span><span class="p">:</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l39">
+                  <tt><i>39</i>                 <span class="n">res</span><span class="o">=</span><span class="n">contents</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator (in 2 places):</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l40">
+                  <tt><i>40</i>                 <span class="k">if</span> <span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;&quot;&#39;</span> <span class="ow">and</span> <span class="n">res</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span><span class="s1">&#39;&quot;&#39;</span><span class="p">:</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l47">
+                  <tt><i>47</i>                                        <span class="o">+</span><span class="s1">&#39;&quot;XXX&quot; but got </span><span class="si">%s</span><span class="s1"> instead&#39;</span> <span class="o">%</span> <span class="n">res</span><span class="p">))</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator (in 2 places):</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l54">
+                  <tt><i>54</i>         <span class="k">if</span> <span class="n">entry</span><span class="o">==</span><span class="s1">&#39;!entry.&#39;</span> <span class="ow">and</span> <span class="n">unit_atoms</span><span class="o">==</span><span class="s1">&#39;.unit.atoms &#39;</span><span class="p">:</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l55">
+                  <tt><i>55</i>             <span class="n">depth</span><span class="o">=</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l57">
+                  <tt><i>57</i>                 <span class="k">if</span> <span class="n">line</span><span class="p">[</span> <span class="mi">0</span><span class="p">]</span><span class="o">!=</span><span class="s1">&#39; &#39;</span><span class="p">:</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator (in 3 places):</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l60">
+                  <tt><i>60</i>                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">contents</span><span class="p">)</span><span class="o">&lt;</span><span class="mi">3</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">contents</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">&gt;</span><span class="mi">4</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">contents</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">&gt;</span><span class="mi">4</span><span class="p">:</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l72">
+                  <tt><i>72</i>                                        <span class="o">+</span><span class="s1">&#39;&quot;XXX&quot; but got </span><span class="si">%s</span><span class="s1"> instead&#39;</span> <span class="o">%</span> <span class="n">res</span><span class="p">))</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l88">
+                  <tt><i>88</i>     <span class="n">file_names</span> <span class="o">=</span><span class="p">(</span><span class="s1">&#39;amino12.lib&#39;</span><span class="p">,</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l111">
+                  <tt><i>111</i>     <span class="n">other_parameters</span><span class="p">[</span><span class="s1">&#39;vdw_potential_well_depth&#39;</span><span class="p">]</span><span class="o">=</span><span class="p">{}</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l112">
+                  <tt><i>112</i>     <span class="n">other_parameters</span><span class="p">[</span><span class="s1">&#39;H_bond_10_12_parameters&#39;</span><span class="p">]</span><span class="o">=</span><span class="p">{}</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l113">
+                  <tt><i>113</i>     <span class="n">other_parameters</span><span class="p">[</span><span class="s1">&#39;equivalences&#39;</span><span class="p">]</span><span class="o">=</span><span class="p">{}</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l114">
+                  <tt><i>114</i>     <span class="n">other_parameters</span><span class="p">[</span><span class="s1">&#39;charge&#39;</span><span class="p">]</span><span class="o">=</span><span class="p">{}</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l115">
+                  <tt><i>115</i>     <span class="n">other_parameters</span><span class="p">[</span><span class="s1">&#39;connectivity&#39;</span><span class="p">]</span><span class="o">=</span><span class="p">{}</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l200">
+                  <tt><i>200</i>         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">contents</span><span class="p">)</span><span class="o">==</span><span class="mi">2</span><span class="p">:</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator (in 2 places):</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l240">
+                  <tt><i>240</i>         <span class="k">if</span> <span class="n">line</span><span class="o">==</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="ow">or</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">==</span><span class="s1">&#39;&#39;</span><span class="p">:</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l250">
+                  <tt><i>250</i>             <span class="n">angle</span><span class="o">=</span><span class="p">(</span><span class="n">atom1</span><span class="p">,</span> <span class="n">atom2</span><span class="p">,</span> <span class="n">atom3</span><span class="p">)</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l252">
+                  <tt><i>252</i>         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">contents</span><span class="p">)</span><span class="o">!=</span><span class="mi">2</span><span class="p">:</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l255">
+                  <tt><i>255</i>         <span class="n">angle_force</span><span class="p">[</span><span class="n">angle</span><span class="p">]</span><span class="o">=</span><span class="n">force_constant</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l256">
+                  <tt><i>256</i>         <span class="n">angle_equil</span><span class="p">[</span><span class="n">angle</span><span class="p">]</span><span class="o">=</span><span class="n">equil_angle</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l279">
+                  <tt><i>279</i>             <span class="k">if</span> <span class="n">torsion_period</span><span class="p">[</span><span class="n">torsion</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l284">
+                  <tt><i>284</i>             <span class="k">elif</span> <span class="n">torsion_period</span><span class="p">[</span><span class="n">torsion</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">:</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator (in 2 places):</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l300">
+                  <tt><i>300</i>         <span class="k">if</span> <span class="n">line</span><span class="o">==</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="ow">or</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">==</span><span class="s1">&#39;&#39;</span><span class="p">:</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator (in 2 places):</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l329">
+                  <tt><i>329</i>         <span class="k">if</span> <span class="n">line</span><span class="o">==</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="ow">or</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">==</span><span class="s1">&#39;&#39;</span><span class="p">:</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l338">
+                  <tt><i>338</i>         <span class="n">other_parameters</span><span class="p">[</span><span class="s1">&#39;H_bond_10_12_parameters&#39;</span><span class="p">][</span><span class="n">pair</span><span class="p">]</span><span class="o">=</span><span class="n">contents</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator (in 2 places):</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l344">
+                  <tt><i>344</i>         <span class="k">if</span> <span class="n">line</span><span class="o">==</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="ow">or</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">==</span><span class="s1">&#39;&#39;</span><span class="p">:</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator (in 2 places):</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l353">
+                  <tt><i>353</i>         <span class="k">if</span> <span class="n">line</span><span class="o">==</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="ow">or</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">==</span><span class="s1">&#39;&#39;</span><span class="p">:</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l427">
+                  <tt><i>427</i>             <span class="k">if</span> <span class="p">(</span><span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">res_mask</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;HIS&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>  <span class="c1"># if a HIS residue</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l431">
+                  <tt><i>431</i>                     <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">res_mask</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span><span class="s1">&#39;HID&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator (in 2 places):</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l435">
+                  <tt><i>435</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;HIS&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="s1">&#39;HIE&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator (in 2 places):</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l437">
+                  <tt><i>437</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;HB1&#39;</span><span class="p">,</span> <span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;MET&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HB3&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator (in 2 places):</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l438">
+                  <tt><i>438</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;HG1&#39;</span><span class="p">,</span> <span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;MET&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HG3&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator (in 2 places):</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l439">
+                  <tt><i>439</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;HB1&#39;</span><span class="p">,</span> <span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;ASN&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HB3&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l461">
+                  <tt><i>461</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HD1&#39;</span><span class="p">,</span> <span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;ILE&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HD11&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l462">
+                  <tt><i>462</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HD2&#39;</span><span class="p">,</span> <span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;ILE&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HD12&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l463">
+                  <tt><i>463</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HD3&#39;</span><span class="p">,</span> <span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;ILE&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HD13&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l464">
+                  <tt><i>464</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HB1&#39;</span><span class="p">,</span> <span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;PHE&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HB3&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l465">
+                  <tt><i>465</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HB1&#39;</span><span class="p">,</span> <span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;GLU&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HB3&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l466">
+                  <tt><i>466</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HG1&#39;</span><span class="p">,</span> <span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;GLU&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HG3&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l467">
+                  <tt><i>467</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HB1&#39;</span><span class="p">,</span> <span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;LEU&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HB3&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l468">
+                  <tt><i>468</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HB1&#39;</span><span class="p">,</span> <span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;ARG&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HB3&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l469">
+                  <tt><i>469</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HG1&#39;</span><span class="p">,</span> <span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;ARG&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HG3&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l470">
+                  <tt><i>470</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HD1&#39;</span><span class="p">,</span> <span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;ARG&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HD3&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l471">
+                  <tt><i>471</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HB1&#39;</span><span class="p">,</span> <span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;ASP&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HB3&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l472">
+                  <tt><i>472</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HA1&#39;</span><span class="p">,</span> <span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;GLY&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HA3&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l473">
+                  <tt><i>473</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HB1&#39;</span><span class="p">,</span> <span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;LYS&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HB3&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l474">
+                  <tt><i>474</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HG1&#39;</span><span class="p">,</span> <span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;LYS&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HG3&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l475">
+                  <tt><i>475</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HD1&#39;</span><span class="p">,</span> <span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;LYS&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HD3&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l476">
+                  <tt><i>476</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HE1&#39;</span><span class="p">,</span> <span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;LYS&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HE3&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l477">
+                  <tt><i>477</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HB1&#39;</span><span class="p">,</span> <span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;TYR&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HB3&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l478">
+                  <tt><i>478</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HB1&#39;</span><span class="p">,</span> <span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;HIP&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HB3&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l479">
+                  <tt><i>479</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HB1&#39;</span><span class="p">,</span> <span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;SER&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HB3&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l480">
+                  <tt><i>480</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HG1&#39;</span><span class="p">,</span> <span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;SER&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HG&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l481">
+                  <tt><i>481</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HB1&#39;</span><span class="p">,</span> <span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;PRO&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HB3&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l482">
+                  <tt><i>482</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HG1&#39;</span><span class="p">,</span> <span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;PRO&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HG3&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l483">
+                  <tt><i>483</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HD1&#39;</span><span class="p">,</span> <span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;PRO&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HD3&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l484">
+                  <tt><i>484</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HB1&#39;</span><span class="p">,</span> <span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;LEU&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HB3&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l485">
+                  <tt><i>485</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HB1&#39;</span><span class="p">,</span> <span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;GLN&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HB3&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l486">
+                  <tt><i>486</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HG1&#39;</span><span class="p">,</span> <span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;GLN&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HG3&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l487">
+                  <tt><i>487</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HB1&#39;</span><span class="p">,</span> <span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;TRP&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HB3&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l493">
+                  <tt><i>493</i>     <span class="n">atom_charges</span><span class="o">=</span><span class="p">[</span><span class="n">other_parameters</span><span class="p">[</span><span class="s1">&#39;charge&#39;</span><span class="p">][</span><span class="n">res</span><span class="p">][</span><span class="n">atom</span><span class="p">]</span> <span class="k">for</span> <span class="n">atom</span><span class="p">,</span> <span class="n">res</span><span class="p">,</span> <span class="n">resid</span> <span class="ow">in</span> <span class="n">atom_names</span><span class="p">]</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l510">
+                  <tt><i>510</i>     <span class="n">cmat</span><span class="o">=</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">pdist</span><span class="p">((</span><span class="n">dataset</span><span class="p">)</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)))</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l516">
+                  <tt><i>516</i>         <span class="k">if</span> <span class="n">cmat</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="o">-</span><span class="n">cmat</span><span class="p">[</span><span class="n">bond_idxs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span><span class="o">&lt;</span><span class="mf">0.25</span><span class="p">:</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator (in 2 places):</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l518">
+                  <tt><i>518</i>                             <span class="o">+</span><span class="p">(</span><span class="n">cmat</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="o">-</span><span class="n">cmat</span><span class="p">[</span><span class="n">bond_idxs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span><span class="o">+</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l520">
+                  <tt><i>520</i>             <span class="n">version</span><span class="o">+=</span><span class="mi">1</span>  <span class="c1"># try version 2 instead</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l522">
+                  <tt><i>522</i>         <span class="n">full_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">cmat</span><span class="o">&lt;</span><span class="n">mid</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int8&#39;</span><span class="p">)</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l524">
+                  <tt><i>524</i>         <span class="n">full_mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">cmat</span><span class="o">&lt;</span><span class="p">(</span><span class="mf">1.643</span><span class="o">+</span><span class="mf">2.129</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int8&#39;</span><span class="p">)</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l531">
+                  <tt><i>531</i>             <span class="n">i</span><span class="p">,</span><span class="n">j</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">max_bond_dist</span><span class="o">&gt;</span><span class="n">cdist</span><span class="p">)</span><span class="o">.</span><span class="n">triu</span><span class="p">(</span><span class="n">diagonal</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l532">
+                  <tt><i>532</i>             <span class="n">remove</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">j</span><span class="o">-</span><span class="n">i</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">30</span><span class="p">)</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l533">
+                  <tt><i>533</i>             <span class="n">max_bond_dist</span><span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="n">remove</span><span class="p">],</span> <span class="n">j</span><span class="p">[</span><span class="n">remove</span><span class="p">]]</span><span class="o">=</span><span class="mf">0.0</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l552">
+                  <tt><i>552</i>                 <span class="k">if</span> <span class="n">resid</span> <span class="o">!=</span><span class="n">current_resid</span><span class="p">:</span><span class="c1"># and atom2 == &#39;C&#39;:</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator (in 2 places):</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l563">
+                  <tt><i>563</i>                 <span class="k">if</span> <span class="n">atom1</span><span class="o">==</span><span class="s1">&#39;N&#39;</span> <span class="ow">and</span> <span class="n">atom2</span><span class="o">==</span><span class="s1">&#39;CA&#39;</span><span class="p">:</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l574">
+                  <tt><i>574</i>             <span class="k">if</span> <span class="n">resid</span> <span class="o">!=</span><span class="n">current_resid</span><span class="p">:</span>  <span class="c1"># and atom2 == &#39;C&#39;:</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l578">
+                  <tt><i>578</i>     <span class="k">if</span> <span class="n">version</span> <span class="o">==</span><span class="mi">5</span><span class="p">:</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l588">
+                  <tt><i>588</i>             <span class="k">if</span> <span class="n">resid</span><span class="o">!=</span><span class="n">current_resid</span><span class="p">:</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l591">
+                  <tt><i>591</i>                 <span class="n">current_resid</span><span class="o">=</span><span class="n">resid</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l592">
+                  <tt><i>592</i>             <span class="k">if</span> <span class="n">atom1</span><span class="o">==</span><span class="s1">&#39;N&#39;</span><span class="p">:</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l594">
+                  <tt><i>594</i>                     <span class="k">if</span> <span class="n">atom2</span><span class="o">==</span><span class="s1">&#39;C&#39;</span><span class="p">:</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l608">
+                  <tt><i>608</i>     <span class="k">if</span> <span class="n">version</span> <span class="o">&lt;</span><span class="mi">4</span><span class="p">:</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l628">
+                  <tt><i>628</i>             <span class="k">if</span> <span class="n">atom_label</span><span class="o">==</span><span class="s1">&#39;string&#39;</span><span class="p">:</span>  <span class="c1"># string of atom labels, doesn&#39;t handle Proline alternate ordering</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l631">
+                  <tt><i>631</i>             <span class="k">elif</span> <span class="n">atom_label</span><span class="o">==</span><span class="s1">&#39;set&#39;</span><span class="p">:</span>  <span class="c1"># set of atom labels</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l639">
+                  <tt><i>639</i>     <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">tracker</span><span class="p">)</span><span class="o">&lt;</span><span class="n">N</span><span class="p">:</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l662">
+                  <tt><i>662</i>                 <span class="k">if</span> <span class="n">atom3</span><span class="o">&gt;</span><span class="n">atom1</span><span class="p">:</span> <span class="c1"># each angle will only be counter once</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator (in 2 places):</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l675">
+                  <tt><i>675</i>                         <span class="k">if</span> <span class="n">atom4</span><span class="o">&gt;</span><span class="n">atom1</span> <span class="ow">and</span> <span class="n">atom2</span><span class="o">!=</span><span class="n">atom4</span><span class="p">:</span>  <span class="c1"># each torsion will be counter once</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l693">
+                  <tt><i>693</i>     <span class="k">if</span> <span class="n">bond_max_conv</span><span class="o">&lt;</span><span class="mi">3</span> <span class="ow">and</span> <span class="n">fix_slice_method</span><span class="p">:</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l696">
+                  <tt><i>696</i>     <span class="k">if</span> <span class="n">angle_max_conv</span><span class="o">&lt;</span><span class="mi">5</span> <span class="ow">and</span> <span class="n">fix_slice_method</span><span class="p">:</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l699">
+                  <tt><i>699</i>     <span class="k">if</span> <span class="n">torsion_max_conv</span><span class="o">&lt;</span><span class="mi">7</span> <span class="ow">and</span> <span class="n">fix_slice_method</span><span class="p">:</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l700">
+                  <tt><i>700</i>         <span class="n">torsion_max_conv</span><span class="o">=</span><span class="mi">7</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l708">
+                  <tt><i>708</i>     <span class="n">angle_para</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">angle_equil</span><span class="p">[</span><span class="n">angle</span><span class="p">],</span> <span class="n">angle_force</span><span class="p">[</span><span class="n">angle</span><span class="p">]]</span> <span class="k">if</span> <span class="n">angle</span> <span class="ow">in</span> <span class="n">angle_equil</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l729">
+                  <tt><i>729</i>             <span class="n">t_unique_para</span><span class="p">[</span><span class="n">torsion</span><span class="p">]</span><span class="o">=</span> <span class="p">[</span><span class="n">torsion_factor</span><span class="p">[</span><span class="n">torsion_xx</span><span class="p">],</span> <span class="n">torsion_barrier</span><span class="p">[</span><span class="n">torsion_xx</span><span class="p">],</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l733">
+                  <tt><i>733</i>             <span class="n">t_unique_para</span><span class="p">[</span><span class="n">torsion</span><span class="p">]</span><span class="o">=</span> <span class="p">[</span><span class="n">torsion_factor</span><span class="p">[</span><span class="n">torsion_xb</span><span class="p">],</span> <span class="n">torsion_barrier</span><span class="p">[</span><span class="n">torsion_xb</span><span class="p">],</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l736">
+                  <tt><i>736</i>             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ERROR: Torsion </span><span class="si">%s</span><span class="s1"> cannot be found in torsion_barrier and will not be included&#39;</span><span class="o">%</span> <span class="n">torsion</span><span class="p">)</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l739">
+                  <tt><i>739</i>     <span class="n">torsion_para</span><span class="p">[:,</span><span class="mi">0</span><span class="p">,:]</span><span class="o">=</span><span class="mf">1.0</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l760">
+                  <tt><i>760</i>         <span class="n">mask_index</span> <span class="o">=</span> <span class="n">bond_idxs</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="n">bond_conv</span><span class="o">==</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="n">bond_max_conv</span><span class="o">-</span><span class="mi">2</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l762">
+                  <tt><i>762</i>         <span class="n">b_equil</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">mask_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">bond_para</span><span class="p">[</span><span class="n">bond_conv</span><span class="o">==</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l763">
+                  <tt><i>763</i>         <span class="n">b_force</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">mask_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">bond_para</span><span class="p">[</span><span class="n">bond_conv</span><span class="o">==</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l768">
+                  <tt><i>768</i>     <span class="n">angle_conv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">angle_conv</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">&lt;</span><span class="n">angle_conv</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">angle_conv</span><span class="p">,</span><span class="n">angle_conv</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>  <span class="c1"># remove mirrors</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l772">
+                  <tt><i>772</i>     <span class="n">angle_weights</span><span class="o">=</span><span class="p">[]</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l782">
+                  <tt><i>782</i>         <span class="n">mask_index</span> <span class="o">=</span> <span class="n">angle_idxs</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[(</span><span class="n">angle_conv</span><span class="o">==</span><span class="n">angle</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)]</span><span class="o">+</span><span class="n">angle_max_conv</span><span class="o">-</span><span class="mi">3</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l783">
+                  <tt><i>783</i>         <span class="n">a_equil</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">mask_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">angle_para</span><span class="p">[(</span><span class="n">angle_conv</span><span class="o">==</span><span class="n">angle</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l784">
+                  <tt><i>784</i>         <span class="n">a_force</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">mask_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">angle_para</span><span class="p">[(</span><span class="n">angle_conv</span><span class="o">==</span><span class="n">angle</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">]</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l785">
+                  <tt><i>785</i>         <span class="n">angle_masks</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">mask_index</span><span class="p">]</span><span class="o">=</span><span class="kc">True</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l790">
+                  <tt><i>790</i>     <span class="n">torsion_conv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">torsion_conv</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">&lt;</span><span class="n">torsion_conv</span><span class="p">[:,</span><span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">torsion_conv</span><span class="p">,</span><span class="n">torsion_conv</span><span class="p">[:,[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]])</span>  <span class="c1"># remove mirrors</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l799">
+                  <tt><i>799</i>     <span class="n">t_para</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">,:]</span><span class="o">=</span><span class="mf">1.0</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l809">
+                  <tt><i>809</i>         <span class="n">mask_index</span> <span class="o">=</span> <span class="n">torsion_idxs</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[(</span><span class="n">torsion_conv</span><span class="o">==</span><span class="n">torsion</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)]</span><span class="o">+</span><span class="n">torsion_max_conv</span><span class="o">-</span><span class="mi">4</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l811">
+                  <tt><i>811</i>         <span class="n">t_para</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">mask_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">torsion_para</span><span class="p">[(</span><span class="n">torsion_conv</span><span class="o">==</span><span class="n">torsion</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)]</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l826">
+                  <tt><i>826</i>         <span class="n">atom_charges</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">atom_charges</span><span class="p">)</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l886">
+                  <tt><i>886</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;OXT&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;O&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l888">
+                  <tt><i>888</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;HSD&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HID&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l889">
+                  <tt><i>889</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;HSE&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HIE&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l909">
+                  <tt><i>909</i>         <span class="k">if</span> <span class="n">resid</span><span class="o">!=</span> <span class="n">current_resid</span><span class="p">:</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l1060">
+                  <tt><i>1060</i>         <span class="n">atom_charges</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">atom_charges</span><span class="p">)</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l1063">
+                  <tt><i>1063</i>         <span class="n">q1q2</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">angle_idxs</span><span class="p">[:,(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]</span><span class="o">.</span><span class="n">T</span><span class="p">)]</span><span class="o">=</span><span class="mf">0.0</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l1065">
+                  <tt><i>1065</i>             <span class="n">q1q2</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">torsion_idxs</span><span class="p">[:,(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)]</span><span class="o">.</span><span class="n">T</span><span class="p">)]</span><span class="o">/=</span><span class="mf">1.2</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace around operator:</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l1067">
+                  <tt><i>1067</i>             <span class="n">q1q2</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">torsion_idxs</span><span class="p">[:,(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)]</span><span class="o">.</span><span class="n">T</span><span class="p">)]</span><span class="o">=</span><span class="mf">0.0</span></tt>
+               </a>
+            </li>
+            </ul>
+         </li>
+         
+         <li>
+            <a data-code="E231">
+               <span class="count sev-2">
+                  91
+               </span>
+               <strong>E231:</strong> missing whitespace after ','
+               
+                  (and 1 similar)
+               
+            </a>
+            <ul class="details">
+            <li>
+               
+               <p>Missing whitespace after ',' (in 6 places):</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l62">
+                  <tt><i>62</i>                 <span class="n">pdb_name</span><span class="p">,</span> <span class="n">amber_name</span><span class="p">,</span><span class="n">_</span><span class="p">,</span><span class="n">_</span><span class="p">,</span><span class="n">_</span><span class="p">,</span><span class="n">index</span><span class="p">,</span><span class="n">element_number</span><span class="p">,</span><span class="n">charge</span> <span class="o">=</span> <span class="n">contents</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',' (in 2 places):</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l116">
+                  <tt><i>116</i>     <span class="n">read_lib_file</span><span class="p">(</span><span class="n">file_names</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">amber_atoms</span><span class="p">,</span><span class="n">other_parameters</span><span class="p">[</span><span class="s1">&#39;charge&#39;</span><span class="p">],</span> <span class="n">other_parameters</span><span class="p">[</span><span class="s1">&#39;connectivity&#39;</span><span class="p">])</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l201">
+                  <tt><i>201</i>             <span class="n">mass</span><span class="p">,</span> <span class="n">polarizability</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">contents</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="nb">float</span><span class="p">(</span><span class="n">contents</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l360">
+                  <tt><i>360</i>                               <span class="n">atom_label</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;set&#39;</span><span class="p">,</span><span class="s1">&#39;string&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l364">
+                  <tt><i>364</i>                               <span class="n">return_type</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;mask&#39;</span><span class="p">,</span><span class="s1">&#39;idxs&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l459">
+                  <tt><i>459</i>         <span class="n">pdb_atom_names</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">pdb_atom_names</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;HG11&#39;</span><span class="p">,</span> <span class="n">pdb_atom_names</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;ILE&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;HG13&#39;</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l490">
+                  <tt><i>490</i>     <span class="n">p_atom_names</span> <span class="o">=</span> <span class="p">[[</span><span class="n">atom</span><span class="p">,</span><span class="n">res</span><span class="p">,</span> <span class="n">resid</span><span class="p">]</span> <span class="k">if</span> <span class="n">atom</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;H2&#39;</span><span class="p">,</span> <span class="s1">&#39;H3&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="p">[</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="n">res</span><span class="p">,</span> <span class="n">resid</span><span class="p">]</span> <span class="k">for</span> <span class="n">atom</span><span class="p">,</span> <span class="n">res</span><span class="p">,</span> <span class="n">resid</span> <span class="ow">in</span> <span class="n">pdb_atom_names</span><span class="p">]</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l503">
+                  <tt><i>503</i>         <span class="n">atom_R</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="n">vdw_para</span><span class="p">[</span><span class="n">equiv</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">atom</span><span class="p">,</span><span class="n">atom</span><span class="p">)][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">atom</span><span class="p">,</span> <span class="n">res</span><span class="p">,</span> <span class="n">resid</span> <span class="ow">in</span> <span class="n">atom_names</span><span class="p">])</span>  <span class="c1"># radius</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l504">
+                  <tt><i>504</i>         <span class="n">atom_e</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="n">vdw_para</span><span class="p">[</span><span class="n">equiv</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">atom</span><span class="p">,</span><span class="n">atom</span><span class="p">)][</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">atom</span><span class="p">,</span> <span class="n">res</span><span class="p">,</span> <span class="n">resid</span> <span class="ow">in</span> <span class="n">atom_names</span><span class="p">])</span>  <span class="c1"># welldepth</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l510">
+                  <tt><i>510</i>     <span class="n">cmat</span><span class="o">=</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">functional</span><span class="o">.</span><span class="n">pdist</span><span class="p">((</span><span class="n">dataset</span><span class="p">)</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)))</span><span class="o">.</span><span class="n">cpu</span><span class="p">()</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l512">
+                  <tt><i>512</i>         <span class="n">bond_idxs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argpartition</span><span class="p">(</span><span class="n">cmat</span><span class="p">,</span> <span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">N</span><span class="p">))</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l530">
+                  <tt><i>530</i>             <span class="n">cdist</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cdist</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="n">dataset</span><span class="o">.</span><span class="n">T</span><span class="p">)</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l531">
+                  <tt><i>531</i>             <span class="n">i</span><span class="p">,</span><span class="n">j</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">max_bond_dist</span><span class="o">&gt;</span><span class="n">cdist</span><span class="p">)</span><span class="o">.</span><span class="n">triu</span><span class="p">(</span><span class="n">diagonal</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">numpy</span><span class="p">())</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',' (in 2 places):</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l537">
+                  <tt><i>537</i>         <span class="n">max_bond_dist</span> <span class="o">=</span> <span class="n">max_bond_dist</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">triu</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">N</span><span class="p">,</span><span class="n">N</span><span class="p">)),</span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">))]</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l538">
+                  <tt><i>538</i>         <span class="n">full_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">greater</span><span class="p">(</span><span class="n">max_bond_dist</span><span class="p">,</span><span class="n">cmat</span><span class="p">)</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ':':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l552">
+                  <tt><i>552</i>                 <span class="k">if</span> <span class="n">resid</span> <span class="o">!=</span><span class="n">current_resid</span><span class="p">:</span><span class="c1"># and atom2 == &#39;C&#39;:</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l573">
+                  <tt><i>573</i>                     <span class="n">bond_idxs</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">i2</span><span class="p">,</span><span class="n">i1</span><span class="p">])</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l577">
+                  <tt><i>577</i>             <span class="n">current_atoms</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">atom1</span><span class="p">,</span><span class="n">i1</span><span class="p">])</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l598">
+                  <tt><i>598</i>                         <span class="n">bond_idxs</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">i2</span><span class="p">,</span><span class="n">i1</span><span class="p">])</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l606">
+                  <tt><i>606</i>                     <span class="n">bond_idxs</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">i2</span><span class="p">,</span><span class="n">i1</span><span class="p">])</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l607">
+                  <tt><i>607</i>             <span class="n">current_atoms</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">atom1</span><span class="p">,</span><span class="n">i1</span><span class="p">])</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l687">
+                  <tt><i>687</i>                             <span class="n">bond_14_idxs</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">atom1</span><span class="p">,</span><span class="n">atom4</span><span class="p">])</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l706">
+                  <tt><i>706</i>               <span class="k">else</span> <span class="p">[</span><span class="n">bond_equil</span><span class="p">[(</span><span class="n">bond</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">bond</span><span class="p">[</span><span class="mi">0</span><span class="p">])],</span> <span class="n">bond_force</span><span class="p">[(</span><span class="n">bond</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">bond</span><span class="p">[</span><span class="mi">0</span><span class="p">])]]</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',' (in 2 places):</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l709">
+                  <tt><i>709</i>               <span class="k">else</span> <span class="p">[</span><span class="n">angle_equil</span><span class="p">[(</span><span class="n">angle</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">angle</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">angle</span><span class="p">[</span><span class="mi">0</span><span class="p">])],</span> <span class="n">angle_force</span><span class="p">[(</span><span class="n">angle</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">angle</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">angle</span><span class="p">[</span><span class="mi">0</span><span class="p">])]]</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',' (in 2 places):</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l737">
+                  <tt><i>737</i>     <span class="n">torsion_para</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">torsion_types</span><span class="p">),</span><span class="mi">4</span><span class="p">,</span><span class="n">max_para</span><span class="p">))</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',' (in 2 places):</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l739">
+                  <tt><i>739</i>     <span class="n">torsion_para</span><span class="p">[:,</span><span class="mi">0</span><span class="p">,:]</span><span class="o">=</span><span class="mf">1.0</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l740">
+                  <tt><i>740</i>     <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">torsion</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">torsion_types</span><span class="p">):</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',' (in 2 places):</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l742">
+                  <tt><i>742</i>         <span class="n">torsion_para</span><span class="p">[</span><span class="n">i</span><span class="p">,:,:</span><span class="nb">len</span><span class="p">(</span><span class="n">para</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span> <span class="o">=</span> <span class="n">para</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',' (in 4 places):</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l745">
+                  <tt><i>745</i>         <span class="n">torsion_para</span><span class="p">[:,</span><span class="mi">3</span><span class="p">,:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">torsion_para</span><span class="p">[:,</span><span class="mi">3</span><span class="p">,:])</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l749">
+                  <tt><i>749</i>     <span class="n">bond_masks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">bond_max_conv</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span><span class="o">-</span><span class="p">(</span><span class="n">bond_max_conv</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">bond_max_conv</span><span class="o">-</span><span class="mi">2</span><span class="p">)),</span><span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l768">
+                  <tt><i>768</i>     <span class="n">angle_conv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">angle_conv</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">&lt;</span><span class="n">angle_conv</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">angle_conv</span><span class="p">,</span><span class="n">angle_conv</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>  <span class="c1"># remove mirrors</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l771">
+                  <tt><i>771</i>     <span class="n">angle_masks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">angle_unique</span><span class="p">),</span> <span class="n">N</span><span class="o">-</span><span class="p">(</span><span class="n">angle_max_conv</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">angle_max_conv</span><span class="o">-</span><span class="mi">3</span><span class="p">)),</span><span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l776">
+                  <tt><i>776</i>         <span class="n">weight</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.0</span><span class="p">]</span><span class="o">*</span><span class="n">angle_max_conv</span><span class="p">,[</span><span class="mf">0.0</span><span class="p">]</span><span class="o">*</span><span class="n">angle_max_conv</span><span class="p">]</span>  <span class="c1"># 2xsize</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l789">
+                  <tt><i>789</i>     <span class="n">torsion_conv</span> <span class="o">=</span> <span class="p">(</span><span class="n">torsion_idxs</span><span class="o">-</span><span class="n">torsion_idxs</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>  <span class="c1"># relative positions of atoms</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',' (in 9 places):</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l790">
+                  <tt><i>790</i>     <span class="n">torsion_conv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">((</span><span class="n">torsion_conv</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">&lt;</span><span class="n">torsion_conv</span><span class="p">[:,</span><span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="n">torsion_conv</span><span class="p">,</span><span class="n">torsion_conv</span><span class="p">[:,[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]])</span>  <span class="c1"># remove mirrors</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l793">
+                  <tt><i>793</i>     <span class="n">torsion_masks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">torsion_unique</span><span class="p">),</span> <span class="n">N</span><span class="o">-</span><span class="p">(</span><span class="n">torsion_max_conv</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">+</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">torsion_max_conv</span><span class="o">-</span><span class="mi">4</span><span class="p">)),</span><span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l796">
+                  <tt><i>796</i>     <span class="n">t_para</span>   <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">torsion_masks</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">torsion_masks</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',' (in 3 places):</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l799">
+                  <tt><i>799</i>     <span class="n">t_para</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">,:]</span><span class="o">=</span><span class="mf">1.0</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l810">
+                  <tt><i>810</i>         <span class="n">torsion_masks</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">mask_index</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l811">
+                  <tt><i>811</i>         <span class="n">t_para</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">mask_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">torsion_para</span><span class="p">[(</span><span class="n">torsion_conv</span><span class="o">==</span><span class="n">torsion</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)]</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l816">
+                  <tt><i>816</i>         <span class="n">vdw_e</span> <span class="o">=</span> <span class="p">(</span><span class="n">atom_e</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">atom_e</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">triu</span><span class="p">(</span><span class="n">diagonal</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l829">
+                  <tt><i>829</i>         <span class="n">q1q2</span><span class="p">[</span><span class="n">angle_idxs</span><span class="p">[:,(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]</span><span class="o">.</span><span class="n">T</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l830">
+                  <tt><i>830</i>         <span class="n">q1q2</span><span class="p">[</span><span class="n">torsion_idxs</span><span class="p">[:,(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)]</span><span class="o">.</span><span class="n">T</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l836">
+                  <tt><i>836</i>         <span class="n">q1q2_14</span> <span class="o">=</span> <span class="p">(</span><span class="n">atom_charges</span><span class="p">[</span><span class="n">bond_14_idxs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]]</span><span class="o">*</span><span class="n">atom_charges</span><span class="p">[</span><span class="n">bond_14_idxs</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]])</span><span class="o">/</span><span class="n">e_</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l881">
+                  <tt><i>881</i>     <span class="n">pdb_atom_names</span> <span class="o">=</span> <span class="n">pdb_atom_names</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l883">
+                  <tt><i>883</i>     <span class="n">dataset</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l892">
+                  <tt><i>892</i>     <span class="n">padded_atom_names</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">amber_atoms</span><span class="p">[</span><span class="n">res</span><span class="p">][</span><span class="n">atom</span><span class="p">],</span><span class="n">res</span><span class="p">,</span> <span class="n">resid</span><span class="p">]</span> <span class="k">if</span> <span class="n">atom</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">[</span><span class="n">atom</span><span class="p">,</span> <span class="n">res</span><span class="p">,</span> <span class="n">resid</span><span class="p">]</span> <span class="k">for</span> <span class="n">atom</span><span class="p">,</span> <span class="n">res</span><span class="p">,</span> <span class="n">resid</span> <span class="ow">in</span> <span class="n">pdb_atom_names</span><span class="p">])</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',' (in 2 places):</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l968">
+                  <tt><i>968</i>                             <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="p">[(</span><span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span><span class="p">,</span> <span class="n">a4</span><span class="p">),(</span><span class="n">a4</span><span class="p">,</span> <span class="n">a3</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a1</span><span class="p">),(</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">,</span> <span class="n">a3</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="s1">&#39;X&#39;</span><span class="p">)]:</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',' (in 2 places):</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l986">
+                  <tt><i>986</i>     <span class="n">torsion_para</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">torsion_idxs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">4</span><span class="p">,</span><span class="n">max_number_torsion_para</span><span class="p">)</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',' (in 2 places):</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l987">
+                  <tt><i>987</i>     <span class="n">torsion_para</span><span class="p">[:,</span><span class="mi">0</span><span class="p">,:]</span> <span class="o">=</span> <span class="mf">1.0</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l988">
+                  <tt><i>988</i>     <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">tf</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">torsion_para_</span><span class="p">):</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l1035">
+                  <tt><i>1035</i>         <span class="n">atom_R</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="n">vdw_para</span><span class="p">[</span><span class="n">equiv</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">)][</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">atom_names</span><span class="p">])</span>  <span class="c1"># radius</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l1036">
+                  <tt><i>1036</i>         <span class="n">atom_e</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">([</span><span class="n">vdw_para</span><span class="p">[</span><span class="n">equiv</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">)][</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">atom_names</span><span class="p">])</span>  <span class="c1"># welldepth</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l1038">
+                  <tt><i>1038</i>         <span class="n">vdw_R</span> <span class="o">=</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">torch</span><span class="o">.</span><span class="n">cdist</span><span class="p">(</span><span class="n">atom_R</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="o">-</span><span class="n">atom_R</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">triu</span><span class="p">(</span><span class="n">diagonal</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l1039">
+                  <tt><i>1039</i>         <span class="n">vdw_e</span> <span class="o">=</span> <span class="p">(</span><span class="n">atom_e</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">atom_e</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">triu</span><span class="p">(</span><span class="n">diagonal</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sqrt</span><span class="p">()</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l1043">
+                  <tt><i>1043</i>         <span class="n">vdw_R</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">angle_idxs</span><span class="p">[:,(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]</span><span class="o">.</span><span class="n">T</span><span class="p">)]</span> <span class="o">=</span> <span class="mf">0.0</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l1044">
+                  <tt><i>1044</i>         <span class="n">vdw_e</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">angle_idxs</span><span class="p">[:,(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]</span><span class="o">.</span><span class="n">T</span><span class="p">)]</span> <span class="o">=</span> <span class="mf">0.0</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l1049">
+                  <tt><i>1049</i>             <span class="n">vdw_e</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">torsion_idxs</span><span class="p">[:,(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)]</span><span class="o">.</span><span class="n">T</span><span class="p">)]</span> <span class="o">/=</span> <span class="mf">2.0</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l1051">
+                  <tt><i>1051</i>             <span class="n">vdw_R</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">torsion_idxs</span><span class="p">[:,(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)]</span><span class="o">.</span><span class="n">T</span><span class="p">)]</span> <span class="o">=</span> <span class="mf">0.0</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l1052">
+                  <tt><i>1052</i>             <span class="n">vdw_e</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">torsion_idxs</span><span class="p">[:,(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)]</span><span class="o">.</span><span class="n">T</span><span class="p">)]</span> <span class="o">=</span> <span class="mf">0.0</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l1061">
+                  <tt><i>1061</i>         <span class="n">q1q2</span> <span class="o">=</span> <span class="p">(</span><span class="n">atom_charges</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">atom_charges</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="n">e_</span><span class="p">)</span><span class="o">.</span><span class="n">triu</span><span class="p">(</span><span class="n">diagonal</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Aij=bi*bj</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l1063">
+                  <tt><i>1063</i>         <span class="n">q1q2</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">angle_idxs</span><span class="p">[:,(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">)]</span><span class="o">.</span><span class="n">T</span><span class="p">)]</span><span class="o">=</span><span class="mf">0.0</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l1065">
+                  <tt><i>1065</i>             <span class="n">q1q2</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">torsion_idxs</span><span class="p">[:,(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)]</span><span class="o">.</span><span class="n">T</span><span class="p">)]</span><span class="o">/=</span><span class="mf">1.2</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Missing whitespace after ',':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l1067">
+                  <tt><i>1067</i>             <span class="n">q1q2</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">torsion_idxs</span><span class="p">[:,(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)]</span><span class="o">.</span><span class="n">T</span><span class="p">)]</span><span class="o">=</span><span class="mf">0.0</span></tt>
+               </a>
+            </li>
+            </ul>
+         </li>
+         
+         <li>
+            <a data-code="E221">
+               <span class="count sev-2">
+                  28
+               </span>
+               <strong>E221:</strong> multiple spaces before operator
+               
+            </a>
+            <ul class="details">
+            <li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l94">
+                  <tt><i>94</i>     <span class="n">amber_atoms</span>          <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># knowledge[res][pdb_atom] = amber_atom</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l95">
+                  <tt><i>95</i>     <span class="n">atom_mass</span>            <span class="o">=</span> <span class="p">{}</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l96">
+                  <tt><i>96</i>     <span class="n">atom_polarizability</span>  <span class="o">=</span> <span class="p">{}</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l97">
+                  <tt><i>97</i>     <span class="n">bond_force</span>           <span class="o">=</span> <span class="p">{}</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l98">
+                  <tt><i>98</i>     <span class="n">bond_equil</span>           <span class="o">=</span> <span class="p">{}</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l99">
+                  <tt><i>99</i>     <span class="n">angle_force</span>          <span class="o">=</span> <span class="p">{}</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l100">
+                  <tt><i>100</i>     <span class="n">angle_equil</span>          <span class="o">=</span> <span class="p">{}</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l101">
+                  <tt><i>101</i>     <span class="n">torsion_factor</span>       <span class="o">=</span> <span class="p">{}</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l102">
+                  <tt><i>102</i>     <span class="n">torsion_barrier</span>      <span class="o">=</span> <span class="p">{}</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l103">
+                  <tt><i>103</i>     <span class="n">torsion_phase</span>        <span class="o">=</span> <span class="p">{}</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l104">
+                  <tt><i>104</i>     <span class="n">torsion_period</span>       <span class="o">=</span> <span class="p">{}</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l105">
+                  <tt><i>105</i>     <span class="n">improper_factor</span>      <span class="o">=</span> <span class="p">{}</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l106">
+                  <tt><i>106</i>     <span class="n">improper_barrier</span>     <span class="o">=</span> <span class="p">{}</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l107">
+                  <tt><i>107</i>     <span class="n">improper_phase</span>       <span class="o">=</span> <span class="p">{}</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l108">
+                  <tt><i>108</i>     <span class="n">improper_period</span>      <span class="o">=</span> <span class="p">{}</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l110">
+                  <tt><i>110</i>     <span class="n">other_parameters</span>     <span class="o">=</span> <span class="p">{}</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l280">
+                  <tt><i>280</i>                 <span class="n">torsion_factor</span><span class="p">[</span><span class="n">torsion</span><span class="p">]</span>  <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">contents</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="p">]</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l282">
+                  <tt><i>282</i>                 <span class="n">torsion_phase</span><span class="p">[</span><span class="n">torsion</span><span class="p">]</span>   <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">contents</span><span class="p">[</span><span class="mi">2</span><span class="p">])]</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l283">
+                  <tt><i>283</i>                 <span class="n">torsion_period</span><span class="p">[</span><span class="n">torsion</span><span class="p">]</span>  <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">contents</span><span class="p">[</span><span class="mi">3</span><span class="p">])]</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l290">
+                  <tt><i>290</i>             <span class="n">torsion_factor</span><span class="p">[</span><span class="n">torsion</span><span class="p">]</span>  <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">contents</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="p">]</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l292">
+                  <tt><i>292</i>             <span class="n">torsion_phase</span><span class="p">[</span><span class="n">torsion</span><span class="p">]</span>   <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">contents</span><span class="p">[</span><span class="mi">2</span><span class="p">])]</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l293">
+                  <tt><i>293</i>             <span class="n">torsion_period</span><span class="p">[</span><span class="n">torsion</span><span class="p">]</span>  <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">contents</span><span class="p">[</span><span class="mi">3</span><span class="p">])]</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l314">
+                  <tt><i>314</i>             <span class="n">improper_phase</span><span class="p">[</span><span class="n">torsion</span><span class="p">]</span>   <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">contents</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l315">
+                  <tt><i>315</i>             <span class="n">improper_period</span><span class="p">[</span><span class="n">torsion</span><span class="p">]</span>  <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">contents</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l318">
+                  <tt><i>318</i>             <span class="n">improper_factor</span><span class="p">[</span><span class="n">torsion</span><span class="p">]</span>  <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">contents</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l320">
+                  <tt><i>320</i>             <span class="n">improper_phase</span><span class="p">[</span><span class="n">torsion</span><span class="p">]</span>   <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">contents</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l321">
+                  <tt><i>321</i>             <span class="n">improper_period</span><span class="p">[</span><span class="n">torsion</span><span class="p">]</span>  <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">contents</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l796">
+                  <tt><i>796</i>     <span class="n">t_para</span>   <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">torsion_masks</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">torsion_masks</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span></tt>
+               </a>
+            </li>
+            </ul>
+         </li>
+         
+         <li>
+            <a data-code="E127">
+               <span class="count sev-2">
+                  21
+               </span>
+               <strong>E127:</strong> continuation line over-indented for visual indent
+               
+            </a>
+            <ul class="details">
+            <li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l47">
+                  <tt><i>47</i>                                        <span class="o">+</span><span class="s1">&#39;&quot;XXX&quot; but got </span><span class="si">%s</span><span class="s1"> instead&#39;</span> <span class="o">%</span> <span class="n">res</span><span class="p">))</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l72">
+                  <tt><i>72</i>                                        <span class="o">+</span><span class="s1">&#39;&quot;XXX&quot; but got </span><span class="si">%s</span><span class="s1"> instead&#39;</span> <span class="o">%</span> <span class="n">res</span><span class="p">))</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l360">
+                  <tt><i>360</i>                               <span class="n">atom_label</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;set&#39;</span><span class="p">,</span><span class="s1">&#39;string&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l361">
+                  <tt><i>361</i>                               <span class="n">perform_checks</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l362">
+                  <tt><i>362</i>                               <span class="n">v</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l363">
+                  <tt><i>363</i>                               <span class="n">order</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l364">
+                  <tt><i>364</i>                               <span class="n">return_type</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;mask&#39;</span><span class="p">,</span><span class="s1">&#39;idxs&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l365">
+                  <tt><i>365</i>                               <span class="n">absolute_torsion_period</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l366">
+                  <tt><i>366</i>                               <span class="n">NB</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;matrix&#39;</span><span class="p">,)[</span><span class="mi">0</span><span class="p">],</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l367">
+                  <tt><i>367</i>                               <span class="n">fix_terminal</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l368">
+                  <tt><i>368</i>                               <span class="n">fix_charmm_residues</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l369">
+                  <tt><i>369</i>                               <span class="n">fix_slice_method</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l370">
+                  <tt><i>370</i>                               <span class="n">fix_h</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l371">
+                  <tt><i>371</i>                               <span class="n">alt_vdw</span><span class="o">=</span><span class="p">[],</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l372">
+                  <tt><i>372</i>                               <span class="n">permitivity</span><span class="o">=</span><span class="mf">1.0</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l850">
+                  <tt><i>850</i>                               <span class="n">absolute_torsion_period</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l851">
+                  <tt><i>851</i>                               <span class="n">NB</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;matrix&#39;</span><span class="p">,)[</span><span class="mi">0</span><span class="p">],</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l852">
+                  <tt><i>852</i>                               <span class="n">fix_terminal</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l853">
+                  <tt><i>853</i>                               <span class="n">fix_charmm_residues</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l854">
+                  <tt><i>854</i>                               <span class="n">correct_1_4</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l855">
+                  <tt><i>855</i>                               <span class="n">permitivity</span><span class="o">=</span><span class="mf">1.0</span><span class="p">):</span></tt>
+               </a>
+            </li>
+            </ul>
+         </li>
+         
+         <li>
+            <a data-code="E128">
+               <span class="count sev-2">
+                  10
+               </span>
+               <strong>E128:</strong> continuation line under-indented for visual indent
+               
+            </a>
+            <ul class="details">
+            <li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l417">
+                  <tt><i>417</i>     <span class="n">angle_force</span><span class="p">,</span> <span class="n">angle_equil</span><span class="p">,</span> <span class="n">torsion_factor</span><span class="p">,</span> <span class="n">torsion_barrier</span><span class="p">,</span> <span class="n">torsion_phase</span><span class="p">,</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l418">
+                  <tt><i>418</i>     <span class="n">torsion_period</span><span class="p">,</span> <span class="n">improper_factor</span><span class="p">,</span> <span class="n">improper_barrier</span><span class="p">,</span> <span class="n">improper_phase</span><span class="p">,</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l419">
+                  <tt><i>419</i>     <span class="n">improper_period</span><span class="p">,</span> <span class="n">other_parameters</span><span class="p">)</span> <span class="o">=</span> <span class="n">get_amber_parameters</span><span class="p">()</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l706">
+                  <tt><i>706</i>               <span class="k">else</span> <span class="p">[</span><span class="n">bond_equil</span><span class="p">[(</span><span class="n">bond</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">bond</span><span class="p">[</span><span class="mi">0</span><span class="p">])],</span> <span class="n">bond_force</span><span class="p">[(</span><span class="n">bond</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">bond</span><span class="p">[</span><span class="mi">0</span><span class="p">])]]</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l709">
+                  <tt><i>709</i>               <span class="k">else</span> <span class="p">[</span><span class="n">angle_equil</span><span class="p">[(</span><span class="n">angle</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span><span class="n">angle</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">angle</span><span class="p">[</span><span class="mi">0</span><span class="p">])],</span> <span class="n">angle_force</span><span class="p">[(</span><span class="n">angle</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">angle</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">angle</span><span class="p">[</span><span class="mi">0</span><span class="p">])]]</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l722">
+                  <tt><i>722</i>                                      <span class="n">torsion_phase</span><span class="p">[</span><span class="n">torsion</span><span class="p">],</span>  <span class="n">torsion_period</span><span class="p">[</span><span class="n">torsion</span><span class="p">]]</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l726">
+                  <tt><i>726</i>                                      <span class="n">torsion_phase</span><span class="p">[</span><span class="n">torsion_b</span><span class="p">],</span> <span class="n">torsion_period</span><span class="p">[</span><span class="n">torsion_b</span><span class="p">]]</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l874">
+                  <tt><i>874</i>     <span class="n">angle_force</span><span class="p">,</span> <span class="n">angle_equil</span><span class="p">,</span> <span class="n">torsion_factor</span><span class="p">,</span> <span class="n">torsion_barrier</span><span class="p">,</span> <span class="n">torsion_phase</span><span class="p">,</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l875">
+                  <tt><i>875</i>     <span class="n">torsion_period</span><span class="p">,</span> <span class="n">improper_factor</span><span class="p">,</span> <span class="n">improper_barrier</span><span class="p">,</span> <span class="n">improper_phase</span><span class="p">,</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l876">
+                  <tt><i>876</i>     <span class="n">improper_period</span><span class="p">,</span> <span class="n">other_parameters</span><span class="p">)</span> <span class="o">=</span> <span class="n">get_amber_parameters</span><span class="p">()</span></tt>
+               </a>
+            </li>
+            </ul>
+         </li>
+         
+         <li>
+            <a data-code="E266">
+               <span class="count sev-2">
+                  5
+               </span>
+               <strong>E266:</strong> too many leading '#' for block comment
+               
+            </a>
+            <ul class="details">
+            <li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l642">
+                  <tt><i>642</i>     <span class="c1">##################### Angles/1-3 #####################</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l747">
+                  <tt><i>747</i>     <span class="c1">###############################  bonds  #################################</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l765">
+                  <tt><i>765</i>     <span class="c1">###############################  angles  #################################</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l787">
+                  <tt><i>787</i>     <span class="c1">###############################  torsion  #################################</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l993">
+                  <tt><i>993</i>     <span class="c1">###### Gather based potential ######</span></tt>
+               </a>
+            </li>
+            </ul>
+         </li>
+         
+         <li>
+            <a data-code="E201">
+               <span class="count sev-2">
+                  4
+               </span>
+               <strong>E201:</strong> whitespace after '['
+               
+                  (and 1 similar)
+               
+            </a>
+            <ul class="details">
+            <li>
+               
+               <p>Whitespace after '[':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l57">
+                  <tt><i>57</i>                 <span class="k">if</span> <span class="n">line</span><span class="p">[</span> <span class="mi">0</span><span class="p">]</span><span class="o">!=</span><span class="s1">&#39; &#39;</span><span class="p">:</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Whitespace after '(':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l285">
+                  <tt><i>285</i>                 <span class="n">torsion_factor</span><span class="p">[</span><span class="n">torsion</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>   <span class="nb">int</span><span class="p">(</span><span class="n">contents</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Whitespace after '(':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l287">
+                  <tt><i>287</i>                 <span class="n">torsion_phase</span><span class="p">[</span><span class="n">torsion</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>  <span class="nb">float</span><span class="p">(</span><span class="n">contents</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span></tt>
+               </a>
+            </li><li>
+               
+               <p>Whitespace after '(':</p>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l288">
+                  <tt><i>288</i>                 <span class="n">torsion_period</span><span class="p">[</span><span class="n">torsion</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="nb">float</span><span class="p">(</span><span class="n">contents</span><span class="p">[</span><span class="mi">3</span><span class="p">]))</span></tt>
+               </a>
+            </li>
+            </ul>
+         </li>
+         
+         <li>
+            <a data-code="E241">
+               <span class="count sev-2">
+                  4
+               </span>
+               <strong>E241:</strong> multiple spaces after ','
+               
+            </a>
+            <ul class="details">
+            <li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l722">
+                  <tt><i>722</i>                                      <span class="n">torsion_phase</span><span class="p">[</span><span class="n">torsion</span><span class="p">],</span>  <span class="n">torsion_period</span><span class="p">[</span><span class="n">torsion</span><span class="p">]]</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l730">
+                  <tt><i>730</i>                                      <span class="n">torsion_phase</span><span class="p">[</span><span class="n">torsion_xx</span><span class="p">],</span>  <span class="n">torsion_period</span><span class="p">[</span><span class="n">torsion_xx</span><span class="p">]]</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l734">
+                  <tt><i>734</i>                                      <span class="n">torsion_phase</span><span class="p">[</span><span class="n">torsion_xb</span><span class="p">],</span>  <span class="n">torsion_period</span><span class="p">[</span><span class="n">torsion_xb</span><span class="p">]]</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l844">
+                  <tt><i>844</i>     <span class="k">return</span> <span class="p">(</span><span class="n">bond_masks</span><span class="p">,</span>  <span class="n">b_equil</span><span class="p">,</span> <span class="n">b_force</span><span class="p">,</span> <span class="n">bond_weights</span><span class="p">,</span></tt>
+               </a>
+            </li>
+            </ul>
+         </li>
+         
+         <li>
+            <a data-code="E261">
+               <span class="count sev-2">
+                  4
+               </span>
+               <strong>E261:</strong> at least two spaces before inline comment
+               
+            </a>
+            <ul class="details">
+            <li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l552">
+                  <tt><i>552</i>                 <span class="k">if</span> <span class="n">resid</span> <span class="o">!=</span><span class="n">current_resid</span><span class="p">:</span><span class="c1"># and atom2 == &#39;C&#39;:</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l619">
+                  <tt><i>619</i>                 <span class="n">atom2</span> <span class="o">=</span> <span class="n">atom1</span><span class="o">+</span><span class="n">bond</span><span class="o">-</span><span class="n">counter</span><span class="o">+</span><span class="mi">1</span> <span class="c1"># 0-0+1</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l620">
+                  <tt><i>620</i>                 <span class="n">tracker</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">atom2</span><span class="p">)</span> <span class="c1">#</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l662">
+                  <tt><i>662</i>                 <span class="k">if</span> <span class="n">atom3</span><span class="o">&gt;</span><span class="n">atom1</span><span class="p">:</span> <span class="c1"># each angle will only be counter once</span></tt>
+               </a>
+            </li>
+            </ul>
+         </li>
+         
+         <li>
+            <a data-code="W293">
+               <span class="count sev-2">
+                  4
+               </span>
+               <strong>W293:</strong> blank line contains whitespace
+               
+            </a>
+            <ul class="details">
+            <li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l51">
+                  <tt><i>51</i>         </tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l491">
+                  <tt><i>491</i>     </tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l509">
+                  <tt><i>509</i>     </tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l992">
+                  <tt><i>992</i>     </tt>
+               </a>
+            </li>
+            </ul>
+         </li>
+         
+         <li>
+            <a data-code="W503">
+               <span class="count sev-2">
+                  4
+               </span>
+               <strong>W503:</strong> line break before binary operator
+               
+            </a>
+            <ul class="details">
+            <li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l47">
+                  <tt><i>47</i>                                        <span class="o">+</span><span class="s1">&#39;&quot;XXX&quot; but got </span><span class="si">%s</span><span class="s1"> instead&#39;</span> <span class="o">%</span> <span class="n">res</span><span class="p">))</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l64">
+                  <tt><i>64</i>                     <span class="ow">and</span> <span class="n">amber_name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;&quot;&#39;</span> <span class="ow">and</span> <span class="n">amber_name</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;&quot;&#39;</span><span class="p">):</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l72">
+                  <tt><i>72</i>                                        <span class="o">+</span><span class="s1">&#39;&quot;XXX&quot; but got </span><span class="si">%s</span><span class="s1"> instead&#39;</span> <span class="o">%</span> <span class="n">res</span><span class="p">))</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l518">
+                  <tt><i>518</i>                             <span class="o">+</span><span class="p">(</span><span class="n">cmat</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="o">-</span><span class="n">cmat</span><span class="p">[</span><span class="n">bond_idxs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span><span class="o">+</span></tt>
+               </a>
+            </li>
+            </ul>
+         </li>
+         
+         <li>
+            <a data-code="E126">
+               <span class="count sev-2">
+                  3
+               </span>
+               <strong>E126:</strong> continuation line over-indented for hanging indent
+               
+            </a>
+            <ul class="details">
+            <li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l707">
+                  <tt><i>707</i>               <span class="k">for</span> <span class="n">bond</span> <span class="ow">in</span> <span class="n">bond_types</span><span class="p">])</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l710">
+                  <tt><i>710</i>               <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="n">angle_types</span><span class="p">])</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l971">
+                  <tt><i>971</i>                                             <span class="n">torsion_factor</span><span class="p">[</span><span class="n">t</span><span class="p">],</span></tt>
+               </a>
+            </li>
+            </ul>
+         </li>
+         
+         <li>
+            <a data-code="E222">
+               <span class="count sev-2">
+                  3
+               </span>
+               <strong>E222:</strong> multiple spaces after operator
+               
+            </a>
+            <ul class="details">
+            <li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l802">
+                  <tt><i>802</i>         <span class="n">weight</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">torsion</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span>  <span class="mf">1.0</span>  <span class="c1"># b1 = ri-rj</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l804">
+                  <tt><i>804</i>         <span class="n">weight</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">torsion</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span>  <span class="mf">1.0</span>  <span class="c1"># b2 = rj-rk</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l807">
+                  <tt><i>807</i>         <span class="n">weight</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="n">torsion</span><span class="p">[</span><span class="mi">3</span><span class="p">]]</span> <span class="o">=</span>  <span class="mf">1.0</span></tt>
+               </a>
+            </li>
+            </ul>
+         </li>
+         
+         <li>
+            <a data-code="E202">
+               <span class="count sev-2">
+                  2
+               </span>
+               <strong>E202:</strong> whitespace before ']'
+               
+            </a>
+            <ul class="details">
+            <li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l280">
+                  <tt><i>280</i>                 <span class="n">torsion_factor</span><span class="p">[</span><span class="n">torsion</span><span class="p">]</span>  <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">contents</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="p">]</span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l290">
+                  <tt><i>290</i>             <span class="n">torsion_factor</span><span class="p">[</span><span class="n">torsion</span><span class="p">]</span>  <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">contents</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="p">]</span></tt>
+               </a>
+            </li>
+            </ul>
+         </li>
+         
+         <li>
+            <a data-code="W291">
+               <span class="count sev-2">
+                  2
+               </span>
+               <strong>W291:</strong> trailing whitespace
+               
+            </a>
+            <ul class="details">
+            <li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l234">
+                  <tt><i>234</i>         <span class="c1"># this should throw an error if there are not </span></tt>
+               </a>
+            </li><li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l298">
+                  <tt><i>298</i>     <span class="c1"># section 7 improper dihedrals </span></tt>
+               </a>
+            </li>
+            </ul>
+         </li>
+         
+         <li>
+            <a data-code="E124">
+               <span class="count sev-2">
+                  1
+               </span>
+               <strong>E124:</strong> closing bracket does not match visual indentation
+               
+            </a>
+            <ul class="details">
+            <li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l373">
+                  <tt><i>373</i>                              <span class="p">):</span></tt>
+               </a>
+            </li>
+            </ul>
+         </li>
+         
+         <li>
+            <a data-code="E129">
+               <span class="count sev-2">
+                  1
+               </span>
+               <strong>E129:</strong> visually indented line with same indent as next logical line
+               
+            </a>
+            <ul class="details">
+            <li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l64">
+                  <tt><i>64</i>                     <span class="ow">and</span> <span class="n">amber_name</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;&quot;&#39;</span> <span class="ow">and</span> <span class="n">amber_name</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;&quot;&#39;</span><span class="p">):</span></tt>
+               </a>
+            </li>
+            </ul>
+         </li>
+         
+         <li>
+            <a data-code="W504">
+               <span class="count sev-2">
+                  1
+               </span>
+               <strong>W504:</strong> line break after binary operator
+               
+            </a>
+            <ul class="details">
+            <li>
+               
+               <a href="biobb_pytorch.mdae.loss.utils.torch_protein_energy_utils.source.html#l518">
+                  <tt><i>518</i>                             <span class="o">+</span><span class="p">(</span><span class="n">cmat</span><span class="p">[</span><span class="n">u</span><span class="p">]</span><span class="o">-</span><span class="n">cmat</span><span class="p">[</span><span class="n">bond_idxs</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span><span class="o">+</span></tt>
+               </a>
+            </li>
+            </ul>
+         </li>
+         
+         </ul>
+      </div>
+   </body>
+</html>

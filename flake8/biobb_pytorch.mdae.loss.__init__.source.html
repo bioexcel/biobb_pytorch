@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>biobb_pytorch/mdae/loss/__init__.py - flake8 annotated source</title>
+      <meta http-equiv="Content-Type" value="text/html; charset=UTF-8">
+      <link rel="stylesheet" href="styles.css">
+   </head>
+   <body>
+      <div id="masthead" class="sev-1"></div>
+      <div id="page">
+         <h1>
+            <a href="biobb_pytorch.mdae.loss.__init__.report.html">
+               <img src="back.svg" alt="&#x2B05;">
+               biobb_pytorch/mdae/loss/__init__.py source
+            </a>
+         </h1>
+
+         <div id="doc">
+            <div id="l1"
+               class="code sev- "><tt><i>1</i> <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span></tt>
+            </div>
+            <div id="l2"
+               class="code sev- "><tt><i>2</i>     <span class="s2">&quot;MSELoss&quot;</span><span class="p">,</span></tt>
+            </div>
+            <div id="l3"
+               class="code sev- "><tt><i>3</i>     <span class="s2">&quot;mse_loss&quot;</span><span class="p">,</span></tt>
+            </div>
+            <div id="l4"
+               class="code sev- "><tt><i>4</i>     <span class="s2">&quot;TDALoss&quot;</span><span class="p">,</span></tt>
+            </div>
+            <div id="l5"
+               class="code sev- "><tt><i>5</i>     <span class="s2">&quot;tda_loss&quot;</span><span class="p">,</span></tt>
+            </div>
+            <div id="l6"
+               class="code sev- "><tt><i>6</i>     <span class="s2">&quot;ELBOGaussiansLoss&quot;</span><span class="p">,</span></tt>
+            </div>
+            <div id="l7"
+               class="code sev- "><tt><i>7</i>     <span class="s2">&quot;elbo_gaussians_loss&quot;</span><span class="p">,</span></tt>
+            </div>
+            <div id="l8"
+               class="code sev- "><tt><i>8</i>     <span class="s2">&quot;ELBOLoss&quot;</span><span class="p">,</span></tt>
+            </div>
+            <div id="l9"
+               class="code sev- "><tt><i>9</i>     <span class="s2">&quot;ELBOGaussianMixtureLoss&quot;</span><span class="p">,</span></tt>
+            </div>
+            <div id="l10"
+               class="code sev- "><tt><i>10</i>     <span class="s2">&quot;ReduceEigenvaluesLoss&quot;</span><span class="p">,</span></tt>
+            </div>
+            <div id="l11"
+               class="code sev- "><tt><i>11</i>     <span class="s2">&quot;reduce_eigenvalues_loss&quot;</span><span class="p">,</span></tt>
+            </div>
+            <div id="l12"
+               class="code sev- "><tt><i>12</i>     <span class="s2">&quot;AutocorrelationLoss&quot;</span><span class="p">,</span></tt>
+            </div>
+            <div id="l13"
+               class="code sev- "><tt><i>13</i>     <span class="s2">&quot;autocorrelation_loss&quot;</span><span class="p">,</span></tt>
+            </div>
+            <div id="l14"
+               class="code sev- "><tt><i>14</i>     <span class="s2">&quot;FisherDiscriminantLoss&quot;</span><span class="p">,</span></tt>
+            </div>
+            <div id="l15"
+               class="code sev- "><tt><i>15</i>     <span class="s2">&quot;fisher_discriminant_loss&quot;</span><span class="p">,</span></tt>
+            </div>
+            <div id="l16"
+               class="code sev- "><tt><i>16</i>     <span class="s2">&quot;CommittorLoss&quot;</span><span class="p">,</span></tt>
+            </div>
+            <div id="l17"
+               class="code sev- "><tt><i>17</i>     <span class="s2">&quot;committor_loss&quot;</span><span class="p">,</span></tt>
+            </div>
+            <div id="l18"
+               class="code sev- "><tt><i>18</i>     <span class="s2">&quot;SmartDerivatives&quot;</span><span class="p">,</span></tt>
+            </div>
+            <div id="l19"
+               class="code sev- "><tt><i>19</i>     <span class="s2">&quot;compute_descriptors_derivatives&quot;</span></tt>
+            </div>
+            <div id="l20"
+               class="code sev- "><tt><i>20</i>     <span class="s2">&quot;PhysicsLoss&quot;</span><span class="p">,</span></tt>
+            </div>
+            <div id="l21"
+               class="code sev- "><tt><i>21</i>     <span class="s2">&quot;InformationBottleneckLoss&quot;</span><span class="p">,</span></tt>
+            </div>
+            <div id="l22"
+               class="code sev- "><tt><i>22</i> <span class="p">]</span></tt>
+            </div>
+            <div id="l23"
+               class="code sev- "><tt><i>23</i> &nbsp;</tt>
+            </div>
+            <div id="l24"
+               class="code sev- "><tt><i>24</i> <span class="kn">from</span><span class="w"> </span><span class="nn">.mse</span><span class="w"> </span><span class="kn">import</span> <span class="n">MSELoss</span><span class="p">,</span> <span class="n">mse_loss</span></tt>
+            </div>
+            <div id="l25"
+               class="code sev- "><tt><i>25</i> <span class="kn">from</span><span class="w"> </span><span class="nn">.tda_loss</span><span class="w"> </span><span class="kn">import</span> <span class="n">TDALoss</span><span class="p">,</span> <span class="n">tda_loss</span></tt>
+            </div>
+            <div id="l26"
+               class="code sev- "><tt><i>26</i> <span class="kn">from</span><span class="w"> </span><span class="nn">.eigvals</span><span class="w"> </span><span class="kn">import</span> <span class="n">ReduceEigenvaluesLoss</span><span class="p">,</span> <span class="n">reduce_eigenvalues_loss</span></tt>
+            </div>
+            <div id="l27"
+               class="code sev- "><tt><i>27</i> <span class="kn">from</span><span class="w"> </span><span class="nn">.elbo</span><span class="w"> </span><span class="kn">import</span> <span class="n">ELBOGaussiansLoss</span><span class="p">,</span> <span class="n">ELBOLoss</span><span class="p">,</span> <span class="n">ELBOGaussianMixtureLoss</span><span class="p">,</span> <span class="n">elbo_gaussians_loss</span></tt>
+            </div>
+            <div id="l28"
+               class="code sev- "><tt><i>28</i> <span class="kn">from</span><span class="w"> </span><span class="nn">.autocorrelation</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutocorrelationLoss</span><span class="p">,</span> <span class="n">autocorrelation_loss</span></tt>
+            </div>
+            <div id="l29"
+               class="code sev- "><tt><i>29</i> <span class="kn">from</span><span class="w"> </span><span class="nn">.fisher</span><span class="w"> </span><span class="kn">import</span> <span class="n">FisherDiscriminantLoss</span><span class="p">,</span> <span class="n">fisher_discriminant_loss</span></tt>
+            </div>
+            <div id="l30"
+               class="code sev-1  le">
+               <ul class="violations">
+               
+                  <li>
+                     <span class="count sev-1">
+                        F401
+                     </span>
+                     '.committor_loss.compute_descriptors_derivatives' imported but unused</li>
+               
+               </ul><tt><i>30</i> <span class="kn">from</span><span class="w"> </span><span class="nn">.committor_loss</span><span class="w"> </span><span class="kn">import</span> <span class="n">CommittorLoss</span><span class="p">,</span> <span class="n">committor_loss</span><span class="p">,</span> <span class="n">SmartDerivatives</span><span class="p">,</span> <span class="n">compute_descriptors_derivatives</span></tt>
+            </div>
+            <div id="l31"
+               class="code sev-1  le">
+               <ul class="violations">
+               
+                  <li>
+                     <span class="count sev-1">
+                        F401
+                     </span>
+                     '.physics_loss.PhysicsLoss' imported but unused</li>
+               
+               </ul><tt><i>31</i> <span class="kn">from</span><span class="w"> </span><span class="nn">.physics_loss</span><span class="w"> </span><span class="kn">import</span> <span class="n">PhysicsLoss</span></tt>
+            </div>
+            <div id="l32"
+               class="code sev-2  le">
+               <ul class="violations">
+               
+                  <li>
+                     <span class="count sev-2">
+                        W292
+                     </span>
+                     No newline at end of file</li>
+               
+               </ul><tt><i>32</i> <span class="kn">from</span><span class="w"> </span><span class="nn">.ib_loss</span><span class="w"> </span><span class="kn">import</span> <span class="n">InformationBottleneckLoss</span></tt>
+            </div>
+            
+         </div>
+      </div>
+   </body>
+</html>

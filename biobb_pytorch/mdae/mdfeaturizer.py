@@ -28,7 +28,7 @@ class MDFeaturePipeline(BiobbObject):
             * **distances** (*dict*) - ({"selection": "name CA", "cutoff": 0.4, "periodic": True, "bonded": False}) Atom selection options for pairwise distance features (selection, cutoff, periodic, bonded, etc.).
             * **angles** (*dict*) - ({"selection": "backbone", "periodic": True, "bonded": True}) Atom selection options for angle features (selection, periodic, bonded, etc.).
             * **dihedrals** (*dict*) - ({"selection": "backbone", "periodic": True, "bonded": True}) Atom selection options for dihedral features (selection, periodic, bonded, etc.).
-            * **options** (*dict*) - ({"norm_in": "min_max"}) General processing options (e.g. timelag, norm_in).
+            * **options** (*dict*) - ({"norm_in": {"mode": "min_max"}}) General processing options (e.g. timelag, norm_in).
 
     Examples:
         This is a use case of how to use the building block from Python::
@@ -112,7 +112,7 @@ class MDFeaturePipeline(BiobbObject):
         self.distances: dict = properties.get("distances", {"selection": "name CA", "cutoff": 0.4, "periodic": True, "bonded": False})
         self.angles:    dict = properties.get("angles", {"selection": "backbone", "periodic": True, "bonded": True})
         self.dihedrals: dict = properties.get("dihedrals", {"selection": "backbone", "periodic": True, "bonded": True})
-        self.options:   dict = properties.get("options", {"norm_in": "min_max"})
+        self.options:   dict = properties.get("options", {"norm_in": {"mode": "min_max"}})
 
         # Check the properties
         self.check_properties(properties)

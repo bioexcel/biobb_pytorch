@@ -13,7 +13,7 @@
 60    E221 multiple spaces before operator
 3     E222 multiple spaces after operator
 167   E225 missing whitespace around operator
-197   E231 missing whitespace after ','
+195   E231 missing whitespace after ','
 38    E241 multiple spaces after ':'
 6     E251 unexpected spaces around keyword / parameter equals
 11    E261 at least two spaces before inline comment

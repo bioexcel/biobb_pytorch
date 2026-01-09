@@ -65,7 +65,7 @@
             <a id="nextFileLink" class="nav" href="z_91dddf8e041354b2_plumed_feat_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.13.1">coverage.py v7.13.1</a>,
-            created at 2026-01-09 12:11 +0000
+            created at 2026-01-09 12:14 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -115,7 +115,7 @@
     <p class="run"><span class="n"><a id="t33" href="#t33">33</a></span><span class="t">        <span class="nam">t</span> <span class="op">=</span> <span class="nam">t</span><span class="op">.</span><span class="nam">unsqueeze</span><span class="op">(</span><span class="num">0</span><span class="op">)</span><span class="op">.</span><span class="nam">expand</span><span class="op">(</span><span class="nam">batch_size</span><span class="op">,</span> <span class="nam">x_size</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t34" href="#t34">34</a></span><span class="t">    <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t35" href="#t35">35</a></span><span class="t">        <span class="key">raise</span> <span class="nam">ValueError</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis mis2 show_mis"><span class="n"><a id="t36" href="#t36">36</a></span><span class="t">            <span class="fst">f"</span><span class="fst">Input tensor must of shape (n_features) or (n_batch,n_features), not </span><span class="op">{</span><span class="nam">size</span><span class="op">}</span><span class="fst"> (len=</span><span class="op">{</span><span class="nam">len</span><span class="op">(</span><span class="nam">size</span><span class="op">)</span><span class="op">}</span><span class="fst">).</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="mis mis2 show_mis"><span class="n"><a id="t36" href="#t36">36</a></span><span class="t">            <span class="str">f"Input tensor must of shape (n_features) or (n_batch,n_features), not {size} (len={len(size)})."</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis mis2 show_mis"><span class="n"><a id="t37" href="#t37">37</a></span><span class="t">        <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t38" href="#t38">38</a></span><span class="t">    <span class="key">return</span> <span class="nam">t</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t39" href="#t39">39</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
@@ -188,7 +188,7 @@
     <p class="run"><span class="n"><a id="t106" href="#t106">106</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">out_features</span> <span class="op">=</span> <span class="nam">in_features</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t107" href="#t107">107</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t108" href="#t108">108</a></span><span class="t">    <span class="key">def</span> <span class="nam">extra_repr</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span> <span class="op">-></span> <span class="nam">str</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t109" href="#t109">109</a></span><span class="t">        <span class="key">return</span> <span class="fst">f"</span><span class="fst">in_features=</span><span class="op">{</span><span class="nam">self</span><span class="op">.</span><span class="nam">in_features</span><span class="op">}</span><span class="fst">, out_features=</span><span class="op">{</span><span class="nam">self</span><span class="op">.</span><span class="nam">out_features</span><span class="op">}</span><span class="fst">, mode=</span><span class="op">{</span><span class="nam">self</span><span class="op">.</span><span class="nam">mode</span><span class="op">}</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="mis show_mis"><span class="n"><a id="t109" href="#t109">109</a></span><span class="t">        <span class="key">return</span> <span class="str">f"in_features={self.in_features}, out_features={self.out_features}, mode={self.mode}"</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t110" href="#t110">110</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t111" href="#t111">111</a></span><span class="t">    <span class="key">def</span> <span class="nam">set_custom</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">mean</span><span class="op">:</span> <span class="nam">torch</span><span class="op">.</span><span class="nam">Tensor</span> <span class="op">=</span> <span class="key">None</span><span class="op">,</span> <span class="nam">range</span><span class="op">:</span> <span class="nam">torch</span><span class="op">.</span><span class="nam">Tensor</span> <span class="op">=</span> <span class="key">None</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t112" href="#t112">112</a></span><span class="t">        <span class="str">"""Set parameter of the normalization layer.</span>&nbsp;</span><span class="r"></span></p>
@@ -242,7 +242,7 @@
     <p class="mis mis2 show_mis"><span class="n"><a id="t160" href="#t160">160</a></span><span class="t">            <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t161" href="#t161">161</a></span><span class="t">        <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t162" href="#t162">162</a></span><span class="t">            <span class="key">raise</span> <span class="nam">ValueError</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis mis2 show_mis"><span class="n"><a id="t163" href="#t163">163</a></span><span class="t">                <span class="fst">f'</span><span class="fst">Mode </span><span class="op">{</span><span class="nam">self</span><span class="op">.</span><span class="nam">mode</span><span class="op">}</span><span class="fst"> unknonwn. Available modes: "mean_std", "min_max","custom"</span><span class="fst">'</span>&nbsp;</span><span class="r"></span></p>
+    <p class="mis mis2 show_mis"><span class="n"><a id="t163" href="#t163">163</a></span><span class="t">                <span class="str">f'Mode {self.mode} unknonwn. Available modes: "mean_std", "min_max","custom"'</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis mis2 show_mis"><span class="n"><a id="t164" href="#t164">164</a></span><span class="t">            <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t165" href="#t165">165</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t166" href="#t166">166</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">is_initialized</span> <span class="op">=</span> <span class="key">True</span>&nbsp;</span><span class="r"></span></p>
@@ -257,7 +257,7 @@
     <p class="mis show_mis"><span class="n"><a id="t175" href="#t175">175</a></span><span class="t">                <span class="nam">stats</span> <span class="op">=</span> <span class="nam">datamodule</span><span class="op">.</span><span class="nam">train_dataloader</span><span class="op">(</span><span class="op">)</span><span class="op">.</span><span class="nam">get_stats</span><span class="op">(</span><span class="op">)</span><span class="op">[</span><span class="str">"data"</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t176" href="#t176">176</a></span><span class="t">            <span class="key">except</span> <span class="nam">KeyError</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t177" href="#t177">177</a></span><span class="t">                <span class="key">raise</span> <span class="nam">ValueError</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis mis2 show_mis"><span class="n"><a id="t178" href="#t178">178</a></span><span class="t">                    <span class="fst">f"</span><span class="fst">Impossible to initialize </span><span class="op">{</span><span class="nam">self</span><span class="op">.</span><span class="nam">__class__</span><span class="op">.</span><span class="nam">__name__</span><span class="op">}</span><span class="fst"> </span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="mis mis2 show_mis"><span class="n"><a id="t178" href="#t178">178</a></span><span class="t">                    <span class="str">f"Impossible to initialize {self.__class__.__name__} "</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis mis2 show_mis"><span class="n"><a id="t179" href="#t179">179</a></span><span class="t">                    <span class="str">'because the training dataloader does not have a "data" key '</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis mis2 show_mis"><span class="n"><a id="t180" href="#t180">180</a></span><span class="t">                    <span class="str">"(are you using multiple datasets?). A manual initialization "</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis mis2 show_mis"><span class="n"><a id="t181" href="#t181">181</a></span><span class="t">                    <span class="str">'of "mean" and "range" is necessary.'</span>&nbsp;</span><span class="r"></span></p>
@@ -348,7 +348,7 @@
             <a class="nav" href="z_91dddf8e041354b2_plumed_feat_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.13.1">coverage.py v7.13.1</a>,
-            created at 2026-01-09 12:11 +0000
+            created at 2026-01-09 12:14 +0000
         </p>
     </div>
 </footer>

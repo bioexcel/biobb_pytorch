@@ -65,7 +65,7 @@
             <a id="nextFileLink" class="nav" href="z_3eb4689806e13784___init___py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.13.1">coverage.py v7.13.1</a>,
-            created at 2026-01-09 12:11 +0000
+            created at 2026-01-09 12:14 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -86,13 +86,13 @@
     <p class="run"><span class="n"><a id="t4" href="#t4">4</a></span><span class="t"><span class="key">def</span> <span class="nam">get_size</span><span class="op">(</span><span class="nam">path</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t5" href="#t5">5</a></span><span class="t">    <span class="nam">size</span> <span class="op">=</span> <span class="nam">os</span><span class="op">.</span><span class="nam">path</span><span class="op">.</span><span class="nam">getsize</span><span class="op">(</span><span class="nam">path</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t6" href="#t6">6</a></span><span class="t">    <span class="key">if</span> <span class="nam">size</span> <span class="op">&lt;</span> <span class="num">1024</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t7" href="#t7">7</a></span><span class="t">        <span class="key">return</span> <span class="fst">f"</span><span class="op">{</span><span class="nam">size</span><span class="op">}</span><span class="fst"> bytes</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="mis show_mis"><span class="n"><a id="t7" href="#t7">7</a></span><span class="t">        <span class="key">return</span> <span class="str">f"{size} bytes"</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t8" href="#t8">8</a></span><span class="t">    <span class="key">elif</span> <span class="nam">size</span> <span class="op">&lt;</span> <span class="nam">pow</span><span class="op">(</span><span class="num">1024</span><span class="op">,</span> <span class="num">2</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t9" href="#t9">9</a></span><span class="t">        <span class="key">return</span> <span class="fst">f"</span><span class="op">{</span><span class="nam">round</span><span class="op">(</span><span class="nam">size</span> <span class="op">/</span> <span class="num">1024</span><span class="op">,</span> <span class="num">2</span><span class="op">)</span><span class="op">}</span><span class="fst"> KB</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t9" href="#t9">9</a></span><span class="t">        <span class="key">return</span> <span class="str">f"{round(size / 1024, 2)} KB"</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t10" href="#t10">10</a></span><span class="t">    <span class="key">elif</span> <span class="nam">size</span> <span class="op">&lt;</span> <span class="nam">pow</span><span class="op">(</span><span class="num">1024</span><span class="op">,</span> <span class="num">3</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t11" href="#t11">11</a></span><span class="t">        <span class="key">return</span> <span class="fst">f"</span><span class="op">{</span><span class="nam">round</span><span class="op">(</span><span class="nam">size</span> <span class="op">/</span> <span class="op">(</span><span class="nam">pow</span><span class="op">(</span><span class="num">1024</span><span class="op">,</span> <span class="num">2</span><span class="op">)</span><span class="op">)</span><span class="op">,</span> <span class="num">2</span><span class="op">)</span><span class="op">}</span><span class="fst"> MB</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="mis show_mis"><span class="n"><a id="t11" href="#t11">11</a></span><span class="t">        <span class="key">return</span> <span class="str">f"{round(size / (pow(1024, 2)), 2)} MB"</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t12" href="#t12">12</a></span><span class="t">    <span class="key">elif</span> <span class="nam">size</span> <span class="op">&lt;</span> <span class="nam">pow</span><span class="op">(</span><span class="num">1024</span><span class="op">,</span> <span class="num">4</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t13" href="#t13">13</a></span><span class="t">        <span class="key">return</span> <span class="fst">f"</span><span class="op">{</span><span class="nam">round</span><span class="op">(</span><span class="nam">size</span> <span class="op">/</span> <span class="op">(</span><span class="nam">pow</span><span class="op">(</span><span class="num">1024</span><span class="op">,</span> <span class="num">3</span><span class="op">)</span><span class="op">)</span><span class="op">,</span> <span class="num">2</span><span class="op">)</span><span class="op">}</span><span class="fst"> GB</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="mis show_mis"><span class="n"><a id="t13" href="#t13">13</a></span><span class="t">        <span class="key">return</span> <span class="str">f"{round(size / (pow(1024, 3)), 2)} GB"</span>&nbsp;</span><span class="r"></span></p>
 </main>
 <footer>
     <div class="content">
@@ -102,7 +102,7 @@
             <a class="nav" href="z_3eb4689806e13784___init___py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.13.1">coverage.py v7.13.1</a>,
-            created at 2026-01-09 12:11 +0000
+            created at 2026-01-09 12:14 +0000
         </p>
     </div>
 </footer>

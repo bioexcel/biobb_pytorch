@@ -6,7 +6,7 @@
       <link rel="stylesheet" href="styles.css">
    </head>
    <body>
-      <div id="masthead" class="sev-1"></div>
+      <div id="masthead" class="sev-2"></div>
       <div id="page">
          <h1>
             <a href="biobb_pytorch.mdae.loss.ib_loss.report.html">
@@ -29,31 +29,13 @@
                class="code sev- "><tt><i>4</i> <span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span></tt>
             </div>
             <div id="l5"
-               class="code sev-1  le">
-               <ul class="violations">
-               
-                  <li>
-                     <span class="count sev-1">
-                        F401
-                     </span>
-                     'math' imported but unused</li>
-               
-               </ul><tt><i>5</i> <span class="kn">import</span><span class="w"> </span><span class="nn">math</span></tt>
+               class="code sev- "><tt><i>5</i> &nbsp;</tt>
             </div>
             <div id="l6"
                class="code sev- "><tt><i>6</i> &nbsp;</tt>
             </div>
             <div id="l7"
-               class="code sev-2  le">
-               <ul class="violations">
-               
-                  <li>
-                     <span class="count sev-2">
-                        E302
-                     </span>
-                     Expected 2 blank lines, found 1</li>
-               
-               </ul><tt><i>7</i> <span class="k">class</span><span class="w"> </span><span class="nc">InformationBottleneckLoss</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span></tt>
+               class="code sev- "><tt><i>7</i> <span class="k">class</span><span class="w"> </span><span class="nc">InformationBottleneckLoss</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span></tt>
             </div>
             <div id="l8"
                class="code sev- "><tt><i>8</i> <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span></tt>
@@ -74,174 +56,120 @@
                class="code sev- "><tt><i>13</i> <span class="sd">    &quot;&quot;&quot;</span></tt>
             </div>
             <div id="l14"
-               class="code sev- "><tt><i>14</i>     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span></tt>
+               class="code sev- "><tt><i>14</i> &nbsp;</tt>
             </div>
             <div id="l15"
-               class="code sev- "><tt><i>15</i>         <span class="bp">self</span><span class="p">,</span></tt>
+               class="code sev- "><tt><i>15</i>     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span></tt>
             </div>
             <div id="l16"
-               class="code sev- "><tt><i>16</i>         <span class="n">beta</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span></tt>
+               class="code sev- "><tt><i>16</i>         <span class="bp">self</span><span class="p">,</span></tt>
             </div>
             <div id="l17"
-               class="code sev- "><tt><i>17</i>         <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-8</span><span class="p">,</span></tt>
+               class="code sev- "><tt><i>17</i>         <span class="n">beta</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span></tt>
             </div>
             <div id="l18"
-               class="code sev- "><tt><i>18</i>     <span class="p">):</span></tt>
+               class="code sev- "><tt><i>18</i>         <span class="n">eps</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">1e-8</span><span class="p">,</span></tt>
             </div>
             <div id="l19"
-               class="code sev- "><tt><i>19</i>         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span></tt>
+               class="code sev- "><tt><i>19</i>     <span class="p">):</span></tt>
             </div>
             <div id="l20"
-               class="code sev-2  le">
-               <ul class="violations">
-               
-                  <li>
-                     <span class="count sev-2">
-                        E221
-                     </span>
-                     Multiple spaces before operator</li>
-               
-               </ul><tt><i>20</i>         <span class="bp">self</span><span class="o">.</span><span class="n">beta</span>   <span class="o">=</span> <span class="n">beta</span></tt>
+               class="code sev- "><tt><i>20</i>         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span></tt>
             </div>
             <div id="l21"
-               class="code sev-2  le">
-               <ul class="violations">
-               
-                  <li>
-                     <span class="count sev-2">
-                        E221
-                     </span>
-                     Multiple spaces before operator</li>
-               
-               </ul><tt><i>21</i>         <span class="bp">self</span><span class="o">.</span><span class="n">eps</span>    <span class="o">=</span> <span class="n">eps</span></tt>
+               class="code sev- "><tt><i>21</i>         <span class="bp">self</span><span class="o">.</span><span class="n">beta</span> <span class="o">=</span> <span class="n">beta</span></tt>
             </div>
             <div id="l22"
-               class="code sev- "><tt><i>22</i>         <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span></tt>
+               class="code sev- "><tt><i>22</i>         <span class="bp">self</span><span class="o">.</span><span class="n">eps</span> <span class="o">=</span> <span class="n">eps</span></tt>
             </div>
             <div id="l23"
-               class="code sev- "><tt><i>23</i> &nbsp;</tt>
+               class="code sev- "><tt><i>23</i>         <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;cuda&quot;</span> <span class="k">if</span> <span class="n">torch</span><span class="o">.</span><span class="n">cuda</span><span class="o">.</span><span class="n">is_available</span><span class="p">()</span> <span class="k">else</span> <span class="s2">&quot;cpu&quot;</span></tt>
             </div>
             <div id="l24"
-               class="code sev- "><tt><i>24</i>     <span class="k">def</span><span class="w"> </span><span class="nf">log_p</span><span class="p">(</span></tt>
+               class="code sev- "><tt><i>24</i> &nbsp;</tt>
             </div>
             <div id="l25"
-               class="code sev- "><tt><i>25</i>         <span class="bp">self</span><span class="p">,</span></tt>
+               class="code sev- "><tt><i>25</i>     <span class="k">def</span><span class="w"> </span><span class="nf">log_p</span><span class="p">(</span></tt>
             </div>
             <div id="l26"
-               class="code sev- "><tt><i>26</i>         <span class="n">z</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>                   <span class="c1"># [B] or [B,1]</span></tt>
+               class="code sev- "><tt><i>26</i>         <span class="bp">self</span><span class="p">,</span></tt>
             </div>
             <div id="l27"
-               class="code sev- "><tt><i>27</i>         <span class="n">rep_mean</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>            <span class="c1"># [R]</span></tt>
+               class="code sev- "><tt><i>27</i>         <span class="n">z</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>                   <span class="c1"># [B] or [B,1]</span></tt>
             </div>
             <div id="l28"
-               class="code sev- "><tt><i>28</i>         <span class="n">rep_logvar</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>          <span class="c1"># [R]</span></tt>
+               class="code sev- "><tt><i>28</i>         <span class="n">rep_mean</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>            <span class="c1"># [R]</span></tt>
             </div>
             <div id="l29"
-               class="code sev- "><tt><i>29</i>         <span class="n">w</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>                   <span class="c1"># [R] or [R,1]</span></tt>
+               class="code sev- "><tt><i>29</i>         <span class="n">rep_logvar</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>          <span class="c1"># [R]</span></tt>
             </div>
             <div id="l30"
-               class="code sev- "><tt><i>30</i>         <span class="n">sum_up</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span></tt>
+               class="code sev- "><tt><i>30</i>         <span class="n">w</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>                   <span class="c1"># [R] or [R,1]</span></tt>
             </div>
             <div id="l31"
-               class="code sev- "><tt><i>31</i>     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span></tt>
+               class="code sev- "><tt><i>31</i>         <span class="n">sum_up</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span></tt>
             </div>
             <div id="l32"
-               class="code sev- "><tt><i>32</i> <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span></tt>
+               class="code sev- "><tt><i>32</i>     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">:</span></tt>
             </div>
             <div id="l33"
-               class="code sev- "><tt><i>33</i> <span class="sd">        Compute log p(z) under the mixture prior.</span></tt>
+               class="code sev- "><tt><i>33</i> <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span></tt>
             </div>
             <div id="l34"
-               class="code sev- "><tt><i>34</i> &nbsp;</tt>
+               class="code sev- "><tt><i>34</i> <span class="sd">        Compute log p(z) under the mixture prior.</span></tt>
             </div>
             <div id="l35"
-               class="code sev- "><tt><i>35</i> <span class="sd">        Args:</span></tt>
+               class="code sev- "><tt><i>35</i> &nbsp;</tt>
             </div>
             <div id="l36"
-               class="code sev- "><tt><i>36</i> <span class="sd">          z         (Tensor[B] or [B,1]): latent samples</span></tt>
+               class="code sev- "><tt><i>36</i> <span class="sd">        Args:</span></tt>
             </div>
             <div id="l37"
-               class="code sev- "><tt><i>37</i> <span class="sd">          rep_mean  (Tensor[R])           : mixture means</span></tt>
+               class="code sev- "><tt><i>37</i> <span class="sd">          z         (Tensor[B] or [B,1]): latent samples</span></tt>
             </div>
             <div id="l38"
-               class="code sev- "><tt><i>38</i> <span class="sd">          rep_logvar(Tensor[R])           : mixture log‐vars</span></tt>
+               class="code sev- "><tt><i>38</i> <span class="sd">          rep_mean  (Tensor[R])           : mixture means</span></tt>
             </div>
             <div id="l39"
-               class="code sev- "><tt><i>39</i> <span class="sd">          w         (Tensor[R] or [R,1])  : mixture weights</span></tt>
+               class="code sev- "><tt><i>39</i> <span class="sd">          rep_logvar(Tensor[R])           : mixture log‐vars</span></tt>
             </div>
             <div id="l40"
-               class="code sev- "><tt><i>40</i> <span class="sd">          sum_up    (bool)                : if True, returns [B] log‐density;</span></tt>
+               class="code sev- "><tt><i>40</i> <span class="sd">          w         (Tensor[R] or [R,1])  : mixture weights</span></tt>
             </div>
             <div id="l41"
-               class="code sev- "><tt><i>41</i> <span class="sd">                                           if False, returns [B,R] component‐wise log‐probs</span></tt>
+               class="code sev- "><tt><i>41</i> <span class="sd">          sum_up    (bool)                : if True, returns [B] log‐density;</span></tt>
             </div>
             <div id="l42"
-               class="code sev- "><tt><i>42</i> <span class="sd">        Returns:</span></tt>
+               class="code sev- "><tt><i>42</i> <span class="sd">                                           if False, returns [B,R] component‐wise log‐probs</span></tt>
             </div>
             <div id="l43"
-               class="code sev- "><tt><i>43</i> <span class="sd">          Tensor[B] if sum_up else Tensor[B,R]</span></tt>
+               class="code sev- "><tt><i>43</i> <span class="sd">        Returns:</span></tt>
             </div>
             <div id="l44"
-               class="code sev- "><tt><i>44</i> <span class="sd">        &quot;&quot;&quot;</span></tt>
+               class="code sev- "><tt><i>44</i> <span class="sd">          Tensor[B] if sum_up else Tensor[B,R]</span></tt>
             </div>
             <div id="l45"
-               class="code sev- "><tt><i>45</i> &nbsp;</tt>
+               class="code sev- "><tt><i>45</i> <span class="sd">        &quot;&quot;&quot;</span></tt>
             </div>
             <div id="l46"
-               class="code sev-2  le">
-               <ul class="violations">
-               
-                  <li>
-                     <span class="count sev-2">
-                        W291
-                     </span>
-                     Trailing whitespace</li>
-               
-               </ul><tt><i>46</i>         <span class="n">z_expand</span> <span class="o">=</span> <span class="n">z</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>               </tt>
+               class="code sev- "><tt><i>46</i> &nbsp;</tt>
             </div>
             <div id="l47"
-               class="code sev-2  le">
-               <ul class="violations">
-               
-                  <li>
-                     <span class="count sev-2">
-                        E221
-                     </span>
-                     Multiple spaces before operator</li>
-               
-                  <li>
-                     <span class="count sev-2">
-                        W291
-                     </span>
-                     Trailing whitespace</li>
-               
-               </ul><tt><i>47</i>         <span class="n">mu</span>    <span class="o">=</span> <span class="n">rep_mean</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>        </tt>
+               class="code sev- "><tt><i>47</i>         <span class="n">z_expand</span> <span class="o">=</span> <span class="n">z</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></tt>
             </div>
             <div id="l48"
-               class="code sev-2  le">
-               <ul class="violations">
-               
-                  <li>
-                     <span class="count sev-2">
-                        E221
-                     </span>
-                     Multiple spaces before operator</li>
-               
-                  <li>
-                     <span class="count sev-2">
-                        W291
-                     </span>
-                     Trailing whitespace</li>
-               
-               </ul><tt><i>48</i>         <span class="n">lv</span>    <span class="o">=</span> <span class="n">rep_logvar</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>      </tt>
+               class="code sev- "><tt><i>48</i>         <span class="n">mu</span> <span class="o">=</span> <span class="n">rep_mean</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></tt>
             </div>
             <div id="l49"
-               class="code sev- "><tt><i>49</i> &nbsp;</tt>
+               class="code sev- "><tt><i>49</i>         <span class="n">lv</span> <span class="o">=</span> <span class="n">rep_logvar</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></tt>
             </div>
             <div id="l50"
-               class="code sev- "><tt><i>50</i>         <span class="n">representative_log_q</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">lv</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">z_expand</span><span class="o">-</span><span class="n">mu</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span></tt>
+               class="code sev- "><tt><i>50</i> &nbsp;</tt>
             </div>
             <div id="l51"
+               class="code sev- "><tt><i>51</i>         <span class="n">representative_log_q</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">lv</span> <span class="o">+</span> <span class="n">torch</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="n">z_expand</span> <span class="o">-</span> <span class="n">mu</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span></tt>
+            </div>
+            <div id="l52"
                class="code sev-2  le">
                <ul class="violations">
                
@@ -251,499 +179,424 @@
                      </span>
                      Line break before binary operator</li>
                
-                  <li>
-                     <span class="count sev-2">
-                        E128
-                     </span>
-                     Continuation line under-indented for visual indent</li>
-               
-                  <li>
-                     <span class="count sev-2">
-                        E202
-                     </span>
-                     Whitespace before ')'</li>
-               
-               </ul><tt><i>51</i>                                         <span class="o">/</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">lv</span><span class="p">),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span> <span class="p">)</span></tt>
-            </div>
-            <div id="l52"
-               class="code sev-2  le">
-               <ul class="violations">
-               
-                  <li>
-                     <span class="count sev-2">
-                        W293
-                     </span>
-                     Blank line contains whitespace</li>
-               
-               </ul><tt><i>52</i>         </tt>
+               </ul><tt><i>52</i>                                                 <span class="o">/</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">lv</span><span class="p">),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span></tt>
             </div>
             <div id="l53"
-               class="code sev- "><tt><i>53</i>         <span class="k">if</span> <span class="n">sum_up</span><span class="p">:</span></tt>
+               class="code sev- "><tt><i>53</i> &nbsp;</tt>
             </div>
             <div id="l54"
-               class="code sev- "><tt><i>54</i>             <span class="n">log_p</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">representative_log_q</span><span class="p">)</span><span class="nd">@w</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">eps</span><span class="p">),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></tt>
+               class="code sev- "><tt><i>54</i>         <span class="k">if</span> <span class="n">sum_up</span><span class="p">:</span></tt>
             </div>
             <div id="l55"
-               class="code sev- "><tt><i>55</i>         <span class="k">else</span><span class="p">:</span></tt>
+               class="code sev- "><tt><i>55</i>             <span class="n">log_p</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">representative_log_q</span><span class="p">)</span> <span class="o">@</span> <span class="n">w</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">eps</span><span class="p">),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></tt>
             </div>
             <div id="l56"
-               class="code sev-2  le">
-               <ul class="violations">
-               
-                  <li>
-                     <span class="count sev-2">
-                        W291
-                     </span>
-                     Trailing whitespace</li>
-               
-               </ul><tt><i>56</i>             <span class="n">log_p</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">representative_log_q</span><span class="p">)</span><span class="o">*</span><span class="n">w</span><span class="o">.</span><span class="n">T</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">eps</span><span class="p">)</span>  </tt>
+               class="code sev- "><tt><i>56</i>         <span class="k">else</span><span class="p">:</span></tt>
             </div>
             <div id="l57"
-               class="code sev-2  le">
-               <ul class="violations">
-               
-                  <li>
-                     <span class="count sev-2">
-                        W293
-                     </span>
-                     Blank line contains whitespace</li>
-               
-               </ul><tt><i>57</i>             </tt>
+               class="code sev- "><tt><i>57</i>             <span class="n">log_p</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">representative_log_q</span><span class="p">)</span> <span class="o">*</span> <span class="n">w</span><span class="o">.</span><span class="n">T</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">eps</span><span class="p">)</span></tt>
             </div>
             <div id="l58"
-               class="code sev-2  le">
-               <ul class="violations">
-               
-                  <li>
-                     <span class="count sev-2">
-                        W291
-                     </span>
-                     Trailing whitespace</li>
-               
-               </ul><tt><i>58</i>         <span class="k">return</span> <span class="n">log_p</span>              </tt>
+               class="code sev- "><tt><i>58</i> &nbsp;</tt>
             </div>
             <div id="l59"
-               class="code sev- "><tt><i>59</i> &nbsp;</tt>
+               class="code sev- "><tt><i>59</i>         <span class="k">return</span> <span class="n">log_p</span></tt>
             </div>
             <div id="l60"
-               class="code sev- "><tt><i>60</i>     <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span></tt>
+               class="code sev- "><tt><i>60</i> &nbsp;</tt>
             </div>
             <div id="l61"
-               class="code sev- "><tt><i>61</i>         <span class="bp">self</span><span class="p">,</span></tt>
+               class="code sev- "><tt><i>61</i>     <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span></tt>
             </div>
             <div id="l62"
-               class="code sev-2  le">
-               <ul class="violations">
-               
-                  <li>
-                     <span class="count sev-2">
-                        E261
-                     </span>
-                     At least two spaces before inline comment</li>
-               
-               </ul><tt><i>62</i>         <span class="n">data_targets</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="c1"># [B, C_out]</span></tt>
+               class="code sev- "><tt><i>62</i>         <span class="bp">self</span><span class="p">,</span></tt>
             </div>
             <div id="l63"
-               class="code sev- "><tt><i>63</i>         <span class="n">outputs</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>      <span class="c1"># [B, C_out], log‐probs</span></tt>
+               class="code sev- "><tt><i>63</i>         <span class="n">data_targets</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>  <span class="c1"># [B, C_out]</span></tt>
             </div>
             <div id="l64"
-               class="code sev- "><tt><i>64</i>         <span class="n">z_sample</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>     <span class="c1"># [B]</span></tt>
+               class="code sev- "><tt><i>64</i>         <span class="n">outputs</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>      <span class="c1"># [B, C_out], log‐probs</span></tt>
             </div>
             <div id="l65"
-               class="code sev- "><tt><i>65</i>         <span class="n">z_mean</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>       <span class="c1"># [B]</span></tt>
+               class="code sev- "><tt><i>65</i>         <span class="n">z_sample</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>     <span class="c1"># [B]</span></tt>
             </div>
             <div id="l66"
-               class="code sev- "><tt><i>66</i>         <span class="n">z_logvar</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>     <span class="c1"># [B]</span></tt>
+               class="code sev- "><tt><i>66</i>         <span class="n">z_mean</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>       <span class="c1"># [B]</span></tt>
             </div>
             <div id="l67"
-               class="code sev- "><tt><i>67</i>         <span class="n">rep_mean</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>     <span class="c1"># [R]</span></tt>
+               class="code sev- "><tt><i>67</i>         <span class="n">z_logvar</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>     <span class="c1"># [B]</span></tt>
             </div>
             <div id="l68"
-               class="code sev- "><tt><i>68</i>         <span class="n">rep_logvar</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>   <span class="c1"># [R]</span></tt>
+               class="code sev- "><tt><i>68</i>         <span class="n">rep_mean</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>     <span class="c1"># [R]</span></tt>
             </div>
             <div id="l69"
-               class="code sev- "><tt><i>69</i>         <span class="n">w</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>            <span class="c1"># [R] or [R,1]</span></tt>
+               class="code sev- "><tt><i>69</i>         <span class="n">rep_logvar</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>   <span class="c1"># [R]</span></tt>
             </div>
             <div id="l70"
-               class="code sev- "><tt><i>70</i>         <span class="n">data_weights</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span></tt>
+               class="code sev- "><tt><i>70</i>         <span class="n">w</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span>            <span class="c1"># [R] or [R,1]</span></tt>
             </div>
             <div id="l71"
-               class="code sev- "><tt><i>71</i>         <span class="n">sum_up</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span></tt>
+               class="code sev- "><tt><i>71</i>         <span class="n">data_weights</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span></tt>
             </div>
             <div id="l72"
-               class="code sev- "><tt><i>72</i>     <span class="p">):</span></tt>
+               class="code sev- "><tt><i>72</i>         <span class="n">sum_up</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span></tt>
             </div>
             <div id="l73"
-               class="code sev- "><tt><i>73</i> <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span></tt>
+               class="code sev- "><tt><i>73</i>     <span class="p">):</span></tt>
             </div>
             <div id="l74"
-               class="code sev- "><tt><i>74</i> <span class="sd">        Computes:</span></tt>
+               class="code sev- "><tt><i>74</i> <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span></tt>
             </div>
             <div id="l75"
-               class="code sev- "><tt><i>75</i> <span class="sd">          rec_err = E_q[−log p(x|z)]</span></tt>
+               class="code sev- "><tt><i>75</i> <span class="sd">        Computes:</span></tt>
             </div>
             <div id="l76"
-               class="code sev- "><tt><i>76</i> <span class="sd">          kld     = E_q[ log q(z|x) − log p(z) ]</span></tt>
+               class="code sev- "><tt><i>76</i> <span class="sd">          rec_err = E_q[−log p(x|z)]</span></tt>
             </div>
             <div id="l77"
-               class="code sev- "><tt><i>77</i> <span class="sd">        Returns:</span></tt>
+               class="code sev- "><tt><i>77</i> <span class="sd">          kld     = E_q[ log q(z|x) − log p(z) ]</span></tt>
             </div>
             <div id="l78"
-               class="code sev- "><tt><i>78</i> <span class="sd">          loss, rec_err (scalar), kl_term (scalar)</span></tt>
+               class="code sev- "><tt><i>78</i> <span class="sd">        Returns:</span></tt>
             </div>
             <div id="l79"
-               class="code sev- "><tt><i>79</i> <span class="sd">        &quot;&quot;&quot;</span></tt>
+               class="code sev- "><tt><i>79</i> <span class="sd">          loss, rec_err (scalar), kl_term (scalar)</span></tt>
             </div>
             <div id="l80"
-               class="code sev- "><tt><i>80</i> &nbsp;</tt>
+               class="code sev- "><tt><i>80</i> <span class="sd">        &quot;&quot;&quot;</span></tt>
             </div>
             <div id="l81"
-               class="code sev- "><tt><i>81</i>         <span class="c1"># --- RECONSTRUCTION ---</span></tt>
+               class="code sev- "><tt><i>81</i> &nbsp;</tt>
             </div>
             <div id="l82"
-               class="code sev- "><tt><i>82</i>         <span class="c1"># cross‐entropy per sample: [B]</span></tt>
+               class="code sev- "><tt><i>82</i>         <span class="c1"># --- RECONSTRUCTION ---</span></tt>
             </div>
             <div id="l83"
-               class="code sev- "><tt><i>83</i>         <span class="n">ce</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="n">data_targets</span> <span class="o">*</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></tt>
+               class="code sev- "><tt><i>83</i>         <span class="c1"># cross‐entropy per sample: [B]</span></tt>
             </div>
             <div id="l84"
-               class="code sev- "><tt><i>84</i>         <span class="n">rec_err</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">ce</span> <span class="o">*</span> <span class="n">data_weights</span><span class="p">)</span> <span class="k">if</span> <span class="n">data_weights</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">ce</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span></tt>
+               class="code sev- "><tt><i>84</i>         <span class="n">ce</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="o">-</span><span class="n">data_targets</span> <span class="o">*</span> <span class="n">outputs</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></tt>
             </div>
             <div id="l85"
-               class="code sev- "><tt><i>85</i> &nbsp;</tt>
+               class="code sev- "><tt><i>85</i>         <span class="n">rec_err</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">ce</span> <span class="o">*</span> <span class="n">data_weights</span><span class="p">)</span> <span class="k">if</span> <span class="n">data_weights</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">ce</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span></tt>
             </div>
             <div id="l86"
-               class="code sev- "><tt><i>86</i>         <span class="c1"># --- KL TERM ---</span></tt>
+               class="code sev- "><tt><i>86</i> &nbsp;</tt>
             </div>
             <div id="l87"
-               class="code sev- "><tt><i>87</i>         <span class="c1"># log q(z|x): -½ ∑[logvar + (z−mean)² / exp(logvar)]</span></tt>
+               class="code sev- "><tt><i>87</i>         <span class="c1"># --- KL TERM ---</span></tt>
             </div>
             <div id="l88"
-               class="code sev- "><tt><i>88</i>         <span class="n">log_q</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">z_logvar</span> <span class="o">+</span> <span class="p">(</span><span class="n">z_sample</span> <span class="o">-</span> <span class="n">z_mean</span><span class="p">)</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="n">z_logvar</span><span class="o">.</span><span class="n">exp</span><span class="p">()))</span></tt>
+               class="code sev- "><tt><i>88</i>         <span class="c1"># log q(z|x): -½ ∑[logvar + (z−mean)² / exp(logvar)]</span></tt>
             </div>
             <div id="l89"
-               class="code sev- "><tt><i>89</i>         <span class="c1"># log p(z): mixture prior</span></tt>
+               class="code sev- "><tt><i>89</i>         <span class="n">log_q</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">z_logvar</span> <span class="o">+</span> <span class="p">(</span><span class="n">z_sample</span> <span class="o">-</span> <span class="n">z_mean</span><span class="p">)</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="n">z_logvar</span><span class="o">.</span><span class="n">exp</span><span class="p">()))</span></tt>
             </div>
             <div id="l90"
-               class="code sev- "><tt><i>90</i>         <span class="n">log_p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_p</span><span class="p">(</span><span class="n">z_sample</span><span class="p">,</span> <span class="n">rep_mean</span><span class="p">,</span> <span class="n">rep_logvar</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">sum_up</span><span class="o">=</span><span class="n">sum_up</span><span class="p">)</span></tt>
+               class="code sev- "><tt><i>90</i>         <span class="c1"># log p(z): mixture prior</span></tt>
             </div>
             <div id="l91"
-               class="code sev- "><tt><i>91</i> &nbsp;</tt>
+               class="code sev- "><tt><i>91</i>         <span class="n">log_p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_p</span><span class="p">(</span><span class="n">z_sample</span><span class="p">,</span> <span class="n">rep_mean</span><span class="p">,</span> <span class="n">rep_logvar</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">sum_up</span><span class="o">=</span><span class="n">sum_up</span><span class="p">)</span></tt>
             </div>
             <div id="l92"
-               class="code sev- "><tt><i>92</i>         <span class="c1"># per‐sample KL</span></tt>
+               class="code sev- "><tt><i>92</i> &nbsp;</tt>
             </div>
             <div id="l93"
-               class="code sev-2  le">
-               <ul class="violations">
-               
-                  <li>
-                     <span class="count sev-2">
-                        E221
-                     </span>
-                     Multiple spaces before operator</li>
-               
-               </ul><tt><i>93</i>         <span class="n">kld</span>   <span class="o">=</span> <span class="n">log_q</span> <span class="o">-</span> <span class="n">log_p</span></tt>
+               class="code sev- "><tt><i>93</i>         <span class="c1"># per‐sample KL</span></tt>
             </div>
             <div id="l94"
-               class="code sev- "><tt><i>94</i>         <span class="n">kl_term</span> <span class="o">=</span> <span class="p">(</span><span class="n">kld</span> <span class="o">*</span> <span class="n">data_weights</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="k">if</span> <span class="n">data_weights</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">kld</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span></tt>
+               class="code sev- "><tt><i>94</i>         <span class="n">kld</span> <span class="o">=</span> <span class="n">log_q</span> <span class="o">-</span> <span class="n">log_p</span></tt>
             </div>
             <div id="l95"
-               class="code sev- "><tt><i>95</i> &nbsp;</tt>
+               class="code sev- "><tt><i>95</i>         <span class="n">kl_term</span> <span class="o">=</span> <span class="p">(</span><span class="n">kld</span> <span class="o">*</span> <span class="n">data_weights</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="k">if</span> <span class="n">data_weights</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">kld</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span></tt>
             </div>
             <div id="l96"
-               class="code sev- "><tt><i>96</i>         <span class="n">loss</span> <span class="o">=</span> <span class="n">rec_err</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">beta</span> <span class="o">*</span> <span class="n">kl_term</span></tt>
+               class="code sev- "><tt><i>96</i> &nbsp;</tt>
             </div>
             <div id="l97"
-               class="code sev- "><tt><i>97</i>         <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="n">rec_err</span><span class="p">,</span> <span class="n">kl_term</span></tt>
+               class="code sev- "><tt><i>97</i>         <span class="n">loss</span> <span class="o">=</span> <span class="n">rec_err</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">beta</span> <span class="o">*</span> <span class="n">kl_term</span></tt>
             </div>
             <div id="l98"
-               class="code sev- "><tt><i>98</i> <span class="c1"># class InformationBottleneckLoss(nn.Module):</span></tt>
+               class="code sev- "><tt><i>98</i>         <span class="k">return</span> <span class="n">loss</span><span class="p">,</span> <span class="n">rec_err</span><span class="p">,</span> <span class="n">kl_term</span></tt>
             </div>
             <div id="l99"
-               class="code sev- "><tt><i>99</i> <span class="c1">#     &quot;&quot;&quot;</span></tt>
+               class="code sev- "><tt><i>99</i> <span class="c1"># class InformationBottleneckLoss(nn.Module):</span></tt>
             </div>
             <div id="l100"
-               class="code sev- "><tt><i>100</i> <span class="c1">#     Loss = reconstruction_error + beta * KL[q(z|x) || p(z)]</span></tt>
+               class="code sev- "><tt><i>100</i> <span class="c1">#     &quot;&quot;&quot;</span></tt>
             </div>
             <div id="l101"
-               class="code sev- "><tt><i>101</i> <span class="c1">#     Where p(z) is a mixture over representative_z (means/logvars),</span></tt>
+               class="code sev- "><tt><i>101</i> <span class="c1">#     Loss = reconstruction_error + beta * KL[q(z|x) || p(z)]</span></tt>
             </div>
             <div id="l102"
-               class="code sev- "><tt><i>102</i> <span class="c1">#     weighted by representative_weights(idle_input).</span></tt>
+               class="code sev- "><tt><i>102</i> <span class="c1">#     Where p(z) is a mixture over representative_z (means/logvars),</span></tt>
             </div>
             <div id="l103"
-               class="code sev- "><tt><i>103</i> <span class="c1">#     &quot;&quot;&quot;</span></tt>
+               class="code sev- "><tt><i>103</i> <span class="c1">#     weighted by representative_weights(idle_input).</span></tt>
             </div>
             <div id="l104"
-               class="code sev- "><tt><i>104</i> <span class="c1">#     def __init__(self, beta: float = 1.0, eps: float = 1e-8):</span></tt>
+               class="code sev- "><tt><i>104</i> <span class="c1">#     &quot;&quot;&quot;</span></tt>
             </div>
             <div id="l105"
-               class="code sev- "><tt><i>105</i> <span class="c1">#         super().__init__()</span></tt>
+               class="code sev- "><tt><i>105</i> <span class="c1">#     def __init__(self, beta: float = 1.0, eps: float = 1e-8):</span></tt>
             </div>
             <div id="l106"
-               class="code sev- "><tt><i>106</i> <span class="c1">#         self.beta = beta</span></tt>
+               class="code sev- "><tt><i>106</i> <span class="c1">#         super().__init__()</span></tt>
             </div>
             <div id="l107"
-               class="code sev- "><tt><i>107</i> <span class="c1">#         self.eps = eps</span></tt>
+               class="code sev- "><tt><i>107</i> <span class="c1">#         self.beta = beta</span></tt>
             </div>
             <div id="l108"
-               class="code sev- "><tt><i>108</i> <span class="c1">#         self.device = &quot;cuda&quot; if torch.cuda.is_available() else &quot;cpu&quot;</span></tt>
+               class="code sev- "><tt><i>108</i> <span class="c1">#         self.eps = eps</span></tt>
             </div>
             <div id="l109"
-               class="code sev- "><tt><i>109</i> &nbsp;</tt>
+               class="code sev- "><tt><i>109</i> <span class="c1">#         self.device = &quot;cuda&quot; if torch.cuda.is_available() else &quot;cpu&quot;</span></tt>
             </div>
             <div id="l110"
-               class="code sev- "><tt><i>110</i> <span class="c1">#     def log_p(</span></tt>
+               class="code sev- "><tt><i>110</i> &nbsp;</tt>
             </div>
             <div id="l111"
-               class="code sev- "><tt><i>111</i> <span class="c1">#         self,</span></tt>
+               class="code sev- "><tt><i>111</i> <span class="c1">#     def log_p(</span></tt>
             </div>
             <div id="l112"
-               class="code sev- "><tt><i>112</i> <span class="c1">#         z: torch.Tensor,                   # [B, n_cvs]</span></tt>
+               class="code sev- "><tt><i>112</i> <span class="c1">#         self,</span></tt>
             </div>
             <div id="l113"
-               class="code sev- "><tt><i>113</i> <span class="c1">#         rep_mean: torch.Tensor,            # [k, n_cvs]</span></tt>
+               class="code sev- "><tt><i>113</i> <span class="c1">#         z: torch.Tensor,                   # [B, n_cvs]</span></tt>
             </div>
             <div id="l114"
-               class="code sev- "><tt><i>114</i> <span class="c1">#         rep_logvar: torch.Tensor,          # [k, n_cvs]</span></tt>
+               class="code sev- "><tt><i>114</i> <span class="c1">#         rep_mean: torch.Tensor,            # [k, n_cvs]</span></tt>
             </div>
             <div id="l115"
-               class="code sev- "><tt><i>115</i> <span class="c1">#         w: torch.Tensor,                   # [k, 1]</span></tt>
+               class="code sev- "><tt><i>115</i> <span class="c1">#         rep_logvar: torch.Tensor,          # [k, n_cvs]</span></tt>
             </div>
             <div id="l116"
-               class="code sev- "><tt><i>116</i> <span class="c1">#     ) -&gt; torch.Tensor:</span></tt>
+               class="code sev- "><tt><i>116</i> <span class="c1">#         w: torch.Tensor,                   # [k, 1]</span></tt>
             </div>
             <div id="l117"
-               class="code sev- "><tt><i>117</i> <span class="c1">#         &quot;&quot;&quot;</span></tt>
+               class="code sev- "><tt><i>117</i> <span class="c1">#     ) -&gt; torch.Tensor:</span></tt>
             </div>
             <div id="l118"
-               class="code sev- "><tt><i>118</i> <span class="c1">#         Compute log p(z) under the mixture prior.</span></tt>
+               class="code sev- "><tt><i>118</i> <span class="c1">#         &quot;&quot;&quot;</span></tt>
             </div>
             <div id="l119"
-               class="code sev- "><tt><i>119</i> &nbsp;</tt>
+               class="code sev- "><tt><i>119</i> <span class="c1">#         Compute log p(z) under the mixture prior.</span></tt>
             </div>
             <div id="l120"
-               class="code sev- "><tt><i>120</i> <span class="c1">#         Args:</span></tt>
+               class="code sev- "><tt><i>120</i> &nbsp;</tt>
             </div>
             <div id="l121"
-               class="code sev- "><tt><i>121</i> <span class="c1">#             z: (Tensor[B, n_cvs]) latent samples</span></tt>
+               class="code sev- "><tt><i>121</i> <span class="c1">#         Args:</span></tt>
             </div>
             <div id="l122"
-               class="code sev- "><tt><i>122</i> <span class="c1">#             rep_mean: (Tensor[k, n_cvs]) mixture means</span></tt>
+               class="code sev- "><tt><i>122</i> <span class="c1">#             z: (Tensor[B, n_cvs]) latent samples</span></tt>
             </div>
             <div id="l123"
-               class="code sev- "><tt><i>123</i> <span class="c1">#             rep_logvar: (Tensor[k, n_cvs]) mixture log-variances</span></tt>
+               class="code sev- "><tt><i>123</i> <span class="c1">#             rep_mean: (Tensor[k, n_cvs]) mixture means</span></tt>
             </div>
             <div id="l124"
-               class="code sev- "><tt><i>124</i> <span class="c1">#             w: (Tensor[k, 1]) mixture weights</span></tt>
+               class="code sev- "><tt><i>124</i> <span class="c1">#             rep_logvar: (Tensor[k, n_cvs]) mixture log-variances</span></tt>
             </div>
             <div id="l125"
-               class="code sev- "><tt><i>125</i> &nbsp;</tt>
+               class="code sev- "><tt><i>125</i> <span class="c1">#             w: (Tensor[k, 1]) mixture weights</span></tt>
             </div>
             <div id="l126"
-               class="code sev- "><tt><i>126</i> <span class="c1">#         Returns:</span></tt>
+               class="code sev- "><tt><i>126</i> &nbsp;</tt>
             </div>
             <div id="l127"
-               class="code sev- "><tt><i>127</i> <span class="c1">#             Tensor[B]</span></tt>
+               class="code sev- "><tt><i>127</i> <span class="c1">#         Returns:</span></tt>
             </div>
             <div id="l128"
-               class="code sev- "><tt><i>128</i> <span class="c1">#         &quot;&quot;&quot;</span></tt>
+               class="code sev- "><tt><i>128</i> <span class="c1">#             Tensor[B]</span></tt>
             </div>
             <div id="l129"
-               class="code sev- "><tt><i>129</i> <span class="c1">#         batch_size, n_cvs = z.shape</span></tt>
+               class="code sev- "><tt><i>129</i> <span class="c1">#         &quot;&quot;&quot;</span></tt>
             </div>
             <div id="l130"
-               class="code sev- "><tt><i>130</i> <span class="c1">#         k = rep_mean.shape[0]</span></tt>
+               class="code sev- "><tt><i>130</i> <span class="c1">#         batch_size, n_cvs = z.shape</span></tt>
             </div>
             <div id="l131"
-               class="code sev- "><tt><i>131</i> &nbsp;</tt>
+               class="code sev- "><tt><i>131</i> <span class="c1">#         k = rep_mean.shape[0]</span></tt>
             </div>
             <div id="l132"
-               class="code sev- "><tt><i>132</i> <span class="c1">#         # Expand dimensions for broadcasting</span></tt>
+               class="code sev- "><tt><i>132</i> &nbsp;</tt>
             </div>
             <div id="l133"
-               class="code sev- "><tt><i>133</i> <span class="c1">#         z_expand = z.unsqueeze(1)  # [B, 1, n_cvs]</span></tt>
+               class="code sev- "><tt><i>133</i> <span class="c1">#         # Expand dimensions for broadcasting</span></tt>
             </div>
             <div id="l134"
-               class="code sev- "><tt><i>134</i> <span class="c1">#         mu = rep_mean.unsqueeze(0)  # [1, k, n_cvs]</span></tt>
+               class="code sev- "><tt><i>134</i> <span class="c1">#         z_expand = z.unsqueeze(1)  # [B, 1, n_cvs]</span></tt>
             </div>
             <div id="l135"
-               class="code sev- "><tt><i>135</i> <span class="c1">#         lv = rep_logvar.unsqueeze(0)  # [1, k, n_cvs]</span></tt>
+               class="code sev- "><tt><i>135</i> <span class="c1">#         mu = rep_mean.unsqueeze(0)  # [1, k, n_cvs]</span></tt>
             </div>
             <div id="l136"
-               class="code sev- "><tt><i>136</i> &nbsp;</tt>
+               class="code sev- "><tt><i>136</i> <span class="c1">#         lv = rep_logvar.unsqueeze(0)  # [1, k, n_cvs]</span></tt>
             </div>
             <div id="l137"
-               class="code sev- "><tt><i>137</i> <span class="c1">#         var = torch.exp(lv)</span></tt>
+               class="code sev- "><tt><i>137</i> &nbsp;</tt>
             </div>
             <div id="l138"
-               class="code sev- "><tt><i>138</i> &nbsp;</tt>
+               class="code sev- "><tt><i>138</i> <span class="c1">#         var = torch.exp(lv)</span></tt>
             </div>
             <div id="l139"
-               class="code sev- "><tt><i>139</i> <span class="c1">#         # Log-probability per dimension per component</span></tt>
+               class="code sev- "><tt><i>139</i> &nbsp;</tt>
             </div>
             <div id="l140"
-               class="code sev- "><tt><i>140</i> <span class="c1">#         log_prob_per_dim = -0.5 * (math.log(2 * math.pi) + lv + ((z_expand - mu) ** 2) / var)  # [B, k, n_cvs]</span></tt>
+               class="code sev- "><tt><i>140</i> <span class="c1">#         # Log-probability per dimension per component</span></tt>
             </div>
             <div id="l141"
-               class="code sev- "><tt><i>141</i> &nbsp;</tt>
+               class="code sev- "><tt><i>141</i> <span class="c1">#         log_prob_per_dim = -0.5 * (math.log(2 * math.pi) + lv + ((z_expand - mu) ** 2) / var)  # [B, k, n_cvs]</span></tt>
             </div>
             <div id="l142"
-               class="code sev- "><tt><i>142</i> <span class="c1">#         # Sum over dimensions to get log_prob per component</span></tt>
+               class="code sev- "><tt><i>142</i> &nbsp;</tt>
             </div>
             <div id="l143"
-               class="code sev- "><tt><i>143</i> <span class="c1">#         log_prob_comp = log_prob_per_dim.sum(dim=2)  # [B, k]</span></tt>
+               class="code sev- "><tt><i>143</i> <span class="c1">#         # Sum over dimensions to get log_prob per component</span></tt>
             </div>
             <div id="l144"
-               class="code sev- "><tt><i>144</i> &nbsp;</tt>
+               class="code sev- "><tt><i>144</i> <span class="c1">#         log_prob_comp = log_prob_per_dim.sum(dim=2)  # [B, k]</span></tt>
             </div>
             <div id="l145"
-               class="code sev- "><tt><i>145</i> <span class="c1">#         # Add log-weights</span></tt>
+               class="code sev- "><tt><i>145</i> &nbsp;</tt>
             </div>
             <div id="l146"
-               class="code sev- "><tt><i>146</i> <span class="c1">#         log_w = torch.log(w + self.eps).squeeze(-1)  # [k]</span></tt>
+               class="code sev- "><tt><i>146</i> <span class="c1">#         # Add log-weights</span></tt>
             </div>
             <div id="l147"
-               class="code sev- "><tt><i>147</i> <span class="c1">#         log_prob_comp += log_w.unsqueeze(0)  # [B, k]</span></tt>
+               class="code sev- "><tt><i>147</i> <span class="c1">#         log_w = torch.log(w + self.eps).squeeze(-1)  # [k]</span></tt>
             </div>
             <div id="l148"
-               class="code sev- "><tt><i>148</i> &nbsp;</tt>
+               class="code sev- "><tt><i>148</i> <span class="c1">#         log_prob_comp += log_w.unsqueeze(0)  # [B, k]</span></tt>
             </div>
             <div id="l149"
-               class="code sev- "><tt><i>149</i> <span class="c1">#         # Marginalize over components via logsumexp</span></tt>
+               class="code sev- "><tt><i>149</i> &nbsp;</tt>
             </div>
             <div id="l150"
-               class="code sev- "><tt><i>150</i> <span class="c1">#         log_p = torch.logsumexp(log_prob_comp, dim=1)  # [B]</span></tt>
+               class="code sev- "><tt><i>150</i> <span class="c1">#         # Marginalize over components via logsumexp</span></tt>
             </div>
             <div id="l151"
-               class="code sev- "><tt><i>151</i> &nbsp;</tt>
+               class="code sev- "><tt><i>151</i> <span class="c1">#         log_p = torch.logsumexp(log_prob_comp, dim=1)  # [B]</span></tt>
             </div>
             <div id="l152"
-               class="code sev- "><tt><i>152</i> <span class="c1">#         return log_p</span></tt>
+               class="code sev- "><tt><i>152</i> &nbsp;</tt>
             </div>
             <div id="l153"
-               class="code sev- "><tt><i>153</i> &nbsp;</tt>
+               class="code sev- "><tt><i>153</i> <span class="c1">#         return log_p</span></tt>
             </div>
             <div id="l154"
-               class="code sev- "><tt><i>154</i> <span class="c1">#     def forward(</span></tt>
+               class="code sev- "><tt><i>154</i> &nbsp;</tt>
             </div>
             <div id="l155"
-               class="code sev- "><tt><i>155</i> <span class="c1">#         self,</span></tt>
+               class="code sev- "><tt><i>155</i> <span class="c1">#     def forward(</span></tt>
             </div>
             <div id="l156"
-               class="code sev- "><tt><i>156</i> <span class="c1">#         data_targets: torch.Tensor,  # [B, C_out]</span></tt>
+               class="code sev- "><tt><i>156</i> <span class="c1">#         self,</span></tt>
             </div>
             <div id="l157"
-               class="code sev- "><tt><i>157</i> <span class="c1">#         outputs: torch.Tensor,       # [B, C_out], log-probs</span></tt>
+               class="code sev- "><tt><i>157</i> <span class="c1">#         data_targets: torch.Tensor,  # [B, C_out]</span></tt>
             </div>
             <div id="l158"
-               class="code sev- "><tt><i>158</i> <span class="c1">#         z_sample: torch.Tensor,      # [B, n_cvs]</span></tt>
+               class="code sev- "><tt><i>158</i> <span class="c1">#         outputs: torch.Tensor,       # [B, C_out], log-probs</span></tt>
             </div>
             <div id="l159"
-               class="code sev- "><tt><i>159</i> <span class="c1">#         z_mean: torch.Tensor,        # [B, n_cvs]</span></tt>
+               class="code sev- "><tt><i>159</i> <span class="c1">#         z_sample: torch.Tensor,      # [B, n_cvs]</span></tt>
             </div>
             <div id="l160"
-               class="code sev- "><tt><i>160</i> <span class="c1">#         z_logvar: torch.Tensor,      # [B, n_cvs]</span></tt>
+               class="code sev- "><tt><i>160</i> <span class="c1">#         z_mean: torch.Tensor,        # [B, n_cvs]</span></tt>
             </div>
             <div id="l161"
-               class="code sev- "><tt><i>161</i> <span class="c1">#         rep_mean: torch.Tensor,      # [k, n_cvs]</span></tt>
+               class="code sev- "><tt><i>161</i> <span class="c1">#         z_logvar: torch.Tensor,      # [B, n_cvs]</span></tt>
             </div>
             <div id="l162"
-               class="code sev- "><tt><i>162</i> <span class="c1">#         rep_logvar: torch.Tensor,    # [k, n_cvs]</span></tt>
+               class="code sev- "><tt><i>162</i> <span class="c1">#         rep_mean: torch.Tensor,      # [k, n_cvs]</span></tt>
             </div>
             <div id="l163"
-               class="code sev- "><tt><i>163</i> <span class="c1">#         w: torch.Tensor,             # [k, 1]</span></tt>
+               class="code sev- "><tt><i>163</i> <span class="c1">#         rep_logvar: torch.Tensor,    # [k, n_cvs]</span></tt>
             </div>
             <div id="l164"
-               class="code sev- "><tt><i>164</i> <span class="c1">#         data_weights: torch.Tensor = None,  # [B] or None</span></tt>
+               class="code sev- "><tt><i>164</i> <span class="c1">#         w: torch.Tensor,             # [k, 1]</span></tt>
             </div>
             <div id="l165"
-               class="code sev- "><tt><i>165</i> <span class="c1">#     ):</span></tt>
+               class="code sev- "><tt><i>165</i> <span class="c1">#         data_weights: torch.Tensor = None,  # [B] or None</span></tt>
             </div>
             <div id="l166"
-               class="code sev- "><tt><i>166</i> <span class="c1">#         &quot;&quot;&quot;</span></tt>
+               class="code sev- "><tt><i>166</i> <span class="c1">#     ):</span></tt>
             </div>
             <div id="l167"
-               class="code sev- "><tt><i>167</i> <span class="c1">#         Computes:</span></tt>
+               class="code sev- "><tt><i>167</i> <span class="c1">#         &quot;&quot;&quot;</span></tt>
             </div>
             <div id="l168"
-               class="code sev- "><tt><i>168</i> <span class="c1">#             rec_err = E_q[-log p(x|z)]</span></tt>
+               class="code sev- "><tt><i>168</i> <span class="c1">#         Computes:</span></tt>
             </div>
             <div id="l169"
-               class="code sev- "><tt><i>169</i> <span class="c1">#             kld = E_q[ log q(z|x) - log p(z) ]</span></tt>
+               class="code sev- "><tt><i>169</i> <span class="c1">#             rec_err = E_q[-log p(x|z)]</span></tt>
             </div>
             <div id="l170"
-               class="code sev- "><tt><i>170</i> <span class="c1">#         Returns:</span></tt>
+               class="code sev- "><tt><i>170</i> <span class="c1">#             kld = E_q[ log q(z|x) - log p(z) ]</span></tt>
             </div>
             <div id="l171"
-               class="code sev- "><tt><i>171</i> <span class="c1">#             loss, rec_err (scalar), kl_term (scalar)</span></tt>
+               class="code sev- "><tt><i>171</i> <span class="c1">#         Returns:</span></tt>
             </div>
             <div id="l172"
-               class="code sev- "><tt><i>172</i> <span class="c1">#         &quot;&quot;&quot;</span></tt>
+               class="code sev- "><tt><i>172</i> <span class="c1">#             loss, rec_err (scalar), kl_term (scalar)</span></tt>
             </div>
             <div id="l173"
-               class="code sev- "><tt><i>173</i> <span class="c1">#         # Reconstruction error: cross-entropy per sample</span></tt>
+               class="code sev- "><tt><i>173</i> <span class="c1">#         &quot;&quot;&quot;</span></tt>
             </div>
             <div id="l174"
-               class="code sev- "><tt><i>174</i> <span class="c1">#         ce = torch.sum(-data_targets * outputs, dim=1)  # [B]</span></tt>
+               class="code sev- "><tt><i>174</i> <span class="c1">#         # Reconstruction error: cross-entropy per sample</span></tt>
             </div>
             <div id="l175"
-               class="code sev- "><tt><i>175</i> <span class="c1">#         rec_err = (ce * data_weights).mean() if data_weights is not None else ce.mean()</span></tt>
+               class="code sev- "><tt><i>175</i> <span class="c1">#         ce = torch.sum(-data_targets * outputs, dim=1)  # [B]</span></tt>
             </div>
             <div id="l176"
-               class="code sev- "><tt><i>176</i> &nbsp;</tt>
+               class="code sev- "><tt><i>176</i> <span class="c1">#         rec_err = (ce * data_weights).mean() if data_weights is not None else ce.mean()</span></tt>
             </div>
             <div id="l177"
-               class="code sev- "><tt><i>177</i> <span class="c1">#         # KL term: log q(z|x) - log p(z)</span></tt>
+               class="code sev- "><tt><i>177</i> &nbsp;</tt>
             </div>
             <div id="l178"
-               class="code sev- "><tt><i>178</i> <span class="c1">#         # log q(z|x): full multivariate diagonal Gaussian log-prob</span></tt>
+               class="code sev- "><tt><i>178</i> <span class="c1">#         # KL term: log q(z|x) - log p(z)</span></tt>
             </div>
             <div id="l179"
-               class="code sev- "><tt><i>179</i> <span class="c1">#         log_q_per_dim = -0.5 * (math.log(2 * math.pi) + z_logvar + ((z_sample - z_mean) ** 2) / z_logvar.exp())  # [B, n_cvs]</span></tt>
+               class="code sev- "><tt><i>179</i> <span class="c1">#         # log q(z|x): full multivariate diagonal Gaussian log-prob</span></tt>
             </div>
             <div id="l180"
-               class="code sev- "><tt><i>180</i> <span class="c1">#         log_q = log_q_per_dim.sum(dim=1)  # [B]</span></tt>
+               class="code sev- "><tt><i>180</i> <span class="c1">#         log_q_per_dim = -0.5 * (math.log(2 * math.pi) + z_logvar + ((z_sample - z_mean) ** 2) / z_logvar.exp())  # [B, n_cvs]</span></tt>
             </div>
             <div id="l181"
-               class="code sev- "><tt><i>181</i> &nbsp;</tt>
+               class="code sev- "><tt><i>181</i> <span class="c1">#         log_q = log_q_per_dim.sum(dim=1)  # [B]</span></tt>
             </div>
             <div id="l182"
-               class="code sev- "><tt><i>182</i> <span class="c1">#         # log p(z): mixture prior</span></tt>
+               class="code sev- "><tt><i>182</i> &nbsp;</tt>
             </div>
             <div id="l183"
-               class="code sev- "><tt><i>183</i> <span class="c1">#         log_p = self.log_p(z_sample, rep_mean, rep_logvar, w)  # [B]</span></tt>
+               class="code sev- "><tt><i>183</i> <span class="c1">#         # log p(z): mixture prior</span></tt>
             </div>
             <div id="l184"
-               class="code sev- "><tt><i>184</i> &nbsp;</tt>
+               class="code sev- "><tt><i>184</i> <span class="c1">#         log_p = self.log_p(z_sample, rep_mean, rep_logvar, w)  # [B]</span></tt>
             </div>
             <div id="l185"
-               class="code sev- "><tt><i>185</i> <span class="c1">#         # Per-sample KL</span></tt>
+               class="code sev- "><tt><i>185</i> &nbsp;</tt>
             </div>
             <div id="l186"
-               class="code sev- "><tt><i>186</i> <span class="c1">#         kld = log_q - log_p  # [B]</span></tt>
+               class="code sev- "><tt><i>186</i> <span class="c1">#         # Per-sample KL</span></tt>
             </div>
             <div id="l187"
-               class="code sev- "><tt><i>187</i> <span class="c1">#         kl_term = (kld * data_weights).mean() if data_weights is not None else kld.mean()</span></tt>
+               class="code sev- "><tt><i>187</i> <span class="c1">#         kld = log_q - log_p  # [B]</span></tt>
             </div>
             <div id="l188"
-               class="code sev- "><tt><i>188</i> &nbsp;</tt>
+               class="code sev- "><tt><i>188</i> <span class="c1">#         kl_term = (kld * data_weights).mean() if data_weights is not None else kld.mean()</span></tt>
             </div>
             <div id="l189"
-               class="code sev- "><tt><i>189</i> <span class="c1">#         loss = rec_err + self.beta * kl_term</span></tt>
+               class="code sev- "><tt><i>189</i> &nbsp;</tt>
             </div>
             <div id="l190"
-               class="code sev-2  le">
-               <ul class="violations">
-               
-                  <li>
-                     <span class="count sev-2">
-                        W292
-                     </span>
-                     No newline at end of file</li>
-               
-               </ul><tt><i>190</i> <span class="c1">#         return loss, rec_err, kl_term</span></tt>
+               class="code sev- "><tt><i>190</i> <span class="c1">#         loss = rec_err + self.beta * kl_term</span></tt>
+            </div>
+            <div id="l191"
+               class="code sev- "><tt><i>191</i> <span class="c1">#         return loss, rec_err, kl_term</span></tt>
             </div>
             
          </div>

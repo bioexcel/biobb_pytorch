@@ -33,7 +33,7 @@ window.addEventListener('DOMContentLoaded', function () {
 </script>
    </head>
    <body>
-      <div id="masthead" class="sev-1"></div>
+      <div id="masthead" class="sev-2"></div>
       <div id="page">
          <p id="srclink">
             <a title="View full annotated source"
@@ -50,213 +50,6 @@ window.addEventListener('DOMContentLoaded', function () {
          <ul id="index">
          
          <li>
-            <a data-code="F401">
-               <span class="count sev-1">
-                  1
-               </span>
-               <strong>F401:</strong> 'math' imported but unused
-               
-            </a>
-            <ul class="details">
-            <li>
-               
-               <a href="biobb_pytorch.mdae.loss.ib_loss.source.html#l5">
-                  <tt><i>5</i> <span class="kn">import</span><span class="w"> </span><span class="nn">math</span></tt>
-               </a>
-            </li>
-            </ul>
-         </li>
-         
-         <li>
-            <a data-code="E221">
-               <span class="count sev-2">
-                  5
-               </span>
-               <strong>E221:</strong> multiple spaces before operator
-               
-            </a>
-            <ul class="details">
-            <li>
-               
-               <a href="biobb_pytorch.mdae.loss.ib_loss.source.html#l20">
-                  <tt><i>20</i>         <span class="bp">self</span><span class="o">.</span><span class="n">beta</span>   <span class="o">=</span> <span class="n">beta</span></tt>
-               </a>
-            </li><li>
-               
-               <a href="biobb_pytorch.mdae.loss.ib_loss.source.html#l21">
-                  <tt><i>21</i>         <span class="bp">self</span><span class="o">.</span><span class="n">eps</span>    <span class="o">=</span> <span class="n">eps</span></tt>
-               </a>
-            </li><li>
-               
-               <a href="biobb_pytorch.mdae.loss.ib_loss.source.html#l47">
-                  <tt><i>47</i>         <span class="n">mu</span>    <span class="o">=</span> <span class="n">rep_mean</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>        </tt>
-               </a>
-            </li><li>
-               
-               <a href="biobb_pytorch.mdae.loss.ib_loss.source.html#l48">
-                  <tt><i>48</i>         <span class="n">lv</span>    <span class="o">=</span> <span class="n">rep_logvar</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>      </tt>
-               </a>
-            </li><li>
-               
-               <a href="biobb_pytorch.mdae.loss.ib_loss.source.html#l93">
-                  <tt><i>93</i>         <span class="n">kld</span>   <span class="o">=</span> <span class="n">log_q</span> <span class="o">-</span> <span class="n">log_p</span></tt>
-               </a>
-            </li>
-            </ul>
-         </li>
-         
-         <li>
-            <a data-code="W291">
-               <span class="count sev-2">
-                  5
-               </span>
-               <strong>W291:</strong> trailing whitespace
-               
-            </a>
-            <ul class="details">
-            <li>
-               
-               <a href="biobb_pytorch.mdae.loss.ib_loss.source.html#l46">
-                  <tt><i>46</i>         <span class="n">z_expand</span> <span class="o">=</span> <span class="n">z</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>               </tt>
-               </a>
-            </li><li>
-               
-               <a href="biobb_pytorch.mdae.loss.ib_loss.source.html#l47">
-                  <tt><i>47</i>         <span class="n">mu</span>    <span class="o">=</span> <span class="n">rep_mean</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>        </tt>
-               </a>
-            </li><li>
-               
-               <a href="biobb_pytorch.mdae.loss.ib_loss.source.html#l48">
-                  <tt><i>48</i>         <span class="n">lv</span>    <span class="o">=</span> <span class="n">rep_logvar</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>      </tt>
-               </a>
-            </li><li>
-               
-               <a href="biobb_pytorch.mdae.loss.ib_loss.source.html#l56">
-                  <tt><i>56</i>             <span class="n">log_p</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">representative_log_q</span><span class="p">)</span><span class="o">*</span><span class="n">w</span><span class="o">.</span><span class="n">T</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">eps</span><span class="p">)</span>  </tt>
-               </a>
-            </li><li>
-               
-               <a href="biobb_pytorch.mdae.loss.ib_loss.source.html#l58">
-                  <tt><i>58</i>         <span class="k">return</span> <span class="n">log_p</span>              </tt>
-               </a>
-            </li>
-            </ul>
-         </li>
-         
-         <li>
-            <a data-code="W293">
-               <span class="count sev-2">
-                  2
-               </span>
-               <strong>W293:</strong> blank line contains whitespace
-               
-            </a>
-            <ul class="details">
-            <li>
-               
-               <a href="biobb_pytorch.mdae.loss.ib_loss.source.html#l52">
-                  <tt><i>52</i>         </tt>
-               </a>
-            </li><li>
-               
-               <a href="biobb_pytorch.mdae.loss.ib_loss.source.html#l57">
-                  <tt><i>57</i>             </tt>
-               </a>
-            </li>
-            </ul>
-         </li>
-         
-         <li>
-            <a data-code="E128">
-               <span class="count sev-2">
-                  1
-               </span>
-               <strong>E128:</strong> continuation line under-indented for visual indent
-               
-            </a>
-            <ul class="details">
-            <li>
-               
-               <a href="biobb_pytorch.mdae.loss.ib_loss.source.html#l51">
-                  <tt><i>51</i>                                         <span class="o">/</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">lv</span><span class="p">),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span> <span class="p">)</span></tt>
-               </a>
-            </li>
-            </ul>
-         </li>
-         
-         <li>
-            <a data-code="E202">
-               <span class="count sev-2">
-                  1
-               </span>
-               <strong>E202:</strong> whitespace before ')'
-               
-            </a>
-            <ul class="details">
-            <li>
-               
-               <a href="biobb_pytorch.mdae.loss.ib_loss.source.html#l51">
-                  <tt><i>51</i>                                         <span class="o">/</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">lv</span><span class="p">),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span> <span class="p">)</span></tt>
-               </a>
-            </li>
-            </ul>
-         </li>
-         
-         <li>
-            <a data-code="E261">
-               <span class="count sev-2">
-                  1
-               </span>
-               <strong>E261:</strong> at least two spaces before inline comment
-               
-            </a>
-            <ul class="details">
-            <li>
-               
-               <a href="biobb_pytorch.mdae.loss.ib_loss.source.html#l62">
-                  <tt><i>62</i>         <span class="n">data_targets</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="c1"># [B, C_out]</span></tt>
-               </a>
-            </li>
-            </ul>
-         </li>
-         
-         <li>
-            <a data-code="E302">
-               <span class="count sev-2">
-                  1
-               </span>
-               <strong>E302:</strong> expected 2 blank lines, found 1
-               
-            </a>
-            <ul class="details">
-            <li>
-               
-               <a href="biobb_pytorch.mdae.loss.ib_loss.source.html#l7">
-                  <tt><i>7</i> <span class="k">class</span><span class="w"> </span><span class="nc">InformationBottleneckLoss</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span></tt>
-               </a>
-            </li>
-            </ul>
-         </li>
-         
-         <li>
-            <a data-code="W292">
-               <span class="count sev-2">
-                  1
-               </span>
-               <strong>W292:</strong> no newline at end of file
-               
-            </a>
-            <ul class="details">
-            <li>
-               
-               <a href="biobb_pytorch.mdae.loss.ib_loss.source.html#l190">
-                  <tt><i>190</i> <span class="c1">#         return loss, rec_err, kl_term</span></tt>
-               </a>
-            </li>
-            </ul>
-         </li>
-         
-         <li>
             <a data-code="W503">
                <span class="count sev-2">
                   1
@@ -267,8 +60,8 @@ window.addEventListener('DOMContentLoaded', function () {
             <ul class="details">
             <li>
                
-               <a href="biobb_pytorch.mdae.loss.ib_loss.source.html#l51">
-                  <tt><i>51</i>                                         <span class="o">/</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">lv</span><span class="p">),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span> <span class="p">)</span></tt>
+               <a href="biobb_pytorch.mdae.loss.ib_loss.source.html#l52">
+                  <tt><i>52</i>                                                 <span class="o">/</span> <span class="n">torch</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">lv</span><span class="p">),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span></tt>
                </a>
             </li>
             </ul>

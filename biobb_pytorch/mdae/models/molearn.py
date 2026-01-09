@@ -1,4 +1,3 @@
-import os
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -7,12 +6,12 @@ from biobb_pytorch.mdae.loss.utils.torch_protein_energy import TorchProteinEnerg
 from biobb_pytorch.mdae.loss.physics_loss import PhysicsLoss
 import lightning
 from mlcolvar.cvs import BaseCV
-from biobb_pytorch.mdae.featurization.normalization import Normalization
+
 
 def index_points(point_clouds, index):
     '''
     Given a batch of tensor and index, select sub-tensor.
-    
+
     :param points_clouds: input points data, [B, N, C]
     :param index: sample index data, [B, N, k]
     :return: indexed points data, [B, N, k, C]
@@ -27,10 +26,11 @@ def index_points(point_clouds, index):
     new_points = point_clouds[batch_indices, index, :]
     return new_points
 
+
 def knn(x, k):
     '''
     K nearest neighborhood.
-    
+
     :param x: a tensor with size of (B, C, N)
     :param k: the number of nearest neighborhoods
     :return: indices of the k nearest neighborhoods with size of (B, N, k)
@@ -42,12 +42,14 @@ def knn(x, k):
     idx = pairwise_distance.topk(k=k, dim=-1)[1]  # (B, N, k)
     return idx
 
+
 class GraphLayer(nn.Module):
     '''
     Graph layer.
     in_channel: it depends on the input of this network.
     out_channel: given by ourselves.
     '''
+
     def __init__(self, in_channel, out_channel, k=16):
         super(GraphLayer, self).__init__()
         self.k = k
@@ -69,10 +71,12 @@ class GraphLayer(nn.Module):
         x = F.relu(self.bn(self.conv(x)))
         return x
 
+
 class Encoder(nn.Module):
     '''
     Graph based encoder
     '''
+
     def __init__(self, latent_dimension=2, **kwargs):
         super(Encoder, self).__init__()
         self.latent_dimension = latent_dimension
@@ -89,7 +93,7 @@ class Encoder(nn.Module):
 
         self.conv4 = nn.Conv1d(1024, 512, 1)
         self.bn4 = nn.BatchNorm1d(512)
-        self.conv5 = nn.Conv1d(512, latent_dimension,1)
+        self.conv5 = nn.Conv1d(512, latent_dimension, 1)
 
     def forward(self, x):
 
@@ -130,12 +134,12 @@ class FoldingLayer(nn.Module):
 
         layers = []
         for oc in out_channels[:-1]:
-            conv = nn.Conv1d(in_channel, oc, 3,1,1)
+            conv = nn.Conv1d(in_channel, oc, 3, 1, 1)
             bn = nn.BatchNorm1d(oc)
             active = nn.ReLU(inplace=True)
             layers.extend([conv, bn, active])
             in_channel = oc
-        out_layer = nn.Conv1d(in_channel, out_channels[-1], 3,1,1)
+        out_layer = nn.Conv1d(in_channel, out_channels[-1], 3, 1, 1)
         layers.append(out_layer)
 
         self.layers = nn.Sequential(*layers)
@@ -157,11 +161,13 @@ class FoldingLayer(nn.Module):
 
         return x
 
+
 class Decoder_Layer(nn.Module):
     '''
     Decoder Module of FoldingNet
     '''
-    def __init__(self, in_features, out_features, in_channel, out_channel,**kwargs):
+
+    def __init__(self, in_features, out_features, in_channel, out_channel, **kwargs):
         super(Decoder_Layer, self).__init__()
 
         # Sample the grids in 2D space
@@ -169,14 +175,14 @@ class Decoder_Layer(nn.Module):
         # yy = np.linspace(-0.3, 0.3, 45, dtype=np.float32)
         # self.grid = np.meshgrid(xx, yy)   # (2, 45, 45)
         self.out_features = out_features
-        self.grid = torch.linspace(-0.5, 0.5, out_features).view(1,-1)
+        self.grid = torch.linspace(-0.5, 0.5, out_features).view(1, -1)
         # reshape
         # self.grid = torch.Tensor(self.grid).view(2, -1)  # (2, 45, 45) -> (2, 45 * 45)
         assert out_features % in_features == 0
-        self.m = out_features//in_features
+        self.m = out_features // in_features
 
         self.fold1 = FoldingLayer(in_channel + 1, [512, 512, out_channel])
-        self.fold2 = FoldingLayer(in_channel + out_channel+1, [512, 512, out_channel])
+        self.fold2 = FoldingLayer(in_channel + out_channel + 1, [512, 512, out_channel])
 
     def forward(self, x):
         '''
@@ -192,8 +198,8 @@ class Decoder_Layer(nn.Module):
         x = x.repeat_interleave(self.m, dim=-1)            # (B, 512, 45 * 45)
 
         # two folding operations
-        recon1 = self.fold1(grid,x)
-        recon2 = recon1+self.fold2(grid,x, recon1)
+        recon1 = self.fold1(grid, x)
+        recon2 = recon1 + self.fold2(grid, x, recon1)
 
         return recon2
 
@@ -202,6 +208,7 @@ class Decoder(nn.Module):
     '''
     Decoder Module of FoldingNet
     '''
+
     def __init__(self, out_features, latent_dimension=2, **kwargs):
         super(Decoder, self).__init__()
         self.latent_dimension = latent_dimension
@@ -211,14 +218,14 @@ class Decoder(nn.Module):
         # yy = np.linspace(-0.3, 0.3, 45, dtype=np.float32)
         # self.grid = np.meshgrid(xx, yy)   # (2, 45, 45)
 
-        start_out = (out_features//128) +1
+        start_out = (out_features // 128) + 1
 
         self.out_features = out_features
 
-        self.layer1 = Decoder_Layer(1,           start_out,    latent_dimension,3*128)
-        self.layer2 = Decoder_Layer(start_out,   start_out*8,  3*128,     3*16)
-        self.layer3 = Decoder_Layer(start_out*8, start_out*32, 3*16,      3*4)
-        self.layer4 = Decoder_Layer(start_out*32,start_out*128,3*4,       3)
+        self.layer1 = Decoder_Layer(1, start_out, latent_dimension, 3 * 128)
+        self.layer2 = Decoder_Layer(start_out, start_out * 8, 3 * 128, 3 * 16)
+        self.layer3 = Decoder_Layer(start_out * 8, start_out * 32, 3 * 16, 3 * 4)
+        self.layer4 = Decoder_Layer(start_out * 32, start_out * 128, 3 * 4, 3)
 
     def forward(self, x):
         '''
@@ -237,7 +244,7 @@ class CNNAutoEncoder(BaseCV, lightning.LightningModule):
     '''
     Autoencoder architecture derived from FoldingNet.
     '''
-    
+
     BLOCKS = ["norm_in", "encoder", "decoder"]
 
     def __init__(self, n_features, n_cvs, encoder_layers, decoder_layers, options=None, **kwargs):
@@ -249,35 +256,35 @@ class CNNAutoEncoder(BaseCV, lightning.LightningModule):
         if "norm_in" in options and options["norm_in"] is not None:
             self.mean = options["norm_in"]["stats"]["parametric"][0]
             self.std = options["norm_in"]["stats"]["parametric"][1]
-            #self.norm_in = Normalization(self.in_features, mean=self.mean, range=self.std)
-        
+            # self.norm_in = Normalization(self.in_features, mean=self.mean, range=self.std)
+
         top = options["norm_in"]["stats"]["topology"][0]
         self.in_features = top.n_atoms
         self.out_features = n_features
 
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-            
+
         x0_coords = torch.tensor(top.xyz[0]).permute(1, 0)
 
         atominfo = []
         for i in top.topology.atoms:
-            atominfo.append([i.name, i.residue.name, i.residue.index+1])
-        atominfo = np.array(atominfo, dtype=object)    
-        
-        #if trainer == "Torch":
+            atominfo.append([i.name, i.residue.name, i.residue.index + 1])
+        atominfo = np.array(atominfo, dtype=object)
+
+        # if trainer == "Torch":
         self.protein_energy = TorchProteinEnergy(x0_coords,
-                                                 atominfo, 
-                                                 device=device, 
-                                                 method='roll') 
-                                                        
+                                                 atominfo,
+                                                 device=device,
+                                                 method='roll')
+
         # if options["trainer"] == "OpenMM":
 
         #     from loss.utils.openmm_thread import openmm_energy_setup, openmm_energy, soft_xml_script
-     
+
         #     protein_energy_setup = openmm_energy_setup(top)
         #     atominfo = protein_energy_setup.get_atominfo()
         #     self.mol = protein_energy_setup.mol_dataframe()
-        
+
         #     atoms_selected = list(set([atom.name for atom in top.topology.atoms]))
 
         #     openmm_kwargs = options["Trainer"]["OpenMM"]
@@ -296,7 +303,7 @@ class CNNAutoEncoder(BaseCV, lightning.LightningModule):
         #     self.start_physics_at = openmm_kwargs.get("start_physics_at", 10)
         #     self.psf = physics_scaling_factor
         #     if openmm_kwargs.get("clamp", False):
-        #         clamp_kwargs = dict(max=openmm_kwargs.get("clamp_threshold",1e8), 
+        #         clamp_kwargs = dict(max=openmm_kwargs.get("clamp_threshold",1e8),
         #                             min=-openmm_kwargs.get("clamp_threshold", 1e8))
         #     else:
         #         clamp_kwargs = None
@@ -309,14 +316,14 @@ class CNNAutoEncoder(BaseCV, lightning.LightningModule):
         #                                             xml_file=xml_file,
         #                                             **kwargs)
         #     os.remove(tmp_filename)
-        
+
         self.loss_fn = PhysicsLoss(stats=None,
-                                   protein_energy=self.protein_energy, 
+                                   protein_energy=self.protein_energy,
                                    physics_scaling_factor=0.1)
 
         self.encoder = Encoder(self.out_features, **kwargs)
         self.decoder = Decoder(self.in_features, self.out_features, **kwargs)
-    
+
     def decode(self, x):
         x = self.decoder(x)
         return x
@@ -326,13 +333,13 @@ class CNNAutoEncoder(BaseCV, lightning.LightningModule):
         x = self.decoder(z)[:, :, : batch.size(2)]
         interpolated = self.decode_interpolation(x, z)[:, :, : batch.size(2)]
         return z, x, interpolated
-    
+
     def forward_cv(self, x):
         if self.norm_in is not None:
             x = (x - self.mean) / self.std
         z = self.encoder(x)
         return z
-    
+
     def training_step(self, train_batch, batch_idx):
 
         x = train_batch["data"]
@@ -348,7 +355,7 @@ class CNNAutoEncoder(BaseCV, lightning.LightningModule):
         xhat_interpolated = xhat_interpolated * self.std + self.mean
 
         mse_loss, physics_loss, scale = self.loss_fn(x_ref, x_hat, xhat_interpolated)
-        loss = mse_loss + scale*physics_loss['physics_loss']
+        loss = mse_loss + scale * physics_loss['physics_loss']
 
         name = "train" if self.training else "valid"
         self.log(f"{name}_loss", loss, on_epoch=True, on_step=True, prog_bar=True, logger=True)
@@ -359,7 +366,7 @@ class CNNAutoEncoder(BaseCV, lightning.LightningModule):
         self.log(f"{name}_torsion_energy", physics_loss['torsion_energy'], on_epoch=True, on_step=True, prog_bar=True, logger=True)
 
         return loss
-    
+
     def decode_interpolation(self, batch, latent):
         """
         Decode a latent vector to a protein structure.
@@ -369,17 +376,16 @@ class CNNAutoEncoder(BaseCV, lightning.LightningModule):
         :rtype: torch.Tensor
         """
 
-        alpha = torch.rand(int(len(batch)//2), 1, 1).type_as(latent)
-        latent_interpolated = (1-alpha)*latent[:-1:2] + alpha*latent[1::2]
+        alpha = torch.rand(int(len(batch) // 2), 1, 1).type_as(latent)
+        latent_interpolated = (1 - alpha) * latent[:-1:2] + alpha * latent[1::2]
         decoded_interpolation = self.decoder(latent_interpolated) * self.std + self.mean
         return decoded_interpolation
-    
+
     @property
     def example_input_array(self):
         # return a dummy tensor of shape [1, C, N] on the correct device
         return torch.zeros(1, 3, self.in_features)
-    
+
     # def configure_optimizers(self):
     #     optimizer = torch.optim.AdamW(self.parameters(), lr=1e-4)
     #     return optimizer
-            

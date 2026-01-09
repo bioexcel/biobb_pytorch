@@ -1,6 +1,6 @@
 # --------------------------------------------------------------------------------------
-# vae.py 
-# 
+# vae.py
+#
 # from the mlcolvar repository
 #     https://github.com/mlcolvar/mlcolvar
 #     Copyright (c) 2023 Luigi Bonati, Enrico Trizio, Andrea Rizzi & Michele Parrinello
@@ -11,15 +11,16 @@ from typing import Optional, Tuple
 import torch
 import lightning
 from mlcolvar.cvs import BaseCV
-from biobb_pytorch.mdae.models.nn.feedforward import FeedForward 
+from biobb_pytorch.mdae.models.nn.feedforward import FeedForward
 from biobb_pytorch.mdae.featurization.normalization import Normalization
 from mlcolvar.core.transform.utils import Inverse
 from biobb_pytorch.mdae.loss import ELBOGaussiansLoss
 
 __all__ = ["VariationalAutoEncoder"]
 
+
 class VariationalAutoEncoder(BaseCV, lightning.LightningModule):
-  
+
     """Variational AutoEncoder Collective Variable.
 
     At training time, the encoder outputs a mean and a variance for each CV
@@ -198,12 +199,12 @@ class VariationalAutoEncoder(BaseCV, lightning.LightningModule):
         #     x_hat = self.norm_in.inverse(x_hat)
 
         return z, mean, log_variance, x_hat
-    
+
     def evaluate_model(self, batch, batch_idx):
         """Evaluate the model on the data, computing average loss."""
 
         x = batch['data']
-        
+
         if 'target' in batch:
             x_ref = batch['target']
             if self.norm_in is not None:
@@ -217,7 +218,6 @@ class VariationalAutoEncoder(BaseCV, lightning.LightningModule):
             x_hat = self.norm_in.inverse(x_hat)
 
         return x_hat, z, mean, log_variance
-
 
     def training_step(self, train_batch, batch_idx):
         """Single training step performed by the PyTorch Lightning Trainer."""

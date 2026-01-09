@@ -1,7 +1,7 @@
-  
+
 # --------------------------------------------------------------------------------------
-# normalization.py 
-# 
+# normalization.py
+#
 # from the mlcolvar repository
 #     https://github.com/mlcolvar/mlcolvar
 #     Copyright (c) 2023 Luigi Bonati, Enrico Trizio, Andrea Rizzi & Michele Parrinello
@@ -13,6 +13,7 @@ from mlcolvar.core.transform.utils import Statistics
 from mlcolvar.core.transform import Transform
 
 __all__ = ["Normalization"]
+
 
 def batch_reshape(t: torch.Tensor, size: torch.Size) -> torch.Tensor:
     """Return value reshaped according to size.
@@ -35,6 +36,7 @@ def batch_reshape(t: torch.Tensor, size: torch.Size) -> torch.Tensor:
             f"Input tensor must of shape (n_features) or (n_batch,n_features), not {size} (len={len(size)})."
         )
     return t
+
 
 def sanitize_range(range: torch.Tensor):
     """Sanitize
@@ -149,8 +151,8 @@ class Normalization(Transform):
         elif mode == "min_max":
             min = stats["min"]
             max = stats["max"]
-            self.mean = min 
-            range = (max - min) 
+            self.mean = min
+            range = (max - min)
             self.range = sanitize_range(range)
         elif mode == "custom":
             raise AttributeError(
@@ -240,17 +242,18 @@ def test_normalization():
 
     # test inverse
     z = norm.inverse(y)
-    assert(torch.allclose(X.mean(0), z.mean(0)))
-    assert(torch.allclose(X.std(0) , z.std(0)))
+    assert (torch.allclose(X.mean(0), z.mean(0)))
+    assert (torch.allclose(X.std(0), z.std(0)))
 
     # test inverse class
     inverse = Inverse(norm)
     q = inverse(y)
-    assert(torch.allclose(X.mean(0), q.mean(0)))
-    assert(torch.allclose(X.std(0), q.std(0)))
+    assert (torch.allclose(X.mean(0), q.mean(0)))
+    assert (torch.allclose(X.std(0), q.std(0)))
     norm = Normalization(
         in_features, mean=stats["mean"], range=stats["std"], mode="min_max"
     )
+
 
 if __name__ == "__main__":
     test_normalization()

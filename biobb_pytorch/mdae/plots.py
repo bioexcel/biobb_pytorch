@@ -1,9 +1,9 @@
-from re import S
 import os
 from typing import Union, List
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.markers import MarkerStyle
+
 
 def plot_loss(output_train_data_npz_path: str) -> None:
     """
@@ -30,7 +30,7 @@ def plot_loss(output_train_data_npz_path: str) -> None:
             val_loss,
             label=f"Validation (min.: {min_val_loss_idx})",
             color="orange",
-    )
+        )
     plt.scatter(
         min_train_loss_idx,
         train_loss[min_train_loss_idx],
@@ -51,6 +51,7 @@ def plot_loss(output_train_data_npz_path: str) -> None:
     plt.xlabel("Epochs")
     plt.title("Training/Validation")
     plt.show()
+
 
 def plot_rmsd(input_xvg_path: Union[str, List[str]]) -> None:
     """
@@ -90,6 +91,7 @@ def plot_rmsd(input_xvg_path: Union[str, List[str]]) -> None:
     plt.grid(True)
     plt.show()
 
+
 def plot_rmsf(input_xvg_path: Union[str, List[str]]) -> None:
     """
     Plots RMSF from one or more XVG files.
@@ -127,6 +129,7 @@ def plot_rmsf(input_xvg_path: Union[str, List[str]]) -> None:
     plt.legend()
     plt.grid(True)
     plt.show()
+
 
 def plot_rmsf_difference(input_xvg_path: Union[str, List[str]]) -> None:
     """
@@ -170,6 +173,7 @@ def plot_rmsf_difference(input_xvg_path: Union[str, List[str]]) -> None:
     plt.grid(True)
     plt.show()
 
+
 def plot_latent_space(results_npz_path: str,
                       projection_dim: list,
                       snapshot_freq_ps=10) -> None:
@@ -189,9 +193,8 @@ def plot_latent_space(results_npz_path: str,
 
     dim1, dim2 = projection_dim
     n_frames = z.shape[0]
-    n_ticks = int(n_frames/10)
+    n_ticks = int(n_frames / 10)
     timestep_ns = 1 / snapshot_freq_ps
-    norm = plt.Normalize(vmin=0, vmax=n_frames+1)
 
     plt.figure(figsize=(10, 6))
     plt.scatter(z[:, dim1], z[:, dim2], c=np.arange(n_frames) * timestep_ns, s=10, alpha=1.0)

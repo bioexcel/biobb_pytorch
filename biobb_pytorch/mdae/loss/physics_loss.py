@@ -2,6 +2,7 @@ import torch
 import numpy as np
 from biobb_pytorch.mdae.loss.utils.torch_protein_energy import TorchProteinEnergy
 
+
 class PhysicsLoss(torch.nn.Module):
     """
     Physics loss for the FoldingNet model.
@@ -17,16 +18,16 @@ class PhysicsLoss(torch.nn.Module):
 
             atominfo = []
             for i in top.topology.atoms:
-                atominfo.append([i.name, i.residue.name, i.residue.index+1])
+                atominfo.append([i.name, i.residue.name, i.residue.index + 1])
             atominfo = np.array(atominfo, dtype=object)
 
             device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
             self.protein_energy = TorchProteinEnergy(x0_coords,
-                                                    atominfo, 
-                                                    device=device, 
-                                                    method='roll')
-            
+                                                     atominfo,
+                                                     device=device,
+                                                     method='roll')
+
         else:
             self.protein_energy = protein_energy
 
@@ -37,7 +38,7 @@ class PhysicsLoss(torch.nn.Module):
         Mean squared error loss for the FoldingNet model.
         """
         return ((batch - decoded) ** 2).mean()
-    
+
     def total_physics_loss(self, decoded_interpolation):
         '''
         Called from both :func:`train_step <molearn.trainers.Torch_Physics_Trainer.train_step>` and :func:`valid_step <molearn.trainers.Torch_Physics_Trainer.valid_step>`.
@@ -48,20 +49,20 @@ class PhysicsLoss(torch.nn.Module):
         '''
         bond, angle, torsion = self.protein_energy._roll_bond_angle_torsion_loss(decoded_interpolation)
         n = len(decoded_interpolation)
-        bond/=n
-        angle/=n
-        torsion/=n
+        bond /= n
+        angle /= n
+        torsion /= n
         _all = torch.tensor([bond, angle, torsion])
-        _all[_all.isinf()]=1e35
+        _all[_all.isinf()] = 1e35
         total_physics = _all.nansum()
 
-        return {'physics_loss':total_physics, 'bond_energy':bond, 'angle_energy':angle, 'torsion_energy':torsion}
-    
-    def forward(self, 
-                batch, 
-                decoded, 
+        return {'physics_loss': total_physics, 'bond_energy': bond, 'angle_energy': angle, 'torsion_energy': torsion}
+
+    def forward(self,
+                batch,
+                decoded,
                 decoded_interpolation
-        ):
+                ):
         """
         Forward pass for the FoldingNet model.
         """
@@ -71,6 +72,6 @@ class PhysicsLoss(torch.nn.Module):
         physics_loss = physics_loss_dict['physics_loss']
 
         with torch.no_grad():
-            scale = self.psf*mse_loss/(physics_loss+1e-5)
+            scale = self.psf * mse_loss / (physics_loss + 1e-5)
 
         return mse_loss, physics_loss_dict, scale

@@ -51,6 +51,7 @@ class EvaluateModel(BiobbObject):
             * name: EDAM
             * schema: http://edamontology.org/EDAM.owl
     """
+
     def __init__(
         self,
         input_model_pth_path: str,
@@ -117,7 +118,7 @@ class EvaluateModel(BiobbObject):
         with torch.no_grad():
             for batch_idx, batch in enumerate(dataloader):
                 result = model.evaluate_model(batch, batch_idx)
-                # Note: Consider replacing with model.validation_step(batch, batch_idx) or 
+                # Note: Consider replacing with model.validation_step(batch, batch_idx) or
                 # model.loss_fn(model(batch['data']), batch['data']) for eval-specific loss
                 batch_loss = model.training_step(batch, batch_idx)
                 all_results.append(result)

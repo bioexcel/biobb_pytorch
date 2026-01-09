@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+
 def lrp_gmvae_single(model, x, latent_index, eps=1e-6):
     device = x.device
     batch_size = x.shape[0]
@@ -57,7 +58,7 @@ def lrp_gmvae_single(model, x, latent_index, eps=1e-6):
 
     zm = torch.stack(zm_list, dim=1)  # [batch, k, n_cvs]
 
-    term_k = qy * zm[:,:,latent_index]  # [batch, k]
+    term_k = qy * zm[:, :, latent_index]  # [batch, k]
 
     selected_a = torch.sum(term_k, dim=1)  # [batch]
 
@@ -72,7 +73,7 @@ def lrp_gmvae_single(model, x, latent_index, eps=1e-6):
     R0 = torch.zeros(batch_size, in_features, device=device)
 
     for i in range(k):
-        R = R_term_k[:,i,:]  # [batch,1]
+        R = R_term_k[:, i, :]  # [batch,1]
 
         intermediates = intermediates_list[i][::-1]
 
@@ -101,12 +102,15 @@ def lrp_gmvae_single(model, x, latent_index, eps=1e-6):
 
     return R0
 
+
 def lrp_encoder(
     model: nn.Module,
     x: torch.Tensor,
     latent_index: int = None,
     eps: float = 1e-6
 ) -> torch.Tensor:
+    """Main LRP function that handles both full models and encoder modules."""
+    # Check if it's a GMVAE model
     if model.__class__.__name__ == 'GaussianMixtureVariationalAutoEncoder':
         if latent_index is None:
             R0 = 0
@@ -116,84 +120,89 @@ def lrp_encoder(
         else:
             return lrp_gmvae_single(model, x, latent_index, eps)
 
-    # General case for MLP
-    handles = []
-    layers = []
-    def collect_hook(module, inp, out):
-        layers.append(module)
+    # Check if model has forward_cv method (full model with encoder)
+    if hasattr(model, 'forward_cv'):
+        # General case for MLP models with forward_cv
+        handles = []
+        layers = []
 
-    for m in model.modules():
-        if isinstance(m, nn.Linear):
-            handle = m.register_forward_hook(collect_hook)
-            handles.append(handle)
+        def collect_hook(module, inp, out):
+            layers.append(module)
 
-    model.eval()
-    with torch.no_grad():
-        _ = model.forward_cv(x[:1])
+        for m in model.modules():
+            if isinstance(m, nn.Linear):
+                handle = m.register_forward_hook(collect_hook)
+                handles.append(handle)
 
-    for h in handles:
-        h.remove()
+        model.eval()
+        with torch.no_grad():
+            _ = model.forward_cv(x[:1])
 
-    if len(layers) == 0:
-        raise ValueError("No Linear layers found.")
+        for h in handles:
+            h.remove()
 
-    for layer in layers:
-        if not isinstance(layer, nn.Linear):
-            raise ValueError("LRP only supported for Linear layers in general case.")
+        if len(layers) == 0:
+            raise ValueError("No Linear layers found.")
 
-    L = len(layers)
+        for layer in layers:
+            if not isinstance(layer, nn.Linear):
+                raise ValueError("LRP only supported for Linear layers in general case.")
 
-    has_norm = hasattr(model, 'norm_in') and model.norm_in is not None
-    if has_norm:
-        input_to_encoder = model.norm_in(x)
-    else:
-        input_to_encoder = x
+        L = len(layers)
 
-    A = [input_to_encoder.clone()]
-    Z = [None] * (L + 1)
-    for l in range(L):
-        lin = layers[l]
-        z = A[l] @ lin.weight.t() + lin.bias
-        sign_z = z.sign()
-        Z[l+1] = z + eps * sign_z
-        if l < L - 1:
-            a = F.relu(z)
+        has_norm = hasattr(model, 'norm_in') and model.norm_in is not None
+        if has_norm:
+            input_to_encoder = model.norm_in(x)
         else:
-            a = z
-        A.append(a)
+            input_to_encoder = x
 
-    zL = A[L]
-    if latent_index is None:
-        R = [None] * (L + 1)
-        R[L] = zL.sum(dim=1, keepdim=True)
-    else:
-        R = [None] * (L + 1)
-        R[L] = zL[:, [latent_index]]
+        A = [input_to_encoder.clone()]
+        Z = [None] * (L + 1)
+        for layer_idx in range(L):
+            lin = layers[layer_idx]
+            z = A[layer_idx] @ lin.weight.t() + lin.bias
+            sign_z = z.sign()
+            Z[layer_idx + 1] = z + eps * sign_z
+            if layer_idx < L - 1:
+                a = F.relu(z)
+            else:
+                a = z
+            A.append(a)
 
-    for l in range(L-1, -1, -1):
-        lin = layers[l]
-        s = R[l+1] / Z[l+1]
-        c = s @ lin.weight
-        R[l] = A[l] * c
+        zL = A[L]
+        if latent_index is None:
+            R = [None] * (L + 1)
+            R[L] = zL.sum(dim=1, keepdim=True)
+        else:
+            R = [None] * (L + 1)
+            R[L] = zL[:, [latent_index]]
 
-    R0 = R[0]
+        for layer_idx in range(L - 1, -1, -1):
+            lin = layers[layer_idx]
+            s = R[layer_idx + 1] / Z[layer_idx + 1]
+            c = s @ lin.weight
+            R[layer_idx] = A[layer_idx] * c
 
-    if has_norm:
-        w = (1 / model.norm_in.std).view(1, -1).to(x.device)
-        b = (-model.norm_in.mean / model.norm_in.std).view(1, -1).to(x.device)
-        z = x * w + b
-        sign_z = z.sign()
-        Z = z + eps * sign_z
-        s = R0 / Z
-        c = s * w
-        R0 = x * c
+        R0 = R[0]
 
-    return R0
+        if has_norm:
+            w = (1 / model.norm_in.std).view(1, -1).to(x.device)
+            b = (-model.norm_in.mean / model.norm_in.std).view(1, -1).to(x.device)
+            z = x * w + b
+            sign_z = z.sign()
+            Z = z + eps * sign_z
+            s = R0 / Z
+            c = s * w
+            R0 = x * c
+
+        return R0
+
+    # Fall back to simple encoder version
+    return _lrp_encoder_simple(model, x, latent_index, eps)
 
 
-
-# Layer-wise Relevance Propagation
-def lrp_encoder(
+# Layer-wise Relevance Propagation (simplified version for encoder modules)
+def _lrp_encoder_simple(
     encoder: nn.Module,
     x: torch.Tensor,
     latent_index: int = None,
@@ -227,9 +236,9 @@ def lrp_encoder(
     # 2) FORWARD PASS: collect activations A[l] and pre-activations Z[l]
     A = [x.clone().to(device)]
     Z = [None] * (L + 1)
-    for l, lin in enumerate(layers):
-        z = A[l] @ lin.weight.t() + lin.bias  # shape [batch, out_dim]
-        Z[l+1] = z + eps                       # add eps for numerical stability
+    for layer_idx, lin in enumerate(layers):
+        z = A[layer_idx] @ lin.weight.t() + lin.bias  # shape [batch, out_dim]
+        Z[layer_idx + 1] = z + eps                       # add eps for numerical stability
         a = F.relu(z)
         A.append(a)
 
@@ -246,16 +255,16 @@ def lrp_encoder(
         R[L] = zL[:, [latent_index]]          # shape [batch, 1]
 
     # 4) BACKWARD PASS (LRP) from layer L → 0
-    #    At each step l, we have R[l+1] of shape [batch, out_dim].
-    #    We want R[l] of shape [batch, in_dim].
-    for l in range(L-1, -1, -1):
-        lin = layers[l]
+    #    At each step layer_idx, we have R[layer_idx+1] of shape [batch, out_dim].
+    #    We want R[layer_idx] of shape [batch, in_dim].
+    for layer_idx in range(L - 1, -1, -1):
+        lin = layers[layer_idx]
         w = lin.weight       # shape [out_dim, in_dim]
-        # Z[l+1]: [batch, out_dim], R[l+1]: [batch, out_dim]
-        s = R[l+1] / Z[l+1]               # [batch, out_dim]
+        # Z[layer_idx+1]: [batch, out_dim], R[layer_idx+1]: [batch, out_dim]
+        s = R[layer_idx + 1] / Z[layer_idx + 1]               # [batch, out_dim]
         c = s @ w                         # [batch, in_dim], since w is [out, in]
         # multiply by the forward activation to zero‐out inactive neurons
-        R[l] = A[l] * c                   # [batch, in_dim]
+        R[layer_idx] = A[layer_idx] * c                   # [batch, in_dim]
 
     # R[0] is now the relevance of each input feature
     return R[0]
@@ -276,4 +285,3 @@ def lrp_encoder(
 
 # # Normalize
 # global_importance = (global_importance - global_importance.min()) / (global_importance.max() - global_importance.min())
-

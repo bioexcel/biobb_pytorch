@@ -1,6 +1,6 @@
 # --------------------------------------------------------------------------------------
-# autoencoder.py 
-# 
+# autoencoder.py
+#
 # from the mlcolvar repository
 #     https://github.com/mlcolvar/mlcolvar
 #     Copyright (c) 2023 Luigi Bonati, Enrico Trizio, Andrea Rizzi & Michele Parrinello
@@ -117,7 +117,7 @@ class AutoEncoder(BaseCV, lightning.LightningModule):
             x = self.norm_in(x)
         x = self.encoder(x)
         return x
-    
+
     def decode(self, z: torch.Tensor) -> torch.Tensor:
         """Decode the latent space into the original input space."""
         x = self.decoder(z)
@@ -132,7 +132,7 @@ class AutoEncoder(BaseCV, lightning.LightningModule):
         if self.norm_in is not None:
             x = self.norm_in.inverse(x)
         return x
-    
+
     def evaluate_model(self, batch, batch_idx=None):
         """Evaluate the model on the data, computing the reconstruction loss."""
 
@@ -142,7 +142,7 @@ class AutoEncoder(BaseCV, lightning.LightningModule):
 
         if self.norm_in is not None:
             x_hat = self.norm_in.inverse(x_hat)
-        
+
         return x_hat, z
 
     def training_step(self, train_batch, batch_idx):
@@ -183,4 +183,3 @@ class AutoEncoder(BaseCV, lightning.LightningModule):
         else:
             decoder_model = self.decoder
         return decoder_model
-

@@ -1,8 +1,8 @@
 
-__all__ = ["AutoEncoder", 
-           "VariationalAutoEncoder", 
-           "GaussianMixtureVariationalAutoEncoder", 
-        #    "GNNAutoEncoder",
+__all__ = ["AutoEncoder",
+           "VariationalAutoEncoder",
+           "GaussianMixtureVariationalAutoEncoder",
+           #    "GNNAutoEncoder",
            "CNNAutoEncoder",
            "SPIB"]
 

@@ -1,7 +1,7 @@
 import argparse
 import json
 import torch
-import os
+
 
 def parse_ndx(ndx_path, group_name):
     atoms = []
@@ -15,6 +15,7 @@ def parse_ndx(ndx_path, group_name):
             elif in_group and line:
                 atoms.extend(int(x) for x in line.split())
     return atoms
+
 
 def generate_features_from_stats(stats_pt, features_path='features.dat'):
     stats = torch.load(stats_pt)
@@ -54,6 +55,7 @@ def generate_features_from_stats(stats_pt, features_path='features.dat'):
     with open(features_path, 'w') as f:
         f.write('\n'.join(feat_lines) + '\n')
     return ','.join(arg_list)
+
 
 def main():
     parser = argparse.ArgumentParser(description='Generate PLUMED input file from inputs.')
@@ -156,6 +158,7 @@ def main():
         f.write('\n'.join(plumed_lines) + '\n')
 
     print(f'PLUMED file generated at {args_parser.output}')
+
 
 if __name__ == '__main__':
     main()

@@ -16,7 +16,7 @@ __all__ = [
     "CommittorLoss",
     "committor_loss",
     "SmartDerivatives",
-    "compute_descriptors_derivatives"
+    "compute_descriptors_derivatives",
     "PhysicsLoss",
     "InformationBottleneckLoss",
 ]

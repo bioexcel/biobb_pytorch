@@ -1,5 +1,5 @@
 """
-SPIB: A deep learning-based framework to learn RCs 
+SPIB: A deep learning-based framework to learn RCs
 from MD trajectories. Code maintained by Dedi.
 
 Read and cite the following when using this method:
@@ -8,7 +8,7 @@ https://aip.scitation.org/doi/abs/10.1063/5.0038198
 
 # --------------------
 # Model
-# --------------------   
+# --------------------
 
 import torch
 import torch.nn as nn
@@ -16,21 +16,20 @@ import torch.nn.functional as F
 import lightning as pl
 from mlcolvar.cvs import BaseCV
 from biobb_pytorch.mdae.models.nn.feedforward import FeedForward
-from biobb_pytorch.mdae.featurization.normalization import Normalization
-from mlcolvar.core.transform.utils import Inverse
 from biobb_pytorch.mdae.loss import InformationBottleneckLoss
-from typing import Optional, List
+from typing import Optional
 
 __all__ = ["SPIB"]
 
+
 class SPIB(BaseCV, pl.LightningModule):
-    BLOCKS = ["norm_in", "encoder", "decoder", "k", 
-              "UpdateLabel", "beta", "threshold", "patience", "refinements", 
+    BLOCKS = ["norm_in", "encoder", "decoder", "k",
+              "UpdateLabel", "beta", "threshold", "patience", "refinements",
               "learning_rate", "lr_step_size", "lr_gamma"]
 
     def __init__(self, n_features, n_cvs, encoder_layers, decoder_layers, options=None, **kwargs):
         super().__init__(in_features=n_features, out_features=n_cvs, **kwargs)
-        
+
         options = self.parse_options(options)
 
         self._n_cvs = n_cvs
@@ -45,7 +44,7 @@ class SPIB(BaseCV, pl.LightningModule):
         self.threshold = options.get("threshold", 0.01)
         self.patience = options.get("patience", 10)
         self.refinements = options.get("refinements", 5)
-        
+
         self.update_times = 0
         self.unchanged_epochs = 0
         self.state_population0 = None
@@ -87,10 +86,10 @@ class SPIB(BaseCV, pl.LightningModule):
         mu = self.encoder_mean(h)
         logvar = -10 * F.sigmoid(self.encoder_logvar(h))
         return mu, logvar
-    
+
     def decode(self, z: torch.Tensor):
         return F.log_softmax(self.decoder(z), dim=1)
-    
+
     def forward_cv(self, x: torch.Tensor) -> torch.Tensor:
         if self.norm_in is not None:
             x = self.norm_in(x)
@@ -112,7 +111,7 @@ class SPIB(BaseCV, pl.LightningModule):
         if self.norm_in is not None:
             x_hat = self.norm_in.inverse(x_hat)
         return x_hat, z, mu, logvar
-    
+
     def evaluate_model(self, batch, batch_idx):
 
         xhat, z, mu, logvar = self.encode_decode(batch['data'])
@@ -135,7 +134,7 @@ class SPIB(BaseCV, pl.LightningModule):
         bs = loader.batch_size
         labels = []
         for i in range(0, len(inputs), bs):
-            batch = inputs[i:i+bs].to(self.device)
+            batch = inputs[i:i + bs].to(self.device)
             mu, _ = self.encode(batch)
             logp = self.decode(mu)
             labels.append(logp.exp())
@@ -157,7 +156,7 @@ class SPIB(BaseCV, pl.LightningModule):
         nn.init.ones_(self.representative_weights[0].weight)
 
     def training_step(self, batch, batch_idx):
-        x,y = batch['data'],batch['labels']
+        x, y = batch['data'], batch['labels']
         w_batch = batch.get('weights', None)
         preds, z, mu, logvar = self.encode_decode(x)
         rep_mu, rep_logvar = self.get_representative_z()
@@ -210,7 +209,7 @@ class SPIB(BaseCV, pl.LightningModule):
                     loop._combined_loader = None
                     loop.setup_data()
                 else:
-                  self.trainer.should_stop = True
+                    self.trainer.should_stop = True
         else:
             self.unchanged_epochs = 0
 

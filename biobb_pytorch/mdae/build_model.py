@@ -92,6 +92,7 @@ class BuildModel(BiobbObject):
             * name: EDAM
             * schema: http://edamontology.org/EDAM.owl
     """
+
     def __init__(
         self,
         input_stats_pt_path: str,

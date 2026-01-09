@@ -4,8 +4,8 @@ import lightning
 from mlcolvar.cvs import BaseCV
 from biobb_pytorch.mdae.featurization.normalization import Normalization
 from mlcolvar.core.transform.utils import Inverse
-from biobb_pytorch.mdae.models.nn.feedforward import FeedForward 
-from biobb_pytorch.mdae.loss import ELBOGaussiansLoss, ELBOGaussianMixtureLoss
+from biobb_pytorch.mdae.models.nn.feedforward import FeedForward
+from biobb_pytorch.mdae.loss import ELBOGaussianMixtureLoss
 
 
 __all__ = ["GaussianMixtureVariationalAutoEncoder"]
@@ -100,7 +100,7 @@ class GaussianMixtureVariationalAutoEncoder(BaseCV, lightning.LightningModule):
         return (
             -self.log_normal(x, xm, xv)                                                             # Reconstruction Loss
             + self.log_normal(z, zm, zv) - self.log_normal(z, zm_prior, zv_prior)                   # Regularization Loss (KL Divergence)
-            - torch.log(torch.tensor(1/self.k, device=x.device))                                    # Entropy Regularization
+            - torch.log(torch.tensor(1 / self.k, device=x.device))                                    # Entropy Regularization
         )
 
     def encode_decode(self, x):
@@ -109,7 +109,6 @@ class GaussianMixtureVariationalAutoEncoder(BaseCV, lightning.LightningModule):
             data = self.norm_in(x)
 
         qy_logit = self.encoder['qy_nn'](data)
-        qy = torch.softmax(qy_logit, dim=1)
 
         y_ = torch.zeros([data.shape[0], self.k]).to(data.device)
 
@@ -215,7 +214,7 @@ class GaussianMixtureVariationalAutoEncoder(BaseCV, lightning.LightningModule):
             xm_list.append(xm)
             xv_list.append(xv)
             x_list.append(x_sample)
-        
+
         xhat = torch.sum(qy.unsqueeze(-1) * torch.stack(x_list, dim=1), dim=1)
 
         if self.norm_in is not None:
@@ -227,7 +226,7 @@ class GaussianMixtureVariationalAutoEncoder(BaseCV, lightning.LightningModule):
 
     def decode(self, z):
         """
-        Reconstruct x' from aggregated z 
+        Reconstruct x' from aggregated z
         """
         if z.dim() == 1:
             z = z.unsqueeze(0)
@@ -240,14 +239,14 @@ class GaussianMixtureVariationalAutoEncoder(BaseCV, lightning.LightningModule):
 
         if self.norm_in is not None:
             x = self.norm_in.inverse(x)
-        
+
         return x
 
     def forward_cv(self, x):
 
         if self.norm_in is not None:
             x = self.norm_in(x)
-        
+
         qy_logit = self.encoder['qy_nn'](x)
         qy = torch.softmax(qy_logit, dim=1)
 
@@ -273,10 +272,10 @@ class GaussianMixtureVariationalAutoEncoder(BaseCV, lightning.LightningModule):
             z_list.append(z_sample)
 
         Z = torch.stack(z_list, dim=1)
-        a = torch.sum(qy.unsqueeze(-1) * Z, dim=1)      
+        a = torch.sum(qy.unsqueeze(-1) * Z, dim=1)
 
         return a
-    
+
     def training_step(self, train_batch, batch_idx):
 
         x = train_batch["data"]
@@ -288,10 +287,10 @@ class GaussianMixtureVariationalAutoEncoder(BaseCV, lightning.LightningModule):
 
         data, qy_logit, xm_list, xv_list, z_list, zm_list, zv_list, zm_prior_list, zv_prior_list = self.encode_decode(x_ref)
 
-        batch_loss, nent = self.loss_fn(data, 
-                                        qy_logit, 
-                                        xm_list, xv_list, 
-                                        z_list, zm_list, zv_list, 
+        batch_loss, nent = self.loss_fn(data,
+                                        qy_logit,
+                                        xm_list, xv_list,
+                                        z_list, zm_list, zv_list,
                                         zm_prior_list, zv_prior_list)
 
         loss = batch_loss.mean()
@@ -302,7 +301,7 @@ class GaussianMixtureVariationalAutoEncoder(BaseCV, lightning.LightningModule):
         self.log(f"{name}_cross_entropy", ce_loss, on_step=True, on_epoch=True, prog_bar=True, logger=True)
 
         return loss
-    
+
     def get_decoder(self, return_normalization=False):
         """Return a torch model with the decoder and optionally the normalization inverse"""
         if return_normalization:
@@ -315,7 +314,7 @@ class GaussianMixtureVariationalAutoEncoder(BaseCV, lightning.LightningModule):
                 )
         else:
             decoder_model = self.decoder
-            
+
         return decoder_model
 
 
@@ -328,12 +327,12 @@ class GaussianMixtureVariationalAutoEncoder(BaseCV, lightning.LightningModule):
 # r_nent = 0.5        # Weight for the entropy regularization term.
 
 # # Encoder sizes
-# qy_dims = [32]   
-# qz_dims = [16, 16]  
+# qy_dims = [32]
+# qz_dims = [16, 16]
 
 # # Decoder sizes
-# pz_dims = [16, 16]  
-# px_dims = [128]    
+# pz_dims = [16, 16]
+# px_dims = [128]
 
 # options = {
 #     "norm_in": {
@@ -354,5 +353,3 @@ class GaussianMixtureVariationalAutoEncoder(BaseCV, lightning.LightningModule):
 #                                                 pz_dims=pz_dims,
 #                                                 px_dims=px_dims,
 #                                                 options=options)
-
-

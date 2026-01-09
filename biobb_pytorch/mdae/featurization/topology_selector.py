@@ -1,11 +1,13 @@
 import mdtraj as md
 import itertools
 
+
 class MDTopologySelector:
     """
     A class to load an MDTraj topology and extract atom pairs (bonds or distances), triplets (angles or arbitrary triples),
     and quads (torsions or arbitrary quadruplets) for a given atom selection.
     """
+
     def __init__(self, topology):
         """
         Parameters
@@ -13,7 +15,7 @@ class MDTopologySelector:
         topology : str | md.Trajectory | md.Topology
             Path to a structure file (e.g., .pdb, .gro), an MDTraj Trajectory, or an MDTraj Topology.
         """
-        
+
         if isinstance(topology, md.Trajectory):
             self.topology = topology.topology
         elif isinstance(topology, md.Topology):
@@ -65,9 +67,9 @@ class MDTopologySelector:
             atom_pairs = [(i, j) for (i, j) in self.bonds if i in sel_set and j in sel_set]
         else:
             atom_pairs = list(itertools.combinations(sel, 2))
-        
+
         self.n_distances = len(atom_pairs)
-        
+
         return atom_pairs
 
     def get_triplets(self, selection, bonded=True):
@@ -144,10 +146,10 @@ class MDTopologySelector:
                 for i in nbrs[j]:
                     if i == k:
                         continue
-                    for l in nbrs[k]:
-                        if l == j:
+                    for neighbor_l in nbrs[k]:
+                        if neighbor_l == j:
                             continue
-                        quads.add((i, j, k, l))
+                        quads.add((i, j, k, neighbor_l))
 
         self.n_dihedrals = len(quads)
 
@@ -172,7 +174,7 @@ class MDTopologySelector:
         self.n_atoms = len(atom_indices)
 
         return atom_indices
-    
+
     def topology_indexing(self, config):
         """
         Get the topology indexing for a given configuration.
@@ -187,7 +189,7 @@ class MDTopologySelector:
         Dict of indices
             Topology indices.
         """
-        
+
         self.config = config
 
         self.topology_idx = {}
@@ -204,21 +206,22 @@ class MDTopologySelector:
                 self.topology_idx['cartesian'] = {'selection': sel, 'indices': idx}
 
         if 'distances' in self.config:
-            sel    = self.config['distances']['selection']
+            sel = self.config['distances']['selection']
             bonded = self.config['distances'].get('bonded', False)
-            pairs  = self.get_atom_pairs(sel, bonded=bonded)
+            pairs = self.get_atom_pairs(sel, bonded=bonded)
             # pull other args
-            cutoff  = self.config['distances'].get('cutoff', None)
+            cutoff = self.config['distances'].get('cutoff', None)
             periodic = self.config['distances'].get('periodic', False)
-            args = {'selection': sel, 
+            args = {'selection': sel,
                     'pairs': pairs}
-            if cutoff is not None:   args['cutoff']  = cutoff
+            if cutoff is not None:
+                args['cutoff'] = cutoff
             args['periodic'] = periodic
             self.topology_idx['distances'] = args
 
         if 'angles' in self.config:
-            sel     = self.config['angles']['selection']
-            bonded  = self.config['angles'].get('bonded', True)
+            sel = self.config['angles']['selection']
+            bonded = self.config['angles'].get('bonded', True)
             triplets = self.get_triplets(sel, bonded=bonded)
             periodic = self.config['angles'].get('periodic', False)
             self.topology_idx['angles'] = {
@@ -228,10 +231,10 @@ class MDTopologySelector:
             }
 
         if 'dihedrals' in self.config:
-            sel       = self.config['dihedrals']['selection']
-            bonded    = self.config['dihedrals'].get('bonded', True)
-            quads     = self.get_quads(sel, bonded=bonded)
-            periodic  = self.config['dihedrals'].get('periodic', False)
+            sel = self.config['dihedrals']['selection']
+            bonded = self.config['dihedrals'].get('bonded', True)
+            quads = self.get_quads(sel, bonded=bonded)
+            periodic = self.config['dihedrals'].get('periodic', False)
             self.topology_idx['dihedrals'] = {
                 'selection': sel,
                 'quadruplets': quads,
@@ -241,6 +244,5 @@ class MDTopologySelector:
         # collect any options
         if 'options' in self.config:
             self.topology_idx['options'] = self.config['options']
-        
-        return self.topology_idx
 
+        return self.topology_idx

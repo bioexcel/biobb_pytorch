@@ -49,6 +49,7 @@ class Feat2Traj(BiobbObject):
             * name: EDAM
             * schema: http://edamontology.org/EDAM.owl
     """
+
     def __init__(
         self,
         input_results_npz_path: str,

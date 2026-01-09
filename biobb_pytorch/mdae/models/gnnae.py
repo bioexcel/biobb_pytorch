@@ -107,7 +107,7 @@
 #         else:
 #             decoder_model = self.decoder
 #         return decoder_model
-    
+
 #     @property
 #     def example_input_array(self):
 #         return None

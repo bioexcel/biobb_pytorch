@@ -2,7 +2,7 @@
 
 import torch
 import torch.nn as nn
-import math
+
 
 class InformationBottleneckLoss(nn.Module):
     """
@@ -11,14 +11,15 @@ class InformationBottleneckLoss(nn.Module):
     Where p(z) is modeled as a mixture over representative_z (means/logvars),
     weighted by representative_weights(idle_input).
     """
+
     def __init__(
         self,
         beta: float = 1.0,
         eps: float = 1e-8,
     ):
         super().__init__()
-        self.beta   = beta
-        self.eps    = eps
+        self.beta = beta
+        self.eps = eps
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
 
     def log_p(
@@ -43,23 +44,23 @@ class InformationBottleneckLoss(nn.Module):
           Tensor[B] if sum_up else Tensor[B,R]
         """
 
-        z_expand = z.unsqueeze(1)               
-        mu    = rep_mean.unsqueeze(0)        
-        lv    = rep_logvar.unsqueeze(0)      
+        z_expand = z.unsqueeze(1)
+        mu = rep_mean.unsqueeze(0)
+        lv = rep_logvar.unsqueeze(0)
 
-        representative_log_q = -0.5 * torch.sum(lv + torch.pow(z_expand-mu, 2)
-                                        / torch.exp(lv), dim=2 )
-        
+        representative_log_q = -0.5 * torch.sum(lv + torch.pow(z_expand - mu, 2)
+                                                / torch.exp(lv), dim=2)
+
         if sum_up:
-            log_p = torch.sum(torch.log(torch.exp(representative_log_q)@w + self.eps), dim=1)
+            log_p = torch.sum(torch.log(torch.exp(representative_log_q) @ w + self.eps), dim=1)
         else:
-            log_p = torch.log(torch.exp(representative_log_q)*w.T + self.eps)  
-            
-        return log_p              
+            log_p = torch.log(torch.exp(representative_log_q) * w.T + self.eps)
+
+        return log_p
 
     def forward(
         self,
-        data_targets: torch.Tensor, # [B, C_out]
+        data_targets: torch.Tensor,  # [B, C_out]
         outputs: torch.Tensor,      # [B, C_out], log‐probs
         z_sample: torch.Tensor,     # [B]
         z_mean: torch.Tensor,       # [B]
@@ -90,7 +91,7 @@ class InformationBottleneckLoss(nn.Module):
         log_p = self.log_p(z_sample, rep_mean, rep_logvar, w, sum_up=sum_up)
 
         # per‐sample KL
-        kld   = log_q - log_p
+        kld = log_q - log_p
         kl_term = (kld * data_weights).mean() if data_weights is not None else kld.mean()
 
         loss = rec_err + self.beta * kl_term

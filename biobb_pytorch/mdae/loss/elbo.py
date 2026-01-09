@@ -242,6 +242,7 @@ class ELBOGaussianMixtureLoss(nn.Module):
          - E_{q(y|x)} [ log p(x|z,y) ]
          + E_{q(y|x)} [ KL( q(z|x,y) ‖ p(z|y) ) ]
     """
+
     def __init__(self, k: int, r_nent: float = 1.0):
         """
         Args:
@@ -272,12 +273,12 @@ class ELBOGaussianMixtureLoss(nn.Module):
                 qy_logit: torch.Tensor,
                 xm_list: list[torch.Tensor],
                 xv_list: list[torch.Tensor],
-                z_list:  list[torch.Tensor],
+                z_list: list[torch.Tensor],
                 zm_list: list[torch.Tensor],
                 zv_list: list[torch.Tensor],
                 zm_prior_list: list[torch.Tensor],
                 zv_prior_list: list[torch.Tensor]
-               ) -> torch.Tensor:
+                ) -> torch.Tensor:
         """
         Args:
             x                [batch, n_features]                Input data

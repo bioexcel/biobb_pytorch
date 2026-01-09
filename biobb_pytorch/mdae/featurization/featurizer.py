@@ -4,6 +4,7 @@ import torch
 from biobb_pytorch.mdae.featurization.normalization import Normalization
 from mlcolvar.core.transform.utils import Statistics
 
+
 class Featurizer:
     """
     A class to extract geometric features (distances, angles, dihedrals) from MD trajectories using MDTraj.
@@ -33,7 +34,7 @@ class Featurizer:
         """
 
         # Load trajectory and topology
-        trajectory = md.load(trajectory_file, 
+        trajectory = md.load(trajectory_file,
                              top=topology_file)
 
         self.trajectory = trajectory
@@ -42,7 +43,6 @@ class Featurizer:
         self.input_weights_npy_path = input_weights_npy_path
 
         self.complete_top = md.Trajectory(xyz=trajectory.xyz[0], topology=trajectory.topology)
-
 
     def select_atoms(self, selection):
         """
@@ -64,7 +64,7 @@ class Featurizer:
         else:
             idx = np.array(selection, dtype=int)
         return idx
-    
+
     def filter_topology(self, selection, topology):
         """
         Filter the topology based on a selection.
@@ -106,7 +106,7 @@ class Featurizer:
                 idxs.append(int(arr[0]))
             tuples.append(tuple(idxs))
         return tuples
-    
+
     def idx_distances(self, pairs):
         """
         Convert pairs of atom indices to MDTraj topology indices.
@@ -123,7 +123,7 @@ class Featurizer:
         """
         if len(pairs) > 0 and isinstance(pairs[0], dict):
             pairs = self._dicts_to_tuples(pairs, 2)
-        
+
         idx_pairs = []
         for a, b in pairs:
             ia = int(self.select_atoms(a)) if isinstance(a, str) else int(a)
@@ -139,10 +139,10 @@ class Featurizer:
         Accepts pairs as list of 2-tuples or list of dicts with 2 entries {resid: atom_name}.
         """
         distances = md.compute_distances(self.trajectory, idx_pairs, periodic=periodic)
-        
+
         # apply cutoff and get only pairs within cutoff
         if cutoff is not None:
-            keep_cols = np.any(distances < cutoff, axis=0) 
+            keep_cols = np.any(distances < cutoff, axis=0)
             idx_pairs = idx_pairs[keep_cols]
             distances = distances[:, keep_cols]
 
@@ -157,7 +157,7 @@ class Featurizer:
         a : np.ndarray
             Array of shape (n_frames, n_angles) representing polar coordinates.
             Each row corresponds to a frame, each column to an angle.
-        
+
         Returns:
         --------
         np.ndarray
@@ -182,7 +182,7 @@ class Featurizer:
         cart_angles : np.ndarray
             Array of shape (n_frames, n_angles * 2) representing Cartesian coordinates.
             Each row corresponds to a frame, each column to sin and cos a.
-        
+
         Returns:
         --------
         np.ndarray
@@ -194,7 +194,7 @@ class Featurizer:
         # Convert angles to degrees
         angles = np.rad2deg(angles)
         return angles
-    
+
     def idx_angles(self, triplets):
         """
         Convert triplets of atom indices to MDTraj topology indices.
@@ -211,7 +211,7 @@ class Featurizer:
         """
         if len(triplets) > 0 and isinstance(triplets[0], dict):
             triplets = self._dicts_to_tuples(triplets, 3)
-        
+
         idx_triplets = []
         for i, j, k in triplets:
             ii = int(self.select_atoms(i)) if isinstance(i, str) else int(i)
@@ -227,7 +227,7 @@ class Featurizer:
 
         Accepts triplets as list of 3-tuples or list of dicts with 3 entries {resid: atom_name}.
         """
-        
+
         return md.compute_angles(self.trajectory, idx_triplets, periodic=periodic)
 
     def idx_dihedrals(self, quadruplets):
@@ -246,7 +246,7 @@ class Featurizer:
         """
         if len(quadruplets) > 0 and isinstance(quadruplets[0], dict):
             quadruplets = self._dicts_to_tuples(quadruplets, 4)
-        
+
         idx_quads = []
         for i, j, k, l in quadruplets:
             ii = int(self.select_atoms(i)) if isinstance(i, str) else int(i)
@@ -263,7 +263,7 @@ class Featurizer:
 
         Accepts quads as list of 4-tuples or list of dicts with 4 entries {resid: atom_name}.
         """
-        
+
         return md.compute_dihedrals(self.trajectory, idx_quads, periodic=periodic)
 
     def compute_cartesian(self, indices):
@@ -281,13 +281,13 @@ class Featurizer:
             Cartesian coordinates of the selected atoms.
         """
         return self.trajectory.xyz[:, indices, :]
-    
+
     def combine_features(self, *feature_arrays):
         """
         Concatenate multiple feature arrays along the feature axis.
         """
         return np.concatenate(feature_arrays, axis=1)
-    
+
     def timelag(self, data: np.ndarray, lag: int):
         """
         Split into X and Y where Y[t] = X[t+lag].
@@ -308,19 +308,19 @@ class Featurizer:
         X = data[:-lag]
         Y = data[lag:]
         return X, Y
-    
+
     def get_n_features(self):
         """
         Get the number of features in the combined feature array.
         """
         return self.n_features
-    
+
     def get_n_frames(self):
         """
         Get the number of frames in the combined feature array.
         """
         return self.n_frames
-    
+
     def get_atom_info(self, selection):
         """
         Get the atom information from the topology.
@@ -329,9 +329,9 @@ class Featurizer:
         top = self.trajectory.atom_slice(idx)
         atom_info = []
         for i in top.topology.atoms:
-            atom_info.append([i.name, i.residue.name, i.residue.index+1])
+            atom_info.append([i.name, i.residue.name, i.residue.index + 1])
         return np.array(atom_info, dtype=object)
-    
+
     def set_statistics(self, combined: np.ndarray, feature_dict: dict):
         """
         Set statistics for the combined feature array.
@@ -350,9 +350,9 @@ class Featurizer:
             stats['angle_indices'] = self.idx_triplets.tolist()
         if self.idx_quads is not None:
             stats['dihedral_indices'] = self.idx_quads.tolist()
-        
+
         return stats
-  
+
     def compute_features(self, feature_dict: dict):
         """
         Compute and combine multiple feature types in one call.
@@ -376,16 +376,16 @@ class Featurizer:
 
         if 'distances' in feature_dict:
             self.idx_dist = self.idx_distances(feature_dict['distances']['pairs'])
-            d, self.idx_dist = self.compute_distances(self.idx_dist, 
-                                                 cutoff=feature_dict['distances']['cutoff'], 
-                                                 periodic=feature_dict['distances']['periodic'])
+            d, self.idx_dist = self.compute_distances(self.idx_dist,
+                                                      cutoff=feature_dict['distances']['cutoff'],
+                                                      periodic=feature_dict['distances']['periodic'])
             self.n_distances = d.shape[1]
             self.features['distances'] = d
             arrays.append(d)
 
         if 'angles' in feature_dict:
             self.idx_triplets = self.idx_angles(feature_dict['angles']['triplets'])
-            a = self.compute_angles(self.idx_triplets, 
+            a = self.compute_angles(self.idx_triplets,
                                     periodic=feature_dict['angles']['periodic'])
             self.n_angles = a.shape[1]
             a = self.polar2cartesian(a)
@@ -394,7 +394,7 @@ class Featurizer:
 
         if 'dihedrals' in feature_dict:
             self.idx_quads = self.idx_dihedrals(feature_dict['dihedrals']['quadruplets'])
-            phi = self.compute_dihedrals(self.idx_quads, 
+            phi = self.compute_dihedrals(self.idx_quads,
                                          periodic=feature_dict['dihedrals']['periodic'])
             self.n_dihedrals = phi.shape[1]
             phi = self.polar2cartesian(phi)
@@ -420,11 +420,11 @@ class Featurizer:
 
         if self.input_weights_npy_path:
             weights = np.load(self.input_weights_npy_path)
-        
+
         if 'norm_in' in feature_dict.get('options', {}):
 
             if feature_dict['options']['norm_in']['mode'] != 'custom':
-                
+
                 feature_dict['options']['norm_in']['stats'] = stats
 
             norm_in = Normalization(combined.shape[1], **feature_dict['options']['norm_in'])
@@ -434,11 +434,11 @@ class Featurizer:
 
         # Add timelag features if specified
         if 'timelag' in feature_dict.get('options', {}):
-            
+
             lag = feature_dict['options']['timelag']
             combined, combined_lag = self.timelag(combined, lag)
 
-            dataset = {"data" : combined, "target": combined_lag}
+            dataset = {"data": combined, "target": combined_lag}
 
             if self.input_labels_npy_path:
                 labels, labels_lag = self.timelag(labels, lag)
@@ -452,7 +452,7 @@ class Featurizer:
 
         else:
             dataset = {"data": combined}
-            
+
             if self.input_labels_npy_path:
                 dataset["labels"] = labels
             if self.input_weights_npy_path:

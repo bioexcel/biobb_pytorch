@@ -1,6 +1,5 @@
 import torch
 import torch.nn.functional as F
-import math
 from typing import Union
 
 
@@ -13,14 +12,15 @@ class Shifted_Softplus(torch.nn.Softplus):
     def forward(self, input):
         sp0 = F.softplus(torch.zeros(1), self.beta, self.threshold).item()
         return F.softplus(input, self.beta, self.threshold) - sp0
-    
+
+
 class Custom_Sigmoid(torch.nn.Module):
     def __init__(self, p=3):
         super(Custom_Sigmoid, self).__init__()
         self.p = p
 
     def forward(self, input):
-        return 1 / (1 + torch.exp(-self.p*(input)))
+        return 1 / (1 + torch.exp(-self.p * (input)))
 
 
 def get_activation(activation: str):
@@ -37,7 +37,7 @@ def get_activation(activation: str):
     elif activation == "shifted_softplus":
         activ = Shifted_Softplus()
     elif activation == "sigmoid":
-        activ = torch.nn.Sigmoid()    
+        activ = torch.nn.Sigmoid()
     elif activation == "logsoftmax":
         activ = torch.nn.LogSoftmax(dim=1)
     elif activation == "linear":
@@ -49,6 +49,7 @@ def get_activation(activation: str):
             f"Unknown activation: {activation}. options: 'relu','elu','tanh','softplus','shifted_softplus','logsoftmax','linear'. "
         )
     return activ
+
 
 def parse_nn_options(options: Union[str, list], n_layers: int, last_layer_activation: Union[bool, str]):
     """Parse args per layer of the NN.
@@ -67,7 +68,7 @@ def parse_nn_options(options: Union[str, list], n_layers: int, last_layer_activa
                 f"Length of options: {options} ({len(options)} should be equal to number of layers ({n_layers}))."
             )
         options_list = options
-    
+
     # if a single value is given, repeat options to all layers but for the output one
     else:
         if last_layer_activation:

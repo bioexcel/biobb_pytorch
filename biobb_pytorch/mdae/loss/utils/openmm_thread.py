@@ -7,7 +7,7 @@ import openmm
 from openmm.app.forcefield import _createResidueSignature
 from openmm.app.internal import compiled
 from torchexposedintegratorplugin import TorchExposedIntegrator
-    
+
 import torch
 import numpy as np
 from copy import deepcopy
@@ -32,19 +32,20 @@ for a1, a2 in exclusions:
 </ForceField>
 """
 
+
 class ModifiedForceField(ForceField):
-    
+
     def __init__(self, *args, alternative_residue_names=None, **kwargs):
         '''
         Takes all `*args` and `**kwargs` of `openmm.app.ForceField`, plus an optional parameter described here.
-        
+
         :param dict  alternative_residue_names: aliases for resnames, e.g., `{'HIS':'HIE'}`.
         '''
         super().__init__(*args, **kwargs)
         if isinstance(alternative_residue_names, dict):
             self._alternative_residue_names = alternative_residue_names
         else:
-            self._alternative_residue_names = {'HIS':'HIE'}
+            self._alternative_residue_names = {'HIS': 'HIE'}
 
     def _getResidueTemplateMatches(self, res, bondedToAtom, templateSignatures=None, ignoreExternalBonds=False, ignoreExtraParticles=False):
         """
@@ -52,7 +53,7 @@ class ModifiedForceField(ForceField):
 
         :param res: Topology.Residue, the residue for which template matches are to be retrieved.
         :param bondedToAtom: list of set of int, bondedToAtom[i] is the set of atoms bonded to atom index i
-        :returns: list with two elements [template, matches]. 
+        :returns: list with two elements [template, matches].
                   _TemplateData is the matching forcefield residue template, or None if no matches are found.
                   matches is a list specifying which atom of the template each atom of the residue corresponds to,
                   or None if it does not match the template.
@@ -81,16 +82,16 @@ class ModifiedForceField(ForceField):
             elif len(allMatches) > 1:
                 for i, (t, m) in enumerate(allMatches):
                     name = self._alternative_residue_names.get(res.name, res.name)
-                    if name==t.name.split('-')[0]:
+                    if name == t.name.split('-')[0]:
                         template = t
                         matches = m
                         return [template, matches]
-                    elif 'N'+name==t.name.split('-')[0]:
+                    elif 'N' + name == t.name.split('-')[0]:
                         print(f'{str(res)}, {res.index}, is a being set as a N terminal residue')
                         template = t
                         matches = m
                         return [template, matches]
-                    elif 'C'+name==t.name.split('-')[0]:
+                    elif 'C' + name == t.name.split('-')[0]:
                         print(f'{str(res)} is a being set as a C terminal residue')
                         template = t
                         matches = m
@@ -101,7 +102,7 @@ class ModifiedForceField(ForceField):
 
                 for t2, m2 in allMatches[1:]:
                     if not t1.areParametersIdentical(t2, m1, m2):
-                        raise Exception('Multiple non-identical matching templates found for residue %d (%s): %s.' % (res.index+1, res.name, ', '.join(match[0].name for match in allMatches)))
+                        raise Exception('Multiple non-identical matching templates found for residue %d (%s): %s.' % (res.index + 1, res.name, ', '.join(match[0].name for match in allMatches)))
                 template = allMatches[0][0]
                 matches = allMatches[0][1]
         return [template, matches]
@@ -112,9 +113,9 @@ class OpenmmPluginScore():
     This will use the new OpenMM Plugin to calculate forces and energy. The intention is that this will be fast enough to be able to calculate forces and energy during training.
     N.B.: The current torchintegratorplugin only supports float on GPU and double on CPU.
     '''
-    
+
     def __init__(self, mol=None, xml_file=['amber14-all.xml'], platform='CUDA', remove_NB=False,
-                 alternative_residue_names=dict(HIS='HIE', HSE='HIE'), atoms=['CA', 'C', 'N', 'CB','O'],
+                 alternative_residue_names=dict(HIS='HIE', HSE='HIE'), atoms=['CA', 'C', 'N', 'CB', 'O'],
                  soft=False):
         '''
         :param `biobox.Molecule` mol: if pldataloader is not given, then a biobox object will be taken from this parameter. If neither are given then an error  will be thrown.
@@ -128,7 +129,7 @@ class OpenmmPluginScore():
         self.mol = mol
         for key, value in alternative_residue_names.items():
             # self.mol.data.loc[:,'resname'][self.mol.data['resname']==key]=value
-            self.mol.data.loc[self.mol.data['resname']==key,'resname']=value
+            self.mol.data.loc[self.mol.data['resname'] == key, 'resname'] = value
             # self.mol.data.loc[lambda df: df['resname']==key, key]=value
         tmp_file = f'tmp{np.random.randint(1e10)}.pdb'
         self.atoms = atoms
@@ -141,9 +142,9 @@ class OpenmmPluginScore():
             self.forcefield = f._createForceField(self.pdb.topology, False)
             self.system = self.forcefield.createSystem(self.pdb.topology)
         else:
-            if isinstance(xml_file,str):
+            if isinstance(xml_file, str):
                 self.forcefield = ModifiedForceField(xml_file, alternative_residue_names=alternative_residue_names)
-            elif len(xml_file)>0:
+            elif len(xml_file) > 0:
                 self.forcefield = ModifiedForceField(*xml_file, alternative_residue_names=alternative_residue_names)
             else:
                 raise ValueError(f'xml_file: {xml_file} needs to be a str or a list of str')
@@ -160,9 +161,9 @@ class OpenmmPluginScore():
                 for idx in reversed(range(len(forces))):
                     force = forces[idx]
                     if isinstance(force, (  # openmm.PeriodicTorsionForce,
-                                          openmm.CustomGBForce,
-                                          openmm.NonbondedForce,
-                                          openmm.CMMotionRemover)):
+                            openmm.CustomGBForce,
+                            openmm.NonbondedForce,
+                            openmm.CMMotionRemover)):
                         self.system.removeForce(idx)
             else:
                 forces = self.system.getForces()
@@ -181,15 +182,15 @@ class OpenmmPluginScore():
         self.get_score = self.get_energy
         print(self.simulation.context.getState(getEnergy=True).getPotentialEnergy()._value)
         os.remove(tmp_file)
-    
+
     def ignore_hydrogen(self):
         # ignore = ['ASH', 'LYN', 'GLH', 'HID', 'HIP', 'CYM', ]
         ignore = []
         for name, template in self.forcefield._templates.items():
             if name in ignore:
                 continue
-            patchData = ForceField._PatchData(name+'_remove_h', 1)
-            
+            patchData = ForceField._PatchData(name + '_remove_h', 1)
+
             for atom in template.atoms:
                 if atom.element is elem.hydrogen:
                     if atom.name not in patchData.allAtomNames:
@@ -205,7 +206,7 @@ class OpenmmPluginScore():
                     a1 = ForceField._PatchAtomData(atom1.name)
                     a2 = ForceField._PatchAtomData(atom2.name)
                     patchData.deletedBonds.append((a1, a2))
-            self.forcefield.registerTemplatePatch(name, name+'_remove_h', 0)
+            self.forcefield.registerTemplatePatch(name, name + '_remove_h', 0)
             self.forcefield.registerPatch(patchData)
 
     def atomselect(self, atoms):
@@ -216,7 +217,7 @@ class OpenmmPluginScore():
             atoms.append('OXT')
 
         for name, template in self.forcefield._templates.items():
-            patchData = ForceField._PatchData(name+'_leave_only_'+'_'.join(atoms), 1)
+            patchData = ForceField._PatchData(name + '_leave_only_' + '_'.join(atoms), 1)
 
             for atom in template.atoms:
                 if atom.name not in atoms:
@@ -234,7 +235,7 @@ class OpenmmPluginScore():
                     a1 = ForceField._PatchAtomData(atom1.name)
                     a2 = ForceField._PatchAtomData(atom2.name)
                     patchData.deletedBonds.append((a1, a2))
-            self.forcefield.registerTemplatePatch(name, name+'_leave_only_'+'_'.join(atoms), 0)
+            self.forcefield.registerTemplatePatch(name, name + '_leave_only_' + '_'.join(atoms), 0)
             self.forcefield.registerPatch(patchData)
 
     def get_energy(self, pos_ptr, force_ptr, energy_ptr, n_particles, batch_size):
@@ -261,31 +262,31 @@ class OpenmmPluginScore():
 
 
 class OpenmmTorchEnergyMinimizer(OpenmmPluginScore):
-    
+
     def minimize(self, x, maxIterations=10, threshold=10000):
         minimized_x = torch.empty_like(x)
-        for i,s in enumerate(x.unsqueeze(1)):
+        for i, s in enumerate(x.unsqueeze(1)):
             h = 0.01
             force, energy = self.execute(s)
-            abs_max = 1/(force.abs().max())
+            abs_max = 1 / (force.abs().max())
             for j in range(maxIterations):
-                new_s = s - force*abs_max*h
+                new_s = s - force * abs_max * h
                 new_force, new_energy = self.execute(new_s)
-                if new_energy<energy:
+                if new_energy < energy:
                     s, energy, force = new_s, new_energy, new_force
-                    if energy<threshold:
+                    if energy < threshold:
                         break
-                    h*=1.2
+                    h *= 1.2
 
                 else:
-                    h*=0.2
-            minimized_x[i]=s
+                    h *= 0.2
+            minimized_x[i] = s
         return minimized_x
 
 
 class OpenMMPluginScoreSoftForceField(OpenmmPluginScore):
-    
-    def __init__(self, mol=None, platform='CUDA', atoms=['CA','C','N','CB','O']):
+
+    def __init__(self, mol=None, platform='CUDA', atoms=['CA', 'C', 'N', 'CB', 'O']):
         self.mol = mol
         tmp_file = 'tmp.pdb'
         self.atoms = atoms
@@ -318,7 +319,7 @@ class openmm_energy_function(torch.autograd.Function):
         if x.device == torch.device('cpu'):
             force = np.zeros(x.shape)
             energy = np.zeros(x.shape[0])
-            for i,t in enumerate(x):
+            for i, t in enumerate(x):
                 plugin.simulation.context.setPositions(t.numpy())
                 state = plugin.simulation.context.getState(getForces=True, getEnergy=True)
                 force[i] = state.getForces(asNumpy=True)
@@ -337,7 +338,7 @@ class openmm_energy_function(torch.autograd.Function):
     def backward(ctx, grad_output):
         force = ctx.saved_tensors[0]  # force shape [B, N, 3]
         # embed(header='23 openmm_loss_function')
-        return None, -force*grad_output.view(-1,1,1)
+        return None, -force * grad_output.view(-1, 1, 1)
 
 
 class openmm_clamped_energy_function(torch.autograd.Function):
@@ -370,15 +371,15 @@ class openmm_clamped_energy_function(torch.autograd.Function):
     @staticmethod
     def backward(ctx, grad_output):
         force = ctx.saved_tensors[0]
-        return None, -force*grad_output.view(-1, 1, 1), None
+        return None, -force * grad_output.view(-1, 1, 1), None
 
 
 class openmm_energy(torch.nn.Module):
-    
+
     def __init__(self, mol, std, clamp=None, **kwargs):
         super().__init__()
         self.openmmplugin = OpenmmPluginScore(mol, **kwargs)
-        self.std = std/10
+        self.std = std / 10
         self.clamp = clamp
         if self.clamp is not None:
             self.forward = self._clamp_forward
@@ -387,42 +388,44 @@ class openmm_energy(torch.nn.Module):
 
     def _forward(self, x):
         '''
-        :param `torch.Tensor` x: dtype=torch.float, device=CUDA, shape B, 3, N 
+        :param `torch.Tensor` x: dtype=torch.float, device=CUDA, shape B, 3, N
         :returns: torch energy tensor dtype should be float and on same device as x
         '''
-        _x = (x*self.std).permute(0, 2, 1).contiguous()
+        _x = (x * self.std).permute(0, 2, 1).contiguous()
         energy = openmm_energy_function.apply(self.openmmplugin, _x)
         return energy
 
     def _clamp_forward(self, x):
         '''
-        :param `torch.Tensor` x: dtype=torch.float, device=CUDA, shape B, 3, N 
+        :param `torch.Tensor` x: dtype=torch.float, device=CUDA, shape B, 3, N
         :returns: torch energy tensor dtype should be float and on same device as x
         '''
-        _x = (x*self.std).permute(0, 2, 1).contiguous()
+        _x = (x * self.std).permute(0, 2, 1).contiguous()
         energy = openmm_clamped_energy_function.apply(self.openmmplugin, _x, self.clamp)
         return energy
-    
+
+
 class openmm_energy_setup():
 
     def __init__(self, topology):
 
         self.top = topology
-        
+
     def get_atominfo(self):
         """
         Get the atom information from the topology.
         """
         atom_info = []
         for i in self.top.topology.atoms:
-            atom_info.append([i.name, i.residue.name, i.residue.index+1])
+            atom_info.append([i.name, i.residue.name, i.residue.index + 1])
         return np.array(atom_info, dtype=object)
-    
+
     def mol_dataframe(self):
         """
         Get the atom information from the topology and convert it to a pandas DataFrame.
         """
         return MolDataFrame.from_stats(self.top)
+
 
 class MolDataFrame(pd.DataFrame):
     """
@@ -461,14 +464,14 @@ class MolDataFrame(pd.DataFrame):
             i = atom.index
             # occupancy and B-factor
             occ = getattr(traj, 'occupancies', [[None]])[0][i]
-            beta = getattr(traj, 'bfactors',    [[None]])[0][i]
-            occ  = 1.0 if occ  is None else occ
+            beta = getattr(traj, 'bfactors', [[None]])[0][i]
+            occ = 1.0 if occ is None else occ
             beta = 0.0 if beta is None else beta
 
-            name    = atom.name
+            name = atom.name
             element = atom.element.symbol if atom.element else None
-            radius  = radius_dict.get(name,
-                        radius_dict.get(element, None))
+            radius = radius_dict.get(name,
+                                     radius_dict.get(element, None))
             charge = 0.0
 
             # chain as letters
@@ -476,25 +479,25 @@ class MolDataFrame(pd.DataFrame):
 
             x, y, z = coords[i]
             rows.append({
-                'atom':      'ATOM',
-                'index':     i,
-                'name':      name,
-                'resname':   atom.residue.name,
-                'chain':     cid,
-                'resid':     atom.residue.index + 1,
+                'atom': 'ATOM',
+                'index': i,
+                'name': name,
+                'resname': atom.residue.name,
+                'chain': cid,
+                'resid': atom.residue.index + 1,
                 'occupancy': occ,
-                'beta':      beta,
-                'atomtype':  element,
-                'radius':    radius,
-                'charge':    charge,
-                'x':         x,
-                'y':         y,
-                'z':         z,
+                'beta': beta,
+                'atomtype': element,
+                'radius': radius,
+                'charge': charge,
+                'x': x,
+                'y': y,
+                'z': z,
             })
 
-        cols = ['atom','index','name','resname','chain','resid',
-                'occupancy','beta','atomtype','radius','charge',
-                'x','y','z']
+        cols = ['atom', 'index', 'name', 'resname', 'chain', 'resid',
+                'occupancy', 'beta', 'atomtype', 'radius', 'charge',
+                'x', 'y', 'z']
         return cls(rows, columns=cols)
 
     def write_pdb(self, filename):

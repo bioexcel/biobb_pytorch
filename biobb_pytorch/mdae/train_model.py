@@ -84,6 +84,7 @@ class TrainModel(BiobbObject):
             * name: EDAM
             * schema: http://edamontology.org/EDAM.owl
     """
+
     def __init__(
         self,
         input_model_pth_path: str,

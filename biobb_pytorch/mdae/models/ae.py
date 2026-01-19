@@ -18,7 +18,7 @@ from biobb_pytorch.mdae.loss import MSELoss
 __all__ = ["AutoEncoder"]
 
 
-class AutoEncoder(pl.LightningModule, BaseCV):
+class AutoEncoder(BaseCV, pl.LightningModule):
     """AutoEncoding Collective Variable.
     It is composed by a first neural network (encoder) which projects
     the input data into a latent space (the CVs). Then a second network (decoder) takes
@@ -81,7 +81,8 @@ class AutoEncoder(pl.LightningModule, BaseCV):
         super().__init__(
             in_features=n_features, out_features=n_cvs, **kwargs
         )
-
+        pl.LightningModule.__init__(self, **kwargs)
+        
         # =======   LOSS  =======
         # Reconstruction (MSE) loss
         self.loss_fn = MSELoss()

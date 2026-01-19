@@ -1,2 +1,4 @@
-8     W503 line break before binary operator
-1     W504 line break after binary operator
+1     F841 local variable 'ref_content' is assigned to but never used
+17    W293 blank line contains whitespace
+8     W391 blank line at end of file
+4     W504 line break after binary operator

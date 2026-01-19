@@ -65,7 +65,7 @@
             <a id="nextFileLink" class="nav" href="z_7698fe156656a2ed_mse_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.13.1">coverage.py v7.13.1</a>,
-            created at 2026-01-09 12:14 +0000
+            created at 2026-01-19 01:59 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -130,8 +130,8 @@
     <p class="mis show_mis"><span class="n"><a id="t48" href="#t48">48</a></span><span class="t">        <span class="nam">mu</span> <span class="op">=</span> <span class="nam">rep_mean</span><span class="op">.</span><span class="nam">unsqueeze</span><span class="op">(</span><span class="num">0</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t49" href="#t49">49</a></span><span class="t">        <span class="nam">lv</span> <span class="op">=</span> <span class="nam">rep_logvar</span><span class="op">.</span><span class="nam">unsqueeze</span><span class="op">(</span><span class="num">0</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t50" href="#t50">50</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t51" href="#t51">51</a></span><span class="t">        <span class="nam">representative_log_q</span> <span class="op">=</span> <span class="op">-</span><span class="num">0.5</span> <span class="op">*</span> <span class="nam">torch</span><span class="op">.</span><span class="nam">sum</span><span class="op">(</span><span class="nam">lv</span> <span class="op">+</span> <span class="nam">torch</span><span class="op">.</span><span class="nam">pow</span><span class="op">(</span><span class="nam">z_expand</span> <span class="op">-</span> <span class="nam">mu</span><span class="op">,</span> <span class="num">2</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis mis2 show_mis"><span class="n"><a id="t52" href="#t52">52</a></span><span class="t">                                                <span class="op">/</span> <span class="nam">torch</span><span class="op">.</span><span class="nam">exp</span><span class="op">(</span><span class="nam">lv</span><span class="op">)</span><span class="op">,</span> <span class="nam">dim</span><span class="op">=</span><span class="num">2</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="mis show_mis"><span class="n"><a id="t51" href="#t51">51</a></span><span class="t">        <span class="nam">representative_log_q</span> <span class="op">=</span> <span class="op">-</span><span class="num">0.5</span> <span class="op">*</span> <span class="nam">torch</span><span class="op">.</span><span class="nam">sum</span><span class="op">(</span><span class="nam">lv</span> <span class="op">+</span> <span class="nam">torch</span><span class="op">.</span><span class="nam">pow</span><span class="op">(</span><span class="nam">z_expand</span> <span class="op">-</span> <span class="nam">mu</span><span class="op">,</span> <span class="num">2</span><span class="op">)</span> <span class="op">/</span>&nbsp;</span><span class="r"></span></p>
+    <p class="mis mis2 show_mis"><span class="n"><a id="t52" href="#t52">52</a></span><span class="t">                                                <span class="nam">torch</span><span class="op">.</span><span class="nam">exp</span><span class="op">(</span><span class="nam">lv</span><span class="op">)</span><span class="op">,</span> <span class="nam">dim</span><span class="op">=</span><span class="num">2</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t53" href="#t53">53</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t54" href="#t54">54</a></span><span class="t">        <span class="key">if</span> <span class="nam">sum_up</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t55" href="#t55">55</a></span><span class="t">            <span class="nam">log_p</span> <span class="op">=</span> <span class="nam">torch</span><span class="op">.</span><span class="nam">sum</span><span class="op">(</span><span class="nam">torch</span><span class="op">.</span><span class="nam">log</span><span class="op">(</span><span class="nam">torch</span><span class="op">.</span><span class="nam">exp</span><span class="op">(</span><span class="nam">representative_log_q</span><span class="op">)</span> <span class="op">@</span> <span class="nam">w</span> <span class="op">+</span> <span class="nam">self</span><span class="op">.</span><span class="nam">eps</span><span class="op">)</span><span class="op">,</span> <span class="nam">dim</span><span class="op">=</span><span class="num">1</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
@@ -280,7 +280,7 @@
             <a class="nav" href="z_7698fe156656a2ed_mse_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.13.1">coverage.py v7.13.1</a>,
-            created at 2026-01-09 12:14 +0000
+            created at 2026-01-19 01:59 +0000
         </p>
     </div>
 </footer>

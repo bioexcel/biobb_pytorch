@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Coverage for biobb_pytorch/mdae/featurization/normalization.py: 56%</title>
+    <title>Coverage for biobb_pytorch/mdae/featurization/normalization.py: 61%</title>
     <link rel="icon" sizes="32x32" href="favicon_32_cb_c827f16f.png">
     <link rel="stylesheet" href="style_cb_9ff733b0.css" type="text/css">
     <script src="coverage_html_cb_dd2e7eb5.js" defer></script>
@@ -12,7 +12,7 @@
     <div class="content">
         <h1>
             <span class="text">Coverage for </span><b>biobb_pytorch&#8201;/&#8201;mdae&#8201;/&#8201;featurization&#8201;/&#8201;normalization.py</b>:
-            <span class="pc_cov">56%</span>
+            <span class="pc_cov">61%</span>
         </h1>
         <aside id="help_panel_wrapper">
             <input id="help_panel_state" type="checkbox">
@@ -55,8 +55,8 @@
         </aside>
         <h2>
             <span class="text">95 statements &nbsp;</span>
-            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">53<span class="text"> run</span></button>
-            <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">42<span class="text"> missing</span></button>
+            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">58<span class="text"> run</span></button>
+            <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">37<span class="text"> missing</span></button>
             <button type="button" class="exc show_exc button_toggle_exc" value="exc" data-shortcut="x" title="Toggle lines excluded">0<span class="text"> excluded</span></button>
         </h2>
         <p class="text">
@@ -65,7 +65,7 @@
             <a id="nextFileLink" class="nav" href="z_91dddf8e041354b2_plumed_feat_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.13.1">coverage.py v7.13.1</a>,
-            created at 2026-01-09 12:14 +0000
+            created at 2026-01-19 01:59 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -188,7 +188,7 @@
     <p class="run"><span class="n"><a id="t106" href="#t106">106</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">out_features</span> <span class="op">=</span> <span class="nam">in_features</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t107" href="#t107">107</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t108" href="#t108">108</a></span><span class="t">    <span class="key">def</span> <span class="nam">extra_repr</span><span class="op">(</span><span class="nam">self</span><span class="op">)</span> <span class="op">-></span> <span class="nam">str</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t109" href="#t109">109</a></span><span class="t">        <span class="key">return</span> <span class="str">f"in_features={self.in_features}, out_features={self.out_features}, mode={self.mode}"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t109" href="#t109">109</a></span><span class="t">        <span class="key">return</span> <span class="str">f"in_features={self.in_features}, out_features={self.out_features}, mode={self.mode}"</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t110" href="#t110">110</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t111" href="#t111">111</a></span><span class="t">    <span class="key">def</span> <span class="nam">set_custom</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">mean</span><span class="op">:</span> <span class="nam">torch</span><span class="op">.</span><span class="nam">Tensor</span> <span class="op">=</span> <span class="key">None</span><span class="op">,</span> <span class="nam">range</span><span class="op">:</span> <span class="nam">torch</span><span class="op">.</span><span class="nam">Tensor</span> <span class="op">=</span> <span class="key">None</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t112" href="#t112">112</a></span><span class="t">        <span class="str">"""Set parameter of the normalization layer.</span>&nbsp;</span><span class="r"></span></p>
@@ -251,7 +251,7 @@
     <p class="mis show_mis"><span class="n"><a id="t169" href="#t169">169</a></span><span class="t">            <span class="nam">self</span><span class="op">.</span><span class="nam">mode</span> <span class="op">=</span> <span class="nam">mode</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t170" href="#t170">170</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t171" href="#t171">171</a></span><span class="t">    <span class="key">def</span> <span class="nam">setup_from_datamodule</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">datamodule</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t172" href="#t172">172</a></span><span class="t">        <span class="key">if</span> <span class="key">not</span> <span class="nam">self</span><span class="op">.</span><span class="nam">is_initialized</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t172" href="#t172">172</a></span><span class="t">        <span class="key">if</span> <span class="key">not</span> <span class="nam">self</span><span class="op">.</span><span class="nam">is_initialized</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t173" href="#t173">173</a></span><span class="t">            <span class="com"># obtain statistics from the dataloader</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t174" href="#t174">174</a></span><span class="t">            <span class="key">try</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t175" href="#t175">175</a></span><span class="t">                <span class="nam">stats</span> <span class="op">=</span> <span class="nam">datamodule</span><span class="op">.</span><span class="nam">train_dataloader</span><span class="op">(</span><span class="op">)</span><span class="op">.</span><span class="nam">get_stats</span><span class="op">(</span><span class="op">)</span><span class="op">[</span><span class="str">"data"</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
@@ -300,10 +300,10 @@
     <p class="pln"><span class="n"><a id="t218" href="#t218">218</a></span><span class="t"><span class="str">            un-normalized inputs</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t219" href="#t219">219</a></span><span class="t"><span class="str">        """</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t220" href="#t220">220</a></span><span class="t">        <span class="com"># get mean and range</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t221" href="#t221">221</a></span><span class="t">        <span class="nam">mean</span> <span class="op">=</span> <span class="nam">batch_reshape</span><span class="op">(</span><span class="nam">self</span><span class="op">.</span><span class="nam">mean</span><span class="op">,</span> <span class="nam">x</span><span class="op">.</span><span class="nam">size</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t222" href="#t222">222</a></span><span class="t">        <span class="nam">range</span> <span class="op">=</span> <span class="nam">batch_reshape</span><span class="op">(</span><span class="nam">self</span><span class="op">.</span><span class="nam">range</span><span class="op">,</span> <span class="nam">x</span><span class="op">.</span><span class="nam">size</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t221" href="#t221">221</a></span><span class="t">        <span class="nam">mean</span> <span class="op">=</span> <span class="nam">batch_reshape</span><span class="op">(</span><span class="nam">self</span><span class="op">.</span><span class="nam">mean</span><span class="op">,</span> <span class="nam">x</span><span class="op">.</span><span class="nam">size</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t222" href="#t222">222</a></span><span class="t">        <span class="nam">range</span> <span class="op">=</span> <span class="nam">batch_reshape</span><span class="op">(</span><span class="nam">self</span><span class="op">.</span><span class="nam">range</span><span class="op">,</span> <span class="nam">x</span><span class="op">.</span><span class="nam">size</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t223" href="#t223">223</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t224" href="#t224">224</a></span><span class="t">        <span class="key">return</span> <span class="nam">x</span><span class="op">.</span><span class="nam">mul</span><span class="op">(</span><span class="nam">range</span><span class="op">)</span><span class="op">.</span><span class="nam">add</span><span class="op">(</span><span class="nam">mean</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t224" href="#t224">224</a></span><span class="t">        <span class="key">return</span> <span class="nam">x</span><span class="op">.</span><span class="nam">mul</span><span class="op">(</span><span class="nam">range</span><span class="op">)</span><span class="op">.</span><span class="nam">add</span><span class="op">(</span><span class="nam">mean</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t225" href="#t225">225</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t226" href="#t226">226</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t227" href="#t227">227</a></span><span class="t"><span class="key">def</span> <span class="nam">test_normalization</span><span class="op">(</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
@@ -348,7 +348,7 @@
             <a class="nav" href="z_91dddf8e041354b2_plumed_feat_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.13.1">coverage.py v7.13.1</a>,
-            created at 2026-01-09 12:14 +0000
+            created at 2026-01-19 01:59 +0000
         </p>
     </div>
 </footer>

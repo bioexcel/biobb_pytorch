@@ -50,23 +50,23 @@ window.addEventListener('DOMContentLoaded', function () {
          <ul id="index">
          
          <li>
-            <a data-code="W503">
+            <a data-code="W504">
                <span class="count sev-2">
                   2
                </span>
-               <strong>W503:</strong> line break before binary operator
+               <strong>W504:</strong> line break after binary operator
                
             </a>
             <ul class="details">
             <li>
                
-               <a href="biobb_pytorch.mdae.models.gmvae.source.html#l102">
-                  <tt><i>102</i>             <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_normal</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">zm</span><span class="p">,</span> <span class="n">zv</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_normal</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">zm_prior</span><span class="p">,</span> <span class="n">zv_prior</span><span class="p">)</span>                   <span class="c1"># Regularization Loss (KL Divergence)</span></tt>
+               <a href="biobb_pytorch.mdae.models.gmvae.source.html#l101">
+                  <tt><i>101</i>             <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">log_normal</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xm</span><span class="p">,</span> <span class="n">xv</span><span class="p">)</span> <span class="o">+</span>  <span class="c1"># Reconstruction Loss</span></tt>
                </a>
             </li><li>
                
-               <a href="biobb_pytorch.mdae.models.gmvae.source.html#l103">
-                  <tt><i>103</i>             <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">device</span><span class="p">))</span>                                    <span class="c1"># Entropy Regularization</span></tt>
+               <a href="biobb_pytorch.mdae.models.gmvae.source.html#l102">
+                  <tt><i>102</i>             <span class="bp">self</span><span class="o">.</span><span class="n">log_normal</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">zm</span><span class="p">,</span> <span class="n">zv</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_normal</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">zm_prior</span><span class="p">,</span> <span class="n">zv_prior</span><span class="p">)</span> <span class="o">-</span>  <span class="c1"># Regularization Loss (KL Divergence)</span></tt>
                </a>
             </li>
             </ul>

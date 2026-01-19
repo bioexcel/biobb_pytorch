@@ -317,7 +317,16 @@
                class="code sev- "><tt><i>100</i>         <span class="k">return</span> <span class="p">(</span></tt>
             </div>
             <div id="l101"
-               class="code sev- "><tt><i>101</i>             <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">log_normal</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xm</span><span class="p">,</span> <span class="n">xv</span><span class="p">)</span>                                                             <span class="c1"># Reconstruction Loss</span></tt>
+               class="code sev-2  le">
+               <ul class="violations">
+               
+                  <li>
+                     <span class="count sev-2">
+                        W504
+                     </span>
+                     Line break after binary operator</li>
+               
+               </ul><tt><i>101</i>             <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">log_normal</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xm</span><span class="p">,</span> <span class="n">xv</span><span class="p">)</span> <span class="o">+</span>  <span class="c1"># Reconstruction Loss</span></tt>
             </div>
             <div id="l102"
                class="code sev-2  le">
@@ -325,23 +334,14 @@
                
                   <li>
                      <span class="count sev-2">
-                        W503
+                        W504
                      </span>
-                     Line break before binary operator</li>
+                     Line break after binary operator</li>
                
-               </ul><tt><i>102</i>             <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_normal</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">zm</span><span class="p">,</span> <span class="n">zv</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_normal</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">zm_prior</span><span class="p">,</span> <span class="n">zv_prior</span><span class="p">)</span>                   <span class="c1"># Regularization Loss (KL Divergence)</span></tt>
+               </ul><tt><i>102</i>             <span class="bp">self</span><span class="o">.</span><span class="n">log_normal</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">zm</span><span class="p">,</span> <span class="n">zv</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_normal</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">zm_prior</span><span class="p">,</span> <span class="n">zv_prior</span><span class="p">)</span> <span class="o">-</span>  <span class="c1"># Regularization Loss (KL Divergence)</span></tt>
             </div>
             <div id="l103"
-               class="code sev-2  le">
-               <ul class="violations">
-               
-                  <li>
-                     <span class="count sev-2">
-                        W503
-                     </span>
-                     Line break before binary operator</li>
-               
-               </ul><tt><i>103</i>             <span class="o">-</span> <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">device</span><span class="p">))</span>                                    <span class="c1"># Entropy Regularization</span></tt>
+               class="code sev- "><tt><i>103</i>             <span class="n">torch</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">tensor</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">k</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">device</span><span class="p">))</span>  <span class="c1"># Entropy Regularization</span></tt>
             </div>
             <div id="l104"
                class="code sev- "><tt><i>104</i>         <span class="p">)</span></tt>

@@ -8,7 +8,7 @@
 # --------------------------------------------------------------------------------------
 
 import torch
-import lightning
+import lightning.pytorch as pl
 from mlcolvar.cvs import BaseCV
 from biobb_pytorch.mdae.models.nn.feedforward import FeedForward
 from biobb_pytorch.mdae.featurization.normalization import Normalization
@@ -18,7 +18,7 @@ from biobb_pytorch.mdae.loss import MSELoss
 __all__ = ["AutoEncoder"]
 
 
-class AutoEncoder(BaseCV, lightning.LightningModule):
+class AutoEncoder(BaseCV, pl.LightningModule):
     """AutoEncoding Collective Variable.
     It is composed by a first neural network (encoder) which projects
     the input data into a latent space (the CVs). Then a second network (decoder) takes

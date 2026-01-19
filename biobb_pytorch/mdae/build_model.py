@@ -52,7 +52,7 @@ class BuildModel(BiobbObject):
     Examples:
         This is a use case of how to use the building block from Python:
 
-            from biobb_pytorch.mdae.build_model import BuildModel
+            from biobb_pytorch.mdae.build_model import build_model
 
             input_stats_pt_path = "input_stats.pt"
             output_model_pth_file = "model.pth"
@@ -72,13 +72,13 @@ class BuildModel(BiobbObject):
             }
 
             # For API usage, output can be None to avoid saving
-            instance = BuildModel(input_stats_pt_path=input_stats_pt_path,
+            instance = build_model(input_stats_pt_path=input_stats_pt_path,
                        output_model_pth_path=None,
                        properties=prop)
             pytorch_model = instance.model  # Access the PyTorch model with loss_fn attached
 
             # Or to save, provide output and call launch
-            instance = BuildModel(input_stats_pt_path=input_stats_pt_path,
+            instance = build_model(input_stats_pt_path=input_stats_pt_path,
                        output_model_pth_path=output_model_pth_file,
                        properties=prop)
             instance.launch()

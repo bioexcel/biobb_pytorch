@@ -1,5 +1,6 @@
 import torch
 import os
+import copy
 from typing import Optional
 from biobb_common.tools.file_utils import launchlogger
 from biobb_common.tools import file_utils as fu
@@ -227,11 +228,12 @@ class TrainModel(BiobbObject):
         fu.log(f'Load model from {os.path.abspath(self.io_dict["in"]["input_model_pth_path"])}', self.out_log)
         self.model = self.load_model()
         
-        # Ensure model has _hparams for PyTorch Lightning compatibility
-        # hparams_initial is a read-only property that reads from _hparams
-        # If _hparams doesn't exist, set it to an empty dict
-        if not hasattr(self.model, '_hparams'):
-            setattr(self.model, '_hparams', {})
+        # Ensure model has _hparams_initial for PyTorch Lightning compatibility
+        # hparams_initial is a read-only property that reads from _hparams_initial
+        # If _hparams_initial doesn't exist, set it from _hparams if available, otherwise empty dict
+        if not hasattr(self.model, '_hparams_initial'):
+            hparams = getattr(self.model, '_hparams', {})
+            setattr(self.model, '_hparams_initial', copy.deepcopy(hparams))
 
         # load the dataset
         fu.log(f'Load dataset from {os.path.abspath(self.io_dict["in"]["input_dataset_pt_path"])}', self.out_log)

@@ -91,8 +91,8 @@ def lrp_gmvae_single(model, x, latent_index, eps=1e-6):
         R0 += R_x_k
 
     if has_norm:
-        w = (1 / model.norm_in.std).view(1, -1).to(device)
-        b = (-model.norm_in.mean / model.norm_in.std).view(1, -1).to(device)
+        w = (1 / model.norm_in.range).view(1, -1).to(device)
+        b = (-model.norm_in.mean / model.norm_in.range).view(1, -1).to(device)
         z = x * w + b
         sign_z = z.sign()
         Z = z + eps * sign_z
@@ -186,8 +186,8 @@ def lrp_encoder(
         R0 = R[0]
 
         if has_norm:
-            w = (1 / model.norm_in.std).view(1, -1).to(x.device)
-            b = (-model.norm_in.mean / model.norm_in.std).view(1, -1).to(x.device)
+            w = (1 / model.norm_in.range).view(1, -1).to(x.device)
+            b = (-model.norm_in.mean / model.norm_in.range).view(1, -1).to(x.device)
             z = x * w + b
             sign_z = z.sign()
             Z = z + eps * sign_z

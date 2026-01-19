@@ -93,8 +93,7 @@ class EvaluateDecoder(BiobbObject):
                           weights_only=False)
 
     def load_dataset(self):
-        dataset = torch.tensor(np.load(self.io_dict["in"]["input_dataset_npy_path"]),
-                               weights_only=False)
+        dataset = torch.tensor(np.load(self.io_dict["in"]["input_dataset_npy_path"]))
         return dataset.float()
 
     def create_dataloader(self, dataset):

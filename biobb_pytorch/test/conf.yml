@@ -20,3 +20,87 @@ mdfeaturizer:
     options:
       norm_in:
         mode: 'min_max'
+
+build_model:
+  paths:
+    input_stats_pt_path: file:test_reference_dir/mdae/ref_output_stats.pt
+    output_model_pth_path: output_model.pth
+  properties:
+    model_type: 'AutoEncoder'
+    n_cvs: 2
+    encoder_layers: [16, 8]
+    decoder_layers: [8, 16]
+    options:
+      norm_in:
+        mode: 'min_max'
+
+train_model:
+  paths:
+    input_model_pth_path: file:test_reference_dir/mdae/ref_output_model.pth
+    input_dataset_pt_path: file:test_reference_dir/mdae/ref_output_dataset.pt
+    output_model_pth_path: output_trained_model.pth
+    output_metrics_npz_path: output_metrics.npz
+  properties:
+    Trainer:
+      max_epochs: 1
+      accelerator: 'cpu'
+    Dataset:
+      batch_size: 32
+      split:
+        train_prop: 0.8
+        val_prop: 0.2
+
+evaluate_model:
+  paths:
+    input_model_pth_path: file:test_reference_dir/mdae/ref_output_model.pth
+    input_dataset_pt_path: file:test_reference_dir/mdae/ref_output_dataset.pt
+    output_results_npz_path: output_evaluate_results.npz
+  properties:
+    Dataset:
+      batch_size: 32
+
+encode_model:
+  paths:
+    input_model_pth_path: file:test_reference_dir/mdae/ref_output_model.pth
+    input_dataset_pt_path: file:test_reference_dir/mdae/ref_output_dataset.pt
+    output_results_npz_path: output_encode_results.npz
+  properties:
+    Dataset:
+      batch_size: 32
+
+decode_model:
+  paths:
+    input_model_pth_path: file:test_reference_dir/mdae/ref_output_model.pth
+    input_dataset_npy_path: file:test_reference_dir/mdae/ref_output_latent.npy
+    output_results_npz_path: output_decode_results.npz
+  properties:
+    Dataset:
+      batch_size: 32
+
+make_plumed:
+  paths:
+    input_model_pth_path: file:test_reference_dir/mdae/ref_output_model.pth
+    input_stats_pt_path: file:test_reference_dir/mdae/ref_output_stats.pt
+    input_reference_pdb_path: file:test_data_dir/mdae/MCV1900209.pdb
+    output_plumed_dat_path: output_plumed.dat
+    output_features_dat_path: output_features.dat
+    output_model_ptc_path: output_model.ptc
+  properties: {}
+
+feat2traj:
+  paths:
+    input_results_npz_path: file:test_reference_dir/mdae/ref_output_decode_results.npz
+    input_stats_pt_path: file:test_reference_dir/mdae/ref_output_stats.pt
+    input_topology_path: file:test_data_dir/mdae/MCV1900209.pdb
+    output_traj_path: output_traj.xtc
+    output_top_path: output_top.pdb
+  properties: {}
+
+lrp:
+  paths:
+    input_model_pth_path: file:test_reference_dir/mdae/ref_output_model.pth
+    input_dataset_pt_path: file:test_reference_dir/mdae/ref_output_dataset.pt
+    output_results_npz_path: output_lrp_results.npz
+  properties:
+    Dataset:
+      batch_size: 32

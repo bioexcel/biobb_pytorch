@@ -43,8 +43,8 @@ def read_lib_file(file_name, amber_atoms, atom_charge, connectivity):
                     indexs[res[1:-1]] = {}
                     connectivity[res[1:-1]] = {}
                 else:
-                    raise Exception(('I was expecting something of the form'
-                                     + '"XXX" but got %s instead' % res))
+                    msg = 'I was expecting something of the form "XXX" but got %s instead' % res
+                    raise Exception(msg)
                 depth += 1
             break
         depth += 1
@@ -60,16 +60,17 @@ def read_lib_file(file_name, amber_atoms, atom_charge, connectivity):
                 if len(contents) < 3 and len(contents[0]) > 4 and len(contents[1]) > 4:
                     break
                 pdb_name, amber_name, _, _, _, index, element_number, charge = contents
-                if (pdb_name[0] == '"' and pdb_name[-1] == '"'
-                        and amber_name[0] == '"' and amber_name[-1] == '"'):
+                pdb_quoted = pdb_name[0] == '"' and pdb_name[-1] == '"'
+                amber_quoted = amber_name[0] == '"' and amber_name[-1] == '"'
+                if pdb_quoted and amber_quoted:
                     amber_atoms[res][contents[0][1:-1]] = contents[1][1:-1]
                     atom_charge[res][amber_name[1:-1]] = float(charge)
                     # indexs[res][amber_name[1:-1]] = int(index)
                     indexs[res][int(index)] = pdb_name[1:-1]
                     connectivity[res][pdb_name[1:-1]] = []
                 else:
-                    raise Exception(('I was expecting something of the form'
-                                     + '"XXX" but got %s instead' % res))
+                    msg = 'I was expecting something of the form "XXX" but got %s instead' % res
+                    raise Exception(msg)
         elif entry == '!entry.' and unit_connectivity == '.unit.connectivity ':
             depth = i + 1
             for line in lines[depth:]:
@@ -514,9 +515,10 @@ def get_convolutions(dataset, pdb_atom_names,
         # that in mind will break if enough proline atoms to make a cycle are selected
         bond_idxs, u = bond_idxs[:N - 1], bond_idxs[N - 1]
         if cmat[u] - cmat[bond_idxs[-1]] < 0.25:
-            raise Exception("WARNING: May not have correctly selected the bonded distances: value "
-                            + (cmat[u] - cmat[bond_idxs[-1]]) +
-                            "should be roughly between 0.42 and 0.57 (>0.25)")  # should be 0.42-0.57
+            dist_val = str(cmat[u] - cmat[bond_idxs[-1]])
+            msg = ("WARNING: May not have correctly selected the bonded distances: value %s "
+                   "should be roughly between 0.42 and 0.57 (>0.25)" % dist_val)
+            raise Exception(msg)  # should be 0.42-0.57
             version += 1  # try version 2 instead
         mid = cmat[bond_idxs[-1]] + ((cmat[u] - cmat[bond_idxs[-1]]) / 2)  # mid point
         full_mask = (cmat < mid).astype('int8')

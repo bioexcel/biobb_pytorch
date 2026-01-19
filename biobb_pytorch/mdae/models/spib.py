@@ -13,7 +13,7 @@ https://aip.scitation.org/doi/abs/10.1063/5.0038198
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import lightning as pl
+import lightning.pytorch as pl
 from mlcolvar.cvs import BaseCV
 from biobb_pytorch.mdae.models.nn.feedforward import FeedForward
 from biobb_pytorch.mdae.loss import InformationBottleneckLoss

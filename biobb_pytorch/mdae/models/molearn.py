@@ -4,7 +4,7 @@ import torch.nn.functional as F
 import numpy as np
 from biobb_pytorch.mdae.loss.utils.torch_protein_energy import TorchProteinEnergy
 from biobb_pytorch.mdae.loss.physics_loss import PhysicsLoss
-import lightning
+import lightning.pytorch as pl
 from mlcolvar.cvs import BaseCV
 
 
@@ -240,7 +240,7 @@ class Decoder(nn.Module):
         return x
 
 
-class CNNAutoEncoder(BaseCV, lightning.LightningModule):
+class CNNAutoEncoder(BaseCV, pl.LightningModule):
     '''
     Autoencoder architecture derived from FoldingNet.
     '''

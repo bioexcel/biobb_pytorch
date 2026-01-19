@@ -9,7 +9,7 @@
 
 from typing import Optional, Tuple
 import torch
-import lightning
+import lightning.pytorch as pl
 from mlcolvar.cvs import BaseCV
 from biobb_pytorch.mdae.models.nn.feedforward import FeedForward
 from biobb_pytorch.mdae.featurization.normalization import Normalization
@@ -19,7 +19,7 @@ from biobb_pytorch.mdae.loss import ELBOGaussiansLoss
 __all__ = ["VariationalAutoEncoder"]
 
 
-class VariationalAutoEncoder(BaseCV, lightning.LightningModule):
+class VariationalAutoEncoder(BaseCV, pl.LightningModule):
 
     """Variational AutoEncoder Collective Variable.
 

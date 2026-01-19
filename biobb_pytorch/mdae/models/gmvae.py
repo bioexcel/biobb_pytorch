@@ -1,6 +1,6 @@
 import torch
 import torch.nn as nn
-import lightning
+import lightning.pytorch as pl
 from mlcolvar.cvs import BaseCV
 from biobb_pytorch.mdae.featurization.normalization import Normalization
 from mlcolvar.core.transform.utils import Inverse
@@ -11,7 +11,7 @@ from biobb_pytorch.mdae.loss import ELBOGaussianMixtureLoss
 __all__ = ["GaussianMixtureVariationalAutoEncoder"]
 
 
-class GaussianMixtureVariationalAutoEncoder(BaseCV, lightning.LightningModule):
+class GaussianMixtureVariationalAutoEncoder(BaseCV, pl.LightningModule):
     """Gaussian Mixture Variational AutoEncoder Collective Variable.
     This class implements a Gaussian Mixture Variational AutoEncoder (GMVAE) for
     collective variable (CV) learning. The GMVAE is a generative model that combines

@@ -227,11 +227,11 @@ class TrainModel(BiobbObject):
         fu.log(f'Load model from {os.path.abspath(self.io_dict["in"]["input_model_pth_path"])}', self.out_log)
         self.model = self.load_model()
         
-        # Ensure model has hparams_initial for PyTorch Lightning compatibility
-        if not hasattr(self.model, 'hparams_initial'):
-            # Use _hparams if available, otherwise empty dict
-            hparams = getattr(self.model, '_hparams', {})
-            setattr(self.model, 'hparams_initial', hparams)
+        # Ensure model has _hparams for PyTorch Lightning compatibility
+        # hparams_initial is a read-only property that reads from _hparams
+        # If _hparams doesn't exist, set it to an empty dict
+        if not hasattr(self.model, '_hparams'):
+            setattr(self.model, '_hparams', {})
 
         # load the dataset
         fu.log(f'Load dataset from {os.path.abspath(self.io_dict["in"]["input_dataset_pt_path"])}', self.out_log)

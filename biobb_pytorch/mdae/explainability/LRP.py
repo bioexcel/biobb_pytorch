@@ -103,7 +103,7 @@ class LRP(BiobbObject):
         self.check_arguments()
 
     def load_model(self):
-        return torch.load(self.io_dict["in"]["input_model_pth_path"])
+        return torch.load(self.io_dict["in"]["input_model_pth_path"], weights_only=False)
 
     def mask_idx(self, dataset: dict, indices: np.ndarray) -> dict:
         """
@@ -114,7 +114,7 @@ class LRP(BiobbObject):
         return dataset
 
     def load_dataset(self):
-        dataset = torch.load(self.io_dict["in"]["input_dataset_pt_path"])
+        dataset = torch.load(self.io_dict["in"]["input_dataset_pt_path"], weights_only=False)
 
         if self.Dataset.get('indices', None):
             if isinstance(self.Dataset['indices'], list):

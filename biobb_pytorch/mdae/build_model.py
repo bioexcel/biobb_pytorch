@@ -249,7 +249,7 @@ class BuildModel(BiobbObject):
     @staticmethod
     def load_full(path: str) -> torch.nn.Module:
         """Load a model serialized with save_full."""
-        return torch.load(path)
+        return torch.load(path, weights_only=False)
 
     @launchlogger
     def launch(self) -> int:

@@ -40,6 +40,12 @@ biobb_pytorch/mdae/notebooks/*
 *.npy
 *.npz
 
+# Exception: Include test reference files
+!biobb_pytorch/test/reference/**/*.pt
+!biobb_pytorch/test/reference/**/*.pth
+!biobb_pytorch/test/reference/**/*.npy
+!biobb_pytorch/test/reference/**/*.npz
+
 # System files
 .DS_Store
 

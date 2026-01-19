@@ -20,5 +20,4 @@ class TestBuildModel:
         model = torch.load(self.paths['output_model_pth_path'], weights_only=False)
         # Verify it's a PyTorch model (has state_dict method)
         assert hasattr(model, 'state_dict'), "Model file should contain a PyTorch model"
-        assert hasattr(model, 'encoder') or hasattr(model, '_hparams'), "Model should have encoder or _hparams attribute"
-
+        assert hasattr(model, '_hparams'), "Model file should contain _hparams attribute"

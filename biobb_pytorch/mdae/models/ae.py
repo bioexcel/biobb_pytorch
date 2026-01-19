@@ -81,7 +81,6 @@ class AutoEncoder(BaseCV, pl.LightningModule):
         super().__init__(
             in_features=n_features, out_features=n_cvs, **kwargs
         )
-        pl.LightningModule.__init__(self, **kwargs)
         
         # =======   LOSS  =======
         # Reconstruction (MSE) loss

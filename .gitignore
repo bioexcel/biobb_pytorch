@@ -25,6 +25,7 @@ wheels/
 .installed.cfg
 *.egg
 .coverage
+reports/*
 
 # Jupyter and data files
 .ipynb_checkpoints/

@@ -36,7 +36,7 @@ buildModel:
 
 trainModel:
   paths:
-    input_model_pth_path: file:test_reference_dir/mdae/ref_output_model.pth
+    input_model_pth_path: file:test_reference_dir/mdae/ref_input_model.pth
     input_dataset_pt_path: file:test_reference_dir/mdae/ref_output_dataset.pt
     output_model_pth_path: output_trained_model.pth
     output_metrics_npz_path: output_metrics.npz

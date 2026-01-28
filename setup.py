@@ -19,7 +19,7 @@ setuptools.setup(
     },
     packages=setuptools.find_packages(exclude=["docs", "test"]),
     package_data={"biobb_pytorch": ["py.typed"]},
-    install_requires=["biobb_common==5.2.0", "torch==2.3.0", "lightning==2.4.0", "mlcolvar==1.2.2", "mdtraj"],
+    install_requires=["biobb_common==5.2.0", "torch", "mlcolvar", "mdtraj"],
     python_requires=">=3.10",
     entry_points={
         "console_scripts": [

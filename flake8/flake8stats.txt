@@ -1,1 +1,2 @@
+1     F401 'copy' imported but unused
 4     W504 line break after binary operator

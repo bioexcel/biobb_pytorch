@@ -39,19 +39,11 @@ class LRP(BiobbObject):
                 }
             }
 
-            # For API usage, output can be None to avoid saving
-            instance = LRP(input_model_pth_path=input_model_pth_path,
+            LRP(input_model_pth_path=input_model_pth_path,
                            input_dataset_pt_path=input_dataset_pt_path,
                            output_results_npz_path=None,
                            properties=prop)
-            instance.launch()
-            results = instance.results  # Access the results dict
 
-            # Or to save, provide output and call launch
-            relevancePropagation(input_model_pth_path=input_model_pth_path,
-                                 input_dataset_pt_path=input_dataset_pt_path,
-                                 output_results_npz_path=output_results_npz_path,
-                                 properties=prop)
 
     Info:
         * wrapped_software:

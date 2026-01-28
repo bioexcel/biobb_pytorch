@@ -21,7 +21,7 @@
             "block": "MDFeaturePipeline",
             "tool": "mdfeaturizer",
             "desc": "Obtain Molecular Dynamics features for PyTorch MDAE model training (dataset and statistics).",
-            "exec": "mdfeaturizer",
+            "exec": "MDFeaturizer",
             "docs": "https://biobb-pytorch.readthedocs.io/en/latest/mdae.html#module-biobb_pytorch.mdae.mdfeaturizer",
             "rest": true
         },

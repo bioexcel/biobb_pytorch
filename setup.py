@@ -23,7 +23,7 @@ setuptools.setup(
     python_requires=">=3.10",
     entry_points={
         "console_scripts": [
-            "mdfeaturizer = biobb_pytorch.mdae.mdfeaturizer:main",
+            "MDFeaturizer = biobb_pytorch.mdae.mdfeaturizer:main",
             "buildModel = biobb_pytorch.mdae.build_model:main",
             "trainModel = biobb_pytorch.mdae.train_model:main",
             "evaluateDecoder = biobb_pytorch.mdae.decode_model:main",

@@ -471,7 +471,7 @@ class GeneratePlumed(BiobbObject):
         return 0
 
 
-def generate_plumed(
+def generatePlumed(
     input_model_pth_path: str,
     input_stats_pt_path: Optional[str] = None,
     input_reference_pdb_path: Optional[str] = None,
@@ -482,13 +482,13 @@ def generate_plumed(
     properties: Optional[Dict[str, Any]] = None,
     **kwargs,
 ) -> int:
-    """Create the :class:`GeneratePlumed <generate_plumed.GeneratePlumed>` class and
-    execute the :meth:`launch() <generate_plumed.GeneratePlumed.launch>` method."""
+    """Create the :class:`GeneratePlumed <generatePlumed.GeneratePlumed>` class and
+    execute the :meth:`launch() <generatePlumed.GeneratePlumed.launch>` method."""
     return GeneratePlumed(**dict(locals())).launch()
 
 
-generate_plumed.__doc__ = GeneratePlumed.__doc__
-main = GeneratePlumed.get_main(generate_plumed, "Generate PLUMED input for biased dynamics using an MDAE model.")
+generatePlumed.__doc__ = GeneratePlumed.__doc__
+main = GeneratePlumed.get_main(generatePlumed, "Generate PLUMED input for biased dynamics using an MDAE model.")
 
 if __name__ == "__main__":
     main()

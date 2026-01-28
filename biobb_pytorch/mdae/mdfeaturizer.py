@@ -14,7 +14,7 @@ from biobb_pytorch.mdae.utils.log_utils import get_size
 
 class MDFeaturePipeline(BiobbObject):
     """
-    | biobb_pytorch MDFeaturePipeline
+    | biobb_pytorch MDFeaturizer
     | Obtain the Molecular Dynamics Features for PyTorch model training.
     | Obtain the Molecular Dynamics Features for PyTorch model training.
 
@@ -33,7 +33,7 @@ class MDFeaturePipeline(BiobbObject):
     Examples:
         This is a use case of how to use the building block from Python::
 
-            from biobb_pytorch.mdae.MDFeaturePipeline import mdfeaturizer
+            from biobb_pytorch.mdae.MDFeaturePipeline import MDFeaturizer
 
             prop = {
                 'cartesian': {'selection': 'name CA'},
@@ -52,7 +52,7 @@ class MDFeaturePipeline(BiobbObject):
                            }
             }
 
-            mdfeaturizer(input_trajectory_path=trajectory_file,
+            MDFeaturizer(input_trajectory_path=trajectory_file,
                          input_topology_path=topology_file,
                          output_dataset_pt_path=output_file,
                          output_stats_pt_path=output_stats_file,
@@ -238,7 +238,7 @@ class MDFeaturePipeline(BiobbObject):
         return 0
 
 
-def mdfeaturizer(
+def MDFeaturizer(
     input_topology_path: str,
     output_dataset_pt_path: str,
     output_stats_pt_path: str,
@@ -253,8 +253,8 @@ def mdfeaturizer(
     return MDFeaturePipeline(**dict(locals())).launch()
 
 
-mdfeaturizer.__doc__ = MDFeaturePipeline.__doc__
-main = MDFeaturePipeline.get_main(mdfeaturizer, "Obtain the Molecular Dynamics Features for PyTorch model training.")
+MDFeaturizer.__doc__ = MDFeaturePipeline.__doc__
+main = MDFeaturePipeline.get_main(MDFeaturizer, "Obtain the Molecular Dynamics Features for PyTorch model training.")
 
 if __name__ == "__main__":
     main()

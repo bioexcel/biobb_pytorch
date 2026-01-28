@@ -513,9 +513,9 @@ Obtain the Molecular Dynamics Features for PyTorch model training.
 ### Get help
 Command:
 ```python
-mdfeaturizer -h
+MDFeaturizer -h
 ```
-    usage: mdfeaturizer [-h] [-c CONFIG] [--input_trajectory_path INPUT_TRAJECTORY_PATH] --input_topology_path INPUT_TOPOLOGY_PATH --output_dataset_pt_path OUTPUT_DATASET_PT_PATH --output_stats_pt_path OUTPUT_STATS_PT_PATH
+    usage: MDFeaturizer [-h] [-c CONFIG] [--input_trajectory_path INPUT_TRAJECTORY_PATH] --input_topology_path INPUT_TOPOLOGY_PATH --output_dataset_pt_path OUTPUT_DATASET_PT_PATH --output_stats_pt_path OUTPUT_STATS_PT_PATH
     
     Obtain the Molecular Dynamics Features for PyTorch model training.
     
@@ -569,7 +569,7 @@ properties:
 ```
 #### Command line
 ```python
-mdfeaturizer --config config_mdfeaturizer.yml --input_trajectory_path train_mdae_traj.xtc --input_topology_path MCV1900209.pdb --output_dataset_pt_path ref_output_dataset.pt --output_stats_pt_path ref_output_stats.pt
+MDFeaturizer --config config_mdfeaturizer.yml --input_trajectory_path train_mdae_traj.xtc --input_topology_path MCV1900209.pdb --output_dataset_pt_path ref_output_dataset.pt --output_stats_pt_path ref_output_stats.pt
 ```
 ### JSON
 #### [Common config file](https://github.com/bioexcel/biobb_pytorch/blob/master/biobb_pytorch/test/data/config/config_mdfeaturizer.json)
@@ -594,7 +594,7 @@ mdfeaturizer --config config_mdfeaturizer.yml --input_trajectory_path train_mdae
 ```
 #### Command line
 ```python
-mdfeaturizer --config config_mdfeaturizer.json --input_trajectory_path train_mdae_traj.xtc --input_topology_path MCV1900209.pdb --output_dataset_pt_path ref_output_dataset.pt --output_stats_pt_path ref_output_stats.pt
+MDFeaturizer --config config_mdfeaturizer.json --input_trajectory_path train_mdae_traj.xtc --input_topology_path MCV1900209.pdb --output_dataset_pt_path ref_output_dataset.pt --output_stats_pt_path ref_output_stats.pt
 ```
 
 ## trainModel

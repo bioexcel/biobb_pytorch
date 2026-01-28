@@ -65,7 +65,7 @@
             <a id="nextFileLink" class="nav" href="z_66854485573be304_mdfeaturizer_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.13.2">coverage.py v7.13.2</a>,
-            created at 2026-01-28 15:06 +0000
+            created at 2026-01-28 17:46 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -553,7 +553,7 @@
     <p class="run"><span class="n"><a id="t471" href="#t471">471</a></span><span class="t">        <span class="key">return</span> <span class="num">0</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t472" href="#t472">472</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t473" href="#t473">473</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t474" href="#t474">474</a></span><span class="t"><span class="key">def</span> <span class="nam">generate_plumed</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t474" href="#t474">474</a></span><span class="t"><span class="key">def</span> <span class="nam">generatePlumed</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t475" href="#t475">475</a></span><span class="t">    <span class="nam">input_model_pth_path</span><span class="op">:</span> <span class="nam">str</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t476" href="#t476">476</a></span><span class="t">    <span class="nam">input_stats_pt_path</span><span class="op">:</span> <span class="nam">Optional</span><span class="op">[</span><span class="nam">str</span><span class="op">]</span> <span class="op">=</span> <span class="key">None</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t477" href="#t477">477</a></span><span class="t">    <span class="nam">input_reference_pdb_path</span><span class="op">:</span> <span class="nam">Optional</span><span class="op">[</span><span class="nam">str</span><span class="op">]</span> <span class="op">=</span> <span class="key">None</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
@@ -564,13 +564,13 @@
     <p class="run run2"><span class="n"><a id="t482" href="#t482">482</a></span><span class="t">    <span class="nam">properties</span><span class="op">:</span> <span class="nam">Optional</span><span class="op">[</span><span class="nam">Dict</span><span class="op">[</span><span class="nam">str</span><span class="op">,</span> <span class="nam">Any</span><span class="op">]</span><span class="op">]</span> <span class="op">=</span> <span class="key">None</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t483" href="#t483">483</a></span><span class="t">    <span class="op">**</span><span class="nam">kwargs</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t484" href="#t484">484</a></span><span class="t"><span class="op">)</span> <span class="op">-></span> <span class="nam">int</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t485" href="#t485">485</a></span><span class="t">    <span class="str">"""Create the :class:`GeneratePlumed &lt;generate_plumed.GeneratePlumed>` class and</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t486" href="#t486">486</a></span><span class="t"><span class="str">    execute the :meth:`launch() &lt;generate_plumed.GeneratePlumed.launch>` method."""</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t485" href="#t485">485</a></span><span class="t">    <span class="str">"""Create the :class:`GeneratePlumed &lt;generatePlumed.GeneratePlumed>` class and</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t486" href="#t486">486</a></span><span class="t"><span class="str">    execute the :meth:`launch() &lt;generatePlumed.GeneratePlumed.launch>` method."""</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t487" href="#t487">487</a></span><span class="t">    <span class="key">return</span> <span class="nam">GeneratePlumed</span><span class="op">(</span><span class="op">**</span><span class="nam">dict</span><span class="op">(</span><span class="nam">locals</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">.</span><span class="nam">launch</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t488" href="#t488">488</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t489" href="#t489">489</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t490" href="#t490">490</a></span><span class="t"><span class="nam">generate_plumed</span><span class="op">.</span><span class="nam">__doc__</span> <span class="op">=</span> <span class="nam">GeneratePlumed</span><span class="op">.</span><span class="nam">__doc__</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t491" href="#t491">491</a></span><span class="t"><span class="nam">main</span> <span class="op">=</span> <span class="nam">GeneratePlumed</span><span class="op">.</span><span class="nam">get_main</span><span class="op">(</span><span class="nam">generate_plumed</span><span class="op">,</span> <span class="str">"Generate PLUMED input for biased dynamics using an MDAE model."</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t490" href="#t490">490</a></span><span class="t"><span class="nam">generatePlumed</span><span class="op">.</span><span class="nam">__doc__</span> <span class="op">=</span> <span class="nam">GeneratePlumed</span><span class="op">.</span><span class="nam">__doc__</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t491" href="#t491">491</a></span><span class="t"><span class="nam">main</span> <span class="op">=</span> <span class="nam">GeneratePlumed</span><span class="op">.</span><span class="nam">get_main</span><span class="op">(</span><span class="nam">generatePlumed</span><span class="op">,</span> <span class="str">"Generate PLUMED input for biased dynamics using an MDAE model."</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t492" href="#t492">492</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t493" href="#t493">493</a></span><span class="t"><span class="key">if</span> <span class="nam">__name__</span> <span class="op">==</span> <span class="str">"__main__"</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t494" href="#t494">494</a></span><span class="t">    <span class="nam">main</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
@@ -583,7 +583,7 @@
             <a class="nav" href="z_66854485573be304_mdfeaturizer_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.13.2">coverage.py v7.13.2</a>,
-            created at 2026-01-28 15:06 +0000
+            created at 2026-01-28 17:46 +0000
         </p>
     </div>
 </footer>

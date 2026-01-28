@@ -1,9 +1,1 @@
-1     E302 expected 2 blank lines, found 1
-2     E402 module level import not at top of file
-4     F401 'copy' imported but unused
-5     F841 local variable 'loss_fn' is assigned to but never used
-1     W291 trailing whitespace
-1     W292 no newline at end of file
-182   W293 blank line contains whitespace
-12    W391 blank line at end of file
 4     W504 line break after binary operator

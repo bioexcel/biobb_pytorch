@@ -1,6 +1,5 @@
 import torch
 import os
-import copy
 from typing import Optional
 from biobb_common.tools.file_utils import launchlogger
 from biobb_common.tools import file_utils as fu
@@ -63,7 +62,7 @@ class TrainModel(BiobbObject):
                                   output_model_pth_path=None,
                                   output_metrics_npz_path=None,
                                   properties=prop)
-            
+
     Info:
         * wrapped_software:
             * name: PyTorch
@@ -215,7 +214,7 @@ class TrainModel(BiobbObject):
         # load the model
         fu.log(f'Load model from {os.path.abspath(self.io_dict["in"]["input_model_pth_path"])}', self.out_log)
         self.model = self.load_model()
-        
+
         # load the dataset
         fu.log(f'Load dataset from {os.path.abspath(self.io_dict["in"]["input_dataset_pt_path"])}', self.out_log)
         self.dataset = self.load_dataset()

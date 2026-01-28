@@ -48,8 +48,8 @@ class InformationBottleneckLoss(nn.Module):
         mu = rep_mean.unsqueeze(0)
         lv = rep_logvar.unsqueeze(0)
 
-        representative_log_q = -0.5 * torch.sum(lv + torch.pow(z_expand - mu, 2) /
-                                                torch.exp(lv), dim=2)
+        representative_log_q = -0.5 * torch.sum(lv + torch.pow(z_expand - mu, 2)
+                                                / torch.exp(lv), dim=2)
 
         if sum_up:
             log_p = torch.sum(torch.log(torch.exp(representative_log_q) @ w + self.eps), dim=1)

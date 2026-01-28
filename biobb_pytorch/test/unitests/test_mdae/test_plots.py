@@ -4,7 +4,6 @@ import numpy as np
 import tempfile
 from pathlib import Path
 import matplotlib
-matplotlib.use('Agg')  # Use non-interactive backend for testing
 import matplotlib.pyplot as plt
 from biobb_pytorch.mdae.plots import (
     plot_loss,
@@ -13,6 +12,8 @@ from biobb_pytorch.mdae.plots import (
     plot_rmsf_difference,
     plot_latent_space
 )
+
+matplotlib.use('Agg')  # Use non-interactive backend for testing
 
 
 class TestPlots:
@@ -28,7 +29,7 @@ class TestPlots:
             train_loss = np.array([1.0, 0.8, 0.6, 0.5, 0.45])
             valid_loss = np.array([1.1, 0.9, 0.65, 0.55, 0.5])
             np.savez(tmp_path, train_loss=train_loss, valid_loss=valid_loss)
-        
+
         try:
             # This should not raise an error
             plot_loss(tmp_path)
@@ -42,7 +43,7 @@ class TestPlots:
             tmp_path = tmp.name
             train_loss = np.array([1.0, 0.8, 0.6, 0.5, 0.45])
             np.savez(tmp_path, train_loss=train_loss)
-        
+
         try:
             plot_loss(tmp_path)
             assert True
@@ -59,7 +60,7 @@ class TestPlots:
             tmp.write("0.0 0.1\n")
             tmp.write("1.0 0.15\n")
             tmp.write("2.0 0.12\n")
-        
+
         try:
             plot_rmsd(tmp_path)
             assert True
@@ -77,7 +78,7 @@ class TestPlots:
                     tmp.write("# Comment line\n")
                     tmp.write("0.0 0.1\n")
                     tmp.write("1.0 0.15\n")
-            
+
             plot_rmsd(tmp_paths)
             assert True
         finally:
@@ -99,7 +100,7 @@ class TestPlots:
             tmp.write("1 0.1\n")
             tmp.write("2 0.15\n")
             tmp.write("3 0.12\n")
-        
+
         try:
             plot_rmsf(tmp_path)
             assert True
@@ -117,7 +118,7 @@ class TestPlots:
                     tmp.write("# Comment line\n")
                     tmp.write("1 0.1\n")
                     tmp.write("2 0.15\n")
-            
+
             plot_rmsf(tmp_paths)
             assert True
         finally:
@@ -135,7 +136,7 @@ class TestPlots:
                     tmp.write("# Comment line\n")
                     for res, val in enumerate(values, 1):
                         tmp.write(f"{res} {val}\n")
-            
+
             plot_rmsf_difference(tmp_paths)
             assert True
         finally:
@@ -149,7 +150,7 @@ class TestPlots:
             # Create latent space data
             z = np.random.randn(100, 5)  # 100 frames, 5 dimensions
             np.savez(tmp_path, z=z)
-        
+
         try:
             plot_latent_space(tmp_path, projection_dim=[0, 1])
             assert True
@@ -162,7 +163,7 @@ class TestPlots:
             tmp_path = tmp.name
             z = np.random.randn(100, 5)
             np.savez(tmp_path, z=z)
-        
+
         try:
             plot_latent_space(tmp_path, projection_dim=[2, 3], snapshot_freq_ps=20)
             assert True
@@ -175,7 +176,7 @@ class TestPlots:
             tmp_path = tmp.name
             # Save data without 'z' key
             np.savez(tmp_path, other_data=np.array([1, 2, 3]))
-        
+
         try:
             with pytest.raises(KeyError, match="'z' not found"):
                 plot_latent_space(tmp_path, projection_dim=[0, 1])
@@ -188,10 +189,9 @@ class TestPlots:
             tmp_path = tmp.name
             z = np.random.randn(100, 5)
             np.savez(tmp_path, z=z)
-        
+
         try:
             with pytest.raises(ValueError, match="projection_dim must have length 2"):
                 plot_latent_space(tmp_path, projection_dim=[0, 1, 2])
         finally:
             Path(tmp_path).unlink()
-

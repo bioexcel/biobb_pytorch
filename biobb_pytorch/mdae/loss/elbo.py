@@ -303,8 +303,8 @@ class ELBOGaussianMixtureLoss(nn.Module):
             rec_i = -self.log_normal(x, xm_list[i], xv_list[i])
             # KL divergence:   KL( q(z|x,y=i) ‖ p(z|y=i) )
             kl_i = (
-                self.log_normal(z_list[i], zm_list[i], zv_list[i]) -
-                self.log_normal(z_list[i], zm_prior_list[i], zv_prior_list[i])
+                self.log_normal(z_list[i], zm_list[i], zv_list[i])
+                - self.log_normal(z_list[i], zm_prior_list[i], zv_prior_list[i])
             )
             comp_losses.append(rec_i + kl_i)  # shape [batch]
 

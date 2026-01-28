@@ -51,7 +51,7 @@ class BuildModel(BiobbObject):
             buildModel(input_stats_pt_path=input_stats_pt_path,
                        output_model_pth_path=None,
                        properties=prop)
-            
+
     Info:
         * wrapped_software:
             * name: PyTorch

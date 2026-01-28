@@ -17,10 +17,9 @@ class TestDecodeModel:
 
         results = np.load(self.paths['output_results_npz_path'], allow_pickle=True)
         assert 'xhat' in results, "Results should contain decoded/reconstructed data (xhat)"
-        
+
         if 'ref_output_results_npz_path' in self.paths:
             ref_results = np.load(self.paths['ref_output_results_npz_path'], allow_pickle=True)
             # Compare decoded data dimensions
             if 'xhat' in results and 'xhat' in ref_results:
                 assert results['xhat'].shape[0] == ref_results['xhat'].shape[0], "Number of samples should match"
-

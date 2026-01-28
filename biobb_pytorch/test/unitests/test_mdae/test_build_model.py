@@ -33,12 +33,12 @@ class TestBuildModel:
         props['options']['loss_function'] = {
             'loss_type': 'MSELoss'
         }
-        
+
         with tempfile.NamedTemporaryFile(suffix='.pth', delete=False) as tmp:
             tmp_path = tmp.name
-        
+
         try:
-            buildModel(properties=props, 
+            buildModel(properties=props,
                        input_stats_pt_path=self.paths['input_stats_pt_path'],
                        output_model_pth_path=tmp_path)
             assert Path(tmp_path).exists()
@@ -61,11 +61,11 @@ class TestBuildModel:
         class DummyClass:
             def __init__(self, a, b, c=None):
                 pass
-        
+
         # Valid kwargs should not raise
         assert_valid_kwargs(DummyClass, {'a': 1, 'b': 2}, context="test")
         assert_valid_kwargs(DummyClass, {'a': 1, 'b': 2, 'c': 3}, context="test")
-        
+
         # Invalid kwargs should raise
         with pytest.raises(AssertionError):
             assert_valid_kwargs(DummyClass, {'a': 1, 'b': 2, 'invalid': 3}, context="test")

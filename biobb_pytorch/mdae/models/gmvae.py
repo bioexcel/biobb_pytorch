@@ -98,9 +98,9 @@ class GaussianMixtureVariationalAutoEncoder(BaseCV, pl.LightningModule):
 
     def loss_function(self, x, xm, xv, z, zm, zv, zm_prior, zv_prior):
         return (
-            -self.log_normal(x, xm, xv) +  # Reconstruction Loss
-            self.log_normal(z, zm, zv) - self.log_normal(z, zm_prior, zv_prior) -  # Regularization Loss (KL Divergence)
-            torch.log(torch.tensor(1 / self.k, device=x.device))  # Entropy Regularization
+            -self.log_normal(x, xm, xv)  # Reconstruction Loss
+            + self.log_normal(z, zm, zv) - self.log_normal(z, zm_prior, zv_prior)  # Regularization Loss (KL Divergence)
+            - torch.log(torch.tensor(1 / self.k, device=x.device))  # Entropy Regularization
         )
 
     def encode_decode(self, x):

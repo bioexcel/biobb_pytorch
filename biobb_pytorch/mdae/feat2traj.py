@@ -20,7 +20,7 @@ class Feat2Traj(BiobbObject):
         output_top_path (str) (optional): Path to save the output topology file (pdb). Used if trajectory format requires separate topology. File type: output. `Sample file <https://github.com/bioexcel/biobb_pytorch/mdae/output_model.pdb>`_. Accepted formats: pdb (edam:format_1476).
         properties (dict - Python dictionary object containing the tool parameters, not input/output files):
             * **restart** (*bool*) - (False) [WF property] Do not execute if output files exist.
-    
+
     Examples:
         This example shows how to use the Feat2Traj class to convert a .pt file (features) to a trajectory using cartesian indices and topology from the stats file::
 

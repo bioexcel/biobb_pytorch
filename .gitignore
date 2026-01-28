@@ -25,6 +25,7 @@ wheels/
 .installed.cfg
 *.egg
 .coverage
+coverage.xml
 reports/*
 
 # Jupyter and data files

@@ -65,7 +65,7 @@
             <a id="nextFileLink" class="nav" href="z_fff632dd98bd7332___init___py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.13.2">coverage.py v7.13.2</a>,
-            created at 2026-01-28 22:47 +0000
+            created at 2026-01-28 22:49 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -244,7 +244,7 @@
     <p class="pln"><span class="n"><a id="t162" href="#t162">162</a></span><span class="t">        <span class="com"># check which elements belong to class i</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t163" href="#t163">163</a></span><span class="t">        <span class="key">if</span> <span class="key">not</span> <span class="op">(</span><span class="nam">labels</span> <span class="op">==</span> <span class="nam">i</span><span class="op">)</span><span class="op">.</span><span class="nam">any</span><span class="op">(</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t164" href="#t164">164</a></span><span class="t">            <span class="key">raise</span> <span class="nam">ValueError</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis mis2 show_mis"><span class="n"><a id="t165" href="#t165">165</a></span><span class="t">                <span class="fst">f"</span><span class="fst">State </span><span class="op">{</span><span class="nam">i</span><span class="op">}</span><span class="fst"> was not represented in this batch! Either use bigger batch_size or a more equilibrated dataset composition!</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="mis mis2 show_mis"><span class="n"><a id="t165" href="#t165">165</a></span><span class="t">                <span class="str">f"State {i} was not represented in this batch! Either use bigger batch_size or a more equilibrated dataset composition!"</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis mis2 show_mis"><span class="n"><a id="t166" href="#t166">166</a></span><span class="t">            <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t167" href="#t167">167</a></span><span class="t">        <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t168" href="#t168">168</a></span><span class="t">            <span class="nam">H_red</span> <span class="op">=</span> <span class="nam">H</span><span class="op">[</span><span class="nam">torch</span><span class="op">.</span><span class="nam">nonzero</span><span class="op">(</span><span class="nam">labels</span> <span class="op">==</span> <span class="nam">i</span><span class="op">,</span> <span class="nam">as_tuple</span><span class="op">=</span><span class="key">True</span><span class="op">)</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
@@ -253,7 +253,7 @@
     <p class="mis show_mis"><span class="n"><a id="t171" href="#t171">171</a></span><span class="t">            <span class="nam">mu</span> <span class="op">=</span> <span class="nam">torch</span><span class="op">.</span><span class="nam">mean</span><span class="op">(</span><span class="nam">H_red</span><span class="op">,</span> <span class="num">0</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t172" href="#t172">172</a></span><span class="t">            <span class="key">if</span> <span class="nam">len</span><span class="op">(</span><span class="nam">torch</span><span class="op">.</span><span class="nam">nonzero</span><span class="op">(</span><span class="nam">labels</span> <span class="op">==</span> <span class="nam">i</span><span class="op">)</span><span class="op">)</span> <span class="op">==</span> <span class="num">1</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t173" href="#t173">173</a></span><span class="t">                <span class="nam">warn</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis mis2 show_mis"><span class="n"><a id="t174" href="#t174">174</a></span><span class="t">                    <span class="fst">f"</span><span class="fst">There is only one sample for state </span><span class="op">{</span><span class="nam">i</span><span class="op">}</span><span class="fst"> in this batch! Std is set to 0, this may affect the training! Either use bigger batch_size or a more equilibrated dataset composition!</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
+    <p class="mis mis2 show_mis"><span class="n"><a id="t174" href="#t174">174</a></span><span class="t">                    <span class="str">f"There is only one sample for state {i} in this batch! Std is set to 0, this may affect the training! Either use bigger batch_size or a more equilibrated dataset composition!"</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis mis2 show_mis"><span class="n"><a id="t175" href="#t175">175</a></span><span class="t">                <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t176" href="#t176">176</a></span><span class="t">                <span class="nam">sigma</span> <span class="op">=</span> <span class="num">0</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t177" href="#t177">177</a></span><span class="t">            <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
@@ -280,7 +280,7 @@
             <a class="nav" href="z_fff632dd98bd7332___init___py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.13.2">coverage.py v7.13.2</a>,
-            created at 2026-01-28 22:47 +0000
+            created at 2026-01-28 22:49 +0000
         </p>
     </div>
 </footer>

@@ -83,13 +83,7 @@ class AutoEncoder(BaseCV, pl.LightningModule):
             in_features=n_features, out_features=n_cvs, **kwargs
         )
 
-        self._hparams_initial = {
-            'n_features': n_features,
-            'n_cvs': n_cvs,
-            'encoder_layers': encoder_layers,
-            'decoder_layers': decoder_layers,
-            'options': options
-        }
+        self.save_hyperparameters('n_features', 'n_cvs', 'encoder_layers', 'decoder_layers', 'options')
 
         # =======   LOSS  =======
         # Reconstruction (MSE) loss
@@ -192,9 +186,3 @@ class AutoEncoder(BaseCV, pl.LightningModule):
         else:
             decoder_model = self.decoder
         return decoder_model
-
-    @property
-    def hparams_initial(self):
-        if not hasattr(self, "_hparams_initial"):
-            return {}
-        return copy.deepcopy(self._hparams_initial)

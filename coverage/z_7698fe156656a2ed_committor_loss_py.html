@@ -65,7 +65,7 @@
             <a id="nextFileLink" class="nav" href="z_7698fe156656a2ed_eigvals_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.13.2">coverage.py v7.13.2</a>,
-            created at 2026-01-28 18:43 +0000
+            created at 2026-01-28 22:37 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -364,7 +364,7 @@
     <p class="pln"><span class="n"><a id="t282" href="#t282">282</a></span><span class="t">        <span class="com"># it is possible that some atoms are not involved in anything</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t283" href="#t283">283</a></span><span class="t">        <span class="nam">n_effective_atoms</span> <span class="op">=</span> <span class="nam">len</span><span class="op">(</span><span class="nam">torch</span><span class="op">.</span><span class="nam">unique</span><span class="op">(</span><span class="nam">mat_ind</span><span class="op">[</span><span class="num">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t284" href="#t284">284</a></span><span class="t">        <span class="key">if</span> <span class="nam">n_effective_atoms</span> <span class="op">&lt;</span> <span class="nam">self</span><span class="op">.</span><span class="nam">n_atoms</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t285" href="#t285">285</a></span><span class="t">            <span class="key">raise</span> <span class="nam">ValueError</span><span class="op">(</span><span class="str">f"Some of the input atoms are useless LOL. The not used atom IDs are : {[i for i in range(self.n_atoms) if i not in torch.unique(mat_ind[1]).numpy()]}  "</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="mis show_mis"><span class="n"><a id="t285" href="#t285">285</a></span><span class="t">            <span class="key">raise</span> <span class="nam">ValueError</span><span class="op">(</span><span class="fst">f"</span><span class="fst">Some of the input atoms are useless LOL. The not used atom IDs are : </span><span class="op">{</span><span class="op">[</span><span class="nam">i</span> <span class="key">for</span> <span class="nam">i</span> <span class="key">in</span> <span class="nam">range</span><span class="op">(</span><span class="nam">self</span><span class="op">.</span><span class="nam">n_atoms</span><span class="op">)</span> <span class="key">if</span> <span class="nam">i</span> <span class="key">not</span> <span class="key">in</span> <span class="nam">torch</span><span class="op">.</span><span class="nam">unique</span><span class="op">(</span><span class="nam">mat_ind</span><span class="op">[</span><span class="num">1</span><span class="op">]</span><span class="op">)</span><span class="op">.</span><span class="nam">numpy</span><span class="op">(</span><span class="op">)</span><span class="op">]</span><span class="op">}</span><span class="fst">  </span><span class="fst">"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t286" href="#t286">286</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t287" href="#t287">287</a></span><span class="t">        <span class="nam">scatter_indeces</span> <span class="op">=</span> <span class="nam">self</span><span class="op">.</span><span class="nam">_get_scatter_indices</span><span class="op">(</span><span class="nam">batch_ind</span><span class="op">=</span><span class="nam">mat_ind</span><span class="op">[</span><span class="num">0</span><span class="op">]</span><span class="op">,</span> <span class="nam">atom_ind</span><span class="op">=</span><span class="nam">mat_ind</span><span class="op">[</span><span class="num">1</span><span class="op">]</span><span class="op">,</span> <span class="nam">dim_ind</span><span class="op">=</span><span class="nam">mat_ind</span><span class="op">[</span><span class="num">3</span><span class="op">]</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t288" href="#t288">288</a></span><span class="t">        <span class="key">return</span> <span class="nam">left</span><span class="op">,</span> <span class="nam">mat_ind</span><span class="op">,</span> <span class="nam">scatter_indeces</span>&nbsp;</span><span class="r"></span></p>
@@ -595,7 +595,7 @@
             <a class="nav" href="z_7698fe156656a2ed_eigvals_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.13.2">coverage.py v7.13.2</a>,
-            created at 2026-01-28 18:43 +0000
+            created at 2026-01-28 22:37 +0000
         </p>
     </div>
 </footer>

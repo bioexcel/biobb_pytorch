@@ -65,7 +65,7 @@
             <a id="nextFileLink" class="nav" href="z_7698fe156656a2ed_fisher_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.13.2">coverage.py v7.13.2</a>,
-            created at 2026-01-28 18:43 +0000
+            created at 2026-01-28 22:37 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -201,7 +201,7 @@
     <p class="run"><span class="n"><a id="t119" href="#t119">119</a></span><span class="t">        <span class="nam">weights</span> <span class="op">=</span> <span class="nam">weights</span><span class="op">.</span><span class="nam">squeeze</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t120" href="#t120">120</a></span><span class="t">        <span class="key">if</span> <span class="nam">weights</span><span class="op">.</span><span class="nam">shape</span> <span class="op">!=</span> <span class="nam">kl</span><span class="op">.</span><span class="nam">shape</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t121" href="#t121">121</a></span><span class="t">            <span class="key">raise</span> <span class="nam">ValueError</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis mis2 show_mis"><span class="n"><a id="t122" href="#t122">122</a></span><span class="t">                <span class="str">f"weights should be a tensor of shape (n_batches,) or (n_batches,1), not {weights.shape}."</span>&nbsp;</span><span class="r"></span></p>
+    <p class="mis mis2 show_mis"><span class="n"><a id="t122" href="#t122">122</a></span><span class="t">                <span class="fst">f"</span><span class="fst">weights should be a tensor of shape (n_batches,) or (n_batches,1), not </span><span class="op">{</span><span class="nam">weights</span><span class="op">.</span><span class="nam">shape</span><span class="op">}</span><span class="fst">.</span><span class="fst">"</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis mis2 show_mis"><span class="n"><a id="t123" href="#t123">123</a></span><span class="t">            <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t124" href="#t124">124</a></span><span class="t">        <span class="nam">kl</span> <span class="op">=</span> <span class="op">(</span><span class="nam">kl</span> <span class="op">*</span> <span class="nam">weights</span><span class="op">)</span><span class="op">.</span><span class="nam">sum</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t125" href="#t125">125</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
@@ -249,9 +249,9 @@
     <p class="run run2"><span class="n"><a id="t167" href="#t167">167</a></span><span class="t">    <span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t168" href="#t168">168</a></span><span class="t">        <span class="nam">super</span><span class="op">(</span><span class="op">)</span><span class="op">.</span><span class="nam">__init__</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t169" href="#t169">169</a></span><span class="t">        <span class="key">if</span> <span class="nam">reconstruction</span> <span class="key">not</span> <span class="key">in</span> <span class="op">{</span><span class="str">'mse'</span><span class="op">,</span> <span class="str">'bce'</span><span class="op">}</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t170" href="#t170">170</a></span><span class="t">            <span class="key">raise</span> <span class="nam">ValueError</span><span class="op">(</span><span class="str">f"Unsupported reconstruction '{reconstruction}', choose 'mse' or 'bce'."</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="mis show_mis"><span class="n"><a id="t170" href="#t170">170</a></span><span class="t">            <span class="key">raise</span> <span class="nam">ValueError</span><span class="op">(</span><span class="fst">f"</span><span class="fst">Unsupported reconstruction '</span><span class="op">{</span><span class="nam">reconstruction</span><span class="op">}</span><span class="fst">', choose 'mse' or 'bce'.</span><span class="fst">"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t171" href="#t171">171</a></span><span class="t">        <span class="key">if</span> <span class="nam">reduction</span> <span class="key">not</span> <span class="key">in</span> <span class="op">{</span><span class="str">'sum'</span><span class="op">,</span> <span class="str">'mean'</span><span class="op">,</span> <span class="str">'none'</span><span class="op">}</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t172" href="#t172">172</a></span><span class="t">            <span class="key">raise</span> <span class="nam">ValueError</span><span class="op">(</span><span class="str">f"Unsupported reduction '{reduction}', choose 'sum', 'mean', or 'none'."</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="mis show_mis"><span class="n"><a id="t172" href="#t172">172</a></span><span class="t">            <span class="key">raise</span> <span class="nam">ValueError</span><span class="op">(</span><span class="fst">f"</span><span class="fst">Unsupported reduction '</span><span class="op">{</span><span class="nam">reduction</span><span class="op">}</span><span class="fst">', choose 'sum', 'mean', or 'none'.</span><span class="fst">"</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t173" href="#t173">173</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t174" href="#t174">174</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">beta</span> <span class="op">=</span> <span class="nam">beta</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t175" href="#t175">175</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">reconstruction</span> <span class="op">=</span> <span class="nam">reconstruction</span>&nbsp;</span><span class="r"></span></p>
@@ -404,7 +404,7 @@
             <a class="nav" href="z_7698fe156656a2ed_fisher_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.13.2">coverage.py v7.13.2</a>,
-            created at 2026-01-28 18:43 +0000
+            created at 2026-01-28 22:37 +0000
         </p>
     </div>
 </footer>

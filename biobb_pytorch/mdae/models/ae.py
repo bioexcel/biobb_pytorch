@@ -82,8 +82,15 @@ class AutoEncoder(BaseCV, pl.LightningModule):
             in_features=n_features, out_features=n_cvs, **kwargs
         )
 
-        # Save hyperparameters for PyTorch Lightning
-        self.save_hyperparameters()
+        self._hparams_initial = {
+            'n_features': n_features,
+            'n_cvs': n_cvs,
+            'encoder_layers': encoder_layers,
+            'decoder_layers': decoder_layers,
+            'options': options
+        }
+
+        setattr(self, '_hparams_initial', self._hparams_initial)
 
         # =======   LOSS  =======
         # Reconstruction (MSE) loss

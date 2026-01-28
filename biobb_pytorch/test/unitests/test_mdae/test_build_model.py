@@ -1,7 +1,8 @@
 # type: ignore
 import pytest
 from biobb_common.tools import test_fixtures as fx
-from biobb_pytorch.mdae.build_model import build_model, BuildModel, assert_valid_kwargs
+from biobb_pytorch.mdae.build_model import buildModel, BuildModel
+from biobb_pytorch.mdae.utils.model_utils import assert_valid_kwargs
 import torch
 import tempfile
 from pathlib import Path
@@ -9,13 +10,13 @@ from pathlib import Path
 
 class TestBuildModel:
     def setup_class(self):
-        fx.test_setup(self, 'build_model')
+        fx.test_setup(self, 'buildModel')
 
     def teardown_class(self):
         fx.test_teardown(self)
 
     def test_build_model(self):
-        build_model(properties=self.properties, **self.paths)
+        buildModel(properties=self.properties, **self.paths)
         assert fx.not_empty(self.paths['output_model_pth_path'])
 
         # Load and verify model structure
@@ -37,7 +38,7 @@ class TestBuildModel:
             tmp_path = tmp.name
         
         try:
-            build_model(properties=props, 
+            buildModel(properties=props, 
                        input_stats_pt_path=self.paths['input_stats_pt_path'],
                        output_model_pth_path=tmp_path)
             assert Path(tmp_path).exists()
@@ -71,6 +72,6 @@ class TestBuildModel:
 
     def test_load_full(self):
         """Test load_full static method."""
-        build_model(properties=self.properties, **self.paths)
+        buildModel(properties=self.properties, **self.paths)
         loaded_model = BuildModel.load_full(self.paths['output_model_pth_path'])
         assert hasattr(loaded_model, 'state_dict')

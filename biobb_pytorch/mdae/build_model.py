@@ -1,36 +1,13 @@
-import importlib
-import inspect
-import torch
-from biobb_pytorch.mdae.models import __all__ as AVAILABLE_MODELS
-from typing import Dict, Any, Type, Optional
 import os
+import torch
+import importlib
+from typing import Dict, Any, Type, Optional
+from biobb_pytorch.mdae.models import __all__ as AVAILABLE_MODELS
+from biobb_pytorch.mdae.utils.model_utils import assert_valid_kwargs
 from biobb_pytorch.mdae.utils.log_utils import get_size
 from biobb_common.tools.file_utils import launchlogger
 from biobb_common.tools import file_utils as fu
 from biobb_common.generic.biobb_object import BiobbObject
-
-
-def assert_valid_kwargs(target_cls, kwargs, context=""):
-    """
-    Assert that the keys in kwargs are valid parameters for target_cls.__init__.
-    Raises AssertionError if invalid keys are found.
-
-    Args:
-        target_cls: class whose __init__ signature to inspect
-        kwargs (dict): keyword arguments to validate
-        context (str): optional context name for error messages
-    """
-    sig = inspect.signature(target_cls.__init__)
-    params = sig.parameters
-    # if **kwargs is accepted, skip strict validation
-    if any(p.kind == inspect.Parameter.VAR_KEYWORD for p in params.values()):
-        return
-    valid_keys = set(params.keys()) - {'self'}
-    invalid = set(kwargs.keys()) - valid_keys
-    assert not invalid, (
-        f"Invalid {context} arguments for {target_cls.__name__}: {invalid}. "
-        f"Valid parameters are: {valid_keys}"
-    )
 
 
 class BuildModel(BiobbObject):
@@ -50,9 +27,9 @@ class BuildModel(BiobbObject):
             * **options** (*dict*) - ({"norm_in": {"mode": "min_max"}}) Additional options (e.g. norm_in, optimizer, loss_function, device, etc.).
 
     Examples:
-        This is a use case of how to use the building block from Python:
+        This example shows how to use the BuildModel class to build a PyTorch autoencoder model::
 
-            from biobb_pytorch.mdae.build_model import build_model
+            from biobb_pytorch.mdae.build_model import buildModel
 
             input_stats_pt_path = "input_stats.pt"
             output_model_pth_file = "model.pth"
@@ -71,18 +48,10 @@ class BuildModel(BiobbObject):
                 }
             }
 
-            # For API usage, output can be None to avoid saving
-            instance = build_model(input_stats_pt_path=input_stats_pt_path,
+            buildModel(input_stats_pt_path=input_stats_pt_path,
                        output_model_pth_path=None,
                        properties=prop)
-            pytorch_model = instance.model  # Access the PyTorch model with loss_fn attached
-
-            # Or to save, provide output and call launch
-            instance = build_model(input_stats_pt_path=input_stats_pt_path,
-                       output_model_pth_path=output_model_pth_file,
-                       properties=prop)
-            instance.launch()
-
+            
     Info:
         * wrapped_software:
             * name: PyTorch
@@ -311,7 +280,7 @@ class BuildModel(BiobbObject):
         return 0
 
 
-def build_model(
+def buildModel(
     properties: dict,
     input_stats_pt_path: str,
     output_model_pth_path: Optional[str] = None,
@@ -322,8 +291,8 @@ def build_model(
     return BuildModel(**dict(locals())).launch()
 
 
-build_model.__doc__ = BuildModel.__doc__
-main = BuildModel.get_main(build_model, "Build a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.")
+buildModel.__doc__ = BuildModel.__doc__
+main = BuildModel.get_main(buildModel, "Build a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.")
 
 
 if __name__ == "__main__":

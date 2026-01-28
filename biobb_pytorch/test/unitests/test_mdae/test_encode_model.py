@@ -1,18 +1,18 @@
 # type: ignore
 from biobb_common.tools import test_fixtures as fx
-from biobb_pytorch.mdae.encode_model import evaluate_encoder
+from biobb_pytorch.mdae.encode_model import evaluateEncoder
 import numpy as np
 
 
 class TestEncodeModel:
     def setup_class(self):
-        fx.test_setup(self, 'encode_model')
+        fx.test_setup(self, 'evaluateEncoder')
 
     def teardown_class(self):
         fx.test_teardown(self)
 
     def test_encode_model(self):
-        evaluate_encoder(properties=self.properties, **self.paths)
+        evaluateEncoder(properties=self.properties, **self.paths)
         assert fx.not_empty(self.paths['output_results_npz_path'])
 
         results = np.load(self.paths['output_results_npz_path'], allow_pickle=True)

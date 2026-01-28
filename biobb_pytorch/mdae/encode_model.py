@@ -163,7 +163,7 @@ class EvaluateEncoder(BiobbObject):
         return 0
 
 
-def evaluate_encoder(
+def evaluateEncoder(
     properties: dict,
     input_model_pth_path: str,
     input_dataset_pt_path: str,
@@ -175,8 +175,8 @@ def evaluate_encoder(
     return EvaluateEncoder(**dict(locals())).launch()
 
 
-evaluate_encoder.__doc__ = EvaluateEncoder.__doc__
-main = EvaluateEncoder.get_main(evaluate_encoder, "Encode data with a Molecular Dynamics AutoEncoder (MDAE) model.")
+evaluateEncoder.__doc__ = EvaluateEncoder.__doc__
+main = EvaluateEncoder.get_main(evaluateEncoder, "Encode data with a Molecular Dynamics AutoEncoder (MDAE) model.")
 
 if __name__ == "__main__":
     main()

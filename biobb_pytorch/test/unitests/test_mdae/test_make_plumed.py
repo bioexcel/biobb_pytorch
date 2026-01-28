@@ -6,7 +6,7 @@ import os
 
 class TestMakePlumed:
     def setup_class(self):
-        fx.test_setup(self, 'make_plumed')
+        fx.test_setup(self, 'makePlumed')
 
     def teardown_class(self):
         fx.test_teardown(self)

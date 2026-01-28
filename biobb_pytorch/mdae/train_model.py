@@ -34,7 +34,7 @@ class TrainModel(BiobbObject):
     Examples:
         This example shows how to use the TrainModel class to train a PyTorch autoencoder model::
 
-            from biobb_pytorch.mdae.train_model import TrainModel
+            from biobb_pytorch.mdae.train_model import trainModel
 
             input_model_pth_path='input_model.pth'
             input_dataset_pt_path='input_dataset.pt'
@@ -58,24 +58,12 @@ class TrainModel(BiobbObject):
                 }
             }
 
-            # For API usage, outputs can be None to avoid saving
-            instance = TrainModel(input_model_pth_path=input_model_pth_path,
+            trainModel(input_model_pth_path=input_model_pth_path,
                                   input_dataset_pt_path=input_dataset_pt_path,
                                   output_model_pth_path=None,
                                   output_metrics_npz_path=None,
                                   properties=prop)
-            instance.launch()
-            trained_model = instance.model  # Access the trained PyTorch model
-            metrics = instance.metrics  # Access the training metrics
-
-            # Or to save, provide outputs and call launch
-            instance = TrainModel(input_model_pth_path=input_model_pth_path,
-                                  input_dataset_pt_path=input_dataset_pt_path,
-                                  output_model_pth_path=output_model_pth_path,
-                                  output_metrics_npz_path=output_metrics_npz_path,
-                                  properties=prop)
-            instance.launch()
-
+            
     Info:
         * wrapped_software:
             * name: PyTorch
@@ -269,7 +257,7 @@ class TrainModel(BiobbObject):
         return 0
 
 
-def train_model(
+def trainModel(
     properties: dict,
     input_model_pth_path: str,
     input_dataset_pt_path: str,
@@ -282,8 +270,8 @@ def train_model(
     return TrainModel(**dict(locals())).launch()
 
 
-train_model.__doc__ = TrainModel.__doc__
-main = TrainModel.get_main(train_model, "Trains a PyTorch autoencoder using the given properties.")
+trainModel.__doc__ = TrainModel.__doc__
+main = TrainModel.get_main(trainModel, "Trains a PyTorch autoencoder using the given properties.")
 
 if __name__ == "__main__":
     main()

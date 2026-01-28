@@ -1,19 +1,19 @@
 # type: ignore
 from biobb_common.tools import test_fixtures as fx
-from biobb_pytorch.mdae.train_model import train_model
+from biobb_pytorch.mdae.train_model import trainModel
 import torch
 import numpy as np
 
 
 class TestTrainModel:
     def setup_class(self):
-        fx.test_setup(self, 'train_model')
+        fx.test_setup(self, 'trainModel')
 
     def teardown_class(self):
         fx.test_teardown(self)
 
-    def test_train_model(self):
-        train_model(properties=self.properties, **self.paths)
+    def test_trainModel(self):
+        trainModel(properties=self.properties, **self.paths)
         
         if 'output_model_pth_path' in self.paths:
             assert fx.not_empty(self.paths['output_model_pth_path'])

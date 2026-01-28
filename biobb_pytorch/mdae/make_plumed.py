@@ -32,7 +32,7 @@ class GeneratePlumed(BiobbObject):
             * **pytorch_model** (*dict*) - (None) PYTORCH_MODEL options (label, PACE and other parameters).
 
     Examples:
-        This is a use case of how to use the building block from Python:
+        This example shows how to use the GeneratePlumed class to generate a PLUMED input file for biased dynamics using an MDAE model::
 
             from biobb_plumed.generate_plumed import generatePlumed
 

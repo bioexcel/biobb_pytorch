@@ -13,7 +13,7 @@
             "block": "BuildModel",
             "tool": "build_model",
             "desc": "Build a PyTorch autoencoder model (MDAE) from input statistics and hyperparameters.",
-            "exec": "build_model",
+            "exec": "buildModel",
             "docs": "https://biobb-pytorch.readthedocs.io/en/latest/mdae.html#module-biobb_pytorch.mdae.build_model",
             "rest": true
         },
@@ -29,7 +29,7 @@
             "block": "TrainModel",
             "tool": "train_model",
             "desc": "Train a PyTorch autoencoder model (MDAE) from an input dataset and initial model, optionally saving the trained model and training metrics.",
-            "exec": "train_model",
+            "exec": "trainModel",
             "docs": "https://biobb-pytorch.readthedocs.io/en/latest/mdae.html#module-biobb_pytorch.mdae.train_model",
             "rest": true
         },
@@ -37,7 +37,7 @@
             "block": "EvaluateModel",
             "tool": "evaluate_model",
             "desc": "Evaluate a trained PyTorch autoencoder model (MDAE) on a dataset, computing loss and collecting model evaluation variables.",
-            "exec": "evaluate_model",
+            "exec": "evaluateModel",
             "docs": "https://biobb-pytorch.readthedocs.io/en/latest/mdae.html#module-biobb_pytorch.mdae.evaluate_model",
             "rest": true
         },
@@ -45,7 +45,7 @@
             "block": "EvaluateEncoder",
             "tool": "encode_model",
             "desc": "Apply the encoder part of a trained MDAE model to a dataset, producing latent variables (collective variables).",
-            "exec": "encode_model",
+            "exec": "evaluateEncoder",
             "docs": "https://biobb-pytorch.readthedocs.io/en/latest/mdae.html#module-biobb_pytorch.mdae.encode_model",
             "rest": true
         },
@@ -53,7 +53,7 @@
             "block": "EvaluateDecoder",
             "tool": "decode_model",
             "desc": "Apply the decoder part of a trained MDAE model to latent variables, reconstructing molecular dynamics features.",
-            "exec": "decode_model",
+            "exec": "evaluateDecoder",
             "docs": "https://biobb-pytorch.readthedocs.io/en/latest/mdae.html#module-biobb_pytorch.mdae.decode_model",
             "rest": true
         },

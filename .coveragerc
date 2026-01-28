@@ -1,9 +1,0 @@
-[run]
-omit =
-    */loss/*
-    */models/*
-    */featurization/*
-    */explainability/*
-    */plumed/*
-    */utils/*
-

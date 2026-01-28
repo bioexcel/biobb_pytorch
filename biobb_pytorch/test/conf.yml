@@ -21,7 +21,7 @@ mdfeaturizer:
       norm_in:
         mode: 'min_max'
 
-build_model:
+buildModel:
   paths:
     input_stats_pt_path: file:test_reference_dir/mdae/ref_output_stats.pt
     output_model_pth_path: output_model.pth
@@ -34,7 +34,7 @@ build_model:
       norm_in:
         mode: 'min_max'
 
-train_model:
+trainModel:
   paths:
     input_model_pth_path: file:test_reference_dir/mdae/ref_output_model.pth
     input_dataset_pt_path: file:test_reference_dir/mdae/ref_output_dataset.pt
@@ -50,7 +50,7 @@ train_model:
         train_prop: 0.8
         val_prop: 0.2
 
-evaluate_model:
+evaluateModel:
   paths:
     input_model_pth_path: file:test_reference_dir/mdae/ref_output_model.pth
     input_dataset_pt_path: file:test_reference_dir/mdae/ref_output_dataset.pt
@@ -59,7 +59,7 @@ evaluate_model:
     Dataset:
       batch_size: 32
 
-encode_model:
+evaluateEncoder:
   paths:
     input_model_pth_path: file:test_reference_dir/mdae/ref_output_model.pth
     input_dataset_pt_path: file:test_reference_dir/mdae/ref_output_dataset.pt
@@ -68,7 +68,7 @@ encode_model:
     Dataset:
       batch_size: 32
 
-decode_model:
+evaluateDecoder:
   paths:
     input_model_pth_path: file:test_reference_dir/mdae/ref_output_model.pth
     input_dataset_npy_path: file:test_reference_dir/mdae/ref_output_latent.npy
@@ -77,7 +77,7 @@ decode_model:
     Dataset:
       batch_size: 32
 
-make_plumed:
+makePlumed:
   paths:
     input_model_pth_path: file:test_reference_dir/mdae/ref_output_model.pth
     input_stats_pt_path: file:test_reference_dir/mdae/ref_output_stats.pt

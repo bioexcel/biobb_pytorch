@@ -25,7 +25,7 @@ class EvaluateModel(BiobbObject):
     Examples:
         This example shows how to use the EvaluateModel class to evaluate a PyTorch autoencoder model::
 
-            from biobb_pytorch.mdae.evaluate_model import evaluate_model
+            from biobb_pytorch.mdae.evaluate_model import evaluateModel
 
             input_model_pth_path='input_model.pth'
             input_dataset_pt_path='input_dataset.pt'
@@ -37,7 +37,7 @@ class EvaluateModel(BiobbObject):
                 }
             }
 
-            evaluate_model(input_model_pth_path=input_model.pth,
+            evaluateModel(input_model_pth_path=input_model.pth,
                     input_dataset_pt_path=input_dataset.pt,
                     output_results_npz_path=output_results.npz,
                     properties=prop)
@@ -209,7 +209,7 @@ class EvaluateModel(BiobbObject):
         return 0
 
 
-def evaluate_model(
+def evaluateModel(
     properties: dict,
     input_model_pth_path: str,
     input_dataset_pt_path: str,
@@ -221,8 +221,8 @@ def evaluate_model(
     return EvaluateModel(**dict(locals())).launch()
 
 
-evaluate_model.__doc__ = EvaluateModel.__doc__
-main = EvaluateModel.get_main(evaluate_model, "Evaluate a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.")
+evaluateModel.__doc__ = EvaluateModel.__doc__
+main = EvaluateModel.get_main(evaluateModel, "Evaluate a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.")
 
 if __name__ == "__main__":
     main()

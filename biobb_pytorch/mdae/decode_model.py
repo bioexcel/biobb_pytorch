@@ -10,7 +10,7 @@ import numpy as np
 
 class EvaluateDecoder(BiobbObject):
     """
-    | biobb_pytorch EvaluateDecoder
+    | biobb_pytorch evaluateDecoder
     | Evaluates a PyTorch autoencoder from the given properties.
     | Evaluates a PyTorch autoencoder from the given properties.
 
@@ -24,7 +24,7 @@ class EvaluateDecoder(BiobbObject):
     Examples:
         This example shows how to use the EvaluateDecoder class to evaluate a PyTorch autoencoder model::
 
-            from biobb_pytorch.mdae.evaluate_model import evaluateDecoder
+            from biobb_pytorch.mdae.decode_model import evaluateDecoder
 
             input_model_pth_path='input_model.pth'
             input_dataset_npy_path='input_dataset.npy'
@@ -161,7 +161,7 @@ class EvaluateDecoder(BiobbObject):
         return 0
 
 
-def evaluate_decoder(
+def evaluateDecoder(
     properties: dict,
     input_model_pth_path: str,
     input_dataset_npy_path: str,
@@ -173,8 +173,8 @@ def evaluate_decoder(
     return EvaluateDecoder(**dict(locals())).launch()
 
 
-evaluate_decoder.__doc__ = EvaluateDecoder.__doc__
-main = EvaluateDecoder.get_main(evaluate_decoder, "Evaluates a PyTorch autoencoder from the given properties.")
+evaluateDecoder.__doc__ = EvaluateDecoder.__doc__
+main = EvaluateDecoder.get_main(evaluateDecoder, "Evaluates a PyTorch autoencoder from the given properties.")
 
 if __name__ == "__main__":
     main()

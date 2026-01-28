@@ -11,9 +11,9 @@ Build a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.
 ### Get help
 Command:
 ```python
-build_model -h
+buildModel -h
 ```
-    usage: build_model [-h] [-c CONFIG] -i INPUT_STATS_PT_PATH [-o OUTPUT_MODEL_PTH_PATH]
+    usage: buildModel [-h] [-c CONFIG] -i INPUT_STATS_PT_PATH [-o OUTPUT_MODEL_PTH_PATH]
     
     Build a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.
     
@@ -58,7 +58,7 @@ properties:
 ```
 #### Command line
 ```python
-build_model --config config_build_model.yml --input_stats_pt_path ref_input_model.pt --output_model_pth_path output_model.pth
+buildModel --config config_build_model.yml --input_stats_pt_path ref_input_model.pt --output_model_pth_path output_model.pth
 ```
 ### JSON
 #### [Common config file](https://github.com/bioexcel/biobb_pytorch/blob/master/biobb_pytorch/test/data/config/config_build_model.json)
@@ -78,17 +78,17 @@ build_model --config config_build_model.yml --input_stats_pt_path ref_input_mode
 ```
 #### Command line
 ```python
-build_model --config config_build_model.json --input_stats_pt_path ref_input_model.pt --output_model_pth_path output_model.pth
+buildModel --config config_build_model.json --input_stats_pt_path ref_input_model.pt --output_model_pth_path output_model.pth
 ```
 
-## Decode_model
-Evaluates a PyTorch autoencoder from the given properties.
+## evaluate_decoder
+Evaluates a PyTorch autoencoder Decoder from the given properties.
 ### Get help
 Command:
 ```python
-decode_model -h
+evaluateDecoder -h
 ```
-    usage: decode_model [-h] [-c CONFIG] --input_model_pth_path INPUT_MODEL_PTH_PATH --input_dataset_npy_path INPUT_DATASET_NPY_PATH -o OUTPUT_RESULTS_NPZ_PATH
+    usage: evaluateDecoder [-h] [-c CONFIG] --input_model_pth_path INPUT_MODEL_PTH_PATH --input_dataset_npy_path INPUT_DATASET_NPY_PATH -o OUTPUT_RESULTS_NPZ_PATH
     
     Evaluates a PyTorch autoencoder from the given properties.
     
@@ -127,7 +127,7 @@ properties:
 ```
 #### Command line
 ```python
-decode_model --config config_decode_model.yml --input_model_pth_path output_model.pth --input_dataset_npy_path output_model.npy --output_results_npz_path output_results.npz
+evaluateDecoder --config config_decode_model.yml --input_model_pth_path output_model.pth --input_dataset_npy_path output_model.npy --output_results_npz_path output_results.npz
 ```
 ### JSON
 #### [Common config file](https://github.com/bioexcel/biobb_pytorch/blob/master/biobb_pytorch/test/data/config/config_decode_model.json)
@@ -143,17 +143,17 @@ decode_model --config config_decode_model.yml --input_model_pth_path output_mode
 ```
 #### Command line
 ```python
-decode_model --config config_decode_model.json --input_model_pth_path output_model.pth --input_dataset_npy_path output_model.npy --output_results_npz_path output_results.npz
+evaluateDecoder --config config_decode_model.json --input_model_pth_path output_model.pth --input_dataset_npy_path output_model.npy --output_results_npz_path output_results.npz
 ```
 
-## Encode_model
+## Evaluate_encoder
 Encode data with a Molecular Dynamics AutoEncoder (MDAE) model.
 ### Get help
 Command:
 ```python
-encode_model -h
+evaluateEncoder -h
 ```
-    usage: encode_model [-h] [-c CONFIG] --input_model_pth_path INPUT_MODEL_PTH_PATH --input_dataset_pt_path INPUT_DATASET_PT_PATH -o OUTPUT_RESULTS_NPZ_PATH
+    usage: evaluateEncoder [-h] [-c CONFIG] --input_model_pth_path INPUT_MODEL_PTH_PATH --input_dataset_pt_path INPUT_DATASET_PT_PATH -o OUTPUT_RESULTS_NPZ_PATH
     
     Encode data with a Molecular Dynamics AutoEncoder (MDAE) model.
     
@@ -192,7 +192,7 @@ properties:
 ```
 #### Command line
 ```python
-encode_model --config config_encode_model.yml --input_model_pth_path output_model.pth --input_dataset_pt_path output_model.pt --output_results_npz_path output_results.npz
+evaluateEncoder --config config_encode_model.yml --input_model_pth_path output_model.pth --input_dataset_pt_path output_model.pt --output_results_npz_path output_results.npz
 ```
 ### JSON
 #### [Common config file](https://github.com/bioexcel/biobb_pytorch/blob/master/biobb_pytorch/test/data/config/config_encode_model.json)
@@ -208,7 +208,7 @@ encode_model --config config_encode_model.yml --input_model_pth_path output_mode
 ```
 #### Command line
 ```python
-encode_model --config config_encode_model.json --input_model_pth_path output_model.pth --input_dataset_pt_path output_model.pt --output_results_npz_path output_results.npz
+evaluateEncoder --config config_encode_model.json --input_model_pth_path output_model.pth --input_dataset_pt_path output_model.pt --output_results_npz_path output_results.npz
 ```
 
 ## Evaluate_model
@@ -216,9 +216,9 @@ Evaluate a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.
 ### Get help
 Command:
 ```python
-evaluate_model -h
+evaluateModel -h
 ```
-    usage: evaluate_model [-h] [-c CONFIG] --input_model_pth_path INPUT_MODEL_PTH_PATH --input_dataset_pt_path INPUT_DATASET_PT_PATH -o OUTPUT_RESULTS_NPZ_PATH
+    usage: evaluateModel [-h] [-c CONFIG] --input_model_pth_path INPUT_MODEL_PTH_PATH --input_dataset_pt_path INPUT_DATASET_PT_PATH -o OUTPUT_RESULTS_NPZ_PATH
     
     Evaluate a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.
     
@@ -257,7 +257,7 @@ properties:
 ```
 #### Command line
 ```python
-evaluate_model --config config_evaluate_model.yml --input_model_pth_path output_model.pth --input_dataset_pt_path output_model.pt --output_results_npz_path output_results.npz
+evaluateModel --config config_evaluate_model.yml --input_model_pth_path output_model.pth --input_dataset_pt_path output_model.pt --output_results_npz_path output_results.npz
 ```
 ### JSON
 #### [Common config file](https://github.com/bioexcel/biobb_pytorch/blob/master/biobb_pytorch/test/data/config/config_evaluate_model.json)
@@ -273,7 +273,7 @@ evaluate_model --config config_evaluate_model.yml --input_model_pth_path output_
 ```
 #### Command line
 ```python
-evaluate_model --config config_evaluate_model.json --input_model_pth_path output_model.pth --input_dataset_pt_path output_model.pt --output_results_npz_path output_results.npz
+evaluateModel --config config_evaluate_model.json --input_model_pth_path output_model.pth --input_dataset_pt_path output_model.pt --output_results_npz_path output_results.npz
 ```
 
 ## Feat2traj
@@ -597,14 +597,14 @@ mdfeaturizer --config config_mdfeaturizer.yml --input_trajectory_path train_mdae
 mdfeaturizer --config config_mdfeaturizer.json --input_trajectory_path train_mdae_traj.xtc --input_topology_path MCV1900209.pdb --output_dataset_pt_path ref_output_dataset.pt --output_stats_pt_path ref_output_stats.pt
 ```
 
-## Train_model
+## trainModel
 Trains a PyTorch autoencoder using the given properties.
 ### Get help
 Command:
 ```python
-train_model -h
+trainModel -h
 ```
-    usage: train_model [-h] [-c CONFIG] --input_model_pth_path INPUT_MODEL_PTH_PATH --input_dataset_pt_path INPUT_DATASET_PT_PATH [--output_model_pth_path OUTPUT_MODEL_PTH_PATH] [--output_metrics_npz_path OUTPUT_METRICS_NPZ_PATH]
+    usage: trainModel [-h] [-c CONFIG] --input_model_pth_path INPUT_MODEL_PTH_PATH --input_dataset_pt_path INPUT_DATASET_PT_PATH [--output_model_pth_path OUTPUT_MODEL_PTH_PATH] [--output_metrics_npz_path OUTPUT_METRICS_NPZ_PATH]
     
     Trains a PyTorch autoencoder using the given properties.
     
@@ -656,7 +656,7 @@ properties:
 ```
 #### Command line
 ```python
-train_model --config config_train_model.yml --input_model_pth_path output_model.pth --input_dataset_pt_path output_model.pt --output_model_pth_path output_model.pth --output_metrics_npz_path output_model.npz
+trainModel --config config_train_model.yml --input_model_pth_path output_model.pth --input_dataset_pt_path output_model.pt --output_model_pth_path output_model.pth --output_metrics_npz_path output_model.npz
 ```
 ### JSON
 #### [Common config file](https://github.com/bioexcel/biobb_pytorch/blob/master/biobb_pytorch/test/data/config/config_train_model.json)

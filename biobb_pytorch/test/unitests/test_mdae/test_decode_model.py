@@ -1,18 +1,18 @@
 # type: ignore
 from biobb_common.tools import test_fixtures as fx
-from biobb_pytorch.mdae.decode_model import evaluate_decoder
+from biobb_pytorch.mdae.decode_model import evaluateDecoder
 import numpy as np
 
 
 class TestDecodeModel:
     def setup_class(self):
-        fx.test_setup(self, 'decode_model')
+        fx.test_setup(self, 'evaluateDecoder')
 
     def teardown_class(self):
         fx.test_teardown(self)
 
     def test_decode_model(self):
-        evaluate_decoder(properties=self.properties, **self.paths)
+        evaluateDecoder(properties=self.properties, **self.paths)
         assert fx.not_empty(self.paths['output_results_npz_path'])
 
         results = np.load(self.paths['output_results_npz_path'], allow_pickle=True)

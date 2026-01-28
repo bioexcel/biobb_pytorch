@@ -14,7 +14,6 @@ from biobb_pytorch.mdae.models.nn.feedforward import FeedForward
 from biobb_pytorch.mdae.featurization.normalization import Normalization
 from mlcolvar.core.transform.utils import Inverse
 from biobb_pytorch.mdae.loss import MSELoss
-import copy
 
 __all__ = ["AutoEncoder"]
 
@@ -82,8 +81,6 @@ class AutoEncoder(BaseCV, pl.LightningModule):
         super().__init__(
             in_features=n_features, out_features=n_cvs, **kwargs
         )
-
-        self.save_hyperparameters('n_features', 'n_cvs', 'encoder_layers', 'decoder_layers', 'options')
 
         # =======   LOSS  =======
         # Reconstruction (MSE) loss

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Coverage for biobb_pytorch/mdae/loss/elbo.py: 30%</title>
+    <title>Coverage for biobb_pytorch/mdae/loss/elbo.py: 49%</title>
     <link rel="icon" sizes="32x32" href="favicon_32_cb_c827f16f.png">
     <link rel="stylesheet" href="style_cb_9ff733b0.css" type="text/css">
     <script src="coverage_html_cb_dd2e7eb5.js" defer></script>
@@ -12,7 +12,7 @@
     <div class="content">
         <h1>
             <span class="text">Coverage for </span><b>biobb_pytorch&#8201;/&#8201;mdae&#8201;/&#8201;loss&#8201;/&#8201;elbo.py</b>:
-            <span class="pc_cov">30%</span>
+            <span class="pc_cov">49%</span>
         </h1>
         <aside id="help_panel_wrapper">
             <input id="help_panel_state" type="checkbox">
@@ -55,8 +55,8 @@
         </aside>
         <h2>
             <span class="text">61 statements &nbsp;</span>
-            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">18<span class="text"> run</span></button>
-            <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">43<span class="text"> missing</span></button>
+            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">30<span class="text"> run</span></button>
+            <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">31<span class="text"> missing</span></button>
             <button type="button" class="exc show_exc button_toggle_exc" value="exc" data-shortcut="x" title="Toggle lines excluded">0<span class="text"> excluded</span></button>
         </h2>
         <p class="text">
@@ -64,8 +64,8 @@
             <a id="indexLink" class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a id="nextFileLink" class="nav" href="z_7698fe156656a2ed_fisher_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.13.1">coverage.py v7.13.1</a>,
-            created at 2026-01-19 01:59 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.13.2">coverage.py v7.13.2</a>,
+            created at 2026-01-28 15:06 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -151,7 +151,7 @@
     <p class="pln"><span class="n"><a id="t69" href="#t69">69</a></span><span class="t"><span class="str">        loss: torch.Tensor</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t70" href="#t70">70</a></span><span class="t"><span class="str">            The value of the loss function.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t71" href="#t71">71</a></span><span class="t"><span class="str">        """</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t72" href="#t72">72</a></span><span class="t">        <span class="key">return</span> <span class="nam">elbo_gaussians_loss</span><span class="op">(</span><span class="nam">target</span><span class="op">,</span> <span class="nam">output</span><span class="op">,</span> <span class="nam">mean</span><span class="op">,</span> <span class="nam">log_variance</span><span class="op">,</span> <span class="nam">weights</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t72" href="#t72">72</a></span><span class="t">        <span class="key">return</span> <span class="nam">elbo_gaussians_loss</span><span class="op">(</span><span class="nam">target</span><span class="op">,</span> <span class="nam">output</span><span class="op">,</span> <span class="nam">mean</span><span class="op">,</span> <span class="nam">log_variance</span><span class="op">,</span> <span class="nam">weights</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t73" href="#t73">73</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t74" href="#t74">74</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t75" href="#t75">75</a></span><span class="t"><span class="key">def</span> <span class="nam">elbo_gaussians_loss</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
@@ -192,23 +192,23 @@
     <p class="pln"><span class="n"><a id="t110" href="#t110">110</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t111" href="#t111">111</a></span><span class="t">    <span class="com"># KL divergence between N(mean, variance) and N(0, 1).</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t112" href="#t112">112</a></span><span class="t">    <span class="com"># See https://stats.stackexchange.com/questions/7440/kl-divergence-between-two-univariate-gaussians</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t113" href="#t113">113</a></span><span class="t">    <span class="nam">kl</span> <span class="op">=</span> <span class="op">-</span><span class="num">0.5</span> <span class="op">*</span> <span class="op">(</span><span class="nam">log_variance</span> <span class="op">-</span> <span class="nam">log_variance</span><span class="op">.</span><span class="nam">exp</span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="nam">mean</span><span class="op">**</span><span class="num">2</span> <span class="op">+</span> <span class="num">1</span><span class="op">)</span><span class="op">.</span><span class="nam">sum</span><span class="op">(</span><span class="nam">dim</span><span class="op">=</span><span class="num">1</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t113" href="#t113">113</a></span><span class="t">    <span class="nam">kl</span> <span class="op">=</span> <span class="op">-</span><span class="num">0.5</span> <span class="op">*</span> <span class="op">(</span><span class="nam">log_variance</span> <span class="op">-</span> <span class="nam">log_variance</span><span class="op">.</span><span class="nam">exp</span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="nam">mean</span><span class="op">**</span><span class="num">2</span> <span class="op">+</span> <span class="num">1</span><span class="op">)</span><span class="op">.</span><span class="nam">sum</span><span class="op">(</span><span class="nam">dim</span><span class="op">=</span><span class="num">1</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t114" href="#t114">114</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t115" href="#t115">115</a></span><span class="t">    <span class="com"># Weighted mean over batches.</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t116" href="#t116">116</a></span><span class="t">    <span class="key">if</span> <span class="nam">weights</span> <span class="key">is</span> <span class="key">None</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t117" href="#t117">117</a></span><span class="t">        <span class="nam">kl</span> <span class="op">=</span> <span class="nam">kl</span><span class="op">.</span><span class="nam">mean</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t116" href="#t116">116</a></span><span class="t">    <span class="key">if</span> <span class="nam">weights</span> <span class="key">is</span> <span class="key">None</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t117" href="#t117">117</a></span><span class="t">        <span class="nam">kl</span> <span class="op">=</span> <span class="nam">kl</span><span class="op">.</span><span class="nam">mean</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t118" href="#t118">118</a></span><span class="t">    <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t119" href="#t119">119</a></span><span class="t">        <span class="nam">weights</span> <span class="op">=</span> <span class="nam">weights</span><span class="op">.</span><span class="nam">squeeze</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t120" href="#t120">120</a></span><span class="t">        <span class="key">if</span> <span class="nam">weights</span><span class="op">.</span><span class="nam">shape</span> <span class="op">!=</span> <span class="nam">kl</span><span class="op">.</span><span class="nam">shape</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t119" href="#t119">119</a></span><span class="t">        <span class="nam">weights</span> <span class="op">=</span> <span class="nam">weights</span><span class="op">.</span><span class="nam">squeeze</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t120" href="#t120">120</a></span><span class="t">        <span class="key">if</span> <span class="nam">weights</span><span class="op">.</span><span class="nam">shape</span> <span class="op">!=</span> <span class="nam">kl</span><span class="op">.</span><span class="nam">shape</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t121" href="#t121">121</a></span><span class="t">            <span class="key">raise</span> <span class="nam">ValueError</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis mis2 show_mis"><span class="n"><a id="t122" href="#t122">122</a></span><span class="t">                <span class="str">f"weights should be a tensor of shape (n_batches,) or (n_batches,1), not {weights.shape}."</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis mis2 show_mis"><span class="n"><a id="t123" href="#t123">123</a></span><span class="t">            <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t124" href="#t124">124</a></span><span class="t">        <span class="nam">kl</span> <span class="op">=</span> <span class="op">(</span><span class="nam">kl</span> <span class="op">*</span> <span class="nam">weights</span><span class="op">)</span><span class="op">.</span><span class="nam">sum</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t124" href="#t124">124</a></span><span class="t">        <span class="nam">kl</span> <span class="op">=</span> <span class="op">(</span><span class="nam">kl</span> <span class="op">*</span> <span class="nam">weights</span><span class="op">)</span><span class="op">.</span><span class="nam">sum</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t125" href="#t125">125</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t126" href="#t126">126</a></span><span class="t">    <span class="com"># Reconstruction loss.</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t127" href="#t127">127</a></span><span class="t">    <span class="nam">reconstruction</span> <span class="op">=</span> <span class="nam">mse_loss</span><span class="op">(</span><span class="nam">output</span><span class="op">,</span> <span class="nam">target</span><span class="op">,</span> <span class="nam">weights</span><span class="op">=</span><span class="nam">weights</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t127" href="#t127">127</a></span><span class="t">    <span class="nam">reconstruction</span> <span class="op">=</span> <span class="nam">mse_loss</span><span class="op">(</span><span class="nam">output</span><span class="op">,</span> <span class="nam">target</span><span class="op">,</span> <span class="nam">weights</span><span class="op">=</span><span class="nam">weights</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t128" href="#t128">128</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t129" href="#t129">129</a></span><span class="t">    <span class="key">return</span> <span class="nam">reconstruction</span> <span class="op">+</span> <span class="nam">kl</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t129" href="#t129">129</a></span><span class="t">    <span class="key">return</span> <span class="nam">reconstruction</span> <span class="op">+</span> <span class="nam">kl</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t130" href="#t130">130</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t131" href="#t131">131</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t132" href="#t132">132</a></span><span class="t"><span class="key">class</span> <span class="nam">ELBOLoss</span><span class="op">(</span><span class="nam">nn</span><span class="op">.</span><span class="nam">Module</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
@@ -331,9 +331,9 @@
     <p class="pln"><span class="n"><a id="t249" href="#t249">249</a></span><span class="t"><span class="str">            k       Number of mixture components.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t250" href="#t250">250</a></span><span class="t"><span class="str">            r_nent  Weight on the entropy term.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t251" href="#t251">251</a></span><span class="t"><span class="str">        """</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t252" href="#t252">252</a></span><span class="t">        <span class="nam">super</span><span class="op">(</span><span class="op">)</span><span class="op">.</span><span class="nam">__init__</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t253" href="#t253">253</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">k</span> <span class="op">=</span> <span class="nam">k</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t254" href="#t254">254</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">r_nent</span> <span class="op">=</span> <span class="nam">r_nent</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t252" href="#t252">252</a></span><span class="t">        <span class="nam">super</span><span class="op">(</span><span class="op">)</span><span class="op">.</span><span class="nam">__init__</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t253" href="#t253">253</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">k</span> <span class="op">=</span> <span class="nam">k</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t254" href="#t254">254</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">r_nent</span> <span class="op">=</span> <span class="nam">r_nent</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t255" href="#t255">255</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t256" href="#t256">256</a></span><span class="t">    <span class="op">@</span><span class="nam">staticmethod</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t257" href="#t257">257</a></span><span class="t">    <span class="key">def</span> <span class="nam">log_normal</span><span class="op">(</span><span class="nam">x</span><span class="op">:</span> <span class="nam">torch</span><span class="op">.</span><span class="nam">Tensor</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
@@ -403,8 +403,8 @@
             <a class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a class="nav" href="z_7698fe156656a2ed_fisher_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.13.1">coverage.py v7.13.1</a>,
-            created at 2026-01-19 01:59 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.13.2">coverage.py v7.13.2</a>,
+            created at 2026-01-28 15:06 +0000
         </p>
     </div>
 </footer>

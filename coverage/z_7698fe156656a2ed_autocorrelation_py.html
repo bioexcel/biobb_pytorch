@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Coverage for biobb_pytorch/mdae/loss/autocorrelation.py: 53%</title>
+    <title>Coverage for biobb_pytorch/mdae/loss/autocorrelation.py: 94%</title>
     <link rel="icon" sizes="32x32" href="favicon_32_cb_c827f16f.png">
     <link rel="stylesheet" href="style_cb_9ff733b0.css" type="text/css">
     <script src="coverage_html_cb_dd2e7eb5.js" defer></script>
@@ -12,7 +12,7 @@
     <div class="content">
         <h1>
             <span class="text">Coverage for </span><b>biobb_pytorch&#8201;/&#8201;mdae&#8201;/&#8201;loss&#8201;/&#8201;autocorrelation.py</b>:
-            <span class="pc_cov">53%</span>
+            <span class="pc_cov">94%</span>
         </h1>
         <aside id="help_panel_wrapper">
             <input id="help_panel_state" type="checkbox">
@@ -55,8 +55,8 @@
         </aside>
         <h2>
             <span class="text">17 statements &nbsp;</span>
-            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">9<span class="text"> run</span></button>
-            <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">8<span class="text"> missing</span></button>
+            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">16<span class="text"> run</span></button>
+            <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">1<span class="text"> missing</span></button>
             <button type="button" class="exc show_exc button_toggle_exc" value="exc" data-shortcut="x" title="Toggle lines excluded">0<span class="text"> excluded</span></button>
         </h2>
         <p class="text">
@@ -64,8 +64,8 @@
             <a id="indexLink" class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a id="nextFileLink" class="nav" href="z_7698fe156656a2ed_committor_loss_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.13.1">coverage.py v7.13.1</a>,
-            created at 2026-01-19 01:59 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.13.2">coverage.py v7.13.2</a>,
+            created at 2026-01-28 15:06 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -132,9 +132,9 @@
     <p class="pln"><span class="n"><a id="t50" href="#t50">50</a></span><span class="t"><span class="str">            Whether to return the negative autocorrelation in order to be minimized</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t51" href="#t51">51</a></span><span class="t"><span class="str">            with gradient descent methods. Default is ``True``.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t52" href="#t52">52</a></span><span class="t"><span class="str">        """</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t53" href="#t53">53</a></span><span class="t">        <span class="nam">super</span><span class="op">(</span><span class="op">)</span><span class="op">.</span><span class="nam">__init__</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t54" href="#t54">54</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">reduce_mode</span> <span class="op">=</span> <span class="nam">reduce_mode</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t55" href="#t55">55</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">invert_sign</span> <span class="op">=</span> <span class="nam">invert_sign</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t53" href="#t53">53</a></span><span class="t">        <span class="nam">super</span><span class="op">(</span><span class="op">)</span><span class="op">.</span><span class="nam">__init__</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t54" href="#t54">54</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">reduce_mode</span> <span class="op">=</span> <span class="nam">reduce_mode</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t55" href="#t55">55</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">invert_sign</span> <span class="op">=</span> <span class="nam">invert_sign</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t56" href="#t56">56</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t57" href="#t57">57</a></span><span class="t">    <span class="key">def</span> <span class="nam">forward</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t58" href="#t58">58</a></span><span class="t">        <span class="nam">self</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
@@ -216,10 +216,10 @@
     <p class="pln"><span class="n"><a id="t134" href="#t134">134</a></span><span class="t"><span class="str">    loss: torch.Tensor</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t135" href="#t135">135</a></span><span class="t"><span class="str">        Loss value.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t136" href="#t136">136</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t137" href="#t137">137</a></span><span class="t">    <span class="nam">tica</span> <span class="op">=</span> <span class="nam">TICA</span><span class="op">(</span><span class="nam">in_features</span><span class="op">=</span><span class="nam">x</span><span class="op">.</span><span class="nam">shape</span><span class="op">[</span><span class="op">-</span><span class="num">1</span><span class="op">]</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t138" href="#t138">138</a></span><span class="t">    <span class="nam">eigvals</span><span class="op">,</span> <span class="nam">_</span> <span class="op">=</span> <span class="nam">tica</span><span class="op">.</span><span class="nam">compute</span><span class="op">(</span><span class="nam">data</span><span class="op">=</span><span class="op">[</span><span class="nam">x</span><span class="op">,</span> <span class="nam">x_lag</span><span class="op">]</span><span class="op">,</span> <span class="nam">weights</span><span class="op">=</span><span class="op">[</span><span class="nam">weights</span><span class="op">,</span> <span class="nam">weights_lag</span><span class="op">]</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t139" href="#t139">139</a></span><span class="t">    <span class="nam">loss</span> <span class="op">=</span> <span class="nam">reduce_eigenvalues_loss</span><span class="op">(</span><span class="nam">eigvals</span><span class="op">,</span> <span class="nam">mode</span><span class="op">=</span><span class="nam">reduce_mode</span><span class="op">,</span> <span class="nam">invert_sign</span><span class="op">=</span><span class="nam">invert_sign</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t140" href="#t140">140</a></span><span class="t">    <span class="key">return</span> <span class="nam">loss</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t137" href="#t137">137</a></span><span class="t">    <span class="nam">tica</span> <span class="op">=</span> <span class="nam">TICA</span><span class="op">(</span><span class="nam">in_features</span><span class="op">=</span><span class="nam">x</span><span class="op">.</span><span class="nam">shape</span><span class="op">[</span><span class="op">-</span><span class="num">1</span><span class="op">]</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t138" href="#t138">138</a></span><span class="t">    <span class="nam">eigvals</span><span class="op">,</span> <span class="nam">_</span> <span class="op">=</span> <span class="nam">tica</span><span class="op">.</span><span class="nam">compute</span><span class="op">(</span><span class="nam">data</span><span class="op">=</span><span class="op">[</span><span class="nam">x</span><span class="op">,</span> <span class="nam">x_lag</span><span class="op">]</span><span class="op">,</span> <span class="nam">weights</span><span class="op">=</span><span class="op">[</span><span class="nam">weights</span><span class="op">,</span> <span class="nam">weights_lag</span><span class="op">]</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t139" href="#t139">139</a></span><span class="t">    <span class="nam">loss</span> <span class="op">=</span> <span class="nam">reduce_eigenvalues_loss</span><span class="op">(</span><span class="nam">eigvals</span><span class="op">,</span> <span class="nam">mode</span><span class="op">=</span><span class="nam">reduce_mode</span><span class="op">,</span> <span class="nam">invert_sign</span><span class="op">=</span><span class="nam">invert_sign</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t140" href="#t140">140</a></span><span class="t">    <span class="key">return</span> <span class="nam">loss</span>&nbsp;</span><span class="r"></span></p>
 </main>
 <footer>
     <div class="content">
@@ -228,8 +228,8 @@
             <a class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a class="nav" href="z_7698fe156656a2ed_committor_loss_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.13.1">coverage.py v7.13.1</a>,
-            created at 2026-01-19 01:59 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.13.2">coverage.py v7.13.2</a>,
+            created at 2026-01-28 15:06 +0000
         </p>
     </div>
 </footer>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Coverage for biobb_pytorch/mdae/loss/fisher.py: 33%</title>
+    <title>Coverage for biobb_pytorch/mdae/loss/fisher.py: 93%</title>
     <link rel="icon" sizes="32x32" href="favicon_32_cb_c827f16f.png">
     <link rel="stylesheet" href="style_cb_9ff733b0.css" type="text/css">
     <script src="coverage_html_cb_dd2e7eb5.js" defer></script>
@@ -12,7 +12,7 @@
     <div class="content">
         <h1>
             <span class="text">Coverage for </span><b>biobb_pytorch&#8201;/&#8201;mdae&#8201;/&#8201;loss&#8201;/&#8201;fisher.py</b>:
-            <span class="pc_cov">33%</span>
+            <span class="pc_cov">93%</span>
         </h1>
         <aside id="help_panel_wrapper">
             <input id="help_panel_state" type="checkbox">
@@ -55,8 +55,8 @@
         </aside>
         <h2>
             <span class="text">27 statements &nbsp;</span>
-            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">9<span class="text"> run</span></button>
-            <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">18<span class="text"> missing</span></button>
+            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">25<span class="text"> run</span></button>
+            <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">2<span class="text"> missing</span></button>
             <button type="button" class="exc show_exc button_toggle_exc" value="exc" data-shortcut="x" title="Toggle lines excluded">0<span class="text"> excluded</span></button>
         </h2>
         <p class="text">
@@ -64,8 +64,8 @@
             <a id="indexLink" class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a id="nextFileLink" class="nav" href="z_7698fe156656a2ed_ib_loss_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.13.1">coverage.py v7.13.1</a>,
-            created at 2026-01-19 01:59 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.13.2">coverage.py v7.13.2</a>,
+            created at 2026-01-28 15:06 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -147,12 +147,12 @@
     <p class="pln"><span class="n"><a id="t65" href="#t65">65</a></span><span class="t"><span class="str">            Whether to return the negative Fisher's discriminant ratio in order to be</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t66" href="#t66">66</a></span><span class="t"><span class="str">            minimized with gradient descent methods. Default is ``True``.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t67" href="#t67">67</a></span><span class="t"><span class="str">        """</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t68" href="#t68">68</a></span><span class="t">        <span class="nam">super</span><span class="op">(</span><span class="op">)</span><span class="op">.</span><span class="nam">__init__</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t69" href="#t69">69</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">n_states</span> <span class="op">=</span> <span class="nam">n_states</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t70" href="#t70">70</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">lda_mode</span> <span class="op">=</span> <span class="nam">lda_mode</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t71" href="#t71">71</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">reduce_mode</span> <span class="op">=</span> <span class="nam">reduce_mode</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t72" href="#t72">72</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">lorentzian_reg</span> <span class="op">=</span> <span class="nam">lorentzian_reg</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t73" href="#t73">73</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">invert_sign</span> <span class="op">=</span> <span class="nam">invert_sign</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t68" href="#t68">68</a></span><span class="t">        <span class="nam">super</span><span class="op">(</span><span class="op">)</span><span class="op">.</span><span class="nam">__init__</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t69" href="#t69">69</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">n_states</span> <span class="op">=</span> <span class="nam">n_states</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t70" href="#t70">70</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">lda_mode</span> <span class="op">=</span> <span class="nam">lda_mode</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t71" href="#t71">71</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">reduce_mode</span> <span class="op">=</span> <span class="nam">reduce_mode</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t72" href="#t72">72</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">lorentzian_reg</span> <span class="op">=</span> <span class="nam">lorentzian_reg</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t73" href="#t73">73</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">invert_sign</span> <span class="op">=</span> <span class="nam">invert_sign</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t74" href="#t74">74</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t75" href="#t75">75</a></span><span class="t">    <span class="key">def</span> <span class="nam">forward</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
     <p class="run run2"><span class="n"><a id="t76" href="#t76">76</a></span><span class="t">        <span class="nam">self</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
@@ -232,27 +232,27 @@
     <p class="pln"><span class="n"><a id="t150" href="#t150">150</a></span><span class="t"><span class="str">        Loss value.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t151" href="#t151">151</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t152" href="#t152">152</a></span><span class="t">    <span class="com"># define lda object</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t153" href="#t153">153</a></span><span class="t">    <span class="nam">lda</span> <span class="op">=</span> <span class="nam">LDA</span><span class="op">(</span><span class="nam">in_features</span><span class="op">=</span><span class="nam">x</span><span class="op">.</span><span class="nam">shape</span><span class="op">[</span><span class="op">-</span><span class="num">1</span><span class="op">]</span><span class="op">,</span> <span class="nam">n_states</span><span class="op">=</span><span class="nam">n_states</span><span class="op">,</span> <span class="nam">mode</span><span class="op">=</span><span class="nam">lda_mode</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t153" href="#t153">153</a></span><span class="t">    <span class="nam">lda</span> <span class="op">=</span> <span class="nam">LDA</span><span class="op">(</span><span class="nam">in_features</span><span class="op">=</span><span class="nam">x</span><span class="op">.</span><span class="nam">shape</span><span class="op">[</span><span class="op">-</span><span class="num">1</span><span class="op">]</span><span class="op">,</span> <span class="nam">n_states</span><span class="op">=</span><span class="nam">n_states</span><span class="op">,</span> <span class="nam">mode</span><span class="op">=</span><span class="nam">lda_mode</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t154" href="#t154">154</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t155" href="#t155">155</a></span><span class="t">    <span class="com"># regularize s_w</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t156" href="#t156">156</a></span><span class="t">    <span class="nam">lda</span><span class="op">.</span><span class="nam">sw_reg</span> <span class="op">=</span> <span class="nam">sw_reg</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t156" href="#t156">156</a></span><span class="t">    <span class="nam">lda</span><span class="op">.</span><span class="nam">sw_reg</span> <span class="op">=</span> <span class="nam">sw_reg</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t157" href="#t157">157</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t158" href="#t158">158</a></span><span class="t">    <span class="com"># compute LDA eigvals</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t159" href="#t159">159</a></span><span class="t">    <span class="nam">eigvals</span><span class="op">,</span> <span class="nam">_</span> <span class="op">=</span> <span class="nam">lda</span><span class="op">.</span><span class="nam">compute</span><span class="op">(</span><span class="nam">x</span><span class="op">,</span> <span class="nam">labels</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t160" href="#t160">160</a></span><span class="t">    <span class="nam">loss</span> <span class="op">=</span> <span class="nam">reduce_eigenvalues_loss</span><span class="op">(</span><span class="nam">eigvals</span><span class="op">,</span> <span class="nam">mode</span><span class="op">=</span><span class="nam">reduce_mode</span><span class="op">,</span> <span class="nam">invert_sign</span><span class="op">=</span><span class="nam">invert_sign</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t159" href="#t159">159</a></span><span class="t">    <span class="nam">eigvals</span><span class="op">,</span> <span class="nam">_</span> <span class="op">=</span> <span class="nam">lda</span><span class="op">.</span><span class="nam">compute</span><span class="op">(</span><span class="nam">x</span><span class="op">,</span> <span class="nam">labels</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t160" href="#t160">160</a></span><span class="t">    <span class="nam">loss</span> <span class="op">=</span> <span class="nam">reduce_eigenvalues_loss</span><span class="op">(</span><span class="nam">eigvals</span><span class="op">,</span> <span class="nam">mode</span><span class="op">=</span><span class="nam">reduce_mode</span><span class="op">,</span> <span class="nam">invert_sign</span><span class="op">=</span><span class="nam">invert_sign</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t161" href="#t161">161</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t162" href="#t162">162</a></span><span class="t">    <span class="com"># Add lorentzian regularization. The heuristic is the same used by DeepLDA.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t163" href="#t163">163</a></span><span class="t">    <span class="com"># TODO: ENCAPSULATE THIS IN A UTILITY FUNCTION USED BY BOTH THIS AND DEEPLDA?</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t164" href="#t164">164</a></span><span class="t">    <span class="key">if</span> <span class="nam">lorentzian_reg</span> <span class="key">is</span> <span class="key">None</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t165" href="#t165">165</a></span><span class="t">        <span class="key">if</span> <span class="nam">sw_reg</span> <span class="op">==</span> <span class="num">0</span> <span class="key">or</span> <span class="nam">sw_reg</span> <span class="key">is</span> <span class="key">None</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t164" href="#t164">164</a></span><span class="t">    <span class="key">if</span> <span class="nam">lorentzian_reg</span> <span class="key">is</span> <span class="key">None</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t165" href="#t165">165</a></span><span class="t">        <span class="key">if</span> <span class="nam">sw_reg</span> <span class="op">==</span> <span class="num">0</span> <span class="key">or</span> <span class="nam">sw_reg</span> <span class="key">is</span> <span class="key">None</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t166" href="#t166">166</a></span><span class="t">            <span class="key">raise</span> <span class="nam">ValueError</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis mis2 show_mis"><span class="n"><a id="t167" href="#t167">167</a></span><span class="t">                <span class="str">f"Unable to calculate `lorentzian_reg` from `sw_reg` ({sw_reg}), please specify the value."</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis mis2 show_mis"><span class="n"><a id="t168" href="#t168">168</a></span><span class="t">            <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t169" href="#t169">169</a></span><span class="t">        <span class="nam">lorentzian_reg</span> <span class="op">=</span> <span class="num">2.0</span> <span class="op">/</span> <span class="nam">sw_reg</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t170" href="#t170">170</a></span><span class="t">    <span class="nam">reg_loss</span> <span class="op">=</span> <span class="nam">x</span><span class="op">.</span><span class="nam">pow</span><span class="op">(</span><span class="num">2</span><span class="op">)</span><span class="op">.</span><span class="nam">sum</span><span class="op">(</span><span class="op">)</span><span class="op">.</span><span class="nam">div</span><span class="op">(</span><span class="nam">x</span><span class="op">.</span><span class="nam">size</span><span class="op">(</span><span class="num">0</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t171" href="#t171">171</a></span><span class="t">    <span class="nam">reg_loss</span> <span class="op">=</span> <span class="op">-</span><span class="nam">lorentzian_reg</span> <span class="op">/</span> <span class="op">(</span><span class="num">1</span> <span class="op">+</span> <span class="op">(</span><span class="nam">reg_loss</span> <span class="op">-</span> <span class="num">1</span><span class="op">)</span><span class="op">.</span><span class="nam">pow</span><span class="op">(</span><span class="num">2</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t169" href="#t169">169</a></span><span class="t">        <span class="nam">lorentzian_reg</span> <span class="op">=</span> <span class="num">2.0</span> <span class="op">/</span> <span class="nam">sw_reg</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t170" href="#t170">170</a></span><span class="t">    <span class="nam">reg_loss</span> <span class="op">=</span> <span class="nam">x</span><span class="op">.</span><span class="nam">pow</span><span class="op">(</span><span class="num">2</span><span class="op">)</span><span class="op">.</span><span class="nam">sum</span><span class="op">(</span><span class="op">)</span><span class="op">.</span><span class="nam">div</span><span class="op">(</span><span class="nam">x</span><span class="op">.</span><span class="nam">size</span><span class="op">(</span><span class="num">0</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t171" href="#t171">171</a></span><span class="t">    <span class="nam">reg_loss</span> <span class="op">=</span> <span class="op">-</span><span class="nam">lorentzian_reg</span> <span class="op">/</span> <span class="op">(</span><span class="num">1</span> <span class="op">+</span> <span class="op">(</span><span class="nam">reg_loss</span> <span class="op">-</span> <span class="num">1</span><span class="op">)</span><span class="op">.</span><span class="nam">pow</span><span class="op">(</span><span class="num">2</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t172" href="#t172">172</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t173" href="#t173">173</a></span><span class="t">    <span class="key">return</span> <span class="nam">loss</span> <span class="op">+</span> <span class="nam">reg_loss</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t173" href="#t173">173</a></span><span class="t">    <span class="key">return</span> <span class="nam">loss</span> <span class="op">+</span> <span class="nam">reg_loss</span>&nbsp;</span><span class="r"></span></p>
 </main>
 <footer>
     <div class="content">
@@ -261,8 +261,8 @@
             <a class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a class="nav" href="z_7698fe156656a2ed_ib_loss_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.13.1">coverage.py v7.13.1</a>,
-            created at 2026-01-19 01:59 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.13.2">coverage.py v7.13.2</a>,
+            created at 2026-01-28 15:06 +0000
         </p>
     </div>
 </footer>

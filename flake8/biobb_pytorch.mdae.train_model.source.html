@@ -6,7 +6,7 @@
       <link rel="stylesheet" href="styles.css">
    </head>
    <body>
-      <div id="masthead" class="sev-2"></div>
+      <div id="masthead" class="sev-1"></div>
       <div id="page">
          <h1>
             <a href="biobb_pytorch.mdae.train_model.report.html">
@@ -23,7 +23,16 @@
                class="code sev- "><tt><i>2</i> <span class="kn">import</span><span class="w"> </span><span class="nn">os</span></tt>
             </div>
             <div id="l3"
-               class="code sev- "><tt><i>3</i> <span class="kn">import</span><span class="w"> </span><span class="nn">copy</span></tt>
+               class="code sev-1  le">
+               <ul class="violations">
+               
+                  <li>
+                     <span class="count sev-1">
+                        F401
+                     </span>
+                     'copy' imported but unused</li>
+               
+               </ul><tt><i>3</i> <span class="kn">import</span><span class="w"> </span><span class="nn">copy</span></tt>
             </div>
             <div id="l4"
                class="code sev- "><tt><i>4</i> <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Optional</span></tt>
@@ -125,7 +134,7 @@
                class="code sev- "><tt><i>36</i> &nbsp;</tt>
             </div>
             <div id="l37"
-               class="code sev- "><tt><i>37</i> <span class="sd">            from biobb_pytorch.mdae.train_model import TrainModel</span></tt>
+               class="code sev- "><tt><i>37</i> <span class="sd">            from biobb_pytorch.mdae.train_model import trainModel</span></tt>
             </div>
             <div id="l38"
                class="code sev- "><tt><i>38</i> &nbsp;</tt>
@@ -197,513 +206,21 @@
                class="code sev- "><tt><i>60</i> &nbsp;</tt>
             </div>
             <div id="l61"
-               class="code sev- "><tt><i>61</i> <span class="sd">            # For API usage, outputs can be None to avoid saving</span></tt>
+               class="code sev- "><tt><i>61</i> <span class="sd">            trainModel(input_model_pth_path=input_model_pth_path,</span></tt>
             </div>
             <div id="l62"
-               class="code sev- "><tt><i>62</i> <span class="sd">            instance = TrainModel(input_model_pth_path=input_model_pth_path,</span></tt>
+               class="code sev- "><tt><i>62</i> <span class="sd">                                  input_dataset_pt_path=input_dataset_pt_path,</span></tt>
             </div>
             <div id="l63"
-               class="code sev- "><tt><i>63</i> <span class="sd">                                  input_dataset_pt_path=input_dataset_pt_path,</span></tt>
+               class="code sev- "><tt><i>63</i> <span class="sd">                                  output_model_pth_path=None,</span></tt>
             </div>
             <div id="l64"
-               class="code sev- "><tt><i>64</i> <span class="sd">                                  output_model_pth_path=None,</span></tt>
+               class="code sev- "><tt><i>64</i> <span class="sd">                                  output_metrics_npz_path=None,</span></tt>
             </div>
             <div id="l65"
-               class="code sev- "><tt><i>65</i> <span class="sd">                                  output_metrics_npz_path=None,</span></tt>
+               class="code sev- "><tt><i>65</i> <span class="sd">                                  properties=prop)</span></tt>
             </div>
             <div id="l66"
-               class="code sev- "><tt><i>66</i> <span class="sd">                                  properties=prop)</span></tt>
-            </div>
-            <div id="l67"
-               class="code sev- "><tt><i>67</i> <span class="sd">            instance.launch()</span></tt>
-            </div>
-            <div id="l68"
-               class="code sev- "><tt><i>68</i> <span class="sd">            trained_model = instance.model  # Access the trained PyTorch model</span></tt>
-            </div>
-            <div id="l69"
-               class="code sev- "><tt><i>69</i> <span class="sd">            metrics = instance.metrics  # Access the training metrics</span></tt>
-            </div>
-            <div id="l70"
-               class="code sev- "><tt><i>70</i> &nbsp;</tt>
-            </div>
-            <div id="l71"
-               class="code sev- "><tt><i>71</i> <span class="sd">            # Or to save, provide outputs and call launch</span></tt>
-            </div>
-            <div id="l72"
-               class="code sev- "><tt><i>72</i> <span class="sd">            instance = TrainModel(input_model_pth_path=input_model_pth_path,</span></tt>
-            </div>
-            <div id="l73"
-               class="code sev- "><tt><i>73</i> <span class="sd">                                  input_dataset_pt_path=input_dataset_pt_path,</span></tt>
-            </div>
-            <div id="l74"
-               class="code sev- "><tt><i>74</i> <span class="sd">                                  output_model_pth_path=output_model_pth_path,</span></tt>
-            </div>
-            <div id="l75"
-               class="code sev- "><tt><i>75</i> <span class="sd">                                  output_metrics_npz_path=output_metrics_npz_path,</span></tt>
-            </div>
-            <div id="l76"
-               class="code sev- "><tt><i>76</i> <span class="sd">                                  properties=prop)</span></tt>
-            </div>
-            <div id="l77"
-               class="code sev- "><tt><i>77</i> <span class="sd">            instance.launch()</span></tt>
-            </div>
-            <div id="l78"
-               class="code sev- "><tt><i>78</i> &nbsp;</tt>
-            </div>
-            <div id="l79"
-               class="code sev- "><tt><i>79</i> <span class="sd">    Info:</span></tt>
-            </div>
-            <div id="l80"
-               class="code sev- "><tt><i>80</i> <span class="sd">        * wrapped_software:</span></tt>
-            </div>
-            <div id="l81"
-               class="code sev- "><tt><i>81</i> <span class="sd">            * name: PyTorch</span></tt>
-            </div>
-            <div id="l82"
-               class="code sev- "><tt><i>82</i> <span class="sd">            * version: &gt;=1.6.0</span></tt>
-            </div>
-            <div id="l83"
-               class="code sev- "><tt><i>83</i> <span class="sd">            * license: BSD 3-Clause</span></tt>
-            </div>
-            <div id="l84"
-               class="code sev- "><tt><i>84</i> <span class="sd">        * ontology:</span></tt>
-            </div>
-            <div id="l85"
-               class="code sev- "><tt><i>85</i> <span class="sd">            * name: EDAM</span></tt>
-            </div>
-            <div id="l86"
-               class="code sev- "><tt><i>86</i> <span class="sd">            * schema: http://edamontology.org/EDAM.owl</span></tt>
-            </div>
-            <div id="l87"
-               class="code sev- "><tt><i>87</i> <span class="sd">    &quot;&quot;&quot;</span></tt>
-            </div>
-            <div id="l88"
-               class="code sev- "><tt><i>88</i> &nbsp;</tt>
-            </div>
-            <div id="l89"
-               class="code sev- "><tt><i>89</i>     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span></tt>
-            </div>
-            <div id="l90"
-               class="code sev- "><tt><i>90</i>         <span class="bp">self</span><span class="p">,</span></tt>
-            </div>
-            <div id="l91"
-               class="code sev- "><tt><i>91</i>         <span class="n">input_model_pth_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span></tt>
-            </div>
-            <div id="l92"
-               class="code sev- "><tt><i>92</i>         <span class="n">input_dataset_pt_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span></tt>
-            </div>
-            <div id="l93"
-               class="code sev- "><tt><i>93</i>         <span class="n">output_model_pth_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span></tt>
-            </div>
-            <div id="l94"
-               class="code sev- "><tt><i>94</i>         <span class="n">output_metrics_npz_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span></tt>
-            </div>
-            <div id="l95"
-               class="code sev- "><tt><i>95</i>         <span class="n">properties</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span></tt>
-            </div>
-            <div id="l96"
-               class="code sev- "><tt><i>96</i>         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span></tt>
-            </div>
-            <div id="l97"
-               class="code sev- "><tt><i>97</i>     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span></tt>
-            </div>
-            <div id="l98"
-               class="code sev- "><tt><i>98</i> &nbsp;</tt>
-            </div>
-            <div id="l99"
-               class="code sev- "><tt><i>99</i>         <span class="n">properties</span> <span class="o">=</span> <span class="n">properties</span> <span class="ow">or</span> <span class="p">{}</span></tt>
-            </div>
-            <div id="l100"
-               class="code sev- "><tt><i>100</i> &nbsp;</tt>
-            </div>
-            <div id="l101"
-               class="code sev- "><tt><i>101</i>         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">properties</span><span class="p">)</span></tt>
-            </div>
-            <div id="l102"
-               class="code sev- "><tt><i>102</i> &nbsp;</tt>
-            </div>
-            <div id="l103"
-               class="code sev- "><tt><i>103</i>         <span class="bp">self</span><span class="o">.</span><span class="n">input_model_pth_path</span> <span class="o">=</span> <span class="n">input_model_pth_path</span></tt>
-            </div>
-            <div id="l104"
-               class="code sev- "><tt><i>104</i>         <span class="bp">self</span><span class="o">.</span><span class="n">input_dataset_pt_path</span> <span class="o">=</span> <span class="n">input_dataset_pt_path</span></tt>
-            </div>
-            <div id="l105"
-               class="code sev- "><tt><i>105</i>         <span class="bp">self</span><span class="o">.</span><span class="n">output_model_pth_path</span> <span class="o">=</span> <span class="n">output_model_pth_path</span></tt>
-            </div>
-            <div id="l106"
-               class="code sev- "><tt><i>106</i>         <span class="bp">self</span><span class="o">.</span><span class="n">output_metrics_npz_path</span> <span class="o">=</span> <span class="n">output_metrics_npz_path</span></tt>
-            </div>
-            <div id="l107"
-               class="code sev- "><tt><i>107</i>         <span class="bp">self</span><span class="o">.</span><span class="n">properties</span> <span class="o">=</span> <span class="n">properties</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></tt>
-            </div>
-            <div id="l108"
-               class="code sev- "><tt><i>108</i>         <span class="bp">self</span><span class="o">.</span><span class="n">locals_var_dict</span> <span class="o">=</span> <span class="nb">locals</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></tt>
-            </div>
-            <div id="l109"
-               class="code sev- "><tt><i>109</i> &nbsp;</tt>
-            </div>
-            <div id="l110"
-               class="code sev- "><tt><i>110</i>         <span class="c1"># Input/Output files</span></tt>
-            </div>
-            <div id="l111"
-               class="code sev- "><tt><i>111</i>         <span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span> <span class="o">=</span> <span class="p">{</span></tt>
-            </div>
-            <div id="l112"
-               class="code sev- "><tt><i>112</i>             <span class="s2">&quot;in&quot;</span><span class="p">:</span> <span class="p">{</span></tt>
-            </div>
-            <div id="l113"
-               class="code sev- "><tt><i>113</i>                 <span class="s2">&quot;input_model_pth_path&quot;</span><span class="p">:</span> <span class="n">input_model_pth_path</span><span class="p">,</span></tt>
-            </div>
-            <div id="l114"
-               class="code sev- "><tt><i>114</i>                 <span class="s2">&quot;input_dataset_pt_path&quot;</span><span class="p">:</span> <span class="n">input_dataset_pt_path</span><span class="p">,</span></tt>
-            </div>
-            <div id="l115"
-               class="code sev- "><tt><i>115</i>             <span class="p">},</span></tt>
-            </div>
-            <div id="l116"
-               class="code sev- "><tt><i>116</i>             <span class="s2">&quot;out&quot;</span><span class="p">:</span> <span class="p">{},</span></tt>
-            </div>
-            <div id="l117"
-               class="code sev- "><tt><i>117</i>         <span class="p">}</span></tt>
-            </div>
-            <div id="l118"
-               class="code sev- "><tt><i>118</i>         <span class="k">if</span> <span class="n">output_model_pth_path</span><span class="p">:</span></tt>
-            </div>
-            <div id="l119"
-               class="code sev- "><tt><i>119</i>             <span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;out&quot;</span><span class="p">][</span><span class="s2">&quot;output_model_pth_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">output_model_pth_path</span></tt>
-            </div>
-            <div id="l120"
-               class="code sev- "><tt><i>120</i>         <span class="k">if</span> <span class="n">output_metrics_npz_path</span><span class="p">:</span></tt>
-            </div>
-            <div id="l121"
-               class="code sev- "><tt><i>121</i>             <span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;out&quot;</span><span class="p">][</span><span class="s2">&quot;output_metrics_npz_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">output_metrics_npz_path</span></tt>
-            </div>
-            <div id="l122"
-               class="code sev- "><tt><i>122</i> &nbsp;</tt>
-            </div>
-            <div id="l123"
-               class="code sev- "><tt><i>123</i>         <span class="bp">self</span><span class="o">.</span><span class="n">Trainer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Trainer&#39;</span><span class="p">,</span> <span class="p">{})</span></tt>
-            </div>
-            <div id="l124"
-               class="code sev- "><tt><i>124</i>         <span class="bp">self</span><span class="o">.</span><span class="n">Dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Dataset&#39;</span><span class="p">,</span> <span class="p">{})</span></tt>
-            </div>
-            <div id="l125"
-               class="code sev- "><tt><i>125</i> &nbsp;</tt>
-            </div>
-            <div id="l126"
-               class="code sev- "><tt><i>126</i>         <span class="c1"># Check the properties</span></tt>
-            </div>
-            <div id="l127"
-               class="code sev- "><tt><i>127</i>         <span class="bp">self</span><span class="o">.</span><span class="n">check_properties</span><span class="p">(</span><span class="n">properties</span><span class="p">)</span></tt>
-            </div>
-            <div id="l128"
-               class="code sev- "><tt><i>128</i>         <span class="bp">self</span><span class="o">.</span><span class="n">check_arguments</span><span class="p">()</span></tt>
-            </div>
-            <div id="l129"
-               class="code sev- "><tt><i>129</i> &nbsp;</tt>
-            </div>
-            <div id="l130"
-               class="code sev- "><tt><i>130</i>     <span class="k">def</span><span class="w"> </span><span class="nf">get_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></tt>
-            </div>
-            <div id="l131"
-               class="code sev- "><tt><i>131</i>         <span class="bp">self</span><span class="o">.</span><span class="n">colvars_metrics</span> <span class="o">=</span> <span class="n">MetricsCallback</span><span class="p">()</span></tt>
-            </div>
-            <div id="l132"
-               class="code sev- "><tt><i>132</i>         <span class="n">cbs_list</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">colvars_metrics</span><span class="p">]</span></tt>
-            </div>
-            <div id="l133"
-               class="code sev- "><tt><i>133</i> &nbsp;</tt>
-            </div>
-            <div id="l134"
-               class="code sev- "><tt><i>134</i>         <span class="n">callbacks_prop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Trainer&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;callbacks&#39;</span><span class="p">,</span> <span class="p">{})</span></tt>
-            </div>
-            <div id="l135"
-               class="code sev- "><tt><i>135</i>         <span class="k">if</span> <span class="ow">not</span> <span class="n">callbacks_prop</span><span class="p">:</span></tt>
-            </div>
-            <div id="l136"
-               class="code sev- "><tt><i>136</i>             <span class="k">return</span> <span class="n">cbs_list</span></tt>
-            </div>
-            <div id="l137"
-               class="code sev- "><tt><i>137</i>         <span class="k">else</span><span class="p">:</span></tt>
-            </div>
-            <div id="l138"
-               class="code sev- "><tt><i>138</i>             <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;Trainer&#39;</span><span class="p">][</span><span class="s1">&#39;callbacks&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span></tt>
-            </div>
-            <div id="l139"
-               class="code sev- "><tt><i>139</i>                 <span class="n">callback_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;Trainer&#39;</span><span class="p">][</span><span class="s1">&#39;callbacks&#39;</span><span class="p">][</span><span class="n">k</span><span class="p">]</span></tt>
-            </div>
-            <div id="l140"
-               class="code sev- "><tt><i>140</i>                 <span class="n">CallbackClass</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">_cbs</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></tt>
-            </div>
-            <div id="l141"
-               class="code sev- "><tt><i>141</i>                 <span class="k">if</span> <span class="n">CallbackClass</span><span class="p">:</span></tt>
-            </div>
-            <div id="l142"
-               class="code sev- "><tt><i>142</i>                     <span class="n">callback</span> <span class="o">=</span> <span class="n">CallbackClass</span><span class="p">(</span><span class="o">**</span><span class="n">callback_params</span><span class="p">)</span></tt>
-            </div>
-            <div id="l143"
-               class="code sev- "><tt><i>143</i>                     <span class="n">cbs_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span></tt>
-            </div>
-            <div id="l144"
-               class="code sev- "><tt><i>144</i>             <span class="k">return</span> <span class="n">cbs_list</span></tt>
-            </div>
-            <div id="l145"
-               class="code sev- "><tt><i>145</i> &nbsp;</tt>
-            </div>
-            <div id="l146"
-               class="code sev- "><tt><i>146</i>     <span class="k">def</span><span class="w"> </span><span class="nf">get_logger</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></tt>
-            </div>
-            <div id="l147"
-               class="code sev- "><tt><i>147</i>         <span class="n">logger_prop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Trainer&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;logger&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></tt>
-            </div>
-            <div id="l148"
-               class="code sev- "><tt><i>148</i>         <span class="k">if</span> <span class="ow">not</span> <span class="n">logger_prop</span><span class="p">:</span></tt>
-            </div>
-            <div id="l149"
-               class="code sev- "><tt><i>149</i>             <span class="k">return</span> <span class="kc">None</span></tt>
-            </div>
-            <div id="l150"
-               class="code sev- "><tt><i>150</i> &nbsp;</tt>
-            </div>
-            <div id="l151"
-               class="code sev- "><tt><i>151</i>         <span class="n">logger_type</span><span class="p">,</span> <span class="n">logger_params</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">logger_prop</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span></tt>
-            </div>
-            <div id="l152"
-               class="code sev- "><tt><i>152</i>         <span class="n">LoggerClass</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">_loggers</span><span class="p">,</span> <span class="n">logger_type</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></tt>
-            </div>
-            <div id="l153"
-               class="code sev- "><tt><i>153</i>         <span class="k">if</span> <span class="n">LoggerClass</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span></tt>
-            </div>
-            <div id="l154"
-               class="code sev- "><tt><i>154</i>             <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No Logger named </span><span class="si">{</span><span class="n">logger_type</span><span class="si">}</span><span class="s2"> in lightning.pytorch.loggers&quot;</span><span class="p">)</span></tt>
-            </div>
-            <div id="l155"
-               class="code sev- "><tt><i>155</i> &nbsp;</tt>
-            </div>
-            <div id="l156"
-               class="code sev- "><tt><i>156</i>         <span class="k">return</span> <span class="n">LoggerClass</span><span class="p">(</span><span class="o">**</span><span class="n">logger_params</span><span class="p">)</span></tt>
-            </div>
-            <div id="l157"
-               class="code sev- "><tt><i>157</i> &nbsp;</tt>
-            </div>
-            <div id="l158"
-               class="code sev- "><tt><i>158</i>     <span class="k">def</span><span class="w"> </span><span class="nf">get_profiler</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></tt>
-            </div>
-            <div id="l159"
-               class="code sev- "><tt><i>159</i>         <span class="n">profiler_prop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Trainer&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;profiler&#39;</span><span class="p">)</span></tt>
-            </div>
-            <div id="l160"
-               class="code sev- "><tt><i>160</i>         <span class="k">if</span> <span class="ow">not</span> <span class="n">profiler_prop</span><span class="p">:</span></tt>
-            </div>
-            <div id="l161"
-               class="code sev- "><tt><i>161</i>             <span class="k">return</span> <span class="kc">None</span></tt>
-            </div>
-            <div id="l162"
-               class="code sev- "><tt><i>162</i> &nbsp;</tt>
-            </div>
-            <div id="l163"
-               class="code sev- "><tt><i>163</i>         <span class="n">profiler_type</span><span class="p">,</span> <span class="n">profiler_params</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">profiler_prop</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span></tt>
-            </div>
-            <div id="l164"
-               class="code sev- "><tt><i>164</i>         <span class="n">ProfilerClass</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">_profiler</span><span class="p">,</span> <span class="n">profiler_type</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></tt>
-            </div>
-            <div id="l165"
-               class="code sev- "><tt><i>165</i>         <span class="k">if</span> <span class="n">ProfilerClass</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span></tt>
-            </div>
-            <div id="l166"
-               class="code sev- "><tt><i>166</i>             <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No Profiler named </span><span class="si">{</span><span class="n">profiler_type</span><span class="si">}</span><span class="s2"> in lightning.pytorch.profilers&quot;</span><span class="p">)</span></tt>
-            </div>
-            <div id="l167"
-               class="code sev- "><tt><i>167</i> &nbsp;</tt>
-            </div>
-            <div id="l168"
-               class="code sev- "><tt><i>168</i>         <span class="k">return</span> <span class="n">ProfilerClass</span><span class="p">(</span><span class="o">**</span><span class="n">profiler_params</span><span class="p">)</span></tt>
-            </div>
-            <div id="l169"
-               class="code sev- "><tt><i>169</i> &nbsp;</tt>
-            </div>
-            <div id="l170"
-               class="code sev- "><tt><i>170</i>     <span class="k">def</span><span class="w"> </span><span class="nf">get_trainer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></tt>
-            </div>
-            <div id="l171"
-               class="code sev- "><tt><i>171</i>         <span class="n">train_params</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;Trainer&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span></tt>
-            </div>
-            <div id="l172"
-               class="code sev- "><tt><i>172</i>                         <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;callbacks&#39;</span><span class="p">,</span> <span class="s1">&#39;logger&#39;</span><span class="p">,</span> <span class="s1">&#39;profiler&#39;</span><span class="p">]}</span></tt>
-            </div>
-            <div id="l173"
-               class="code sev- "><tt><i>173</i>         <span class="n">train_params</span><span class="p">[</span><span class="s1">&#39;callbacks&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_callbacks</span><span class="p">()</span></tt>
-            </div>
-            <div id="l174"
-               class="code sev- "><tt><i>174</i>         <span class="n">train_params</span><span class="p">[</span><span class="s1">&#39;logger&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span></tt>
-            </div>
-            <div id="l175"
-               class="code sev- "><tt><i>175</i>         <span class="n">train_params</span><span class="p">[</span><span class="s1">&#39;profiler&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_profiler</span><span class="p">()</span></tt>
-            </div>
-            <div id="l176"
-               class="code sev- "><tt><i>176</i>         <span class="k">return</span> <span class="n">lightning</span><span class="o">.</span><span class="n">Trainer</span><span class="p">(</span><span class="o">**</span><span class="n">train_params</span><span class="p">)</span></tt>
-            </div>
-            <div id="l177"
-               class="code sev- "><tt><i>177</i> &nbsp;</tt>
-            </div>
-            <div id="l178"
-               class="code sev- "><tt><i>178</i>     <span class="k">def</span><span class="w"> </span><span class="nf">load_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></tt>
-            </div>
-            <div id="l179"
-               class="code sev- "><tt><i>179</i>         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;in&quot;</span><span class="p">][</span><span class="s2">&quot;input_model_pth_path&quot;</span><span class="p">],</span></tt>
-            </div>
-            <div id="l180"
-               class="code sev- "><tt><i>180</i>                           <span class="n">weights_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></tt>
-            </div>
-            <div id="l181"
-               class="code sev- "><tt><i>181</i> &nbsp;</tt>
-            </div>
-            <div id="l182"
-               class="code sev- "><tt><i>182</i>     <span class="k">def</span><span class="w"> </span><span class="nf">load_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></tt>
-            </div>
-            <div id="l183"
-               class="code sev- "><tt><i>183</i>         <span class="n">dataset</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;in&quot;</span><span class="p">][</span><span class="s2">&quot;input_dataset_pt_path&quot;</span><span class="p">],</span></tt>
-            </div>
-            <div id="l184"
-               class="code sev- "><tt><i>184</i>                              <span class="n">weights_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></tt>
-            </div>
-            <div id="l185"
-               class="code sev- "><tt><i>185</i>         <span class="k">return</span> <span class="n">DictDataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span></tt>
-            </div>
-            <div id="l186"
-               class="code sev- "><tt><i>186</i> &nbsp;</tt>
-            </div>
-            <div id="l187"
-               class="code sev- "><tt><i>187</i>     <span class="k">def</span><span class="w"> </span><span class="nf">create_datamodule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">):</span></tt>
-            </div>
-            <div id="l188"
-               class="code sev- "><tt><i>188</i>         <span class="n">ds_cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;Dataset&#39;</span><span class="p">]</span></tt>
-            </div>
-            <div id="l189"
-               class="code sev- "><tt><i>189</i> &nbsp;</tt>
-            </div>
-            <div id="l190"
-               class="code sev- "><tt><i>190</i>         <span class="n">lengths</span> <span class="o">=</span> <span class="p">[</span><span class="n">ds_cfg</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;train_prop&#39;</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span></tt>
-            </div>
-            <div id="l191"
-               class="code sev- "><tt><i>191</i>                    <span class="n">ds_cfg</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;val_prop&#39;</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)]</span></tt>
-            </div>
-            <div id="l192"
-               class="code sev- "><tt><i>192</i>         <span class="k">if</span> <span class="n">ds_cfg</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;test_prop&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span></tt>
-            </div>
-            <div id="l193"
-               class="code sev- "><tt><i>193</i>             <span class="n">lengths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ds_cfg</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;test_prop&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span></tt>
-            </div>
-            <div id="l194"
-               class="code sev- "><tt><i>194</i> &nbsp;</tt>
-            </div>
-            <div id="l195"
-               class="code sev- "><tt><i>195</i>         <span class="k">return</span> <span class="n">DictModule</span><span class="p">(</span></tt>
-            </div>
-            <div id="l196"
-               class="code sev- "><tt><i>196</i>             <span class="n">dataset</span><span class="p">,</span></tt>
-            </div>
-            <div id="l197"
-               class="code sev- "><tt><i>197</i>             <span class="n">batch_size</span><span class="o">=</span><span class="n">ds_cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;batch_size&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span></tt>
-            </div>
-            <div id="l198"
-               class="code sev- "><tt><i>198</i>             <span class="n">lengths</span><span class="o">=</span><span class="n">lengths</span><span class="p">,</span></tt>
-            </div>
-            <div id="l199"
-               class="code sev- "><tt><i>199</i>             <span class="n">shuffle</span><span class="o">=</span><span class="n">ds_cfg</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;shuffle&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span></tt>
-            </div>
-            <div id="l200"
-               class="code sev- "><tt><i>200</i>             <span class="n">random_split</span><span class="o">=</span><span class="n">ds_cfg</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;random_split&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span></tt>
-            </div>
-            <div id="l201"
-               class="code sev- "><tt><i>201</i>         <span class="p">)</span></tt>
-            </div>
-            <div id="l202"
-               class="code sev- "><tt><i>202</i> &nbsp;</tt>
-            </div>
-            <div id="l203"
-               class="code sev- "><tt><i>203</i>     <span class="k">def</span><span class="w"> </span><span class="nf">fit_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">datamodule</span><span class="p">):</span></tt>
-            </div>
-            <div id="l204"
-               class="code sev- "><tt><i>204</i> <span class="w">        </span><span class="sd">&quot;&quot;&quot;Fit the model to the data, capturing logs and keeping tqdm clean.&quot;&quot;&quot;</span></tt>
-            </div>
-            <div id="l205"
-               class="code sev- "><tt><i>205</i>         <span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">datamodule</span><span class="p">)</span></tt>
-            </div>
-            <div id="l206"
-               class="code sev- "><tt><i>206</i> &nbsp;</tt>
-            </div>
-            <div id="l207"
-               class="code sev- "><tt><i>207</i>     <span class="k">def</span><span class="w"> </span><span class="nf">save_full</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span></tt>
-            </div>
-            <div id="l208"
-               class="code sev- "><tt><i>208</i> <span class="w">        </span><span class="sd">&quot;&quot;&quot;Serialize the full model object (including architecture).&quot;&quot;&quot;</span></tt>
-            </div>
-            <div id="l209"
-               class="code sev- "><tt><i>209</i>         <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;out&quot;</span><span class="p">][</span><span class="s2">&quot;output_model_pth_path&quot;</span><span class="p">])</span></tt>
-            </div>
-            <div id="l210"
-               class="code sev- "><tt><i>210</i> &nbsp;</tt>
-            </div>
-            <div id="l211"
-               class="code sev- "><tt><i>211</i>     <span class="nd">@launchlogger</span></tt>
-            </div>
-            <div id="l212"
-               class="code sev- "><tt><i>212</i>     <span class="k">def</span><span class="w"> </span><span class="nf">launch</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span></tt>
-            </div>
-            <div id="l213"
-               class="code sev- "><tt><i>213</i> <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span></tt>
-            </div>
-            <div id="l214"
-               class="code sev- "><tt><i>214</i> <span class="sd">        Execute the :class:`TrainModel` class and its `.launch()` method.</span></tt>
-            </div>
-            <div id="l215"
-               class="code sev- "><tt><i>215</i> <span class="sd">        &quot;&quot;&quot;</span></tt>
-            </div>
-            <div id="l216"
-               class="code sev- "><tt><i>216</i> &nbsp;</tt>
-            </div>
-            <div id="l217"
-               class="code sev- "><tt><i>217</i>         <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;## BioBB Model Trainer ##&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
-            </div>
-            <div id="l218"
-               class="code sev- "><tt><i>218</i> &nbsp;</tt>
-            </div>
-            <div id="l219"
-               class="code sev- "><tt><i>219</i>         <span class="c1"># Setup Biobb</span></tt>
-            </div>
-            <div id="l220"
-               class="code sev- "><tt><i>220</i>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_restart</span><span class="p">():</span></tt>
-            </div>
-            <div id="l221"
-               class="code sev- "><tt><i>221</i>             <span class="k">return</span> <span class="mi">0</span></tt>
-            </div>
-            <div id="l222"
-               class="code sev- "><tt><i>222</i> &nbsp;</tt>
-            </div>
-            <div id="l223"
-               class="code sev- "><tt><i>223</i>         <span class="bp">self</span><span class="o">.</span><span class="n">stage_files</span><span class="p">()</span></tt>
-            </div>
-            <div id="l224"
-               class="code sev- "><tt><i>224</i> &nbsp;</tt>
-            </div>
-            <div id="l225"
-               class="code sev- "><tt><i>225</i>         <span class="c1"># Start Pipeline</span></tt>
-            </div>
-            <div id="l226"
-               class="code sev- "><tt><i>226</i> &nbsp;</tt>
-            </div>
-            <div id="l227"
-               class="code sev- "><tt><i>227</i>         <span class="c1"># load the model</span></tt>
-            </div>
-            <div id="l228"
-               class="code sev- "><tt><i>228</i>         <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Load model from </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;in&quot;</span><span class="p">][</span><span class="s2">&quot;input_model_pth_path&quot;</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
-            </div>
-            <div id="l229"
-               class="code sev- "><tt><i>229</i>         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_model</span><span class="p">()</span></tt>
-            </div>
-            <div id="l230"
                class="code sev-2  le">
                <ul class="violations">
                
@@ -713,205 +230,649 @@
                      </span>
                      Blank line contains whitespace</li>
                
-               </ul><tt><i>230</i>         </tt>
+               </ul><tt><i>66</i> <span class="sd">            </span></tt>
+            </div>
+            <div id="l67"
+               class="code sev- "><tt><i>67</i> <span class="sd">    Info:</span></tt>
+            </div>
+            <div id="l68"
+               class="code sev- "><tt><i>68</i> <span class="sd">        * wrapped_software:</span></tt>
+            </div>
+            <div id="l69"
+               class="code sev- "><tt><i>69</i> <span class="sd">            * name: PyTorch</span></tt>
+            </div>
+            <div id="l70"
+               class="code sev- "><tt><i>70</i> <span class="sd">            * version: &gt;=1.6.0</span></tt>
+            </div>
+            <div id="l71"
+               class="code sev- "><tt><i>71</i> <span class="sd">            * license: BSD 3-Clause</span></tt>
+            </div>
+            <div id="l72"
+               class="code sev- "><tt><i>72</i> <span class="sd">        * ontology:</span></tt>
+            </div>
+            <div id="l73"
+               class="code sev- "><tt><i>73</i> <span class="sd">            * name: EDAM</span></tt>
+            </div>
+            <div id="l74"
+               class="code sev- "><tt><i>74</i> <span class="sd">            * schema: http://edamontology.org/EDAM.owl</span></tt>
+            </div>
+            <div id="l75"
+               class="code sev- "><tt><i>75</i> <span class="sd">    &quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l76"
+               class="code sev- "><tt><i>76</i> &nbsp;</tt>
+            </div>
+            <div id="l77"
+               class="code sev- "><tt><i>77</i>     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span></tt>
+            </div>
+            <div id="l78"
+               class="code sev- "><tt><i>78</i>         <span class="bp">self</span><span class="p">,</span></tt>
+            </div>
+            <div id="l79"
+               class="code sev- "><tt><i>79</i>         <span class="n">input_model_pth_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span></tt>
+            </div>
+            <div id="l80"
+               class="code sev- "><tt><i>80</i>         <span class="n">input_dataset_pt_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span></tt>
+            </div>
+            <div id="l81"
+               class="code sev- "><tt><i>81</i>         <span class="n">output_model_pth_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span></tt>
+            </div>
+            <div id="l82"
+               class="code sev- "><tt><i>82</i>         <span class="n">output_metrics_npz_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span></tt>
+            </div>
+            <div id="l83"
+               class="code sev- "><tt><i>83</i>         <span class="n">properties</span><span class="p">:</span> <span class="nb">dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span></tt>
+            </div>
+            <div id="l84"
+               class="code sev- "><tt><i>84</i>         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span></tt>
+            </div>
+            <div id="l85"
+               class="code sev- "><tt><i>85</i>     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span></tt>
+            </div>
+            <div id="l86"
+               class="code sev- "><tt><i>86</i> &nbsp;</tt>
+            </div>
+            <div id="l87"
+               class="code sev- "><tt><i>87</i>         <span class="n">properties</span> <span class="o">=</span> <span class="n">properties</span> <span class="ow">or</span> <span class="p">{}</span></tt>
+            </div>
+            <div id="l88"
+               class="code sev- "><tt><i>88</i> &nbsp;</tt>
+            </div>
+            <div id="l89"
+               class="code sev- "><tt><i>89</i>         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">properties</span><span class="p">)</span></tt>
+            </div>
+            <div id="l90"
+               class="code sev- "><tt><i>90</i> &nbsp;</tt>
+            </div>
+            <div id="l91"
+               class="code sev- "><tt><i>91</i>         <span class="bp">self</span><span class="o">.</span><span class="n">input_model_pth_path</span> <span class="o">=</span> <span class="n">input_model_pth_path</span></tt>
+            </div>
+            <div id="l92"
+               class="code sev- "><tt><i>92</i>         <span class="bp">self</span><span class="o">.</span><span class="n">input_dataset_pt_path</span> <span class="o">=</span> <span class="n">input_dataset_pt_path</span></tt>
+            </div>
+            <div id="l93"
+               class="code sev- "><tt><i>93</i>         <span class="bp">self</span><span class="o">.</span><span class="n">output_model_pth_path</span> <span class="o">=</span> <span class="n">output_model_pth_path</span></tt>
+            </div>
+            <div id="l94"
+               class="code sev- "><tt><i>94</i>         <span class="bp">self</span><span class="o">.</span><span class="n">output_metrics_npz_path</span> <span class="o">=</span> <span class="n">output_metrics_npz_path</span></tt>
+            </div>
+            <div id="l95"
+               class="code sev- "><tt><i>95</i>         <span class="bp">self</span><span class="o">.</span><span class="n">properties</span> <span class="o">=</span> <span class="n">properties</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></tt>
+            </div>
+            <div id="l96"
+               class="code sev- "><tt><i>96</i>         <span class="bp">self</span><span class="o">.</span><span class="n">locals_var_dict</span> <span class="o">=</span> <span class="nb">locals</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></tt>
+            </div>
+            <div id="l97"
+               class="code sev- "><tt><i>97</i> &nbsp;</tt>
+            </div>
+            <div id="l98"
+               class="code sev- "><tt><i>98</i>         <span class="c1"># Input/Output files</span></tt>
+            </div>
+            <div id="l99"
+               class="code sev- "><tt><i>99</i>         <span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span> <span class="o">=</span> <span class="p">{</span></tt>
+            </div>
+            <div id="l100"
+               class="code sev- "><tt><i>100</i>             <span class="s2">&quot;in&quot;</span><span class="p">:</span> <span class="p">{</span></tt>
+            </div>
+            <div id="l101"
+               class="code sev- "><tt><i>101</i>                 <span class="s2">&quot;input_model_pth_path&quot;</span><span class="p">:</span> <span class="n">input_model_pth_path</span><span class="p">,</span></tt>
+            </div>
+            <div id="l102"
+               class="code sev- "><tt><i>102</i>                 <span class="s2">&quot;input_dataset_pt_path&quot;</span><span class="p">:</span> <span class="n">input_dataset_pt_path</span><span class="p">,</span></tt>
+            </div>
+            <div id="l103"
+               class="code sev- "><tt><i>103</i>             <span class="p">},</span></tt>
+            </div>
+            <div id="l104"
+               class="code sev- "><tt><i>104</i>             <span class="s2">&quot;out&quot;</span><span class="p">:</span> <span class="p">{},</span></tt>
+            </div>
+            <div id="l105"
+               class="code sev- "><tt><i>105</i>         <span class="p">}</span></tt>
+            </div>
+            <div id="l106"
+               class="code sev- "><tt><i>106</i>         <span class="k">if</span> <span class="n">output_model_pth_path</span><span class="p">:</span></tt>
+            </div>
+            <div id="l107"
+               class="code sev- "><tt><i>107</i>             <span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;out&quot;</span><span class="p">][</span><span class="s2">&quot;output_model_pth_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">output_model_pth_path</span></tt>
+            </div>
+            <div id="l108"
+               class="code sev- "><tt><i>108</i>         <span class="k">if</span> <span class="n">output_metrics_npz_path</span><span class="p">:</span></tt>
+            </div>
+            <div id="l109"
+               class="code sev- "><tt><i>109</i>             <span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;out&quot;</span><span class="p">][</span><span class="s2">&quot;output_metrics_npz_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">output_metrics_npz_path</span></tt>
+            </div>
+            <div id="l110"
+               class="code sev- "><tt><i>110</i> &nbsp;</tt>
+            </div>
+            <div id="l111"
+               class="code sev- "><tt><i>111</i>         <span class="bp">self</span><span class="o">.</span><span class="n">Trainer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Trainer&#39;</span><span class="p">,</span> <span class="p">{})</span></tt>
+            </div>
+            <div id="l112"
+               class="code sev- "><tt><i>112</i>         <span class="bp">self</span><span class="o">.</span><span class="n">Dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Dataset&#39;</span><span class="p">,</span> <span class="p">{})</span></tt>
+            </div>
+            <div id="l113"
+               class="code sev- "><tt><i>113</i> &nbsp;</tt>
+            </div>
+            <div id="l114"
+               class="code sev- "><tt><i>114</i>         <span class="c1"># Check the properties</span></tt>
+            </div>
+            <div id="l115"
+               class="code sev- "><tt><i>115</i>         <span class="bp">self</span><span class="o">.</span><span class="n">check_properties</span><span class="p">(</span><span class="n">properties</span><span class="p">)</span></tt>
+            </div>
+            <div id="l116"
+               class="code sev- "><tt><i>116</i>         <span class="bp">self</span><span class="o">.</span><span class="n">check_arguments</span><span class="p">()</span></tt>
+            </div>
+            <div id="l117"
+               class="code sev- "><tt><i>117</i> &nbsp;</tt>
+            </div>
+            <div id="l118"
+               class="code sev- "><tt><i>118</i>     <span class="k">def</span><span class="w"> </span><span class="nf">get_callbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></tt>
+            </div>
+            <div id="l119"
+               class="code sev- "><tt><i>119</i>         <span class="bp">self</span><span class="o">.</span><span class="n">colvars_metrics</span> <span class="o">=</span> <span class="n">MetricsCallback</span><span class="p">()</span></tt>
+            </div>
+            <div id="l120"
+               class="code sev- "><tt><i>120</i>         <span class="n">cbs_list</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">colvars_metrics</span><span class="p">]</span></tt>
+            </div>
+            <div id="l121"
+               class="code sev- "><tt><i>121</i> &nbsp;</tt>
+            </div>
+            <div id="l122"
+               class="code sev- "><tt><i>122</i>         <span class="n">callbacks_prop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Trainer&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;callbacks&#39;</span><span class="p">,</span> <span class="p">{})</span></tt>
+            </div>
+            <div id="l123"
+               class="code sev- "><tt><i>123</i>         <span class="k">if</span> <span class="ow">not</span> <span class="n">callbacks_prop</span><span class="p">:</span></tt>
+            </div>
+            <div id="l124"
+               class="code sev- "><tt><i>124</i>             <span class="k">return</span> <span class="n">cbs_list</span></tt>
+            </div>
+            <div id="l125"
+               class="code sev- "><tt><i>125</i>         <span class="k">else</span><span class="p">:</span></tt>
+            </div>
+            <div id="l126"
+               class="code sev- "><tt><i>126</i>             <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;Trainer&#39;</span><span class="p">][</span><span class="s1">&#39;callbacks&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span></tt>
+            </div>
+            <div id="l127"
+               class="code sev- "><tt><i>127</i>                 <span class="n">callback_params</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;Trainer&#39;</span><span class="p">][</span><span class="s1">&#39;callbacks&#39;</span><span class="p">][</span><span class="n">k</span><span class="p">]</span></tt>
+            </div>
+            <div id="l128"
+               class="code sev- "><tt><i>128</i>                 <span class="n">CallbackClass</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">_cbs</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></tt>
+            </div>
+            <div id="l129"
+               class="code sev- "><tt><i>129</i>                 <span class="k">if</span> <span class="n">CallbackClass</span><span class="p">:</span></tt>
+            </div>
+            <div id="l130"
+               class="code sev- "><tt><i>130</i>                     <span class="n">callback</span> <span class="o">=</span> <span class="n">CallbackClass</span><span class="p">(</span><span class="o">**</span><span class="n">callback_params</span><span class="p">)</span></tt>
+            </div>
+            <div id="l131"
+               class="code sev- "><tt><i>131</i>                     <span class="n">cbs_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">callback</span><span class="p">)</span></tt>
+            </div>
+            <div id="l132"
+               class="code sev- "><tt><i>132</i>             <span class="k">return</span> <span class="n">cbs_list</span></tt>
+            </div>
+            <div id="l133"
+               class="code sev- "><tt><i>133</i> &nbsp;</tt>
+            </div>
+            <div id="l134"
+               class="code sev- "><tt><i>134</i>     <span class="k">def</span><span class="w"> </span><span class="nf">get_logger</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></tt>
+            </div>
+            <div id="l135"
+               class="code sev- "><tt><i>135</i>         <span class="n">logger_prop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Trainer&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;logger&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></tt>
+            </div>
+            <div id="l136"
+               class="code sev- "><tt><i>136</i>         <span class="k">if</span> <span class="ow">not</span> <span class="n">logger_prop</span><span class="p">:</span></tt>
+            </div>
+            <div id="l137"
+               class="code sev- "><tt><i>137</i>             <span class="k">return</span> <span class="kc">None</span></tt>
+            </div>
+            <div id="l138"
+               class="code sev- "><tt><i>138</i> &nbsp;</tt>
+            </div>
+            <div id="l139"
+               class="code sev- "><tt><i>139</i>         <span class="n">logger_type</span><span class="p">,</span> <span class="n">logger_params</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">logger_prop</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span></tt>
+            </div>
+            <div id="l140"
+               class="code sev- "><tt><i>140</i>         <span class="n">LoggerClass</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">_loggers</span><span class="p">,</span> <span class="n">logger_type</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></tt>
+            </div>
+            <div id="l141"
+               class="code sev- "><tt><i>141</i>         <span class="k">if</span> <span class="n">LoggerClass</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span></tt>
+            </div>
+            <div id="l142"
+               class="code sev- "><tt><i>142</i>             <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No Logger named </span><span class="si">{</span><span class="n">logger_type</span><span class="si">}</span><span class="s2"> in lightning.pytorch.loggers&quot;</span><span class="p">)</span></tt>
+            </div>
+            <div id="l143"
+               class="code sev- "><tt><i>143</i> &nbsp;</tt>
+            </div>
+            <div id="l144"
+               class="code sev- "><tt><i>144</i>         <span class="k">return</span> <span class="n">LoggerClass</span><span class="p">(</span><span class="o">**</span><span class="n">logger_params</span><span class="p">)</span></tt>
+            </div>
+            <div id="l145"
+               class="code sev- "><tt><i>145</i> &nbsp;</tt>
+            </div>
+            <div id="l146"
+               class="code sev- "><tt><i>146</i>     <span class="k">def</span><span class="w"> </span><span class="nf">get_profiler</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></tt>
+            </div>
+            <div id="l147"
+               class="code sev- "><tt><i>147</i>         <span class="n">profiler_prop</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;Trainer&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;profiler&#39;</span><span class="p">)</span></tt>
+            </div>
+            <div id="l148"
+               class="code sev- "><tt><i>148</i>         <span class="k">if</span> <span class="ow">not</span> <span class="n">profiler_prop</span><span class="p">:</span></tt>
+            </div>
+            <div id="l149"
+               class="code sev- "><tt><i>149</i>             <span class="k">return</span> <span class="kc">None</span></tt>
+            </div>
+            <div id="l150"
+               class="code sev- "><tt><i>150</i> &nbsp;</tt>
+            </div>
+            <div id="l151"
+               class="code sev- "><tt><i>151</i>         <span class="n">profiler_type</span><span class="p">,</span> <span class="n">profiler_params</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">profiler_prop</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span></tt>
+            </div>
+            <div id="l152"
+               class="code sev- "><tt><i>152</i>         <span class="n">ProfilerClass</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">_profiler</span><span class="p">,</span> <span class="n">profiler_type</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></tt>
+            </div>
+            <div id="l153"
+               class="code sev- "><tt><i>153</i>         <span class="k">if</span> <span class="n">ProfilerClass</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span></tt>
+            </div>
+            <div id="l154"
+               class="code sev- "><tt><i>154</i>             <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No Profiler named </span><span class="si">{</span><span class="n">profiler_type</span><span class="si">}</span><span class="s2"> in lightning.pytorch.profilers&quot;</span><span class="p">)</span></tt>
+            </div>
+            <div id="l155"
+               class="code sev- "><tt><i>155</i> &nbsp;</tt>
+            </div>
+            <div id="l156"
+               class="code sev- "><tt><i>156</i>         <span class="k">return</span> <span class="n">ProfilerClass</span><span class="p">(</span><span class="o">**</span><span class="n">profiler_params</span><span class="p">)</span></tt>
+            </div>
+            <div id="l157"
+               class="code sev- "><tt><i>157</i> &nbsp;</tt>
+            </div>
+            <div id="l158"
+               class="code sev- "><tt><i>158</i>     <span class="k">def</span><span class="w"> </span><span class="nf">get_trainer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></tt>
+            </div>
+            <div id="l159"
+               class="code sev- "><tt><i>159</i>         <span class="n">train_params</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;Trainer&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span></tt>
+            </div>
+            <div id="l160"
+               class="code sev- "><tt><i>160</i>                         <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;callbacks&#39;</span><span class="p">,</span> <span class="s1">&#39;logger&#39;</span><span class="p">,</span> <span class="s1">&#39;profiler&#39;</span><span class="p">]}</span></tt>
+            </div>
+            <div id="l161"
+               class="code sev- "><tt><i>161</i>         <span class="n">train_params</span><span class="p">[</span><span class="s1">&#39;callbacks&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_callbacks</span><span class="p">()</span></tt>
+            </div>
+            <div id="l162"
+               class="code sev- "><tt><i>162</i>         <span class="n">train_params</span><span class="p">[</span><span class="s1">&#39;logger&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_logger</span><span class="p">()</span></tt>
+            </div>
+            <div id="l163"
+               class="code sev- "><tt><i>163</i>         <span class="n">train_params</span><span class="p">[</span><span class="s1">&#39;profiler&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_profiler</span><span class="p">()</span></tt>
+            </div>
+            <div id="l164"
+               class="code sev- "><tt><i>164</i>         <span class="k">return</span> <span class="n">lightning</span><span class="o">.</span><span class="n">Trainer</span><span class="p">(</span><span class="o">**</span><span class="n">train_params</span><span class="p">)</span></tt>
+            </div>
+            <div id="l165"
+               class="code sev- "><tt><i>165</i> &nbsp;</tt>
+            </div>
+            <div id="l166"
+               class="code sev- "><tt><i>166</i>     <span class="k">def</span><span class="w"> </span><span class="nf">load_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></tt>
+            </div>
+            <div id="l167"
+               class="code sev- "><tt><i>167</i>         <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;in&quot;</span><span class="p">][</span><span class="s2">&quot;input_model_pth_path&quot;</span><span class="p">],</span></tt>
+            </div>
+            <div id="l168"
+               class="code sev- "><tt><i>168</i>                           <span class="n">weights_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></tt>
+            </div>
+            <div id="l169"
+               class="code sev- "><tt><i>169</i> &nbsp;</tt>
+            </div>
+            <div id="l170"
+               class="code sev- "><tt><i>170</i>     <span class="k">def</span><span class="w"> </span><span class="nf">load_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></tt>
+            </div>
+            <div id="l171"
+               class="code sev- "><tt><i>171</i>         <span class="n">dataset</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;in&quot;</span><span class="p">][</span><span class="s2">&quot;input_dataset_pt_path&quot;</span><span class="p">],</span></tt>
+            </div>
+            <div id="l172"
+               class="code sev- "><tt><i>172</i>                              <span class="n">weights_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></tt>
+            </div>
+            <div id="l173"
+               class="code sev- "><tt><i>173</i>         <span class="k">return</span> <span class="n">DictDataset</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span></tt>
+            </div>
+            <div id="l174"
+               class="code sev- "><tt><i>174</i> &nbsp;</tt>
+            </div>
+            <div id="l175"
+               class="code sev- "><tt><i>175</i>     <span class="k">def</span><span class="w"> </span><span class="nf">create_datamodule</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset</span><span class="p">):</span></tt>
+            </div>
+            <div id="l176"
+               class="code sev- "><tt><i>176</i>         <span class="n">ds_cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="p">[</span><span class="s1">&#39;Dataset&#39;</span><span class="p">]</span></tt>
+            </div>
+            <div id="l177"
+               class="code sev- "><tt><i>177</i> &nbsp;</tt>
+            </div>
+            <div id="l178"
+               class="code sev- "><tt><i>178</i>         <span class="n">lengths</span> <span class="o">=</span> <span class="p">[</span><span class="n">ds_cfg</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;train_prop&#39;</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span></tt>
+            </div>
+            <div id="l179"
+               class="code sev- "><tt><i>179</i>                    <span class="n">ds_cfg</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;val_prop&#39;</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)]</span></tt>
+            </div>
+            <div id="l180"
+               class="code sev- "><tt><i>180</i>         <span class="k">if</span> <span class="n">ds_cfg</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;test_prop&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span></tt>
+            </div>
+            <div id="l181"
+               class="code sev- "><tt><i>181</i>             <span class="n">lengths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ds_cfg</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;test_prop&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span></tt>
+            </div>
+            <div id="l182"
+               class="code sev- "><tt><i>182</i> &nbsp;</tt>
+            </div>
+            <div id="l183"
+               class="code sev- "><tt><i>183</i>         <span class="k">return</span> <span class="n">DictModule</span><span class="p">(</span></tt>
+            </div>
+            <div id="l184"
+               class="code sev- "><tt><i>184</i>             <span class="n">dataset</span><span class="p">,</span></tt>
+            </div>
+            <div id="l185"
+               class="code sev- "><tt><i>185</i>             <span class="n">batch_size</span><span class="o">=</span><span class="n">ds_cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;batch_size&#39;</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span></tt>
+            </div>
+            <div id="l186"
+               class="code sev- "><tt><i>186</i>             <span class="n">lengths</span><span class="o">=</span><span class="n">lengths</span><span class="p">,</span></tt>
+            </div>
+            <div id="l187"
+               class="code sev- "><tt><i>187</i>             <span class="n">shuffle</span><span class="o">=</span><span class="n">ds_cfg</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;shuffle&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span></tt>
+            </div>
+            <div id="l188"
+               class="code sev- "><tt><i>188</i>             <span class="n">random_split</span><span class="o">=</span><span class="n">ds_cfg</span><span class="p">[</span><span class="s1">&#39;split&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;random_split&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span></tt>
+            </div>
+            <div id="l189"
+               class="code sev- "><tt><i>189</i>         <span class="p">)</span></tt>
+            </div>
+            <div id="l190"
+               class="code sev- "><tt><i>190</i> &nbsp;</tt>
+            </div>
+            <div id="l191"
+               class="code sev- "><tt><i>191</i>     <span class="k">def</span><span class="w"> </span><span class="nf">fit_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">trainer</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">datamodule</span><span class="p">):</span></tt>
+            </div>
+            <div id="l192"
+               class="code sev- "><tt><i>192</i> <span class="w">        </span><span class="sd">&quot;&quot;&quot;Fit the model to the data, capturing logs and keeping tqdm clean.&quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l193"
+               class="code sev- "><tt><i>193</i>         <span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">datamodule</span><span class="p">)</span></tt>
+            </div>
+            <div id="l194"
+               class="code sev- "><tt><i>194</i> &nbsp;</tt>
+            </div>
+            <div id="l195"
+               class="code sev- "><tt><i>195</i>     <span class="k">def</span><span class="w"> </span><span class="nf">save_full</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span></tt>
+            </div>
+            <div id="l196"
+               class="code sev- "><tt><i>196</i> <span class="w">        </span><span class="sd">&quot;&quot;&quot;Serialize the full model object (including architecture).&quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l197"
+               class="code sev- "><tt><i>197</i>         <span class="n">torch</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;out&quot;</span><span class="p">][</span><span class="s2">&quot;output_model_pth_path&quot;</span><span class="p">])</span></tt>
+            </div>
+            <div id="l198"
+               class="code sev- "><tt><i>198</i> &nbsp;</tt>
+            </div>
+            <div id="l199"
+               class="code sev- "><tt><i>199</i>     <span class="nd">@launchlogger</span></tt>
+            </div>
+            <div id="l200"
+               class="code sev- "><tt><i>200</i>     <span class="k">def</span><span class="w"> </span><span class="nf">launch</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span></tt>
+            </div>
+            <div id="l201"
+               class="code sev- "><tt><i>201</i> <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l202"
+               class="code sev- "><tt><i>202</i> <span class="sd">        Execute the :class:`TrainModel` class and its `.launch()` method.</span></tt>
+            </div>
+            <div id="l203"
+               class="code sev- "><tt><i>203</i> <span class="sd">        &quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l204"
+               class="code sev- "><tt><i>204</i> &nbsp;</tt>
+            </div>
+            <div id="l205"
+               class="code sev- "><tt><i>205</i>         <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;## BioBB Model Trainer ##&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l206"
+               class="code sev- "><tt><i>206</i> &nbsp;</tt>
+            </div>
+            <div id="l207"
+               class="code sev- "><tt><i>207</i>         <span class="c1"># Setup Biobb</span></tt>
+            </div>
+            <div id="l208"
+               class="code sev- "><tt><i>208</i>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_restart</span><span class="p">():</span></tt>
+            </div>
+            <div id="l209"
+               class="code sev- "><tt><i>209</i>             <span class="k">return</span> <span class="mi">0</span></tt>
+            </div>
+            <div id="l210"
+               class="code sev- "><tt><i>210</i> &nbsp;</tt>
+            </div>
+            <div id="l211"
+               class="code sev- "><tt><i>211</i>         <span class="bp">self</span><span class="o">.</span><span class="n">stage_files</span><span class="p">()</span></tt>
+            </div>
+            <div id="l212"
+               class="code sev- "><tt><i>212</i> &nbsp;</tt>
+            </div>
+            <div id="l213"
+               class="code sev- "><tt><i>213</i>         <span class="c1"># Start Pipeline</span></tt>
+            </div>
+            <div id="l214"
+               class="code sev- "><tt><i>214</i> &nbsp;</tt>
+            </div>
+            <div id="l215"
+               class="code sev- "><tt><i>215</i>         <span class="c1"># load the model</span></tt>
+            </div>
+            <div id="l216"
+               class="code sev- "><tt><i>216</i>         <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Load model from </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;in&quot;</span><span class="p">][</span><span class="s2">&quot;input_model_pth_path&quot;</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l217"
+               class="code sev- "><tt><i>217</i>         <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_model</span><span class="p">()</span></tt>
+            </div>
+            <div id="l218"
+               class="code sev-2  le">
+               <ul class="violations">
+               
+                  <li>
+                     <span class="count sev-2">
+                        W293
+                     </span>
+                     Blank line contains whitespace</li>
+               
+               </ul><tt><i>218</i>         </tt>
+            </div>
+            <div id="l219"
+               class="code sev- "><tt><i>219</i>         <span class="c1"># load the dataset</span></tt>
+            </div>
+            <div id="l220"
+               class="code sev- "><tt><i>220</i>         <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Load dataset from </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;in&quot;</span><span class="p">][</span><span class="s2">&quot;input_dataset_pt_path&quot;</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l221"
+               class="code sev- "><tt><i>221</i>         <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">()</span></tt>
+            </div>
+            <div id="l222"
+               class="code sev- "><tt><i>222</i> &nbsp;</tt>
+            </div>
+            <div id="l223"
+               class="code sev- "><tt><i>223</i>         <span class="c1"># create the datamodule</span></tt>
+            </div>
+            <div id="l224"
+               class="code sev- "><tt><i>224</i>         <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;Start training...&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l225"
+               class="code sev- "><tt><i>225</i>         <span class="bp">self</span><span class="o">.</span><span class="n">datamodule</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_datamodule</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span></tt>
+            </div>
+            <div id="l226"
+               class="code sev- "><tt><i>226</i> &nbsp;</tt>
+            </div>
+            <div id="l227"
+               class="code sev- "><tt><i>227</i>         <span class="c1"># get the trainer</span></tt>
+            </div>
+            <div id="l228"
+               class="code sev- "><tt><i>228</i>         <span class="bp">self</span><span class="o">.</span><span class="n">trainer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_trainer</span><span class="p">()</span></tt>
+            </div>
+            <div id="l229"
+               class="code sev- "><tt><i>229</i> &nbsp;</tt>
+            </div>
+            <div id="l230"
+               class="code sev- "><tt><i>230</i>         <span class="c1"># fit the model</span></tt>
             </div>
             <div id="l231"
-               class="code sev- "><tt><i>231</i>         <span class="c1"># Ensure model has _hparams_initial for PyTorch Lightning compatibility</span></tt>
+               class="code sev- "><tt><i>231</i>         <span class="bp">self</span><span class="o">.</span><span class="n">fit_model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">datamodule</span><span class="p">)</span></tt>
             </div>
             <div id="l232"
-               class="code sev- "><tt><i>232</i>         <span class="c1"># hparams_initial is a read-only property that reads from _hparams_initial</span></tt>
+               class="code sev- "><tt><i>232</i> &nbsp;</tt>
             </div>
             <div id="l233"
-               class="code sev- "><tt><i>233</i>         <span class="c1"># If _hparams_initial doesn&#39;t exist, set it from _hparams if available, otherwise empty dict</span></tt>
+               class="code sev- "><tt><i>233</i>         <span class="c1"># Set the metrics</span></tt>
             </div>
             <div id="l234"
-               class="code sev- "><tt><i>234</i>         <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;_hparams_initial&#39;</span><span class="p">):</span></tt>
+               class="code sev- "><tt><i>234</i>         <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">colvars_metrics</span><span class="o">.</span><span class="n">metrics</span></tt>
             </div>
             <div id="l235"
-               class="code sev- "><tt><i>235</i>             <span class="n">hparams</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;_hparams&#39;</span><span class="p">,</span> <span class="p">{})</span></tt>
+               class="code sev- "><tt><i>235</i> &nbsp;</tt>
             </div>
             <div id="l236"
-               class="code sev- "><tt><i>236</i>             <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s1">&#39;_hparams_initial&#39;</span><span class="p">,</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">hparams</span><span class="p">))</span></tt>
+               class="code sev- "><tt><i>236</i>         <span class="c1"># Save the metrics if path provided</span></tt>
             </div>
             <div id="l237"
-               class="code sev- "><tt><i>237</i> &nbsp;</tt>
+               class="code sev- "><tt><i>237</i>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_metrics_npz_path</span><span class="p">:</span></tt>
             </div>
             <div id="l238"
-               class="code sev- "><tt><i>238</i>         <span class="c1"># load the dataset</span></tt>
+               class="code sev- "><tt><i>238</i>             <span class="n">np</span><span class="o">.</span><span class="n">savez_compressed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;out&quot;</span><span class="p">][</span><span class="s2">&quot;output_metrics_npz_path&quot;</span><span class="p">],</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="p">)</span></tt>
             </div>
             <div id="l239"
-               class="code sev- "><tt><i>239</i>         <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Load dataset from </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;in&quot;</span><span class="p">][</span><span class="s2">&quot;input_dataset_pt_path&quot;</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+               class="code sev- "><tt><i>239</i>             <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Training Metrics saved to </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;out&quot;</span><span class="p">][</span><span class="s2">&quot;output_metrics_npz_path&quot;</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
             </div>
             <div id="l240"
-               class="code sev- "><tt><i>240</i>         <span class="bp">self</span><span class="o">.</span><span class="n">dataset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">()</span></tt>
+               class="code sev- "><tt><i>240</i>             <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;File size: </span><span class="si">{</span><span class="n">get_size</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;out&quot;</span><span class="p">][</span><span class="s2">&quot;output_metrics_npz_path&quot;</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
             </div>
             <div id="l241"
                class="code sev- "><tt><i>241</i> &nbsp;</tt>
             </div>
             <div id="l242"
-               class="code sev- "><tt><i>242</i>         <span class="c1"># create the datamodule</span></tt>
+               class="code sev- "><tt><i>242</i>         <span class="c1"># save the model if path provided</span></tt>
             </div>
             <div id="l243"
-               class="code sev- "><tt><i>243</i>         <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;Start training...&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+               class="code sev- "><tt><i>243</i>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_model_pth_path</span><span class="p">:</span></tt>
             </div>
             <div id="l244"
-               class="code sev- "><tt><i>244</i>         <span class="bp">self</span><span class="o">.</span><span class="n">datamodule</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_datamodule</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset</span><span class="p">)</span></tt>
+               class="code sev- "><tt><i>244</i>             <span class="bp">self</span><span class="o">.</span><span class="n">save_full</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span></tt>
             </div>
             <div id="l245"
-               class="code sev- "><tt><i>245</i> &nbsp;</tt>
+               class="code sev- "><tt><i>245</i>             <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Trained Model saved to </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;out&quot;</span><span class="p">][</span><span class="s2">&quot;output_model_pth_path&quot;</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
             </div>
             <div id="l246"
-               class="code sev- "><tt><i>246</i>         <span class="c1"># get the trainer</span></tt>
+               class="code sev- "><tt><i>246</i>             <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;File size: </span><span class="si">{</span><span class="n">get_size</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;out&quot;</span><span class="p">][</span><span class="s2">&quot;output_model_pth_path&quot;</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
             </div>
             <div id="l247"
-               class="code sev- "><tt><i>247</i>         <span class="bp">self</span><span class="o">.</span><span class="n">trainer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_trainer</span><span class="p">()</span></tt>
+               class="code sev- "><tt><i>247</i> &nbsp;</tt>
             </div>
             <div id="l248"
-               class="code sev- "><tt><i>248</i> &nbsp;</tt>
+               class="code sev- "><tt><i>248</i>         <span class="c1"># Copy files to host</span></tt>
             </div>
             <div id="l249"
-               class="code sev- "><tt><i>249</i>         <span class="c1"># fit the model</span></tt>
+               class="code sev- "><tt><i>249</i>         <span class="bp">self</span><span class="o">.</span><span class="n">copy_to_host</span><span class="p">()</span></tt>
             </div>
             <div id="l250"
-               class="code sev- "><tt><i>250</i>         <span class="bp">self</span><span class="o">.</span><span class="n">fit_model</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">datamodule</span><span class="p">)</span></tt>
+               class="code sev- "><tt><i>250</i> &nbsp;</tt>
             </div>
             <div id="l251"
-               class="code sev- "><tt><i>251</i> &nbsp;</tt>
+               class="code sev- "><tt><i>251</i>         <span class="c1"># Remove temporal files</span></tt>
             </div>
             <div id="l252"
-               class="code sev- "><tt><i>252</i>         <span class="c1"># Set the metrics</span></tt>
+               class="code sev- "><tt><i>252</i>         <span class="bp">self</span><span class="o">.</span><span class="n">remove_tmp_files</span><span class="p">()</span></tt>
             </div>
             <div id="l253"
-               class="code sev- "><tt><i>253</i>         <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">colvars_metrics</span><span class="o">.</span><span class="n">metrics</span></tt>
+               class="code sev- "><tt><i>253</i> &nbsp;</tt>
             </div>
             <div id="l254"
-               class="code sev- "><tt><i>254</i> &nbsp;</tt>
+               class="code sev- "><tt><i>254</i>         <span class="n">output_created</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_model_pth_path</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_metrics_npz_path</span><span class="p">)</span></tt>
             </div>
             <div id="l255"
-               class="code sev- "><tt><i>255</i>         <span class="c1"># Save the metrics if path provided</span></tt>
+               class="code sev- "><tt><i>255</i>         <span class="bp">self</span><span class="o">.</span><span class="n">check_arguments</span><span class="p">(</span><span class="n">output_files_created</span><span class="o">=</span><span class="n">output_created</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></tt>
             </div>
             <div id="l256"
-               class="code sev- "><tt><i>256</i>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_metrics_npz_path</span><span class="p">:</span></tt>
+               class="code sev- "><tt><i>256</i> &nbsp;</tt>
             </div>
             <div id="l257"
-               class="code sev- "><tt><i>257</i>             <span class="n">np</span><span class="o">.</span><span class="n">savez_compressed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;out&quot;</span><span class="p">][</span><span class="s2">&quot;output_metrics_npz_path&quot;</span><span class="p">],</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">metrics</span><span class="p">)</span></tt>
+               class="code sev- "><tt><i>257</i>         <span class="k">return</span> <span class="mi">0</span></tt>
             </div>
             <div id="l258"
-               class="code sev- "><tt><i>258</i>             <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Training Metrics saved to </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;out&quot;</span><span class="p">][</span><span class="s2">&quot;output_metrics_npz_path&quot;</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+               class="code sev- "><tt><i>258</i> &nbsp;</tt>
             </div>
             <div id="l259"
-               class="code sev- "><tt><i>259</i>             <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;File size: </span><span class="si">{</span><span class="n">get_size</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;out&quot;</span><span class="p">][</span><span class="s2">&quot;output_metrics_npz_path&quot;</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+               class="code sev- "><tt><i>259</i> &nbsp;</tt>
             </div>
             <div id="l260"
-               class="code sev- "><tt><i>260</i> &nbsp;</tt>
+               class="code sev- "><tt><i>260</i> <span class="k">def</span><span class="w"> </span><span class="nf">trainModel</span><span class="p">(</span></tt>
             </div>
             <div id="l261"
-               class="code sev- "><tt><i>261</i>         <span class="c1"># save the model if path provided</span></tt>
+               class="code sev- "><tt><i>261</i>     <span class="n">properties</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span></tt>
             </div>
             <div id="l262"
-               class="code sev- "><tt><i>262</i>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_model_pth_path</span><span class="p">:</span></tt>
+               class="code sev- "><tt><i>262</i>     <span class="n">input_model_pth_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span></tt>
             </div>
             <div id="l263"
-               class="code sev- "><tt><i>263</i>             <span class="bp">self</span><span class="o">.</span><span class="n">save_full</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span></tt>
+               class="code sev- "><tt><i>263</i>     <span class="n">input_dataset_pt_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span></tt>
             </div>
             <div id="l264"
-               class="code sev- "><tt><i>264</i>             <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Trained Model saved to </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;out&quot;</span><span class="p">][</span><span class="s2">&quot;output_model_pth_path&quot;</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+               class="code sev- "><tt><i>264</i>     <span class="n">output_model_pth_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span></tt>
             </div>
             <div id="l265"
-               class="code sev- "><tt><i>265</i>             <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;File size: </span><span class="si">{</span><span class="n">get_size</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;out&quot;</span><span class="p">][</span><span class="s2">&quot;output_model_pth_path&quot;</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+               class="code sev- "><tt><i>265</i>     <span class="n">output_metrics_npz_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span></tt>
             </div>
             <div id="l266"
-               class="code sev- "><tt><i>266</i> &nbsp;</tt>
+               class="code sev- "><tt><i>266</i>     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span></tt>
             </div>
             <div id="l267"
-               class="code sev- "><tt><i>267</i>         <span class="c1"># Copy files to host</span></tt>
+               class="code sev- "><tt><i>267</i> <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span></tt>
             </div>
             <div id="l268"
-               class="code sev- "><tt><i>268</i>         <span class="bp">self</span><span class="o">.</span><span class="n">copy_to_host</span><span class="p">()</span></tt>
+               class="code sev- "><tt><i>268</i> <span class="w">    </span><span class="sd">&quot;&quot;&quot;Create the :class:`TrainModel &lt;TrainModel.TrainModel&gt;` class and</span></tt>
             </div>
             <div id="l269"
-               class="code sev- "><tt><i>269</i> &nbsp;</tt>
+               class="code sev- "><tt><i>269</i> <span class="sd">    execute the :meth:`launch() &lt;TrainModel.TrainModel.launch&gt;` method.&quot;&quot;&quot;</span></tt>
             </div>
             <div id="l270"
-               class="code sev- "><tt><i>270</i>         <span class="c1"># Remove temporal files</span></tt>
+               class="code sev- "><tt><i>270</i>     <span class="k">return</span> <span class="n">TrainModel</span><span class="p">(</span><span class="o">**</span><span class="nb">dict</span><span class="p">(</span><span class="nb">locals</span><span class="p">()))</span><span class="o">.</span><span class="n">launch</span><span class="p">()</span></tt>
             </div>
             <div id="l271"
-               class="code sev- "><tt><i>271</i>         <span class="bp">self</span><span class="o">.</span><span class="n">remove_tmp_files</span><span class="p">()</span></tt>
+               class="code sev- "><tt><i>271</i> &nbsp;</tt>
             </div>
             <div id="l272"
                class="code sev- "><tt><i>272</i> &nbsp;</tt>
             </div>
             <div id="l273"
-               class="code sev- "><tt><i>273</i>         <span class="n">output_created</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_model_pth_path</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_metrics_npz_path</span><span class="p">)</span></tt>
+               class="code sev- "><tt><i>273</i> <span class="n">trainModel</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">TrainModel</span><span class="o">.</span><span class="vm">__doc__</span></tt>
             </div>
             <div id="l274"
-               class="code sev- "><tt><i>274</i>         <span class="bp">self</span><span class="o">.</span><span class="n">check_arguments</span><span class="p">(</span><span class="n">output_files_created</span><span class="o">=</span><span class="n">output_created</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></tt>
+               class="code sev- "><tt><i>274</i> <span class="n">main</span> <span class="o">=</span> <span class="n">TrainModel</span><span class="o">.</span><span class="n">get_main</span><span class="p">(</span><span class="n">trainModel</span><span class="p">,</span> <span class="s2">&quot;Trains a PyTorch autoencoder using the given properties.&quot;</span><span class="p">)</span></tt>
             </div>
             <div id="l275"
                class="code sev- "><tt><i>275</i> &nbsp;</tt>
             </div>
             <div id="l276"
-               class="code sev- "><tt><i>276</i>         <span class="k">return</span> <span class="mi">0</span></tt>
+               class="code sev- "><tt><i>276</i> <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span></tt>
             </div>
             <div id="l277"
-               class="code sev- "><tt><i>277</i> &nbsp;</tt>
-            </div>
-            <div id="l278"
-               class="code sev- "><tt><i>278</i> &nbsp;</tt>
-            </div>
-            <div id="l279"
-               class="code sev- "><tt><i>279</i> <span class="k">def</span><span class="w"> </span><span class="nf">train_model</span><span class="p">(</span></tt>
-            </div>
-            <div id="l280"
-               class="code sev- "><tt><i>280</i>     <span class="n">properties</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span></tt>
-            </div>
-            <div id="l281"
-               class="code sev- "><tt><i>281</i>     <span class="n">input_model_pth_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span></tt>
-            </div>
-            <div id="l282"
-               class="code sev- "><tt><i>282</i>     <span class="n">input_dataset_pt_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span></tt>
-            </div>
-            <div id="l283"
-               class="code sev- "><tt><i>283</i>     <span class="n">output_model_pth_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span></tt>
-            </div>
-            <div id="l284"
-               class="code sev- "><tt><i>284</i>     <span class="n">output_metrics_npz_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span></tt>
-            </div>
-            <div id="l285"
-               class="code sev- "><tt><i>285</i>     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span></tt>
-            </div>
-            <div id="l286"
-               class="code sev- "><tt><i>286</i> <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span></tt>
-            </div>
-            <div id="l287"
-               class="code sev- "><tt><i>287</i> <span class="w">    </span><span class="sd">&quot;&quot;&quot;Create the :class:`TrainModel &lt;TrainModel.TrainModel&gt;` class and</span></tt>
-            </div>
-            <div id="l288"
-               class="code sev- "><tt><i>288</i> <span class="sd">    execute the :meth:`launch() &lt;TrainModel.TrainModel.launch&gt;` method.&quot;&quot;&quot;</span></tt>
-            </div>
-            <div id="l289"
-               class="code sev- "><tt><i>289</i>     <span class="k">return</span> <span class="n">TrainModel</span><span class="p">(</span><span class="o">**</span><span class="nb">dict</span><span class="p">(</span><span class="nb">locals</span><span class="p">()))</span><span class="o">.</span><span class="n">launch</span><span class="p">()</span></tt>
-            </div>
-            <div id="l290"
-               class="code sev- "><tt><i>290</i> &nbsp;</tt>
-            </div>
-            <div id="l291"
-               class="code sev- "><tt><i>291</i> &nbsp;</tt>
-            </div>
-            <div id="l292"
-               class="code sev- "><tt><i>292</i> <span class="n">train_model</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">TrainModel</span><span class="o">.</span><span class="vm">__doc__</span></tt>
-            </div>
-            <div id="l293"
-               class="code sev- "><tt><i>293</i> <span class="n">main</span> <span class="o">=</span> <span class="n">TrainModel</span><span class="o">.</span><span class="n">get_main</span><span class="p">(</span><span class="n">train_model</span><span class="p">,</span> <span class="s2">&quot;Trains a PyTorch autoencoder using the given properties.&quot;</span><span class="p">)</span></tt>
-            </div>
-            <div id="l294"
-               class="code sev- "><tt><i>294</i> &nbsp;</tt>
-            </div>
-            <div id="l295"
-               class="code sev- "><tt><i>295</i> <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span></tt>
-            </div>
-            <div id="l296"
-               class="code sev- "><tt><i>296</i>     <span class="n">main</span><span class="p">()</span></tt>
+               class="code sev- "><tt><i>277</i>     <span class="n">main</span><span class="p">()</span></tt>
             </div>
             
          </div>

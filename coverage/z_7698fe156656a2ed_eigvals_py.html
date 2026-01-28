@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Coverage for biobb_pytorch/mdae/loss/eigvals.py: 17%</title>
+    <title>Coverage for biobb_pytorch/mdae/loss/eigvals.py: 72%</title>
     <link rel="icon" sizes="32x32" href="favicon_32_cb_c827f16f.png">
     <link rel="stylesheet" href="style_cb_9ff733b0.css" type="text/css">
     <script src="coverage_html_cb_dd2e7eb5.js" defer></script>
@@ -12,7 +12,7 @@
     <div class="content">
         <h1>
             <span class="text">Coverage for </span><b>biobb_pytorch&#8201;/&#8201;mdae&#8201;/&#8201;loss&#8201;/&#8201;eigvals.py</b>:
-            <span class="pc_cov">17%</span>
+            <span class="pc_cov">72%</span>
         </h1>
         <aside id="help_panel_wrapper">
             <input id="help_panel_state" type="checkbox">
@@ -55,8 +55,8 @@
         </aside>
         <h2>
             <span class="text">36 statements &nbsp;</span>
-            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">6<span class="text"> run</span></button>
-            <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">30<span class="text"> missing</span></button>
+            <button type="button" class="run button_toggle_run" value="run" data-shortcut="r" title="Toggle lines run">26<span class="text"> run</span></button>
+            <button type="button" class="mis show_mis button_toggle_mis" value="mis" data-shortcut="m" title="Toggle lines missing">10<span class="text"> missing</span></button>
             <button type="button" class="exc show_exc button_toggle_exc" value="exc" data-shortcut="x" title="Toggle lines excluded">0<span class="text"> excluded</span></button>
         </h2>
         <p class="text">
@@ -64,8 +64,8 @@
             <a id="indexLink" class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a id="nextFileLink" class="nav" href="z_7698fe156656a2ed_elbo_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.13.1">coverage.py v7.13.1</a>,
-            created at 2026-01-19 01:59 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.13.2">coverage.py v7.13.2</a>,
+            created at 2026-01-28 15:06 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -141,10 +141,10 @@
     <p class="pln"><span class="n"><a id="t59" href="#t59">59</a></span><span class="t"><span class="str">            Whether to return the opposite of the function (in order to be minimized</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t60" href="#t60">60</a></span><span class="t"><span class="str">            with GD methods). Default is ``True``.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t61" href="#t61">61</a></span><span class="t"><span class="str">        """</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t62" href="#t62">62</a></span><span class="t">        <span class="nam">super</span><span class="op">(</span><span class="op">)</span><span class="op">.</span><span class="nam">__init__</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t63" href="#t63">63</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">mode</span> <span class="op">=</span> <span class="nam">mode</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t64" href="#t64">64</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">n_eig</span> <span class="op">=</span> <span class="nam">n_eig</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t65" href="#t65">65</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">invert_sign</span> <span class="op">=</span> <span class="nam">invert_sign</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t62" href="#t62">62</a></span><span class="t">        <span class="nam">super</span><span class="op">(</span><span class="op">)</span><span class="op">.</span><span class="nam">__init__</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t63" href="#t63">63</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">mode</span> <span class="op">=</span> <span class="nam">mode</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t64" href="#t64">64</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">n_eig</span> <span class="op">=</span> <span class="nam">n_eig</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t65" href="#t65">65</a></span><span class="t">        <span class="nam">self</span><span class="op">.</span><span class="nam">invert_sign</span> <span class="op">=</span> <span class="nam">invert_sign</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t66" href="#t66">66</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t67" href="#t67">67</a></span><span class="t">    <span class="key">def</span> <span class="nam">forward</span><span class="op">(</span><span class="nam">self</span><span class="op">,</span> <span class="nam">evals</span><span class="op">:</span> <span class="nam">torch</span><span class="op">.</span><span class="nam">Tensor</span><span class="op">)</span> <span class="op">-></span> <span class="nam">torch</span><span class="op">.</span><span class="nam">Tensor</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t68" href="#t68">68</a></span><span class="t">        <span class="str">"""Compute the loss.</span>&nbsp;</span><span class="r"></span></p>
@@ -203,23 +203,23 @@
     <p class="pln"><span class="n"><a id="t121" href="#t121">121</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t122" href="#t122">122</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t123" href="#t123">123</a></span><span class="t">    <span class="com"># check if n_eig is given and</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t124" href="#t124">124</a></span><span class="t">    <span class="key">if</span> <span class="op">(</span><span class="nam">n_eig</span> <span class="op">></span> <span class="num">0</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">(</span><span class="nam">len</span><span class="op">(</span><span class="nam">evals</span><span class="op">)</span> <span class="op">&lt;</span> <span class="nam">n_eig</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t124" href="#t124">124</a></span><span class="t">    <span class="key">if</span> <span class="op">(</span><span class="nam">n_eig</span> <span class="op">></span> <span class="num">0</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">(</span><span class="nam">len</span><span class="op">(</span><span class="nam">evals</span><span class="op">)</span> <span class="op">&lt;</span> <span class="nam">n_eig</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t125" href="#t125">125</a></span><span class="t">        <span class="key">raise</span> <span class="nam">ValueError</span><span class="op">(</span><span class="str">"n_eig must be lower than the number of eigenvalues."</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t126" href="#t126">126</a></span><span class="t">    <span class="key">elif</span> <span class="nam">n_eig</span> <span class="op">==</span> <span class="num">0</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t127" href="#t127">127</a></span><span class="t">        <span class="key">if</span> <span class="op">(</span><span class="nam">mode</span> <span class="op">==</span> <span class="str">"single"</span><span class="op">)</span> <span class="op">|</span> <span class="op">(</span><span class="nam">mode</span> <span class="op">==</span> <span class="str">"single2"</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t128" href="#t128">128</a></span><span class="t">            <span class="key">raise</span> <span class="nam">ValueError</span><span class="op">(</span><span class="str">"n_eig must be specified when using single or single2."</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t126" href="#t126">126</a></span><span class="t">    <span class="key">elif</span> <span class="nam">n_eig</span> <span class="op">==</span> <span class="num">0</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t127" href="#t127">127</a></span><span class="t">        <span class="key">if</span> <span class="op">(</span><span class="nam">mode</span> <span class="op">==</span> <span class="str">"single"</span><span class="op">)</span> <span class="op">|</span> <span class="op">(</span><span class="nam">mode</span> <span class="op">==</span> <span class="str">"single2"</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t128" href="#t128">128</a></span><span class="t">            <span class="key">raise</span> <span class="nam">ValueError</span><span class="op">(</span><span class="str">"n_eig must be specified when using single or single2."</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t129" href="#t129">129</a></span><span class="t">        <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t130" href="#t130">130</a></span><span class="t">            <span class="nam">n_eig</span> <span class="op">=</span> <span class="nam">len</span><span class="op">(</span><span class="nam">evals</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t130" href="#t130">130</a></span><span class="t">            <span class="nam">n_eig</span> <span class="op">=</span> <span class="nam">len</span><span class="op">(</span><span class="nam">evals</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t131" href="#t131">131</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t132" href="#t132">132</a></span><span class="t">    <span class="nam">loss</span> <span class="op">=</span> <span class="key">None</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t132" href="#t132">132</a></span><span class="t">    <span class="nam">loss</span> <span class="op">=</span> <span class="key">None</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t133" href="#t133">133</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t134" href="#t134">134</a></span><span class="t">    <span class="key">if</span> <span class="nam">mode</span> <span class="op">==</span> <span class="str">"sum"</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t135" href="#t135">135</a></span><span class="t">        <span class="nam">loss</span> <span class="op">=</span> <span class="nam">torch</span><span class="op">.</span><span class="nam">sum</span><span class="op">(</span><span class="nam">evals</span><span class="op">[</span><span class="op">:</span><span class="nam">n_eig</span><span class="op">]</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t136" href="#t136">136</a></span><span class="t">    <span class="key">elif</span> <span class="nam">mode</span> <span class="op">==</span> <span class="str">"sum2"</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t137" href="#t137">137</a></span><span class="t">        <span class="nam">g_lambda</span> <span class="op">=</span> <span class="nam">torch</span><span class="op">.</span><span class="nam">pow</span><span class="op">(</span><span class="nam">evals</span><span class="op">,</span> <span class="num">2</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t138" href="#t138">138</a></span><span class="t">        <span class="nam">loss</span> <span class="op">=</span> <span class="nam">torch</span><span class="op">.</span><span class="nam">sum</span><span class="op">(</span><span class="nam">g_lambda</span><span class="op">[</span><span class="op">:</span><span class="nam">n_eig</span><span class="op">]</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t139" href="#t139">139</a></span><span class="t">    <span class="key">elif</span> <span class="nam">mode</span> <span class="op">==</span> <span class="str">"gap"</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t140" href="#t140">140</a></span><span class="t">        <span class="nam">loss</span> <span class="op">=</span> <span class="nam">evals</span><span class="op">[</span><span class="num">0</span><span class="op">]</span> <span class="op">-</span> <span class="nam">evals</span><span class="op">[</span><span class="num">1</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t134" href="#t134">134</a></span><span class="t">    <span class="key">if</span> <span class="nam">mode</span> <span class="op">==</span> <span class="str">"sum"</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t135" href="#t135">135</a></span><span class="t">        <span class="nam">loss</span> <span class="op">=</span> <span class="nam">torch</span><span class="op">.</span><span class="nam">sum</span><span class="op">(</span><span class="nam">evals</span><span class="op">[</span><span class="op">:</span><span class="nam">n_eig</span><span class="op">]</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t136" href="#t136">136</a></span><span class="t">    <span class="key">elif</span> <span class="nam">mode</span> <span class="op">==</span> <span class="str">"sum2"</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t137" href="#t137">137</a></span><span class="t">        <span class="nam">g_lambda</span> <span class="op">=</span> <span class="nam">torch</span><span class="op">.</span><span class="nam">pow</span><span class="op">(</span><span class="nam">evals</span><span class="op">,</span> <span class="num">2</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t138" href="#t138">138</a></span><span class="t">        <span class="nam">loss</span> <span class="op">=</span> <span class="nam">torch</span><span class="op">.</span><span class="nam">sum</span><span class="op">(</span><span class="nam">g_lambda</span><span class="op">[</span><span class="op">:</span><span class="nam">n_eig</span><span class="op">]</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t139" href="#t139">139</a></span><span class="t">    <span class="key">elif</span> <span class="nam">mode</span> <span class="op">==</span> <span class="str">"gap"</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t140" href="#t140">140</a></span><span class="t">        <span class="nam">loss</span> <span class="op">=</span> <span class="nam">evals</span><span class="op">[</span><span class="num">0</span><span class="op">]</span> <span class="op">-</span> <span class="nam">evals</span><span class="op">[</span><span class="num">1</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t141" href="#t141">141</a></span><span class="t">    <span class="key">elif</span> <span class="nam">mode</span> <span class="op">==</span> <span class="str">"its"</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t142" href="#t142">142</a></span><span class="t">        <span class="nam">g_lambda</span> <span class="op">=</span> <span class="num">1</span> <span class="op">/</span> <span class="nam">torch</span><span class="op">.</span><span class="nam">log</span><span class="op">(</span><span class="nam">evals</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis show_mis"><span class="n"><a id="t143" href="#t143">143</a></span><span class="t">        <span class="nam">loss</span> <span class="op">=</span> <span class="nam">torch</span><span class="op">.</span><span class="nam">sum</span><span class="op">(</span><span class="nam">g_lambda</span><span class="op">[</span><span class="op">:</span><span class="nam">n_eig</span><span class="op">]</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
@@ -232,10 +232,10 @@
     <p class="mis mis2 show_mis"><span class="n"><a id="t150" href="#t150">150</a></span><span class="t">            <span class="str">f"unknown mode : {mode}. options: 'sum','sum2','gap','single','its'."</span>&nbsp;</span><span class="r"></span></p>
     <p class="mis mis2 show_mis"><span class="n"><a id="t151" href="#t151">151</a></span><span class="t">        <span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t152" href="#t152">152</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t153" href="#t153">153</a></span><span class="t">    <span class="key">if</span> <span class="nam">invert_sign</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t154" href="#t154">154</a></span><span class="t">        <span class="nam">loss</span> <span class="op">*=</span> <span class="op">-</span><span class="num">1</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t153" href="#t153">153</a></span><span class="t">    <span class="key">if</span> <span class="nam">invert_sign</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t154" href="#t154">154</a></span><span class="t">        <span class="nam">loss</span> <span class="op">*=</span> <span class="op">-</span><span class="num">1</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t155" href="#t155">155</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="mis show_mis"><span class="n"><a id="t156" href="#t156">156</a></span><span class="t">    <span class="key">return</span> <span class="nam">loss</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t156" href="#t156">156</a></span><span class="t">    <span class="key">return</span> <span class="nam">loss</span>&nbsp;</span><span class="r"></span></p>
 </main>
 <footer>
     <div class="content">
@@ -244,8 +244,8 @@
             <a class="nav" href="index.html">&Hat; index</a> &nbsp; &nbsp;
             <a class="nav" href="z_7698fe156656a2ed_elbo_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
-            <a class="nav" href="https://coverage.readthedocs.io/en/7.13.1">coverage.py v7.13.1</a>,
-            created at 2026-01-19 01:59 +0000
+            <a class="nav" href="https://coverage.readthedocs.io/en/7.13.2">coverage.py v7.13.2</a>,
+            created at 2026-01-28 15:06 +0000
         </p>
     </div>
 </footer>

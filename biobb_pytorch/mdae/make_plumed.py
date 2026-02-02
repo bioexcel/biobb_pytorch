@@ -65,7 +65,7 @@ class GeneratePlumed(BiobbObject):
                     "label": "cv",
                     "PACE": 1
                 },
-                "biased": [
+                "bias": [
                     {
                         "name": "METAD",
                         "label": "bias",
@@ -159,8 +159,6 @@ class GeneratePlumed(BiobbObject):
 
         self.stats = self._load_stats()
         self.n_features = self.stats.get('shape', [None, None])[1]
-        self.arg = ','.join(self._generate_features()[1])
-        self._convert_model_to_ptc()
 
     def _load_stats(self) -> Optional[Dict[str, Any]]:
         """Load stats.pt if provided."""
@@ -237,65 +235,11 @@ class GeneratePlumed(BiobbObject):
                 arg_list.append(label)
                 tor_count += 1
 
+        with open(features_path, 'w') as f:
+            for line in feat_lines:
+                f.write(line + '\n')
+
         return feat_lines, arg_list
-
-    # def _parse_ndx(self, ndx_path: str, group_name: str) -> List[int]:
-    #     """Parse atom indices from a GROMACS NDX file for a specific group."""
-    #     atoms = []
-    #     with open(ndx_path, 'r') as f:
-    #         in_group = False
-    #         for line in f:
-    #             line = line.strip()
-    #             if line.startswith('[') and line.endswith(']'):
-    #                 current_group = line[1:-1].strip()
-    #                 in_group = (current_group == group_name)
-    #             elif in_group and line:
-    #                 atoms.extend(int(x) for x in line.split())
-    #     fu.log(f'Parsed {len(atoms)} atoms from NDX group "{group_name}" in {ndx_path}', self.out_log)
-    #     return atoms
-
-    # def _get_chain_from_group(self, group_name: str) -> str:
-    #     """Extract chain identifier from NDX group name."""
-    #     if group_name.startswith('ch') and '_' in group_name:
-    #         chain_part = group_name[2:group_name.index('_')]
-    #         if len(chain_part) == 1:
-    #             return chain_part
-    #     return 'A'  # Default chain
-
-    # def _generate_ndx_from_pdb(self, pdb_path: str, group_name: str) -> str:
-    #     """
-    #     Generate NDX file from PDB by extracting C-alpha atoms in the specified chain.
-
-    #     Args:
-    #         pdb_path (str): Path to PDB file.
-    #         group_name (str): NDX group name.
-
-    #     Returns:
-    #         str: Path to generated NDX file.
-    #     """
-    #     chain = self._get_chain_from_group(group_name)
-    #     atoms = []
-    #     with open(pdb_path, 'r') as f:
-    #         for line in f:
-    #             if line.startswith('ATOM'):
-    #                 atom_name = line[12:16].strip()
-    #                 chain_id = line[21]
-    #                 if atom_name == 'CA' and chain_id == chain:
-    #                     atom_num = int(line[6:11].strip())
-    #                     atoms.append(atom_num)
-    #     if not atoms:
-    #         raise ValueError(f'No C-alpha atoms found in chain {chain} of {pdb_path}. Cannot generate NDX.')
-    #     ndx_path = 'generated.ndx'
-    #     with open(ndx_path, 'w') as f:
-    #         f.write(f'[ {group_name} ]\n')
-    #         for i, atom in enumerate(atoms, 1):
-    #             f.write(f'{atom} ')
-    #             if i % 15 == 0:
-    #                 f.write('\n')
-    #         if len(atoms) % 15 != 0:
-    #             f.write('\n')
-    #     fu.log(f'Generated NDX file with {len(atoms)} atoms at {ndx_path}', self.out_log)
-    #     return ndx_path
 
     def _convert_model_to_ptc(self) -> None:
         """Convert the PyTorch model to TorchScript format (.ptc)."""
@@ -320,7 +264,7 @@ class GeneratePlumed(BiobbObject):
             fu.log(f'Successfully scripted and saved model to {output_path}', self.out_log)
         except Exception as e:
             fu.log(f'jit.script failed: {e}. Attempting jit.trace instead.', self.out_log)
-            # Add this: Set to eval mode for tracing (required for BatchNorm with batch size 1)
+            # Set to eval mode for tracing (required for BatchNorm with batch size 1)
             model.eval()
             example_input = torch.randn(1, self.n_features)  # Batch size 1, flat input
             traced_model = torch.jit.trace(model, example_input)
@@ -439,7 +383,10 @@ class GeneratePlumed(BiobbObject):
 
         self.stage_files()
 
-        features_lines = self._generate_features()[0]
+        # Perform model conversion and feature generation after staging files
+        self._convert_model_to_ptc()
+        features_lines, arg_list = self._generate_features()
+        self.arg = ','.join(arg_list)
         plumed_lines = self._build_plumed_lines()
 
         has_cartesian = True if 'cartesian_indices' in self.stats else False
@@ -449,9 +396,6 @@ class GeneratePlumed(BiobbObject):
                        'an NDX index file is required to properly define atom groups for fitting and alignment purposes, '
                        'make sure to provide a NDX file.', self.out_log)
 
-        with open(self.io_dict['out']['output_features_dat_path'], 'w') as f:
-            for line in features_lines:
-                f.write(line + '\n')
         fu.log(f'Generated features.dat at {os.path.abspath(self.io_dict["out"]["output_features_dat_path"])}', self.out_log)
         fu.log(f'File size: {get_size(self.io_dict["out"]["output_features_dat_path"])}', self.out_log)
 

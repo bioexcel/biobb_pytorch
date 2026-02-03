@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## What's new in version [5.2.1](https://github.com/bioexcel/biobb_amber/releases/tag/v5.2.1)?
+
+### Changes
+
+* [UPDATE] Update to torch 2.5.0
+* [FEATURE] Minor bug fixes in make_plumed.
+
 ## What's new in version [5.2.0](https://github.com/bioexcel/biobb_amber/releases/tag/v5.2.0)?
 
 ### Changes

@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>biobb_pytorch/mdae/make_plumed.py - flake8 annotated source</title>
+      <meta http-equiv="Content-Type" value="text/html; charset=UTF-8">
+      <link rel="stylesheet" href="styles.css">
+   </head>
+   <body>
+      <div id="masthead" class="sev-1"></div>
+      <div id="page">
+         <h1>
+            <a href="biobb_pytorch.mdae.make_plumed.report.html">
+               <img src="back.svg" alt="&#x2B05;">
+               biobb_pytorch/mdae/make_plumed.py source
+            </a>
+         </h1>
+
+         <div id="doc">
+            <div id="l1"
+               class="code sev- "><tt><i>1</i> <span class="kn">import</span><span class="w"> </span><span class="nn">torch</span></tt>
+            </div>
+            <div id="l2"
+               class="code sev- "><tt><i>2</i> <span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">List</span></tt>
+            </div>
+            <div id="l3"
+               class="code sev- "><tt><i>3</i> <span class="kn">import</span><span class="w"> </span><span class="nn">os</span></tt>
+            </div>
+            <div id="l4"
+               class="code sev- "><tt><i>4</i> <span class="kn">from</span><span class="w"> </span><span class="nn">biobb_pytorch.mdae.utils.log_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_size</span></tt>
+            </div>
+            <div id="l5"
+               class="code sev- "><tt><i>5</i> <span class="kn">from</span><span class="w"> </span><span class="nn">biobb_common.tools.file_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">launchlogger</span></tt>
+            </div>
+            <div id="l6"
+               class="code sev- "><tt><i>6</i> <span class="kn">from</span><span class="w"> </span><span class="nn">biobb_common.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">file_utils</span> <span class="k">as</span> <span class="n">fu</span></tt>
+            </div>
+            <div id="l7"
+               class="code sev- "><tt><i>7</i> <span class="kn">from</span><span class="w"> </span><span class="nn">biobb_common.generic.biobb_object</span><span class="w"> </span><span class="kn">import</span> <span class="n">BiobbObject</span></tt>
+            </div>
+            <div id="l8"
+               class="code sev- "><tt><i>8</i> &nbsp;</tt>
+            </div>
+            <div id="l9"
+               class="code sev- "><tt><i>9</i> &nbsp;</tt>
+            </div>
+            <div id="l10"
+               class="code sev- "><tt><i>10</i> <span class="k">class</span><span class="w"> </span><span class="nc">GeneratePlumed</span><span class="p">(</span><span class="n">BiobbObject</span><span class="p">):</span></tt>
+            </div>
+            <div id="l11"
+               class="code sev- "><tt><i>11</i> <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l12"
+               class="code sev- "><tt><i>12</i> <span class="sd">    | biobb_plumed GeneratePlumed</span></tt>
+            </div>
+            <div id="l13"
+               class="code sev- "><tt><i>13</i> <span class="sd">    | Generate PLUMED input for biased dynamics using an MDAE model.</span></tt>
+            </div>
+            <div id="l14"
+               class="code sev- "><tt><i>14</i> <span class="sd">    | Generates a PLUMED input file, features.dat, and converts the model to .ptc format.</span></tt>
+            </div>
+            <div id="l15"
+               class="code sev- "><tt><i>15</i> &nbsp;</tt>
+            </div>
+            <div id="l16"
+               class="code sev- "><tt><i>16</i> <span class="sd">    Args:</span></tt>
+            </div>
+            <div id="l17"
+               class="code sev- "><tt><i>17</i> <span class="sd">        input_model_pth_path (str): Path to the trained PyTorch model (.pth) to be converted to TorchScript and used in PLUMED. File type: input. Accepted formats: pth (edam:format_2333).</span></tt>
+            </div>
+            <div id="l18"
+               class="code sev- "><tt><i>18</i> <span class="sd">        input_stats_pt_path (str) (Optional): Path to statistics file (.pt) produced during featurization, used to derive the PLUMED features.dat content. File type: input. Accepted formats: pt (edam:format_2333).</span></tt>
+            </div>
+            <div id="l19"
+               class="code sev- "><tt><i>19</i> <span class="sd">        input_reference_pdb_path (str) (Optional): Path to reference PDB used for FIT_TO_TEMPLATE actions when Cartesian features are present. File type: input. Accepted formats: pdb (edam:format_1476).</span></tt>
+            </div>
+            <div id="l20"
+               class="code sev- "><tt><i>20</i> <span class="sd">        input_ndx_path (str) (Optional): Path to GROMACS index (NDX) file used to define groups when required by PLUMED. File type: input. Accepted formats: ndx (edam:format_2033).</span></tt>
+            </div>
+            <div id="l21"
+               class="code sev- "><tt><i>21</i> <span class="sd">        output_plumed_dat_path (str): Path to the output PLUMED input file. File type: output. Accepted formats: dat (edam:format_2330).</span></tt>
+            </div>
+            <div id="l22"
+               class="code sev- "><tt><i>22</i> <span class="sd">        output_features_dat_path (str): Path to the output features.dat file describing the CVs to PLUMED. File type: output. Accepted formats: dat (edam:format_2330).</span></tt>
+            </div>
+            <div id="l23"
+               class="code sev- "><tt><i>23</i> <span class="sd">        output_model_ptc_path (str): Path to the output TorchScript model file (.ptc) for PLUMED&#39;s PYTORCH_MODEL action. File type: output. Accepted formats: ptc (edam:format_2333).</span></tt>
+            </div>
+            <div id="l24"
+               class="code sev- "><tt><i>24</i> <span class="sd">        properties (dict - Python dictionary object containing the tool parameters, not input/output files):</span></tt>
+            </div>
+            <div id="l25"
+               class="code sev- "><tt><i>25</i> <span class="sd">            * **include_energy** (*bool*) - (True) Whether to include ENERGY in PLUMED.</span></tt>
+            </div>
+            <div id="l26"
+               class="code sev- "><tt><i>26</i> <span class="sd">            * **bias** (*list*) - ([]) List of biasing actions (e.g. METAD) to be added to the PLUMED file.</span></tt>
+            </div>
+            <div id="l27"
+               class="code sev- "><tt><i>27</i> <span class="sd">            * **prints** (*dict*) - ({&quot;ARG&quot;: &quot;*&quot;, &quot;STRIDE&quot;: 1, &quot;FILE&quot;: &quot;COLVAR&quot;}) PRINT command parameters (e.g. ARG, STRIDE, FILE).</span></tt>
+            </div>
+            <div id="l28"
+               class="code sev- "><tt><i>28</i> <span class="sd">            * **group** (*dict*) - (None) GROUP definition options (label, NDX group or atom selection parameters).</span></tt>
+            </div>
+            <div id="l29"
+               class="code sev- "><tt><i>29</i> <span class="sd">            * **wholemolecules** (*dict*) - (None) WHOLEMOLECULES options when using Cartesian coordinates.</span></tt>
+            </div>
+            <div id="l30"
+               class="code sev- "><tt><i>30</i> <span class="sd">            * **fit_to_template** (*dict*) - (None) FIT_TO_TEMPLATE options (e.g. STRIDE, TYPE, etc.).</span></tt>
+            </div>
+            <div id="l31"
+               class="code sev- "><tt><i>31</i> <span class="sd">            * **pytorch_model** (*dict*) - (None) PYTORCH_MODEL options (label, PACE and other parameters).</span></tt>
+            </div>
+            <div id="l32"
+               class="code sev- "><tt><i>32</i> &nbsp;</tt>
+            </div>
+            <div id="l33"
+               class="code sev- "><tt><i>33</i> <span class="sd">    Examples:</span></tt>
+            </div>
+            <div id="l34"
+               class="code sev- "><tt><i>34</i> <span class="sd">        This example shows how to use the GeneratePlumed class to generate a PLUMED input file for biased dynamics using an MDAE model::</span></tt>
+            </div>
+            <div id="l35"
+               class="code sev- "><tt><i>35</i> &nbsp;</tt>
+            </div>
+            <div id="l36"
+               class="code sev- "><tt><i>36</i> <span class="sd">            from biobb_plumed.generate_plumed import generatePlumed</span></tt>
+            </div>
+            <div id="l37"
+               class="code sev- "><tt><i>37</i> &nbsp;</tt>
+            </div>
+            <div id="l38"
+               class="code sev- "><tt><i>38</i> <span class="sd">            prop = {</span></tt>
+            </div>
+            <div id="l39"
+               class="code sev- "><tt><i>39</i> <span class="sd">                &quot;additional_actions&quot;: [</span></tt>
+            </div>
+            <div id="l40"
+               class="code sev- "><tt><i>40</i> <span class="sd">                    {</span></tt>
+            </div>
+            <div id="l41"
+               class="code sev- "><tt><i>41</i> <span class="sd">                        &quot;name&quot;: &quot;ENERGY&quot;,</span></tt>
+            </div>
+            <div id="l42"
+               class="code sev- "><tt><i>42</i> <span class="sd">                        &quot;label&quot;: &quot;ene&quot;</span></tt>
+            </div>
+            <div id="l43"
+               class="code sev- "><tt><i>43</i> <span class="sd">                    },</span></tt>
+            </div>
+            <div id="l44"
+               class="code sev- "><tt><i>44</i> <span class="sd">                    {</span></tt>
+            </div>
+            <div id="l45"
+               class="code sev- "><tt><i>45</i> <span class="sd">                        &quot;name&quot;: &quot;RMSD&quot;,</span></tt>
+            </div>
+            <div id="l46"
+               class="code sev- "><tt><i>46</i> <span class="sd">                        &quot;label&quot;: &quot;rmsd&quot;,</span></tt>
+            </div>
+            <div id="l47"
+               class="code sev- "><tt><i>47</i> <span class="sd">                        &quot;params&quot;: {</span></tt>
+            </div>
+            <div id="l48"
+               class="code sev- "><tt><i>48</i> <span class="sd">                            &quot;TYPE&quot;: &quot;OPTIMAL&quot;</span></tt>
+            </div>
+            <div id="l49"
+               class="code sev- "><tt><i>49</i> <span class="sd">                        }</span></tt>
+            </div>
+            <div id="l50"
+               class="code sev- "><tt><i>50</i> <span class="sd">                    }</span></tt>
+            </div>
+            <div id="l51"
+               class="code sev- "><tt><i>51</i> <span class="sd">                ],</span></tt>
+            </div>
+            <div id="l52"
+               class="code sev- "><tt><i>52</i> <span class="sd">                &quot;group&quot;: {</span></tt>
+            </div>
+            <div id="l53"
+               class="code sev- "><tt><i>53</i> <span class="sd">                    &quot;label&quot;: &quot;c_alphas&quot;,</span></tt>
+            </div>
+            <div id="l54"
+               class="code sev- "><tt><i>54</i> <span class="sd">                    &quot;NDX_GROUP&quot;: &quot;chA_&amp;_C-alpha&quot;</span></tt>
+            </div>
+            <div id="l55"
+               class="code sev- "><tt><i>55</i> <span class="sd">                },</span></tt>
+            </div>
+            <div id="l56"
+               class="code sev- "><tt><i>56</i> <span class="sd">                &quot;wholemolecules&quot;: {</span></tt>
+            </div>
+            <div id="l57"
+               class="code sev- "><tt><i>57</i> <span class="sd">                    &quot;ENTITY0&quot;: &quot;c_alphas&quot;</span></tt>
+            </div>
+            <div id="l58"
+               class="code sev- "><tt><i>58</i> <span class="sd">                },</span></tt>
+            </div>
+            <div id="l59"
+               class="code sev- "><tt><i>59</i> <span class="sd">                &quot;fit_to_template&quot;: {</span></tt>
+            </div>
+            <div id="l60"
+               class="code sev- "><tt><i>60</i> <span class="sd">                    &quot;STRIDE&quot;: 1,</span></tt>
+            </div>
+            <div id="l61"
+               class="code sev- "><tt><i>61</i> <span class="sd">                    &quot;TYPE&quot;: &quot;OPTIMAL&quot;</span></tt>
+            </div>
+            <div id="l62"
+               class="code sev- "><tt><i>62</i> <span class="sd">                },</span></tt>
+            </div>
+            <div id="l63"
+               class="code sev- "><tt><i>63</i> <span class="sd">                &quot;pytorch_model&quot;: {</span></tt>
+            </div>
+            <div id="l64"
+               class="code sev- "><tt><i>64</i> <span class="sd">                    &quot;label&quot;: &quot;cv&quot;,</span></tt>
+            </div>
+            <div id="l65"
+               class="code sev- "><tt><i>65</i> <span class="sd">                    &quot;PACE&quot;: 1</span></tt>
+            </div>
+            <div id="l66"
+               class="code sev- "><tt><i>66</i> <span class="sd">                },</span></tt>
+            </div>
+            <div id="l67"
+               class="code sev- "><tt><i>67</i> <span class="sd">                &quot;bias&quot;: [</span></tt>
+            </div>
+            <div id="l68"
+               class="code sev- "><tt><i>68</i> <span class="sd">                    {</span></tt>
+            </div>
+            <div id="l69"
+               class="code sev- "><tt><i>69</i> <span class="sd">                        &quot;name&quot;: &quot;METAD&quot;,</span></tt>
+            </div>
+            <div id="l70"
+               class="code sev- "><tt><i>70</i> <span class="sd">                        &quot;label&quot;: &quot;bias&quot;,</span></tt>
+            </div>
+            <div id="l71"
+               class="code sev- "><tt><i>71</i> <span class="sd">                        &quot;params&quot;: {</span></tt>
+            </div>
+            <div id="l72"
+               class="code sev- "><tt><i>72</i> <span class="sd">                            &quot;ARG&quot;: &quot;cv.1&quot;,</span></tt>
+            </div>
+            <div id="l73"
+               class="code sev- "><tt><i>73</i> <span class="sd">                            &quot;PACE&quot;: 500,</span></tt>
+            </div>
+            <div id="l74"
+               class="code sev- "><tt><i>74</i> <span class="sd">                            &quot;HEIGHT&quot;: 1.2,</span></tt>
+            </div>
+            <div id="l75"
+               class="code sev- "><tt><i>75</i> <span class="sd">                            &quot;SIGMA&quot;: 0.35,</span></tt>
+            </div>
+            <div id="l76"
+               class="code sev- "><tt><i>76</i> <span class="sd">                            &quot;FILE&quot;: &quot;HILLS&quot;,</span></tt>
+            </div>
+            <div id="l77"
+               class="code sev- "><tt><i>77</i> <span class="sd">                            &quot;BIASFACTOR&quot;: 8</span></tt>
+            </div>
+            <div id="l78"
+               class="code sev- "><tt><i>78</i> <span class="sd">                        }</span></tt>
+            </div>
+            <div id="l79"
+               class="code sev- "><tt><i>79</i> <span class="sd">                    }</span></tt>
+            </div>
+            <div id="l80"
+               class="code sev- "><tt><i>80</i> <span class="sd">                ],</span></tt>
+            </div>
+            <div id="l81"
+               class="code sev- "><tt><i>81</i> <span class="sd">                &quot;prints&quot;: {</span></tt>
+            </div>
+            <div id="l82"
+               class="code sev- "><tt><i>82</i> <span class="sd">                    &quot;ARG&quot;: &quot;cv.*,bias.*&quot;,</span></tt>
+            </div>
+            <div id="l83"
+               class="code sev- "><tt><i>83</i> <span class="sd">                    &quot;STRIDE&quot;: 1,</span></tt>
+            </div>
+            <div id="l84"
+               class="code sev- "><tt><i>84</i> <span class="sd">                    &quot;FILE&quot;: &quot;COLVAR&quot;</span></tt>
+            </div>
+            <div id="l85"
+               class="code sev- "><tt><i>85</i> <span class="sd">                }</span></tt>
+            </div>
+            <div id="l86"
+               class="code sev- "><tt><i>86</i> <span class="sd">            }</span></tt>
+            </div>
+            <div id="l87"
+               class="code sev- "><tt><i>87</i> &nbsp;</tt>
+            </div>
+            <div id="l88"
+               class="code sev- "><tt><i>88</i> <span class="sd">            generatePlumed(</span></tt>
+            </div>
+            <div id="l89"
+               class="code sev- "><tt><i>89</i> <span class="sd">                input_model_pth_path=&quot;model.pth&quot;,</span></tt>
+            </div>
+            <div id="l90"
+               class="code sev- "><tt><i>90</i> <span class="sd">                input_stats_pt_path=&quot;stats.pt&quot;,</span></tt>
+            </div>
+            <div id="l91"
+               class="code sev- "><tt><i>91</i> <span class="sd">                output_plumed_dat_path=&quot;plumed.dat&quot;,</span></tt>
+            </div>
+            <div id="l92"
+               class="code sev- "><tt><i>92</i> <span class="sd">                output_features_dat_path=&quot;features.dat&quot;,</span></tt>
+            </div>
+            <div id="l93"
+               class="code sev- "><tt><i>93</i> <span class="sd">                output_model_ptc_path=&quot;model.ptc&quot;,</span></tt>
+            </div>
+            <div id="l94"
+               class="code sev- "><tt><i>94</i> <span class="sd">                properties=prop</span></tt>
+            </div>
+            <div id="l95"
+               class="code sev- "><tt><i>95</i> <span class="sd">            )</span></tt>
+            </div>
+            <div id="l96"
+               class="code sev- "><tt><i>96</i> &nbsp;</tt>
+            </div>
+            <div id="l97"
+               class="code sev- "><tt><i>97</i> <span class="sd">    Info:</span></tt>
+            </div>
+            <div id="l98"
+               class="code sev- "><tt><i>98</i> <span class="sd">        * wrapped_software:</span></tt>
+            </div>
+            <div id="l99"
+               class="code sev- "><tt><i>99</i> <span class="sd">            * name: PLUMED with PyTorch</span></tt>
+            </div>
+            <div id="l100"
+               class="code sev- "><tt><i>100</i> <span class="sd">            * version: &gt;=2.0</span></tt>
+            </div>
+            <div id="l101"
+               class="code sev- "><tt><i>101</i> <span class="sd">            * license: LGPL 3.0</span></tt>
+            </div>
+            <div id="l102"
+               class="code sev- "><tt><i>102</i> <span class="sd">        * ontology:</span></tt>
+            </div>
+            <div id="l103"
+               class="code sev- "><tt><i>103</i> <span class="sd">            * name: EDAM</span></tt>
+            </div>
+            <div id="l104"
+               class="code sev- "><tt><i>104</i> <span class="sd">            * schema: http://edamontology.org/EDAM.owl</span></tt>
+            </div>
+            <div id="l105"
+               class="code sev- "><tt><i>105</i> <span class="sd">    &quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l106"
+               class="code sev- "><tt><i>106</i> &nbsp;</tt>
+            </div>
+            <div id="l107"
+               class="code sev- "><tt><i>107</i>     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span></tt>
+            </div>
+            <div id="l108"
+               class="code sev- "><tt><i>108</i>         <span class="bp">self</span><span class="p">,</span></tt>
+            </div>
+            <div id="l109"
+               class="code sev- "><tt><i>109</i>         <span class="n">input_model_pth_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span></tt>
+            </div>
+            <div id="l110"
+               class="code sev- "><tt><i>110</i>         <span class="n">input_stats_pt_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span></tt>
+            </div>
+            <div id="l111"
+               class="code sev- "><tt><i>111</i>         <span class="n">input_reference_pdb_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span></tt>
+            </div>
+            <div id="l112"
+               class="code sev- "><tt><i>112</i>         <span class="n">input_ndx_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span></tt>
+            </div>
+            <div id="l113"
+               class="code sev- "><tt><i>113</i>         <span class="n">output_plumed_dat_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;plumed.dat&#39;</span><span class="p">,</span></tt>
+            </div>
+            <div id="l114"
+               class="code sev- "><tt><i>114</i>         <span class="n">output_features_dat_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;features.dat&#39;</span><span class="p">,</span></tt>
+            </div>
+            <div id="l115"
+               class="code sev- "><tt><i>115</i>         <span class="n">output_model_ptc_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;model.ptc&#39;</span><span class="p">,</span></tt>
+            </div>
+            <div id="l116"
+               class="code sev- "><tt><i>116</i>         <span class="n">properties</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span></tt>
+            </div>
+            <div id="l117"
+               class="code sev- "><tt><i>117</i>         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span></tt>
+            </div>
+            <div id="l118"
+               class="code sev- "><tt><i>118</i>     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span></tt>
+            </div>
+            <div id="l119"
+               class="code sev- "><tt><i>119</i>         <span class="n">properties</span> <span class="o">=</span> <span class="n">properties</span> <span class="ow">or</span> <span class="p">{}</span></tt>
+            </div>
+            <div id="l120"
+               class="code sev- "><tt><i>120</i> &nbsp;</tt>
+            </div>
+            <div id="l121"
+               class="code sev- "><tt><i>121</i>         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">properties</span><span class="p">)</span></tt>
+            </div>
+            <div id="l122"
+               class="code sev- "><tt><i>122</i>         <span class="bp">self</span><span class="o">.</span><span class="n">locals_var_dict</span> <span class="o">=</span> <span class="nb">locals</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></tt>
+            </div>
+            <div id="l123"
+               class="code sev- "><tt><i>123</i> &nbsp;</tt>
+            </div>
+            <div id="l124"
+               class="code sev- "><tt><i>124</i>         <span class="c1"># Input/Output files</span></tt>
+            </div>
+            <div id="l125"
+               class="code sev- "><tt><i>125</i>         <span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span> <span class="o">=</span> <span class="p">{</span></tt>
+            </div>
+            <div id="l126"
+               class="code sev- "><tt><i>126</i>             <span class="s2">&quot;in&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;input_model_pth_path&quot;</span><span class="p">:</span> <span class="n">input_model_pth_path</span><span class="p">},</span></tt>
+            </div>
+            <div id="l127"
+               class="code sev- "><tt><i>127</i>             <span class="s2">&quot;out&quot;</span><span class="p">:</span> <span class="p">{</span></tt>
+            </div>
+            <div id="l128"
+               class="code sev- "><tt><i>128</i>                 <span class="s2">&quot;output_plumed_dat_path&quot;</span><span class="p">:</span> <span class="n">output_plumed_dat_path</span><span class="p">,</span></tt>
+            </div>
+            <div id="l129"
+               class="code sev- "><tt><i>129</i>                 <span class="s2">&quot;output_features_dat_path&quot;</span><span class="p">:</span> <span class="n">output_features_dat_path</span><span class="p">,</span></tt>
+            </div>
+            <div id="l130"
+               class="code sev- "><tt><i>130</i>                 <span class="s2">&quot;output_model_ptc_path&quot;</span><span class="p">:</span> <span class="n">output_model_ptc_path</span></tt>
+            </div>
+            <div id="l131"
+               class="code sev- "><tt><i>131</i>             <span class="p">}</span></tt>
+            </div>
+            <div id="l132"
+               class="code sev- "><tt><i>132</i>         <span class="p">}</span></tt>
+            </div>
+            <div id="l133"
+               class="code sev- "><tt><i>133</i>         <span class="k">if</span> <span class="n">input_stats_pt_path</span><span class="p">:</span></tt>
+            </div>
+            <div id="l134"
+               class="code sev- "><tt><i>134</i>             <span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;in&quot;</span><span class="p">][</span><span class="s2">&quot;input_stats_pt_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">input_stats_pt_path</span></tt>
+            </div>
+            <div id="l135"
+               class="code sev- "><tt><i>135</i>         <span class="k">if</span> <span class="n">input_reference_pdb_path</span><span class="p">:</span></tt>
+            </div>
+            <div id="l136"
+               class="code sev- "><tt><i>136</i>             <span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;in&quot;</span><span class="p">][</span><span class="s2">&quot;input_reference_pdb_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">input_reference_pdb_path</span></tt>
+            </div>
+            <div id="l137"
+               class="code sev- "><tt><i>137</i>         <span class="k">if</span> <span class="n">input_ndx_path</span><span class="p">:</span></tt>
+            </div>
+            <div id="l138"
+               class="code sev- "><tt><i>138</i>             <span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;in&quot;</span><span class="p">][</span><span class="s2">&quot;input_ndx_path&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">input_ndx_path</span></tt>
+            </div>
+            <div id="l139"
+               class="code sev- "><tt><i>139</i> &nbsp;</tt>
+            </div>
+            <div id="l140"
+               class="code sev- "><tt><i>140</i>         <span class="c1"># Properties</span></tt>
+            </div>
+            <div id="l141"
+               class="code sev- "><tt><i>141</i>         <span class="bp">self</span><span class="o">.</span><span class="n">model_pth</span> <span class="o">=</span> <span class="n">input_model_pth_path</span></tt>
+            </div>
+            <div id="l142"
+               class="code sev- "><tt><i>142</i>         <span class="bp">self</span><span class="o">.</span><span class="n">stats_pt</span> <span class="o">=</span> <span class="n">input_stats_pt_path</span></tt>
+            </div>
+            <div id="l143"
+               class="code sev- "><tt><i>143</i>         <span class="bp">self</span><span class="o">.</span><span class="n">ref_pdb</span> <span class="o">=</span> <span class="n">input_reference_pdb_path</span></tt>
+            </div>
+            <div id="l144"
+               class="code sev- "><tt><i>144</i>         <span class="bp">self</span><span class="o">.</span><span class="n">ndx</span> <span class="o">=</span> <span class="n">input_ndx_path</span></tt>
+            </div>
+            <div id="l145"
+               class="code sev- "><tt><i>145</i>         <span class="bp">self</span><span class="o">.</span><span class="n">properties</span> <span class="o">=</span> <span class="n">properties</span></tt>
+            </div>
+            <div id="l146"
+               class="code sev- "><tt><i>146</i> &nbsp;</tt>
+            </div>
+            <div id="l147"
+               class="code sev- "><tt><i>147</i>         <span class="bp">self</span><span class="o">.</span><span class="n">additional_actions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;additional_actions&#39;</span><span class="p">,</span> <span class="p">[])</span></tt>
+            </div>
+            <div id="l148"
+               class="code sev- "><tt><i>148</i>         <span class="bp">self</span><span class="o">.</span><span class="n">group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;group&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></tt>
+            </div>
+            <div id="l149"
+               class="code sev- "><tt><i>149</i>         <span class="bp">self</span><span class="o">.</span><span class="n">wholemolecules</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;wholemolecules&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></tt>
+            </div>
+            <div id="l150"
+               class="code sev- "><tt><i>150</i>         <span class="bp">self</span><span class="o">.</span><span class="n">fit_to_template</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;fit_to_template&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></tt>
+            </div>
+            <div id="l151"
+               class="code sev- "><tt><i>151</i>         <span class="bp">self</span><span class="o">.</span><span class="n">pytorch_model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;pytorch_model&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></tt>
+            </div>
+            <div id="l152"
+               class="code sev- "><tt><i>152</i>         <span class="bp">self</span><span class="o">.</span><span class="n">bias</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;bias&#39;</span><span class="p">,</span> <span class="p">[])</span></tt>
+            </div>
+            <div id="l153"
+               class="code sev- "><tt><i>153</i>         <span class="bp">self</span><span class="o">.</span><span class="n">prints</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">properties</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;prints&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;ARG&#39;</span><span class="p">:</span> <span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="s1">&#39;STRIDE&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;FILE&#39;</span><span class="p">:</span> <span class="s1">&#39;COLVAR&#39;</span><span class="p">})</span></tt>
+            </div>
+            <div id="l154"
+               class="code sev- "><tt><i>154</i> &nbsp;</tt>
+            </div>
+            <div id="l155"
+               class="code sev- "><tt><i>155</i>         <span class="c1"># Check the properties</span></tt>
+            </div>
+            <div id="l156"
+               class="code sev- "><tt><i>156</i>         <span class="bp">self</span><span class="o">.</span><span class="n">check_properties</span><span class="p">(</span><span class="n">properties</span><span class="p">)</span></tt>
+            </div>
+            <div id="l157"
+               class="code sev- "><tt><i>157</i>         <span class="bp">self</span><span class="o">.</span><span class="n">check_arguments</span><span class="p">()</span></tt>
+            </div>
+            <div id="l158"
+               class="code sev- "><tt><i>158</i> &nbsp;</tt>
+            </div>
+            <div id="l159"
+               class="code sev- "><tt><i>159</i>         <span class="bp">self</span><span class="o">.</span><span class="n">stats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_stats</span><span class="p">()</span></tt>
+            </div>
+            <div id="l160"
+               class="code sev- "><tt><i>160</i>         <span class="bp">self</span><span class="o">.</span><span class="n">n_features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;shape&#39;</span><span class="p">,</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">])[</span><span class="mi">1</span><span class="p">]</span></tt>
+            </div>
+            <div id="l161"
+               class="code sev- "><tt><i>161</i> &nbsp;</tt>
+            </div>
+            <div id="l162"
+               class="code sev- "><tt><i>162</i>     <span class="k">def</span><span class="w"> </span><span class="nf">_load_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span></tt>
+            </div>
+            <div id="l163"
+               class="code sev- "><tt><i>163</i> <span class="w">        </span><span class="sd">&quot;&quot;&quot;Load stats.pt if provided.&quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l164"
+               class="code sev- "><tt><i>164</i>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stats_pt</span><span class="p">:</span></tt>
+            </div>
+            <div id="l165"
+               class="code sev- "><tt><i>165</i>             <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stats_pt</span><span class="p">,</span></tt>
+            </div>
+            <div id="l166"
+               class="code sev- "><tt><i>166</i>                               <span class="n">weights_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></tt>
+            </div>
+            <div id="l167"
+               class="code sev- "><tt><i>167</i>         <span class="k">return</span> <span class="kc">None</span></tt>
+            </div>
+            <div id="l168"
+               class="code sev- "><tt><i>168</i> &nbsp;</tt>
+            </div>
+            <div id="l169"
+               class="code sev- "><tt><i>169</i>     <span class="k">def</span><span class="w"> </span><span class="nf">_generate_features</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span></tt>
+            </div>
+            <div id="l170"
+               class="code sev- "><tt><i>170</i> <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l171"
+               class="code sev- "><tt><i>171</i> <span class="sd">        Generate features.dat and return the ARG string for PYTORCH_MODEL.</span></tt>
+            </div>
+            <div id="l172"
+               class="code sev- "><tt><i>172</i> &nbsp;</tt>
+            </div>
+            <div id="l173"
+               class="code sev- "><tt><i>173</i> <span class="sd">        Returns:</span></tt>
+            </div>
+            <div id="l174"
+               class="code sev- "><tt><i>174</i> <span class="sd">            str: Comma-separated ARG string.</span></tt>
+            </div>
+            <div id="l175"
+               class="code sev- "><tt><i>175</i> <span class="sd">        &quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l176"
+               class="code sev- "><tt><i>176</i>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stats_pt</span><span class="p">:</span></tt>
+            </div>
+            <div id="l177"
+               class="code sev- "><tt><i>177</i>             <span class="c1"># Non-Cartesian or mixed mode</span></tt>
+            </div>
+            <div id="l178"
+               class="code sev- "><tt><i>178</i>             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_features_from_stats</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s1">&#39;out&#39;</span><span class="p">][</span><span class="s1">&#39;output_features_dat_path&#39;</span><span class="p">])</span></tt>
+            </div>
+            <div id="l179"
+               class="code sev- "><tt><i>179</i>         <span class="k">else</span><span class="p">:</span></tt>
+            </div>
+            <div id="l180"
+               class="code sev- "><tt><i>180</i>             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Input_stats_pt_path is required.&#39;</span><span class="p">)</span></tt>
+            </div>
+            <div id="l181"
+               class="code sev- "><tt><i>181</i> &nbsp;</tt>
+            </div>
+            <div id="l182"
+               class="code sev- "><tt><i>182</i>     <span class="k">def</span><span class="w"> </span><span class="nf">_generate_features_from_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stats</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span> <span class="n">features_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span></tt>
+            </div>
+            <div id="l183"
+               class="code sev- "><tt><i>183</i> <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l184"
+               class="code sev- "><tt><i>184</i> <span class="sd">        Generate features.dat from stats.pt for distances, angles, dihedrals, and/or cartesians.</span></tt>
+            </div>
+            <div id="l185"
+               class="code sev- "><tt><i>185</i> &nbsp;</tt>
+            </div>
+            <div id="l186"
+               class="code sev- "><tt><i>186</i> <span class="sd">        Args:</span></tt>
+            </div>
+            <div id="l187"
+               class="code sev- "><tt><i>187</i> <span class="sd">            stats (Dict[str, Any]): Loaded stats dictionary.</span></tt>
+            </div>
+            <div id="l188"
+               class="code sev- "><tt><i>188</i> <span class="sd">            features_path (str): Path to write features.dat.</span></tt>
+            </div>
+            <div id="l189"
+               class="code sev- "><tt><i>189</i> &nbsp;</tt>
+            </div>
+            <div id="l190"
+               class="code sev- "><tt><i>190</i> <span class="sd">        Returns:</span></tt>
+            </div>
+            <div id="l191"
+               class="code sev- "><tt><i>191</i> <span class="sd">            str: Comma-separated ARG string.</span></tt>
+            </div>
+            <div id="l192"
+               class="code sev- "><tt><i>192</i> <span class="sd">        &quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l193"
+               class="code sev- "><tt><i>193</i>         <span class="n">feat_lines</span> <span class="o">=</span> <span class="p">[]</span></tt>
+            </div>
+            <div id="l194"
+               class="code sev- "><tt><i>194</i>         <span class="n">arg_list</span> <span class="o">=</span> <span class="p">[]</span></tt>
+            </div>
+            <div id="l195"
+               class="code sev- "><tt><i>195</i>         <span class="n">dist_count</span> <span class="o">=</span> <span class="mi">1</span></tt>
+            </div>
+            <div id="l196"
+               class="code sev- "><tt><i>196</i>         <span class="n">ang_count</span> <span class="o">=</span> <span class="mi">1</span></tt>
+            </div>
+            <div id="l197"
+               class="code sev- "><tt><i>197</i>         <span class="n">tor_count</span> <span class="o">=</span> <span class="mi">1</span></tt>
+            </div>
+            <div id="l198"
+               class="code sev- "><tt><i>198</i> &nbsp;</tt>
+            </div>
+            <div id="l199"
+               class="code sev- "><tt><i>199</i>         <span class="c1"># Adjust indices to 1-based for PLUMED</span></tt>
+            </div>
+            <div id="l200"
+               class="code sev- "><tt><i>200</i>         <span class="k">def</span><span class="w"> </span><span class="nf">adjust_indices</span><span class="p">(</span><span class="n">indices</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span></tt>
+            </div>
+            <div id="l201"
+               class="code sev- "><tt><i>201</i>             <span class="k">return</span> <span class="p">[</span><span class="n">idx</span> <span class="o">+</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">]</span></tt>
+            </div>
+            <div id="l202"
+               class="code sev- "><tt><i>202</i> &nbsp;</tt>
+            </div>
+            <div id="l203"
+               class="code sev- "><tt><i>203</i>         <span class="k">if</span> <span class="s1">&#39;cartesian_indices&#39;</span> <span class="ow">in</span> <span class="n">stats</span><span class="p">:</span></tt>
+            </div>
+            <div id="l204"
+               class="code sev- "><tt><i>204</i>             <span class="n">pos_atoms</span> <span class="o">=</span> <span class="n">adjust_indices</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;cartesian_indices&#39;</span><span class="p">])</span></tt>
+            </div>
+            <div id="l205"
+               class="code sev- "><tt><i>205</i>             <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">pos_atoms</span><span class="p">)</span><span class="si">}</span><span class="s2"> Cartesian features.&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l206"
+               class="code sev- "><tt><i>206</i>             <span class="k">for</span> <span class="n">atom</span> <span class="ow">in</span> <span class="n">pos_atoms</span><span class="p">:</span></tt>
+            </div>
+            <div id="l207"
+               class="code sev- "><tt><i>207</i>                 <span class="n">feat_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;p</span><span class="si">{</span><span class="n">atom</span><span class="si">}</span><span class="s1">: POSITION ATOM=</span><span class="si">{</span><span class="n">atom</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></tt>
+            </div>
+            <div id="l208"
+               class="code sev- "><tt><i>208</i>                 <span class="n">arg_list</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;p</span><span class="si">{</span><span class="n">atom</span><span class="si">}</span><span class="s1">.x&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;p</span><span class="si">{</span><span class="n">atom</span><span class="si">}</span><span class="s1">.y&#39;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;p</span><span class="si">{</span><span class="n">atom</span><span class="si">}</span><span class="s1">.z&#39;</span><span class="p">])</span></tt>
+            </div>
+            <div id="l209"
+               class="code sev- "><tt><i>209</i> &nbsp;</tt>
+            </div>
+            <div id="l210"
+               class="code sev- "><tt><i>210</i>         <span class="k">if</span> <span class="s1">&#39;distance_indices&#39;</span> <span class="ow">in</span> <span class="n">stats</span><span class="p">:</span></tt>
+            </div>
+            <div id="l211"
+               class="code sev- "><tt><i>211</i>             <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;distance_indices&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2"> Distance features.&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l212"
+               class="code sev- "><tt><i>212</i>             <span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;distance_indices&#39;</span><span class="p">]:</span></tt>
+            </div>
+            <div id="l213"
+               class="code sev- "><tt><i>213</i>                 <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">adjust_indices</span><span class="p">(</span><span class="n">pair</span><span class="p">)</span></tt>
+            </div>
+            <div id="l214"
+               class="code sev- "><tt><i>214</i>                 <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;d</span><span class="si">{</span><span class="n">dist_count</span><span class="si">}</span><span class="s1">&#39;</span></tt>
+            </div>
+            <div id="l215"
+               class="code sev- "><tt><i>215</i>                 <span class="n">feat_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s1">: DISTANCE ATOMS=</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></tt>
+            </div>
+            <div id="l216"
+               class="code sev- "><tt><i>216</i>                 <span class="n">arg_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label</span><span class="p">)</span></tt>
+            </div>
+            <div id="l217"
+               class="code sev- "><tt><i>217</i>                 <span class="n">dist_count</span> <span class="o">+=</span> <span class="mi">1</span></tt>
+            </div>
+            <div id="l218"
+               class="code sev- "><tt><i>218</i> &nbsp;</tt>
+            </div>
+            <div id="l219"
+               class="code sev- "><tt><i>219</i>         <span class="k">if</span> <span class="s1">&#39;angle_indices&#39;</span> <span class="ow">in</span> <span class="n">stats</span><span class="p">:</span></tt>
+            </div>
+            <div id="l220"
+               class="code sev- "><tt><i>220</i>             <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;angle_indices&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2"> Angle features.&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l221"
+               class="code sev- "><tt><i>221</i>             <span class="k">for</span> <span class="n">triple</span> <span class="ow">in</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;angle_indices&#39;</span><span class="p">]:</span></tt>
+            </div>
+            <div id="l222"
+               class="code sev- "><tt><i>222</i>                 <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">adjust_indices</span><span class="p">(</span><span class="n">triple</span><span class="p">)</span></tt>
+            </div>
+            <div id="l223"
+               class="code sev- "><tt><i>223</i>                 <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;a</span><span class="si">{</span><span class="n">ang_count</span><span class="si">}</span><span class="s1">&#39;</span></tt>
+            </div>
+            <div id="l224"
+               class="code sev- "><tt><i>224</i>                 <span class="n">feat_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s1">: ANGLE ATOMS=</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></tt>
+            </div>
+            <div id="l225"
+               class="code sev- "><tt><i>225</i>                 <span class="n">arg_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label</span><span class="p">)</span></tt>
+            </div>
+            <div id="l226"
+               class="code sev- "><tt><i>226</i>                 <span class="n">ang_count</span> <span class="o">+=</span> <span class="mi">1</span></tt>
+            </div>
+            <div id="l227"
+               class="code sev- "><tt><i>227</i> &nbsp;</tt>
+            </div>
+            <div id="l228"
+               class="code sev- "><tt><i>228</i>         <span class="k">if</span> <span class="s1">&#39;dihedral_indices&#39;</span> <span class="ow">in</span> <span class="n">stats</span><span class="p">:</span></tt>
+            </div>
+            <div id="l229"
+               class="code sev- "><tt><i>229</i>             <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;dihedral_indices&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2"> Dihedral features.&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l230"
+               class="code sev- "><tt><i>230</i>             <span class="k">for</span> <span class="n">quad</span> <span class="ow">in</span> <span class="n">stats</span><span class="p">[</span><span class="s1">&#39;dihedral_indices&#39;</span><span class="p">]:</span></tt>
+            </div>
+            <div id="l231"
+               class="code sev- "><tt><i>231</i>                 <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">adjust_indices</span><span class="p">(</span><span class="n">quad</span><span class="p">)</span></tt>
+            </div>
+            <div id="l232"
+               class="code sev- "><tt><i>232</i>                 <span class="n">label</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;t</span><span class="si">{</span><span class="n">tor_count</span><span class="si">}</span><span class="s1">&#39;</span></tt>
+            </div>
+            <div id="l233"
+               class="code sev- "><tt><i>233</i>                 <span class="n">feat_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s1">: TORSION ATOMS=</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">b</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">c</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">d</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></tt>
+            </div>
+            <div id="l234"
+               class="code sev- "><tt><i>234</i>                 <span class="n">arg_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label</span><span class="p">)</span></tt>
+            </div>
+            <div id="l235"
+               class="code sev- "><tt><i>235</i>                 <span class="n">tor_count</span> <span class="o">+=</span> <span class="mi">1</span></tt>
+            </div>
+            <div id="l236"
+               class="code sev- "><tt><i>236</i> &nbsp;</tt>
+            </div>
+            <div id="l237"
+               class="code sev- "><tt><i>237</i>         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">features_path</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span></tt>
+            </div>
+            <div id="l238"
+               class="code sev- "><tt><i>238</i>             <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">feat_lines</span><span class="p">:</span></tt>
+            </div>
+            <div id="l239"
+               class="code sev- "><tt><i>239</i>                 <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span></tt>
+            </div>
+            <div id="l240"
+               class="code sev- "><tt><i>240</i> &nbsp;</tt>
+            </div>
+            <div id="l241"
+               class="code sev- "><tt><i>241</i>         <span class="k">return</span> <span class="n">feat_lines</span><span class="p">,</span> <span class="n">arg_list</span></tt>
+            </div>
+            <div id="l242"
+               class="code sev- "><tt><i>242</i> &nbsp;</tt>
+            </div>
+            <div id="l243"
+               class="code sev- "><tt><i>243</i>     <span class="k">def</span><span class="w"> </span><span class="nf">_convert_model_to_ptc</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span></tt>
+            </div>
+            <div id="l244"
+               class="code sev- "><tt><i>244</i> <span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert the PyTorch model to TorchScript format (.ptc).&quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l245"
+               class="code sev- "><tt><i>245</i>         <span class="n">model</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_pth</span><span class="p">,</span> <span class="n">weights_only</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></tt>
+            </div>
+            <div id="l246"
+               class="code sev- "><tt><i>246</i> &nbsp;</tt>
+            </div>
+            <div id="l247"
+               class="code sev- "><tt><i>247</i>         <span class="c1"># Add this: Convert numpy.int64 attributes to Python int for JIT compatibility</span></tt>
+            </div>
+            <div id="l248"
+               class="code sev- "><tt><i>248</i>         <span class="k">def</span><span class="w"> </span><span class="nf">convert_attributes_to_int</span><span class="p">(</span><span class="n">m</span><span class="p">):</span></tt>
+            </div>
+            <div id="l249"
+               class="code sev- "><tt><i>249</i>             <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="s1">&#39;in_features&#39;</span><span class="p">):</span></tt>
+            </div>
+            <div id="l250"
+               class="code sev- "><tt><i>250</i>                 <span class="n">m</span><span class="o">.</span><span class="n">in_features</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">in_features</span><span class="p">)</span></tt>
+            </div>
+            <div id="l251"
+               class="code sev- "><tt><i>251</i>             <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="s1">&#39;out_features&#39;</span><span class="p">):</span></tt>
+            </div>
+            <div id="l252"
+               class="code sev- "><tt><i>252</i>                 <span class="n">m</span><span class="o">.</span><span class="n">out_features</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">out_features</span><span class="p">)</span></tt>
+            </div>
+            <div id="l253"
+               class="code sev- "><tt><i>253</i>             <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">m</span><span class="o">.</span><span class="n">children</span><span class="p">():</span></tt>
+            </div>
+            <div id="l254"
+               class="code sev- "><tt><i>254</i>                 <span class="n">convert_attributes_to_int</span><span class="p">(</span><span class="n">child</span><span class="p">)</span></tt>
+            </div>
+            <div id="l255"
+               class="code sev- "><tt><i>255</i> &nbsp;</tt>
+            </div>
+            <div id="l256"
+               class="code sev- "><tt><i>256</i>         <span class="n">convert_attributes_to_int</span><span class="p">(</span><span class="n">model</span><span class="p">)</span></tt>
+            </div>
+            <div id="l257"
+               class="code sev- "><tt><i>257</i> &nbsp;</tt>
+            </div>
+            <div id="l258"
+               class="code sev- "><tt><i>258</i>         <span class="bp">self</span><span class="o">.</span><span class="n">_enable_jit_scripting</span><span class="p">(</span><span class="n">model</span><span class="p">)</span></tt>
+            </div>
+            <div id="l259"
+               class="code sev- "><tt><i>259</i>         <span class="n">output_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s1">&#39;out&#39;</span><span class="p">][</span><span class="s1">&#39;output_model_ptc_path&#39;</span><span class="p">]</span></tt>
+            </div>
+            <div id="l260"
+               class="code sev- "><tt><i>260</i>         <span class="k">try</span><span class="p">:</span></tt>
+            </div>
+            <div id="l261"
+               class="code sev- "><tt><i>261</i>             <span class="n">scripted_model</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">jit</span><span class="o">.</span><span class="n">script</span><span class="p">(</span><span class="n">model</span><span class="p">)</span></tt>
+            </div>
+            <div id="l262"
+               class="code sev- "><tt><i>262</i>             <span class="n">torch</span><span class="o">.</span><span class="n">jit</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">scripted_model</span><span class="p">,</span> <span class="n">output_path</span><span class="p">)</span></tt>
+            </div>
+            <div id="l263"
+               class="code sev- "><tt><i>263</i>             <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Successfully scripted and saved model to </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l264"
+               class="code sev- "><tt><i>264</i>         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span></tt>
+            </div>
+            <div id="l265"
+               class="code sev-1  le">
+               <ul class="violations">
+               
+                  <li>
+                     <span class="count sev-1">
+                        F841
+                     </span>
+                     Local variable 'e' is assigned to but never used</li>
+               
+               </ul><tt><i>265</i>             <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;jit.script failed: Attempting jit.trace instead.&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l266"
+               class="code sev-1  le">
+               <ul class="violations">
+               
+                  <li>
+                     <span class="count sev-1">
+                        F541
+                     </span>
+                     F-string is missing placeholders</li>
+               
+               </ul><tt><i>266</i>             <span class="c1"># Set to eval mode for tracing (required for BatchNorm with batch size 1)</span></tt>
+            </div>
+            <div id="l267"
+               class="code sev- "><tt><i>267</i>             <span class="n">model</span><span class="o">.</span><span class="n">eval</span><span class="p">()</span></tt>
+            </div>
+            <div id="l268"
+               class="code sev- "><tt><i>268</i>             <span class="n">example_input</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_features</span><span class="p">)</span>  <span class="c1"># Batch size 1, flat input</span></tt>
+            </div>
+            <div id="l269"
+               class="code sev- "><tt><i>269</i>             <span class="n">traced_model</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">jit</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">example_input</span><span class="p">)</span></tt>
+            </div>
+            <div id="l270"
+               class="code sev- "><tt><i>270</i>             <span class="n">torch</span><span class="o">.</span><span class="n">jit</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">traced_model</span><span class="p">,</span> <span class="n">output_path</span><span class="p">)</span></tt>
+            </div>
+            <div id="l271"
+               class="code sev- "><tt><i>271</i>             <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Successfully traced and saved model to </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l272"
+               class="code sev- "><tt><i>272</i> &nbsp;</tt>
+            </div>
+            <div id="l273"
+               class="code sev- "><tt><i>273</i>     <span class="k">def</span><span class="w"> </span><span class="nf">_enable_jit_scripting</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">module</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span></tt>
+            </div>
+            <div id="l274"
+               class="code sev- "><tt><i>274</i> <span class="w">        </span><span class="sd">&quot;&quot;&quot;Set _jit_is_scripting flag to True for the module and submodules to enable scripting.&quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l275"
+               class="code sev- "><tt><i>275</i>         <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="s1">&#39;_jit_is_scripting&#39;</span><span class="p">):</span></tt>
+            </div>
+            <div id="l276"
+               class="code sev- "><tt><i>276</i>             <span class="n">module</span><span class="o">.</span><span class="n">_jit_is_scripting</span> <span class="o">=</span> <span class="kc">True</span></tt>
+            </div>
+            <div id="l277"
+               class="code sev- "><tt><i>277</i>         <span class="k">for</span> <span class="n">subm</span> <span class="ow">in</span> <span class="n">module</span><span class="o">.</span><span class="n">modules</span><span class="p">():</span></tt>
+            </div>
+            <div id="l278"
+               class="code sev- "><tt><i>278</i>             <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">subm</span><span class="p">,</span> <span class="s1">&#39;_jit_is_scripting&#39;</span><span class="p">):</span></tt>
+            </div>
+            <div id="l279"
+               class="code sev- "><tt><i>279</i>                 <span class="n">subm</span><span class="o">.</span><span class="n">_jit_is_scripting</span> <span class="o">=</span> <span class="kc">True</span></tt>
+            </div>
+            <div id="l280"
+               class="code sev- "><tt><i>280</i> &nbsp;</tt>
+            </div>
+            <div id="l281"
+               class="code sev- "><tt><i>281</i>     <span class="k">def</span><span class="w"> </span><span class="nf">_build_plumed_lines</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span></tt>
+            </div>
+            <div id="l282"
+               class="code sev- "><tt><i>282</i> <span class="w">        </span><span class="sd">&quot;&quot;&quot;Build the list of lines for the PLUMED file.&quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l283"
+               class="code sev- "><tt><i>283</i>         <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span></tt>
+            </div>
+            <div id="l284"
+               class="code sev- "><tt><i>284</i>         <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;INCLUDE FILE=</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;out&quot;</span><span class="p">][</span><span class="s2">&quot;output_features_dat_path&quot;</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></tt>
+            </div>
+            <div id="l285"
+               class="code sev- "><tt><i>285</i> &nbsp;</tt>
+            </div>
+            <div id="l286"
+               class="code sev- "><tt><i>286</i>         <span class="c1"># Additional actions (e.g., ENERGY, other metrics)</span></tt>
+            </div>
+            <div id="l287"
+               class="code sev- "><tt><i>287</i>         <span class="k">for</span> <span class="n">action</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">additional_actions</span><span class="p">:</span></tt>
+            </div>
+            <div id="l288"
+               class="code sev- "><tt><i>288</i>             <span class="n">label</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span></tt>
+            </div>
+            <div id="l289"
+               class="code sev- "><tt><i>289</i>             <span class="k">if</span> <span class="n">label</span><span class="p">:</span></tt>
+            </div>
+            <div id="l290"
+               class="code sev- "><tt><i>290</i>                 <span class="n">label</span> <span class="o">+=</span> <span class="s1">&#39;: &#39;</span></tt>
+            </div>
+            <div id="l291"
+               class="code sev- "><tt><i>291</i>             <span class="n">name</span> <span class="o">=</span> <span class="n">action</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span></tt>
+            </div>
+            <div id="l292"
+               class="code sev- "><tt><i>292</i>             <span class="n">params_str</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">=</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">action</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;params&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">items</span><span class="p">())</span></tt>
+            </div>
+            <div id="l293"
+               class="code sev- "><tt><i>293</i>             <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">label</span><span class="si">}{</span><span class="n">name</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">params_str</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></tt>
+            </div>
+            <div id="l294"
+               class="code sev- "><tt><i>294</i> &nbsp;</tt>
+            </div>
+            <div id="l295"
+               class="code sev- "><tt><i>295</i>         <span class="c1"># GROUP</span></tt>
+            </div>
+            <div id="l296"
+               class="code sev- "><tt><i>296</i>         <span class="n">group_label</span> <span class="o">=</span> <span class="s1">&#39;C-alpha&#39;</span></tt>
+            </div>
+            <div id="l297"
+               class="code sev- "><tt><i>297</i>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="p">:</span></tt>
+            </div>
+            <div id="l298"
+               class="code sev- "><tt><i>298</i>             <span class="n">g</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">group</span></tt>
+            </div>
+            <div id="l299"
+               class="code sev- "><tt><i>299</i>             <span class="n">group_label</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="s1">&#39;C-alpha&#39;</span><span class="p">)</span></tt>
+            </div>
+            <div id="l300"
+               class="code sev- "><tt><i>300</i>             <span class="n">params</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">=</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">])</span></tt>
+            </div>
+            <div id="l301"
+               class="code sev- "><tt><i>301</i>             <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">group_label</span><span class="si">}</span><span class="s2">: GROUP </span><span class="si">{</span><span class="n">params</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></tt>
+            </div>
+            <div id="l302"
+               class="code sev- "><tt><i>302</i>             <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Using GROUP: </span><span class="si">{</span><span class="n">group_label</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l303"
+               class="code sev- "><tt><i>303</i>             <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;   Parameters:&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l304"
+               class="code sev- "><tt><i>304</i>             <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">items</span><span class="p">():</span></tt>
+            </div>
+            <div id="l305"
+               class="code sev- "><tt><i>305</i>                 <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">]:</span></tt>
+            </div>
+            <div id="l306"
+               class="code sev- "><tt><i>306</i>                     <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;    &gt; </span><span class="si">{</span><span class="n">k</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l307"
+               class="code sev- "><tt><i>307</i> &nbsp;</tt>
+            </div>
+            <div id="l308"
+               class="code sev- "><tt><i>308</i>         <span class="c1"># WHOLEMOLECULES</span></tt>
+            </div>
+            <div id="l309"
+               class="code sev- "><tt><i>309</i>         <span class="n">uses_positions</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="s1">&#39;cartesian_indices&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stats</span> <span class="k">else</span> <span class="kc">False</span></tt>
+            </div>
+            <div id="l310"
+               class="code sev- "><tt><i>310</i>         <span class="k">if</span> <span class="n">uses_positions</span><span class="p">:</span></tt>
+            </div>
+            <div id="l311"
+               class="code sev- "><tt><i>311</i>             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">wholemolecules</span><span class="p">:</span></tt>
+            </div>
+            <div id="l312"
+               class="code sev- "><tt><i>312</i>                 <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wholemolecules</span></tt>
+            </div>
+            <div id="l313"
+               class="code sev- "><tt><i>313</i>                 <span class="n">params</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">=</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">w</span><span class="o">.</span><span class="n">items</span><span class="p">())</span></tt>
+            </div>
+            <div id="l314"
+               class="code sev- "><tt><i>314</i>                 <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;WHOLEMOLECULES </span><span class="si">{</span><span class="n">params</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></tt>
+            </div>
+            <div id="l315"
+               class="code sev- "><tt><i>315</i>                 <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Using WHOLEMOLECULES with parameters: </span><span class="si">{</span><span class="n">params</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l316"
+               class="code sev- "><tt><i>316</i>             <span class="k">else</span><span class="p">:</span></tt>
+            </div>
+            <div id="l317"
+               class="code sev- "><tt><i>317</i>                 <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;WARNING: Using Cartesian coordinates but no WHOLEMOLECULES parameters provided; add WHOLEMOLECULES in properties.&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l318"
+               class="code sev- "><tt><i>318</i>         <span class="k">else</span><span class="p">:</span></tt>
+            </div>
+            <div id="l319"
+               class="code sev- "><tt><i>319</i>             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">wholemolecules</span><span class="p">:</span></tt>
+            </div>
+            <div id="l320"
+               class="code sev- "><tt><i>320</i>                 <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;NOTE: Reference PDB provided but no POSITION features detected; skipping WHOLEMOLECULES.&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l321"
+               class="code sev- "><tt><i>321</i> &nbsp;</tt>
+            </div>
+            <div id="l322"
+               class="code sev- "><tt><i>322</i>         <span class="c1"># FIT_TO_TEMPLATE</span></tt>
+            </div>
+            <div id="l323"
+               class="code sev- "><tt><i>323</i>         <span class="k">if</span> <span class="n">uses_positions</span><span class="p">:</span></tt>
+            </div>
+            <div id="l324"
+               class="code sev- "><tt><i>324</i>             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_to_template</span><span class="p">:</span></tt>
+            </div>
+            <div id="l325"
+               class="code sev- "><tt><i>325</i>                 <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_to_template</span></tt>
+            </div>
+            <div id="l326"
+               class="code sev- "><tt><i>326</i>                 <span class="n">params</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">=</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">items</span><span class="p">())</span></tt>
+            </div>
+            <div id="l327"
+               class="code sev- "><tt><i>327</i>                 <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;FIT_TO_TEMPLATE REFERENCE=</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ref_pdb</span><span class="p">)</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">params</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></tt>
+            </div>
+            <div id="l328"
+               class="code sev- "><tt><i>328</i>                 <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;Using FIT_TO_TEMPLATE&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l329"
+               class="code sev- "><tt><i>329</i>                 <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;   Reference PDB: </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ref_pdb</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l330"
+               class="code sev- "><tt><i>330</i>                 <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;   Parameters:&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l331"
+               class="code sev- "><tt><i>331</i>                 <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">f</span><span class="o">.</span><span class="n">items</span><span class="p">():</span></tt>
+            </div>
+            <div id="l332"
+               class="code sev- "><tt><i>332</i>                     <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;    &gt; </span><span class="si">{</span><span class="n">k</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l333"
+               class="code sev- "><tt><i>333</i>             <span class="k">else</span><span class="p">:</span></tt>
+            </div>
+            <div id="l334"
+               class="code sev- "><tt><i>334</i>                 <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;WARNING: Using Cartesian coordinates but no FIT_TO_TEMPLATE parameters provided; add FIT_TO_TEMPLATE in properties.&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l335"
+               class="code sev- "><tt><i>335</i>         <span class="k">else</span><span class="p">:</span></tt>
+            </div>
+            <div id="l336"
+               class="code sev- "><tt><i>336</i>             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_to_template</span><span class="p">:</span></tt>
+            </div>
+            <div id="l337"
+               class="code sev- "><tt><i>337</i>                 <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;NOTE: Reference PDB provided but no POSITION features detected; skipping FIT_TO_TEMPLATE.&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l338"
+               class="code sev- "><tt><i>338</i> &nbsp;</tt>
+            </div>
+            <div id="l339"
+               class="code sev- "><tt><i>339</i>         <span class="c1"># PYTORCH_MODEL</span></tt>
+            </div>
+            <div id="l340"
+               class="code sev- "><tt><i>340</i>         <span class="n">pyt_label</span> <span class="o">=</span> <span class="s1">&#39;cv&#39;</span></tt>
+            </div>
+            <div id="l341"
+               class="code sev- "><tt><i>341</i>         <span class="n">pyt_params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;FILE&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s1">&#39;out&#39;</span><span class="p">][</span><span class="s1">&#39;output_model_ptc_path&#39;</span><span class="p">]),</span> <span class="s1">&#39;ARG&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">arg</span><span class="p">}</span></tt>
+            </div>
+            <div id="l342"
+               class="code sev- "><tt><i>342</i>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">pytorch_model</span><span class="p">:</span></tt>
+            </div>
+            <div id="l343"
+               class="code sev- "><tt><i>343</i>             <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pytorch_model</span></tt>
+            </div>
+            <div id="l344"
+               class="code sev- "><tt><i>344</i>             <span class="n">pyt_label</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="s1">&#39;cv&#39;</span><span class="p">)</span></tt>
+            </div>
+            <div id="l345"
+               class="code sev- "><tt><i>345</i>             <span class="n">pyt_params</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">p</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]})</span></tt>
+            </div>
+            <div id="l346"
+               class="code sev- "><tt><i>346</i>         <span class="n">params_str</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">=</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">pyt_params</span><span class="o">.</span><span class="n">items</span><span class="p">())</span></tt>
+            </div>
+            <div id="l347"
+               class="code sev- "><tt><i>347</i>         <span class="n">params_non_args</span> <span class="o">=</span> <span class="p">{</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">pyt_params</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="s1">&#39;ARG&#39;</span><span class="p">}</span></tt>
+            </div>
+            <div id="l348"
+               class="code sev- "><tt><i>348</i>         <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">pyt_label</span><span class="si">}</span><span class="s1">: PYTORCH_MODEL </span><span class="si">{</span><span class="n">params_str</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></tt>
+            </div>
+            <div id="l349"
+               class="code sev- "><tt><i>349</i>         <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Using PYTORCH_MODEL: </span><span class="si">{</span><span class="n">pyt_label</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l350"
+               class="code sev- "><tt><i>350</i>         <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;   Model ptc file: </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;out&quot;</span><span class="p">][</span><span class="s2">&quot;output_model_ptc_path&quot;</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l351"
+               class="code sev- "><tt><i>351</i>         <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">params_non_args</span><span class="p">:</span></tt>
+            </div>
+            <div id="l352"
+               class="code sev- "><tt><i>352</i>             <span class="k">if</span> <span class="ow">not</span> <span class="n">param</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;FILE&#39;</span><span class="p">):</span></tt>
+            </div>
+            <div id="l353"
+               class="code sev- "><tt><i>353</i>                 <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;   Parameters:&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l354"
+               class="code sev- "><tt><i>354</i>                 <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;    &gt; </span><span class="si">{</span><span class="n">param</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l355"
+               class="code sev- "><tt><i>355</i> &nbsp;</tt>
+            </div>
+            <div id="l356"
+               class="code sev- "><tt><i>356</i>         <span class="c1"># Bias actions</span></tt>
+            </div>
+            <div id="l357"
+               class="code sev- "><tt><i>357</i>         <span class="k">for</span> <span class="n">command</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">bias</span><span class="p">:</span></tt>
+            </div>
+            <div id="l358"
+               class="code sev- "><tt><i>358</i>             <span class="n">label</span> <span class="o">=</span> <span class="n">command</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span></tt>
+            </div>
+            <div id="l359"
+               class="code sev- "><tt><i>359</i>             <span class="k">if</span> <span class="n">label</span><span class="p">:</span></tt>
+            </div>
+            <div id="l360"
+               class="code sev- "><tt><i>360</i>                 <span class="n">label</span> <span class="o">+=</span> <span class="s1">&#39;: &#39;</span></tt>
+            </div>
+            <div id="l361"
+               class="code sev- "><tt><i>361</i>             <span class="n">name</span> <span class="o">=</span> <span class="n">command</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span></tt>
+            </div>
+            <div id="l362"
+               class="code sev- "><tt><i>362</i>             <span class="n">params_str</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">=</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">command</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;params&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">items</span><span class="p">())</span></tt>
+            </div>
+            <div id="l363"
+               class="code sev- "><tt><i>363</i>             <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">label</span><span class="si">}{</span><span class="n">name</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">params_str</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></tt>
+            </div>
+            <div id="l364"
+               class="code sev- "><tt><i>364</i>             <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;Using Bias:&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l365"
+               class="code sev- "><tt><i>365</i>             <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;   Command: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l366"
+               class="code sev- "><tt><i>366</i>             <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;   Parameters:&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l367"
+               class="code sev- "><tt><i>367</i>             <span class="k">for</span> <span class="n">param</span> <span class="ow">in</span> <span class="n">command</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;params&#39;</span><span class="p">,</span> <span class="p">{})</span><span class="o">.</span><span class="n">items</span><span class="p">():</span></tt>
+            </div>
+            <div id="l368"
+               class="code sev- "><tt><i>368</i>                 <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;    &gt; </span><span class="si">{</span><span class="n">param</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">param</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l369"
+               class="code sev- "><tt><i>369</i>         <span class="c1"># PRINT</span></tt>
+            </div>
+            <div id="l370"
+               class="code sev- "><tt><i>370</i>         <span class="n">prints_str</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">=</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">prints</span><span class="o">.</span><span class="n">items</span><span class="p">())</span></tt>
+            </div>
+            <div id="l371"
+               class="code sev- "><tt><i>371</i>         <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;PRINT </span><span class="si">{</span><span class="n">prints_str</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></tt>
+            </div>
+            <div id="l372"
+               class="code sev- "><tt><i>372</i> &nbsp;</tt>
+            </div>
+            <div id="l373"
+               class="code sev- "><tt><i>373</i>         <span class="k">return</span> <span class="n">lines</span></tt>
+            </div>
+            <div id="l374"
+               class="code sev- "><tt><i>374</i> &nbsp;</tt>
+            </div>
+            <div id="l375"
+               class="code sev- "><tt><i>375</i>     <span class="nd">@launchlogger</span></tt>
+            </div>
+            <div id="l376"
+               class="code sev- "><tt><i>376</i>     <span class="k">def</span><span class="w"> </span><span class="nf">launch</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span></tt>
+            </div>
+            <div id="l377"
+               class="code sev- "><tt><i>377</i> <span class="w">        </span><span class="sd">&quot;&quot;&quot;Execute the generation of PLUMED files.&quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l378"
+               class="code sev- "><tt><i>378</i> &nbsp;</tt>
+            </div>
+            <div id="l379"
+               class="code sev- "><tt><i>379</i>         <span class="c1"># Setup Biobb</span></tt>
+            </div>
+            <div id="l380"
+               class="code sev- "><tt><i>380</i>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_restart</span><span class="p">():</span></tt>
+            </div>
+            <div id="l381"
+               class="code sev- "><tt><i>381</i>             <span class="k">return</span> <span class="mi">0</span></tt>
+            </div>
+            <div id="l382"
+               class="code sev- "><tt><i>382</i> &nbsp;</tt>
+            </div>
+            <div id="l383"
+               class="code sev- "><tt><i>383</i>         <span class="bp">self</span><span class="o">.</span><span class="n">stage_files</span><span class="p">()</span></tt>
+            </div>
+            <div id="l384"
+               class="code sev- "><tt><i>384</i> &nbsp;</tt>
+            </div>
+            <div id="l385"
+               class="code sev- "><tt><i>385</i>         <span class="c1"># Perform model conversion and feature generation after staging files</span></tt>
+            </div>
+            <div id="l386"
+               class="code sev- "><tt><i>386</i>         <span class="bp">self</span><span class="o">.</span><span class="n">_convert_model_to_ptc</span><span class="p">()</span></tt>
+            </div>
+            <div id="l387"
+               class="code sev- "><tt><i>387</i>         <span class="n">features_lines</span><span class="p">,</span> <span class="n">arg_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_features</span><span class="p">()</span></tt>
+            </div>
+            <div id="l388"
+               class="code sev- "><tt><i>388</i>         <span class="bp">self</span><span class="o">.</span><span class="n">arg</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">arg_list</span><span class="p">)</span></tt>
+            </div>
+            <div id="l389"
+               class="code sev- "><tt><i>389</i>         <span class="n">plumed_lines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_build_plumed_lines</span><span class="p">()</span></tt>
+            </div>
+            <div id="l390"
+               class="code sev- "><tt><i>390</i> &nbsp;</tt>
+            </div>
+            <div id="l391"
+               class="code sev- "><tt><i>391</i>         <span class="n">has_cartesian</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="s1">&#39;cartesian_indices&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stats</span> <span class="k">else</span> <span class="kc">False</span></tt>
+            </div>
+            <div id="l392"
+               class="code sev- "><tt><i>392</i>         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndx</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span></tt>
+            </div>
+            <div id="l393"
+               class="code sev- "><tt><i>393</i>             <span class="k">if</span> <span class="n">has_cartesian</span><span class="p">:</span></tt>
+            </div>
+            <div id="l394"
+               class="code sev- "><tt><i>394</i>                 <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s1">&#39;WARNING: When employing Cartesian coordinates as collective variables (CVs) for biasing in PLUMED, &#39;</span></tt>
+            </div>
+            <div id="l395"
+               class="code sev- "><tt><i>395</i>                        <span class="s1">&#39;an NDX index file is required to properly define atom groups for fitting and alignment purposes, &#39;</span></tt>
+            </div>
+            <div id="l396"
+               class="code sev- "><tt><i>396</i>                        <span class="s1">&#39;make sure to provide a NDX file.&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l397"
+               class="code sev- "><tt><i>397</i> &nbsp;</tt>
+            </div>
+            <div id="l398"
+               class="code sev- "><tt><i>398</i>         <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Generated features.dat at </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;out&quot;</span><span class="p">][</span><span class="s2">&quot;output_features_dat_path&quot;</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l399"
+               class="code sev- "><tt><i>399</i>         <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;File size: </span><span class="si">{</span><span class="n">get_size</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;out&quot;</span><span class="p">][</span><span class="s2">&quot;output_features_dat_path&quot;</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l400"
+               class="code sev- "><tt><i>400</i> &nbsp;</tt>
+            </div>
+            <div id="l401"
+               class="code sev- "><tt><i>401</i>         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s1">&#39;out&#39;</span><span class="p">][</span><span class="s1">&#39;output_plumed_dat_path&#39;</span><span class="p">],</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span></tt>
+            </div>
+            <div id="l402"
+               class="code sev- "><tt><i>402</i>             <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">plumed_lines</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span></tt>
+            </div>
+            <div id="l403"
+               class="code sev- "><tt><i>403</i>         <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Generated PLUMED file at </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;out&quot;</span><span class="p">][</span><span class="s2">&quot;output_plumed_dat_path&quot;</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l404"
+               class="code sev- "><tt><i>404</i>         <span class="n">fu</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;File size: </span><span class="si">{</span><span class="n">get_size</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">io_dict</span><span class="p">[</span><span class="s2">&quot;out&quot;</span><span class="p">][</span><span class="s2">&quot;output_plumed_dat_path&quot;</span><span class="p">])</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">out_log</span><span class="p">)</span></tt>
+            </div>
+            <div id="l405"
+               class="code sev- "><tt><i>405</i> &nbsp;</tt>
+            </div>
+            <div id="l406"
+               class="code sev- "><tt><i>406</i>         <span class="c1"># Copy files to host</span></tt>
+            </div>
+            <div id="l407"
+               class="code sev- "><tt><i>407</i>         <span class="bp">self</span><span class="o">.</span><span class="n">copy_to_host</span><span class="p">()</span></tt>
+            </div>
+            <div id="l408"
+               class="code sev- "><tt><i>408</i> &nbsp;</tt>
+            </div>
+            <div id="l409"
+               class="code sev- "><tt><i>409</i>         <span class="c1"># Remove temporal files</span></tt>
+            </div>
+            <div id="l410"
+               class="code sev- "><tt><i>410</i>         <span class="bp">self</span><span class="o">.</span><span class="n">remove_tmp_files</span><span class="p">()</span></tt>
+            </div>
+            <div id="l411"
+               class="code sev- "><tt><i>411</i> &nbsp;</tt>
+            </div>
+            <div id="l412"
+               class="code sev- "><tt><i>412</i>         <span class="bp">self</span><span class="o">.</span><span class="n">check_arguments</span><span class="p">(</span><span class="n">output_files_created</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></tt>
+            </div>
+            <div id="l413"
+               class="code sev- "><tt><i>413</i> &nbsp;</tt>
+            </div>
+            <div id="l414"
+               class="code sev- "><tt><i>414</i>         <span class="k">return</span> <span class="mi">0</span></tt>
+            </div>
+            <div id="l415"
+               class="code sev- "><tt><i>415</i> &nbsp;</tt>
+            </div>
+            <div id="l416"
+               class="code sev- "><tt><i>416</i> &nbsp;</tt>
+            </div>
+            <div id="l417"
+               class="code sev- "><tt><i>417</i> <span class="k">def</span><span class="w"> </span><span class="nf">generatePlumed</span><span class="p">(</span></tt>
+            </div>
+            <div id="l418"
+               class="code sev- "><tt><i>418</i>     <span class="n">input_model_pth_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span></tt>
+            </div>
+            <div id="l419"
+               class="code sev- "><tt><i>419</i>     <span class="n">input_stats_pt_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span></tt>
+            </div>
+            <div id="l420"
+               class="code sev- "><tt><i>420</i>     <span class="n">input_reference_pdb_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span></tt>
+            </div>
+            <div id="l421"
+               class="code sev- "><tt><i>421</i>     <span class="n">input_ndx_path</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span></tt>
+            </div>
+            <div id="l422"
+               class="code sev- "><tt><i>422</i>     <span class="n">output_plumed_dat_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;plumed.dat&#39;</span><span class="p">,</span></tt>
+            </div>
+            <div id="l423"
+               class="code sev- "><tt><i>423</i>     <span class="n">output_features_dat_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;features.dat&#39;</span><span class="p">,</span></tt>
+            </div>
+            <div id="l424"
+               class="code sev- "><tt><i>424</i>     <span class="n">output_model_ptc_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;model.ptc&#39;</span><span class="p">,</span></tt>
+            </div>
+            <div id="l425"
+               class="code sev- "><tt><i>425</i>     <span class="n">properties</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span></tt>
+            </div>
+            <div id="l426"
+               class="code sev- "><tt><i>426</i>     <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span></tt>
+            </div>
+            <div id="l427"
+               class="code sev- "><tt><i>427</i> <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span></tt>
+            </div>
+            <div id="l428"
+               class="code sev- "><tt><i>428</i> <span class="w">    </span><span class="sd">&quot;&quot;&quot;Create the :class:`GeneratePlumed &lt;generatePlumed.GeneratePlumed&gt;` class and</span></tt>
+            </div>
+            <div id="l429"
+               class="code sev- "><tt><i>429</i> <span class="sd">    execute the :meth:`launch() &lt;generatePlumed.GeneratePlumed.launch&gt;` method.&quot;&quot;&quot;</span></tt>
+            </div>
+            <div id="l430"
+               class="code sev- "><tt><i>430</i>     <span class="k">return</span> <span class="n">GeneratePlumed</span><span class="p">(</span><span class="o">**</span><span class="nb">dict</span><span class="p">(</span><span class="nb">locals</span><span class="p">()))</span><span class="o">.</span><span class="n">launch</span><span class="p">()</span></tt>
+            </div>
+            <div id="l431"
+               class="code sev- "><tt><i>431</i> &nbsp;</tt>
+            </div>
+            <div id="l432"
+               class="code sev- "><tt><i>432</i> &nbsp;</tt>
+            </div>
+            <div id="l433"
+               class="code sev- "><tt><i>433</i> <span class="n">generatePlumed</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">GeneratePlumed</span><span class="o">.</span><span class="vm">__doc__</span></tt>
+            </div>
+            <div id="l434"
+               class="code sev- "><tt><i>434</i> <span class="n">main</span> <span class="o">=</span> <span class="n">GeneratePlumed</span><span class="o">.</span><span class="n">get_main</span><span class="p">(</span><span class="n">generatePlumed</span><span class="p">,</span> <span class="s2">&quot;Generate PLUMED input for biased dynamics using an MDAE model.&quot;</span><span class="p">)</span></tt>
+            </div>
+            <div id="l435"
+               class="code sev- "><tt><i>435</i> &nbsp;</tt>
+            </div>
+            <div id="l436"
+               class="code sev- "><tt><i>436</i> <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span></tt>
+            </div>
+            <div id="l437"
+               class="code sev- "><tt><i>437</i>     <span class="n">main</span><span class="p">()</span></tt>
+            </div>
+            
+         </div>
+      </div>
+   </body>
+</html>

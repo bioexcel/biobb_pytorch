@@ -263,7 +263,7 @@ class GeneratePlumed(BiobbObject):
             torch.jit.save(scripted_model, output_path)
             fu.log(f'Successfully scripted and saved model to {output_path}', self.out_log)
         except Exception as e:
-            fu.log(f'jit.script failed: {e}. Attempting jit.trace instead.', self.out_log)
+            fu.log(f'jit.script failed: Attempting jit.trace instead.', self.out_log)
             # Set to eval mode for tracing (required for BatchNorm with batch size 1)
             model.eval()
             example_input = torch.randn(1, self.n_features)  # Batch size 1, flat input

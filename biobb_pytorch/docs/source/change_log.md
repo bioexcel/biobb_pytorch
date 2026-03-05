@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## What's new in version [5.2.2](https://github.com/bioexcel/biobb_amber/releases/tag/v5.2.2)?
+
+### Changes
+
+* [UPDATE] Update to biobb_common 5.2.2
+
 ## What's new in version [5.2.1](https://github.com/bioexcel/biobb_amber/releases/tag/v5.2.1)?
 
 ### Changes

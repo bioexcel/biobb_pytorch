@@ -1,0 +1,9 @@
+properties:
+  Dataset:
+    batch_size: 32
+    split:
+      train_prop: 0.8
+      val_prop: 0.2
+  Trainer:
+    accelerator: cpu
+    max_epochs: 1

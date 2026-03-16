@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## What's new in version [5.2.3](https://github.com/bioexcel/biobb_amber/releases/tag/v5.2.3)?
+
+### Changes
+
+* [FEATURE] Bug fixes in executable names.
+
 ## What's new in version [5.2.2](https://github.com/bioexcel/biobb_amber/releases/tag/v5.2.2)?
 
 ### Changes

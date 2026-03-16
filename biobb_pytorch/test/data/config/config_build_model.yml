@@ -1,0 +1,12 @@
+properties:
+  decoder_layers:
+  - 8
+  - 16
+  encoder_layers:
+  - 16
+  - 8
+  model_type: AutoEncoder
+  n_cvs: 2
+  options:
+    norm_in:
+      mode: min_max

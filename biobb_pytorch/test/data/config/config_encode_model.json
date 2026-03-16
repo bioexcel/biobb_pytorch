@@ -1,0 +1,7 @@
+{
+  "properties": {
+    "Dataset": {
+      "batch_size": 32
+    }
+  }
+}

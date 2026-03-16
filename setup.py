@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="biobb_pytorch",
-    version="5.2.2",
+    version="5.2.3",
     author="Biobb developers",
     author_email="pieter.zanders@bsc.es",
     description="biobb_pytorch is the Biobb module collection to create and train ML & DL models.",
@@ -27,7 +27,7 @@ setuptools.setup(
             "build_model = biobb_pytorch.mdae.build_model:main",
             "train_model = biobb_pytorch.mdae.train_model:main",
             "decode_model = biobb_pytorch.mdae.decode_model:main",
-            "evaluate_encoder = biobb_pytorch.mdae.encode_model:main",
+            "encode_model = biobb_pytorch.mdae.encode_model:main",
             "evaluate_model = biobb_pytorch.mdae.evaluate_model:main",
             "make_plumed = biobb_pytorch.mdae.make_plumed:main",
             "feat2traj = biobb_pytorch.mdae.feat2traj:main",

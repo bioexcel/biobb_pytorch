@@ -122,7 +122,7 @@
                class="code sev- "><tt><i>35</i> &nbsp;</tt>
             </div>
             <div id="l36"
-               class="code sev- "><tt><i>36</i> <span class="sd">            from biobb_plumed.generate_plumed import generatePlumed</span></tt>
+               class="code sev- "><tt><i>36</i> <span class="sd">            from biobb_plumed.generate_plumed import make_plumed</span></tt>
             </div>
             <div id="l37"
                class="code sev- "><tt><i>37</i> &nbsp;</tt>
@@ -278,7 +278,7 @@
                class="code sev- "><tt><i>87</i> &nbsp;</tt>
             </div>
             <div id="l88"
-               class="code sev- "><tt><i>88</i> <span class="sd">            generatePlumed(</span></tt>
+               class="code sev- "><tt><i>88</i> <span class="sd">            make_plumed(</span></tt>
             </div>
             <div id="l89"
                class="code sev- "><tt><i>89</i> <span class="sd">                input_model_pth_path=&quot;model.pth&quot;,</span></tt>
@@ -1163,7 +1163,7 @@
                class="code sev- "><tt><i>376</i>     <span class="k">def</span><span class="w"> </span><span class="nf">launch</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span></tt>
             </div>
             <div id="l377"
-               class="code sev- "><tt><i>377</i> <span class="w">        </span><span class="sd">&quot;&quot;&quot;Execute the generation of PLUMED files.&quot;&quot;&quot;</span></tt>
+               class="code sev- "><tt><i>377</i> <span class="w">        </span><span class="sd">&quot;&quot;&quot;Execute the :class:`GeneratePlumed &lt;mdae.make_plumed.GeneratePlumed&gt;` object.&quot;&quot;&quot;</span></tt>
             </div>
             <div id="l378"
                class="code sev- "><tt><i>378</i> &nbsp;</tt>
@@ -1283,7 +1283,7 @@
                class="code sev- "><tt><i>416</i> &nbsp;</tt>
             </div>
             <div id="l417"
-               class="code sev- "><tt><i>417</i> <span class="k">def</span><span class="w"> </span><span class="nf">generatePlumed</span><span class="p">(</span></tt>
+               class="code sev- "><tt><i>417</i> <span class="k">def</span><span class="w"> </span><span class="nf">make_plumed</span><span class="p">(</span></tt>
             </div>
             <div id="l418"
                class="code sev- "><tt><i>418</i>     <span class="n">input_model_pth_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span></tt>
@@ -1316,10 +1316,10 @@
                class="code sev- "><tt><i>427</i> <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span></tt>
             </div>
             <div id="l428"
-               class="code sev- "><tt><i>428</i> <span class="w">    </span><span class="sd">&quot;&quot;&quot;Create the :class:`GeneratePlumed &lt;generatePlumed.GeneratePlumed&gt;` class and</span></tt>
+               class="code sev- "><tt><i>428</i> <span class="w">    </span><span class="sd">&quot;&quot;&quot;Create the :class:`GeneratePlumed &lt;mdae.make_plumed.GeneratePlumed&gt;` class and</span></tt>
             </div>
             <div id="l429"
-               class="code sev- "><tt><i>429</i> <span class="sd">    execute the :meth:`launch() &lt;generatePlumed.GeneratePlumed.launch&gt;` method.&quot;&quot;&quot;</span></tt>
+               class="code sev- "><tt><i>429</i> <span class="sd">    execute the :meth:`launch() &lt;mdae.make_plumed.GeneratePlumed.launch&gt;` method.&quot;&quot;&quot;</span></tt>
             </div>
             <div id="l430"
                class="code sev- "><tt><i>430</i>     <span class="k">return</span> <span class="n">GeneratePlumed</span><span class="p">(</span><span class="o">**</span><span class="nb">dict</span><span class="p">(</span><span class="nb">locals</span><span class="p">()))</span><span class="o">.</span><span class="n">launch</span><span class="p">()</span></tt>
@@ -1331,10 +1331,10 @@
                class="code sev- "><tt><i>432</i> &nbsp;</tt>
             </div>
             <div id="l433"
-               class="code sev- "><tt><i>433</i> <span class="n">generatePlumed</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">GeneratePlumed</span><span class="o">.</span><span class="vm">__doc__</span></tt>
+               class="code sev- "><tt><i>433</i> <span class="n">make_plumed</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">GeneratePlumed</span><span class="o">.</span><span class="vm">__doc__</span></tt>
             </div>
             <div id="l434"
-               class="code sev- "><tt><i>434</i> <span class="n">main</span> <span class="o">=</span> <span class="n">GeneratePlumed</span><span class="o">.</span><span class="n">get_main</span><span class="p">(</span><span class="n">generatePlumed</span><span class="p">,</span> <span class="s2">&quot;Generate PLUMED input for biased dynamics using an MDAE model.&quot;</span><span class="p">)</span></tt>
+               class="code sev- "><tt><i>434</i> <span class="n">main</span> <span class="o">=</span> <span class="n">GeneratePlumed</span><span class="o">.</span><span class="n">get_main</span><span class="p">(</span><span class="n">make_plumed</span><span class="p">,</span> <span class="s2">&quot;Generate PLUMED input for biased dynamics using an MDAE model.&quot;</span><span class="p">)</span></tt>
             </div>
             <div id="l435"
                class="code sev- "><tt><i>435</i> &nbsp;</tt>

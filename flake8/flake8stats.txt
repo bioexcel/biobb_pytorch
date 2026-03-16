@@ -1,3 +1,4 @@
+2     E128 continuation line under-indented for visual indent
 1     F541 f-string is missing placeholders
 1     F841 local variable 'e' is assigned to but never used
 4     W504 line break after binary operator

@@ -13,15 +13,15 @@ import torch
 import tempfile
 from pathlib import Path
 from biobb_common.tools import test_fixtures as fx
-from biobb_pytorch.mdae.build_model import buildModel, BuildModel
+from biobb_pytorch.mdae.build_model import build_model, BuildModel
 
 
 class TestAllModels:
     """Test suite for model architectures with standard configurations."""
 
     def setup_class(self):
-        """Setup test fixtures using buildModel configuration."""
-        fx.test_setup(self, 'buildModel')
+        """Setup test fixtures using build_model configuration."""
+        fx.test_setup(self, 'build_model')
 
     def teardown_class(self):
         """Cleanup after tests."""
@@ -54,7 +54,7 @@ class TestAllModels:
 
         try:
             # Build the model
-            buildModel(
+            build_model(
                 properties=props,
                 input_stats_pt_path=self.paths['input_stats_pt_path'],
                 output_model_pth_path=tmp_path
@@ -172,7 +172,7 @@ class TestAllModels:
             tmp_path = tmp.name
 
         try:
-            buildModel(
+            build_model(
                 properties=props,
                 input_stats_pt_path=self.paths['input_stats_pt_path'],
                 output_model_pth_path=tmp_path
@@ -210,7 +210,7 @@ class TestAllModels:
             tmp_path = tmp.name
 
         try:
-            buildModel(
+            build_model(
                 properties=props,
                 input_stats_pt_path=self.paths['input_stats_pt_path'],
                 output_model_pth_path=tmp_path
@@ -272,7 +272,7 @@ class TestAllModels:
             tmp_path = tmp.name
 
         try:
-            buildModel(
+            build_model(
                 properties=props,
                 input_stats_pt_path=self.paths['input_stats_pt_path'],
                 output_model_pth_path=tmp_path

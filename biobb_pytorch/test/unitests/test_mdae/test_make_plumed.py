@@ -1,18 +1,18 @@
 # type: ignore
 from biobb_common.tools import test_fixtures as fx
-from biobb_pytorch.mdae.make_plumed import generatePlumed
+from biobb_pytorch.mdae.make_plumed import make_plumed
 import os
 
 
 class TestMakePlumed:
     def setup_class(self):
-        fx.test_setup(self, 'generatePlumed')
+        fx.test_setup(self, 'make_plumed')
 
     def teardown_class(self):
         fx.test_teardown(self)
 
-    def test_generatePlumed(self):
-        generatePlumed(properties=self.properties, **self.paths)
+    def test_make_plumed(self):
+        make_plumed(properties=self.properties, **self.paths)
 
         assert fx.not_empty(self.paths['output_plumed_dat_path'])
         assert fx.not_empty(self.paths['output_features_dat_path'])

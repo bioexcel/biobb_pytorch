@@ -23,13 +23,13 @@ setuptools.setup(
     python_requires=">=3.10",
     entry_points={
         "console_scripts": [
-            "MDFeaturizer = biobb_pytorch.mdae.mdfeaturizer:main",
-            "buildModel = biobb_pytorch.mdae.build_model:main",
-            "trainModel = biobb_pytorch.mdae.train_model:main",
-            "evaluateDecoder = biobb_pytorch.mdae.decode_model:main",
-            "evaluateEncoder = biobb_pytorch.mdae.encode_model:main",
-            "evaluateModel = biobb_pytorch.mdae.evaluate_model:main",
-            "makePlumed = biobb_pytorch.mdae.make_plumed:main",
+            "mdfeaturizer = biobb_pytorch.mdae.mdfeaturizer:main",
+            "build_model = biobb_pytorch.mdae.build_model:main",
+            "train_model = biobb_pytorch.mdae.train_model:main",
+            "decode_model = biobb_pytorch.mdae.decode_model:main",
+            "evaluate_encoder = biobb_pytorch.mdae.encode_model:main",
+            "evaluate_model = biobb_pytorch.mdae.evaluate_model:main",
+            "make_plumed = biobb_pytorch.mdae.make_plumed:main",
             "feat2traj = biobb_pytorch.mdae.feat2traj:main",
             "LRP = biobb_pytorch.mdae.explainability.LRP:main",
         ]

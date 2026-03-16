@@ -25,7 +25,7 @@ class EvaluateEncoder(BiobbObject):
     Examples:
         This example shows how to use the EvaluateEncoder class to evaluate a PyTorch autoencoder model::
 
-            from biobb_pytorch.mdae.evaluate_model import evaluateEncoder
+            from biobb_pytorch.mdae.evaluate_model import encode_model
 
             input_model_pth_path='input_model.pth'
             input_dataset_pt_path='input_dataset.npy'
@@ -37,7 +37,7 @@ class EvaluateEncoder(BiobbObject):
                 }
             }
 
-            evaluateEncoder(input_model_pth_path=input_model.pth,
+            encode_model(input_model_pth_path=input_model.pth,
                     input_dataset_pt_path=input_dataset.npy,
                     output_results_npz_path=output_results.npz,
                     properties=prop)
@@ -119,7 +119,7 @@ class EvaluateEncoder(BiobbObject):
     @launchlogger
     def launch(self) -> int:
         """
-        Execute the :class:`EvaluateEncoder` class and its `.launch()` method.
+        Execute the :class:`EvaluateEncoder <mdae.encode_model.EvaluateEncoder>` object.
         """
 
         fu.log('## BioBB Model Evaluator ##', self.out_log)
@@ -163,20 +163,20 @@ class EvaluateEncoder(BiobbObject):
         return 0
 
 
-def evaluateEncoder(
+def encode_model(
     properties: dict,
     input_model_pth_path: str,
     input_dataset_pt_path: str,
     output_results_npz_path: str,
     **kwargs,
 ) -> int:
-    """Create the :class:`EvaluateEncoder <EvaluateEncoder.EvaluateEncoder>` class and
-    execute the :meth:`launch() <EvaluateEncoder.evaluateEncoder.launch>` method."""
+    """Create the :class:`EvaluateEncoder <mdae.encode_model.EvaluateEncoder>` class and
+    execute the :meth:`launch() <mdae.encode_model.EvaluateEncoder.launch>` method."""
     return EvaluateEncoder(**dict(locals())).launch()
 
 
-evaluateEncoder.__doc__ = EvaluateEncoder.__doc__
-main = EvaluateEncoder.get_main(evaluateEncoder, "Encode data with a Molecular Dynamics AutoEncoder (MDAE) model.")
+encode_model.__doc__ = EvaluateEncoder.__doc__
+main = EvaluateEncoder.get_main(encode_model, "Encode data with a Molecular Dynamics AutoEncoder (MDAE) model.")
 
 if __name__ == "__main__":
     main()

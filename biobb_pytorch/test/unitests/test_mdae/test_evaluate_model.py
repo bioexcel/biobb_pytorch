@@ -1,18 +1,18 @@
 # type: ignore
 from biobb_common.tools import test_fixtures as fx
-from biobb_pytorch.mdae.evaluate_model import evaluateModel
+from biobb_pytorch.mdae.evaluate_model import train_model
 import numpy as np
 
 
 class TestEvaluateModel:
     def setup_class(self):
-        fx.test_setup(self, 'evaluateModel')
+        fx.test_setup(self, 'train_model')
 
     def teardown_class(self):
         fx.test_teardown(self)
 
     def test_evaluate_model(self):
-        evaluateModel(properties=self.properties, **self.paths)
+        train_model(properties=self.properties, **self.paths)
         assert fx.not_empty(self.paths['output_results_npz_path'])
 
         results = np.load(self.paths['output_results_npz_path'], allow_pickle=True)

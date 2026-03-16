@@ -3,7 +3,7 @@ global_properties:
   remove_tmp: False
   working_dir_path: /tmp/biobb/unitests
 
-MDFeaturizer:
+mdfeaturizer:
   paths:
     input_topology_path: file:test_data_dir/mdae/MCV1900209.pdb
     output_dataset_pt_path: output_dataset.pt
@@ -21,7 +21,7 @@ MDFeaturizer:
       norm_in:
         mode: 'min_max'
 
-buildModel:
+build_model:
   paths:
     input_stats_pt_path: file:test_reference_dir/mdae/ref_output_stats.pt
     output_model_pth_path: output_model.pth
@@ -34,7 +34,7 @@ buildModel:
       norm_in:
         mode: 'min_max'
 
-trainModel:
+train_model:
   paths:
     input_model_pth_path: file:test_reference_dir/mdae/ref_input_model.pth
     input_dataset_pt_path: file:test_reference_dir/mdae/ref_output_dataset.pt
@@ -50,7 +50,7 @@ trainModel:
         train_prop: 0.8
         val_prop: 0.2
 
-evaluateModel:
+evaluate_model:
   paths:
     input_model_pth_path: file:test_reference_dir/mdae/ref_output_model.pth
     input_dataset_pt_path: file:test_reference_dir/mdae/ref_output_dataset.pt
@@ -59,7 +59,7 @@ evaluateModel:
     Dataset:
       batch_size: 32
 
-evaluateEncoder:
+encode_model:
   paths:
     input_model_pth_path: file:test_reference_dir/mdae/ref_output_model.pth
     input_dataset_pt_path: file:test_reference_dir/mdae/ref_output_dataset.pt
@@ -68,7 +68,7 @@ evaluateEncoder:
     Dataset:
       batch_size: 32
 
-evaluateDecoder:
+decode_model:
   paths:
     input_model_pth_path: file:test_reference_dir/mdae/ref_output_model.pth
     input_dataset_npy_path: file:test_reference_dir/mdae/ref_output_latent.npy
@@ -77,7 +77,7 @@ evaluateDecoder:
     Dataset:
       batch_size: 32
 
-generatePlumed:
+make_plumed:
   paths:
     input_model_pth_path: file:test_reference_dir/mdae/ref_output_model.pth
     input_stats_pt_path: file:test_reference_dir/mdae/ref_output_stats.pt

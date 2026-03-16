@@ -33,7 +33,7 @@ class TrainModel(BiobbObject):
     Examples:
         This example shows how to use the TrainModel class to train a PyTorch autoencoder model::
 
-            from biobb_pytorch.mdae.train_model import trainModel
+            from biobb_pytorch.mdae.train_model import train_model
 
             input_model_pth_path='input_model.pth'
             input_dataset_pt_path='input_dataset.pt'
@@ -57,7 +57,7 @@ class TrainModel(BiobbObject):
                 }
             }
 
-            trainModel(input_model_pth_path=input_model_pth_path,
+            train_model(input_model_pth_path=input_model_pth_path,
                                   input_dataset_pt_path=input_dataset_pt_path,
                                   output_model_pth_path=None,
                                   output_metrics_npz_path=None,
@@ -198,7 +198,7 @@ class TrainModel(BiobbObject):
     @launchlogger
     def launch(self) -> int:
         """
-        Execute the :class:`TrainModel` class and its `.launch()` method.
+        Execute the :class:`TrainModel <mdae.train_model.TrainModel>` object.
         """
 
         fu.log('## BioBB Model Trainer ##', self.out_log)
@@ -256,7 +256,7 @@ class TrainModel(BiobbObject):
         return 0
 
 
-def trainModel(
+def train_model(
     properties: dict,
     input_model_pth_path: str,
     input_dataset_pt_path: str,
@@ -264,13 +264,13 @@ def trainModel(
     output_metrics_npz_path: Optional[str] = None,
     **kwargs,
 ) -> int:
-    """Create the :class:`TrainModel <TrainModel.TrainModel>` class and
-    execute the :meth:`launch() <TrainModel.TrainModel.launch>` method."""
+    """Create the :class:`TrainModel <mdae.train_model.TrainModel>` class and
+    execute the :meth:`launch() <mdae.train_model.TrainModel.launch>` method."""
     return TrainModel(**dict(locals())).launch()
 
 
-trainModel.__doc__ = TrainModel.__doc__
-main = TrainModel.get_main(trainModel, "Trains a PyTorch autoencoder using the given properties.")
+train_model.__doc__ = TrainModel.__doc__
+main = TrainModel.get_main(train_model, "Trains a PyTorch autoencoder using the given properties.")
 
 if __name__ == "__main__":
     main()

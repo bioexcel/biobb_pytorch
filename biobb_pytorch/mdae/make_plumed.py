@@ -34,7 +34,7 @@ class GeneratePlumed(BiobbObject):
     Examples:
         This example shows how to use the GeneratePlumed class to generate a PLUMED input file for biased dynamics using an MDAE model::
 
-            from biobb_plumed.generate_plumed import generatePlumed
+            from biobb_plumed.generate_plumed import make_plumed
 
             prop = {
                 "additional_actions": [
@@ -86,7 +86,7 @@ class GeneratePlumed(BiobbObject):
                 }
             }
 
-            generatePlumed(
+            make_plumed(
                 input_model_pth_path="model.pth",
                 input_stats_pt_path="stats.pt",
                 output_plumed_dat_path="plumed.dat",
@@ -375,7 +375,7 @@ class GeneratePlumed(BiobbObject):
 
     @launchlogger
     def launch(self) -> int:
-        """Execute the generation of PLUMED files."""
+        """Execute the :class:`GeneratePlumed <mdae.make_plumed.GeneratePlumed>` object."""
 
         # Setup Biobb
         if self.check_restart():
@@ -415,7 +415,7 @@ class GeneratePlumed(BiobbObject):
         return 0
 
 
-def generatePlumed(
+def make_plumed(
     input_model_pth_path: str,
     input_stats_pt_path: Optional[str] = None,
     input_reference_pdb_path: Optional[str] = None,
@@ -426,13 +426,13 @@ def generatePlumed(
     properties: Optional[Dict[str, Any]] = None,
     **kwargs,
 ) -> int:
-    """Create the :class:`GeneratePlumed <generatePlumed.GeneratePlumed>` class and
-    execute the :meth:`launch() <generatePlumed.GeneratePlumed.launch>` method."""
+    """Create the :class:`GeneratePlumed <mdae.make_plumed.GeneratePlumed>` class and
+    execute the :meth:`launch() <mdae.make_plumed.GeneratePlumed.launch>` method."""
     return GeneratePlumed(**dict(locals())).launch()
 
 
-generatePlumed.__doc__ = GeneratePlumed.__doc__
-main = GeneratePlumed.get_main(generatePlumed, "Generate PLUMED input for biased dynamics using an MDAE model.")
+make_plumed.__doc__ = GeneratePlumed.__doc__
+main = GeneratePlumed.get_main(make_plumed, "Generate PLUMED input for biased dynamics using an MDAE model.")
 
 if __name__ == "__main__":
     main()

@@ -14,7 +14,7 @@ from biobb_pytorch.mdae.utils.log_utils import get_size
 
 class MDFeaturePipeline(BiobbObject):
     """
-    | biobb_pytorch MDFeaturizer
+    | biobb_pytorch mdfeaturizer
     | Obtain the Molecular Dynamics Features for PyTorch model training.
     | Obtain the Molecular Dynamics Features for PyTorch model training.
 
@@ -33,7 +33,7 @@ class MDFeaturePipeline(BiobbObject):
     Examples:
         This is a use case of how to use the building block from Python::
 
-            from biobb_pytorch.mdae.MDFeaturePipeline import MDFeaturizer
+            from biobb_pytorch.mdae.MDFeaturePipeline import mdfeaturizer
 
             prop = {
                 'cartesian': {'selection': 'name CA'},
@@ -52,7 +52,7 @@ class MDFeaturePipeline(BiobbObject):
                            }
             }
 
-            MDFeaturizer(input_trajectory_path=trajectory_file,
+            mdfeaturizer(input_trajectory_path=trajectory_file,
                          input_topology_path=topology_file,
                          output_dataset_pt_path=output_file,
                          output_stats_pt_path=output_stats_file,
@@ -198,7 +198,7 @@ class MDFeaturePipeline(BiobbObject):
     @launchlogger
     def launch(self) -> int:
         """
-        Execute the :class:`MDFeaturePipeline <MDFeaturePipeline.MDFeaturePipeline>` object
+        Execute the :class:`MDFeaturePipeline <mdae.mdfeaturizer.MDFeaturePipeline>` object
         """
 
         # Setup Biobb
@@ -238,7 +238,7 @@ class MDFeaturePipeline(BiobbObject):
         return 0
 
 
-def MDFeaturizer(
+def mdfeaturizer(
     input_topology_path: str,
     output_dataset_pt_path: str,
     output_stats_pt_path: str,
@@ -248,13 +248,13 @@ def MDFeaturizer(
     input_weights_npy_path: Optional[str] = None,
     **kwargs,
 ) -> int:
-    """Create the :class:`MDFeaturePipeline <MDFeaturePipeline.MDFeaturePipeline>` class and
-    execute the :meth:`launch() <MDFeaturePipeline.MDFeaturizer.launch>` method."""
+    """Create the :class:`MDFeaturePipeline <mdae.mdfeaturizer.MDFeaturePipeline>` class and
+    execute the :meth:`launch() <mdae.mdfeaturizer.MDFeaturePipeline.launch>` method."""
     return MDFeaturePipeline(**dict(locals())).launch()
 
 
-MDFeaturizer.__doc__ = MDFeaturePipeline.__doc__
-main = MDFeaturePipeline.get_main(MDFeaturizer, "Obtain the Molecular Dynamics Features for PyTorch model training.")
+mdfeaturizer.__doc__ = MDFeaturePipeline.__doc__
+main = MDFeaturePipeline.get_main(mdfeaturizer, "Obtain the Molecular Dynamics Features for PyTorch model training.")
 
 if __name__ == "__main__":
     main()

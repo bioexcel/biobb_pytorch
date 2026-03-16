@@ -25,7 +25,7 @@ class EvaluateModel(BiobbObject):
     Examples:
         This example shows how to use the EvaluateModel class to evaluate a PyTorch autoencoder model::
 
-            from biobb_pytorch.mdae.evaluate_model import evaluateModel
+            from biobb_pytorch.mdae.evaluate_model import evaluate_model
 
             input_model_pth_path='input_model.pth'
             input_dataset_pt_path='input_dataset.pt'
@@ -37,7 +37,7 @@ class EvaluateModel(BiobbObject):
                 }
             }
 
-            evaluateModel(input_model_pth_path=input_model.pth,
+            evaluate_model(input_model_pth_path=input_model.pth,
                     input_dataset_pt_path=input_dataset.pt,
                     output_results_npz_path=output_results.npz,
                     properties=prop)
@@ -165,7 +165,7 @@ class EvaluateModel(BiobbObject):
     @launchlogger
     def launch(self) -> int:
         """
-        Execute the :class:`EvaluateModel` class and its `.launch()` method.
+        Execute the :class:`EvaluateModel <mdae.evaluate_model.EvaluateModel>` object.
         """
 
         fu.log('## BioBB Model Evaluator ##', self.out_log)
@@ -209,20 +209,20 @@ class EvaluateModel(BiobbObject):
         return 0
 
 
-def evaluateModel(
+def evaluate_model(
     properties: dict,
     input_model_pth_path: str,
     input_dataset_pt_path: str,
     output_results_npz_path: str,
     **kwargs,
 ) -> int:
-    """Create the :class:`EvaluateModel <EvaluateModel.EvaluateModel>` class and
-    execute the :meth:`launch() <EvaluateModel.EvaluateModel.launch>` method."""
+    """Create the :class:`EvaluateModel <mdae.evaluate_model.EvaluateModel>` class and
+    execute the :meth:`launch() <mdae.evaluate_model.EvaluateModel.launch>` method."""
     return EvaluateModel(**dict(locals())).launch()
 
 
-evaluateModel.__doc__ = EvaluateModel.__doc__
-main = EvaluateModel.get_main(evaluateModel, "Evaluate a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.")
+evaluate_model.__doc__ = EvaluateModel.__doc__
+main = EvaluateModel.get_main(evaluate_model, "Evaluate a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.")
 
 if __name__ == "__main__":
     main()

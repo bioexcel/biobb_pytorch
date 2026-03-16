@@ -29,7 +29,7 @@ class BuildModel(BiobbObject):
     Examples:
         This example shows how to use the BuildModel class to build a PyTorch autoencoder model::
 
-            from biobb_pytorch.mdae.build_model import buildModel
+            from biobb_pytorch.mdae.build_model import build_model
 
             input_stats_pt_path = "input_stats.pt"
             output_model_pth_file = "model.pth"
@@ -48,7 +48,7 @@ class BuildModel(BiobbObject):
                 }
             }
 
-            buildModel(input_stats_pt_path=input_stats_pt_path,
+            build_model(input_stats_pt_path=input_stats_pt_path,
                        output_model_pth_path=None,
                        properties=prop)
 
@@ -223,11 +223,7 @@ class BuildModel(BiobbObject):
     @launchlogger
     def launch(self) -> int:
         """
-        Execute the :class:`BuildModel` class and its `.launch()` method.
-
-        Args:
-            output_model_pth_path (str): Path where the model will be saved.
-            properties (dict): Hyper‐parameters for model construction.
+        Execute the :class:`BuildModel <mdae.build_model.BuildModel>` object
         """
 
         # Setup Biobb
@@ -280,19 +276,19 @@ class BuildModel(BiobbObject):
         return 0
 
 
-def buildModel(
+def build_model(
     properties: dict,
     input_stats_pt_path: str,
     output_model_pth_path: Optional[str] = None,
     **kwargs,
 ) -> int:
-    """Create the :class:`BuildModel <BuildModel.BuildModel>` class and
-    execute the :meth:`launch() <BuildModel.BuildModel.launch>` method."""
+    """Create the :class:`BuildModel <mdae.build_model.BuildModel>` class and
+    execute the :meth:`launch() <mdae.build_model.BuildModel.launch>` method."""
     return BuildModel(**dict(locals())).launch()
 
 
-buildModel.__doc__ = BuildModel.__doc__
-main = BuildModel.get_main(buildModel, "Build a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.")
+build_model.__doc__ = BuildModel.__doc__
+main = BuildModel.get_main(build_model, "Build a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.")
 
 
 if __name__ == "__main__":

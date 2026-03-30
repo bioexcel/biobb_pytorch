@@ -1,6 +1,7 @@
 import torch
 from torch.utils.data import DataLoader
 import os
+from typing import Optional, Union
 from biobb_common.tools.file_utils import launchlogger
 from biobb_common.tools import file_utils as fu
 from biobb_pytorch.mdae.utils.log_utils import get_size
@@ -15,9 +16,9 @@ class EvaluateDecoder(BiobbObject):
     | Evaluates a PyTorch autoencoder from the given properties.
 
     Args:
-        input_model_pth_path (str): Path to the trained model file whose decoder will be used. File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pth>`_. Accepted formats: pth (edam:format_2333).
-        input_dataset_npy_path (str): Path to the input latent variables file in NumPy format (e.g. encoded 'z'). File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.npy>`_. Accepted formats: npy (edam:format_2333).
-        output_results_npz_path (str): Path to the output reconstructed data file (compressed NumPy archive, typically containing 'xhat'). File type: output. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_results.npz>`_. Accepted formats: npz (edam:format_2333).
+        input_model_pth_path (str) (Optional): Path to the trained model file whose decoder will be used. File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pth>`_. Accepted formats: pth (edam:format_2333).
+        input_dataset_npy_path (str) (Optional): Path to the input latent variables file in NumPy format (e.g. encoded 'z'). File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.npy>`_. Accepted formats: npy (edam:format_2333).
+        output_results_npz_path (str) (Optional): Path to the output reconstructed data file (compressed NumPy archive, typically containing 'xhat'). File type: output. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_results.npz>`_. Accepted formats: npz (edam:format_2333).
         properties (dict - Python dictionary object containing the tool parameters, not input/output files):
             * **Dataset** (*dict*) - ({}) DataLoader options (e.g. batch_size, shuffle) for batching the latent variables.
 
@@ -53,10 +54,12 @@ class EvaluateDecoder(BiobbObject):
 
     def __init__(
         self,
-        input_model_pth_path: str,
-        input_dataset_npy_path: str,
-        output_results_npz_path: str,
         properties: dict,
+        input_model_pth_path: str = None,
+        input_dataset_npy_path: str = None,
+        output_results_npz_path: str = None,
+        input_model: Optional[torch.nn.Module] = None,
+        input_latent: Optional[Union[torch.Tensor, np.ndarray]] = None,
         **kwargs,
     ) -> None:
 
@@ -64,6 +67,8 @@ class EvaluateDecoder(BiobbObject):
 
         super().__init__(properties)
 
+        self._input_model = input_model
+        self._input_latent = input_latent
         self.input_model_pth_path = input_model_pth_path
         self.input_dataset_npy_path = input_dataset_npy_path
         self.output_results_npz_path = output_results_npz_path
@@ -89,10 +94,17 @@ class EvaluateDecoder(BiobbObject):
         self.check_arguments()
 
     def load_model(self):
+        if self._input_model is not None:
+            return self._input_model
         return torch.load(self.io_dict["in"]["input_model_pth_path"],
                           weights_only=False)
 
     def load_dataset(self):
+        if self._input_latent is not None:
+            z = self._input_latent
+            if not torch.is_tensor(z):
+                z = torch.tensor(z)
+            return z.float()
         dataset = torch.tensor(np.load(self.io_dict["in"]["input_dataset_npy_path"]))
         return dataset.float()
 
@@ -113,6 +125,17 @@ class EvaluateDecoder(BiobbObject):
                 z = model.decode(batch)
                 all_reconstructions.append(z)
         return {"xhat": torch.cat(all_reconstructions, dim=0)}
+
+    def run_decoding(self) -> dict:
+        """Load model and latent tensor, decode, store ``self.results`` (``'xhat'``).
+
+        Does not call :meth:`stage_files` or write files.
+        """
+        model = self.load_model()
+        dataset = self.load_dataset()
+        dataloader = self.create_dataloader(dataset)
+        self.results = self.evaluate_decoder(model, dataloader)
+        return self.results
 
     @launchlogger
     def launch(self) -> int:
@@ -140,10 +163,7 @@ class EvaluateDecoder(BiobbObject):
 
         # create the dataloader
         fu.log('Start evaluating...', self.out_log)
-        dataloader = self.create_dataloader(dataset)
-
-        # evaluate the model
-        results = self.evaluate_decoder(model, dataloader)
+        results = self.run_decoding()
 
         # Save the results
         np.savez_compressed(self.io_dict["out"]["output_results_npz_path"], **results)

@@ -18,7 +18,7 @@
             "rest": true
         },
         {
-            "block": "MDFeaturePipeline",
+            "block": "MDFeaturizer",
             "tool": "mdfeaturizer",
             "desc": "Obtain Molecular Dynamics features for PyTorch MDAE model training (dataset and statistics).",
             "exec": "mdfeaturizer",

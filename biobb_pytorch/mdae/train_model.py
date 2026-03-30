@@ -1,6 +1,6 @@
 import torch
 import os
-from typing import Optional
+from typing import Any, Dict, Optional, Union
 from biobb_common.tools.file_utils import launchlogger
 from biobb_common.tools import file_utils as fu
 from biobb_pytorch.mdae.utils.log_utils import get_size
@@ -22,8 +22,8 @@ class TrainModel(BiobbObject):
     | Trains a PyTorch autoencoder using the given properties.
 
     Args:
-        input_model_pth_path (str): Path to the input model file. File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pth>`_. Accepted formats: pth (edam:format_2333).
-        input_dataset_pt_path (str): Path to the input dataset file (.pt) produced by the MD feature pipeline. File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pt>`_. Accepted formats: pt (edam:format_2333).
+        input_model_pth_path (str) (Optional): Path to the input model file. File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pth>`_. Accepted formats: pth (edam:format_2333).
+        input_dataset_pt_path (str) (Optional): Path to the input dataset file (.pt) produced by the MD feature pipeline. File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pt>`_. Accepted formats: pt (edam:format_2333).
         output_model_pth_path (str) (Optional): Path to save the trained model (.pth). If omitted, the trained model is only available in memory. File type: output. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pth>`_. Accepted formats: pth (edam:format_2333).
         output_metrics_npz_path (str) (Optional): Path save training metrics in compressed NumPy format (.npz). File type: output. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.npz>`_. Accepted formats: npz (edam:format_2333).
         properties (dict - Python dictionary object containing the tool parameters, not input/output files):
@@ -75,11 +75,13 @@ class TrainModel(BiobbObject):
 
     def __init__(
         self,
-        input_model_pth_path: str,
-        input_dataset_pt_path: str,
+        properties: dict,
+        input_model_pth_path: str = None,
+        input_dataset_pt_path: str = None,
         output_model_pth_path: Optional[str] = None,
         output_metrics_npz_path: Optional[str] = None,
-        properties: dict = None,
+        input_model: Optional[torch.nn.Module] = None,
+        input_dataset: Optional[Union[Dict[str, Any], DictDataset]] = None,
         **kwargs,
     ) -> None:
 
@@ -87,6 +89,8 @@ class TrainModel(BiobbObject):
 
         super().__init__(properties)
 
+        self._input_model = input_model
+        self._input_dataset = input_dataset
         self.input_model_pth_path = input_model_pth_path
         self.input_dataset_pt_path = input_dataset_pt_path
         self.output_model_pth_path = output_model_pth_path
@@ -163,10 +167,16 @@ class TrainModel(BiobbObject):
         return lightning.Trainer(**train_params)
 
     def load_model(self):
+        if self._input_model is not None:
+            return self._input_model
         return torch.load(self.io_dict["in"]["input_model_pth_path"],
                           weights_only=False)
 
     def load_dataset(self):
+        if self._input_dataset is not None:
+            if isinstance(self._input_dataset, DictDataset):
+                return self._input_dataset
+            return DictDataset(self._input_dataset)
         dataset = torch.load(self.io_dict["in"]["input_dataset_pt_path"],
                              weights_only=False)
         return DictDataset(dataset)
@@ -190,6 +200,21 @@ class TrainModel(BiobbObject):
     def fit_model(self, trainer, model, datamodule):
         """Fit the model to the data, capturing logs and keeping tqdm clean."""
         trainer.fit(model, datamodule)
+
+    def run_training(self) -> None:
+        """Load model and dataset, build the Lightning trainer, and run ``fit``.
+
+        Does not call :meth:`stage_files`, write outputs, or copy/remove temp files.
+        Use this from a notebook or script when passing ``input_model`` /
+        ``input_dataset`` in memory and you only need the trained ``self.model`` and
+        ``self.metrics`` without the full BioBB :meth:`launch` pipeline.
+        """
+        self.model = self.load_model()
+        self.dataset = self.load_dataset()
+        self.datamodule = self.create_datamodule(self.dataset)
+        self.trainer = self.get_trainer()
+        self.fit_model(self.trainer, self.model, self.datamodule)
+        self.metrics = self.colvars_metrics.metrics
 
     def save_full(self, model) -> None:
         """Serialize the full model object (including architecture)."""
@@ -221,16 +246,7 @@ class TrainModel(BiobbObject):
 
         # create the datamodule
         fu.log('Start training...', self.out_log)
-        self.datamodule = self.create_datamodule(self.dataset)
-
-        # get the trainer
-        self.trainer = self.get_trainer()
-
-        # fit the model
-        self.fit_model(self.trainer, self.model, self.datamodule)
-
-        # Set the metrics
-        self.metrics = self.colvars_metrics.metrics
+        self.run_training()
 
         # Save the metrics if path provided
         if self.output_metrics_npz_path:

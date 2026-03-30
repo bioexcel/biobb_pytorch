@@ -17,7 +17,7 @@ class BuildModel(BiobbObject):
     | Builds a PyTorch autoencoder from the given properties.
 
     Args:
-        input_stats_pt_path (str): Path to the input model statistics file. File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_input_model.pt>`_. Accepted formats: pt (edam:format_2333).
+        input_stats_pt_path (str) (Optional): Path to the input model statistics file. File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/ref_input_model.pt>`_. Accepted formats: pt (edam:format_2333).
         output_model_pth_path (str) (Optional): Path to save the model in .pth format. File type: output. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pth>`_. Accepted formats: pth (edam:format_2333).
         properties (dict - Python dictionary object containing the tool parameters, not input/output files):
             * **model_type** (*str*) - ("AutoEncoder") Name of the model class to instantiate (must exist in biobb_pytorch.mdae.models).
@@ -49,7 +49,7 @@ class BuildModel(BiobbObject):
             }
 
             build_model(input_stats_pt_path=input_stats_pt_path,
-                       output_model_pth_path=None,
+                       output_model_pth_path=output_model_pth_file,
                        properties=prop)
 
     Info:
@@ -64,9 +64,10 @@ class BuildModel(BiobbObject):
 
     def __init__(
         self,
-        input_stats_pt_path: str,
-        output_model_pth_path: Optional[str] = None,
+        input_stats_pt_path: str = None,
+        output_model_pth_path: str = None,
         properties: dict = None,
+        input_stats: Optional[Dict[str, Any]] = None,
         **kwargs,
     ) -> None:
 
@@ -98,9 +99,13 @@ class BuildModel(BiobbObject):
         self.loss_function: Optional[dict] = properties.get("loss_function", None)
         self.device = self.options['device'] if 'device' in self.options else 'cpu'
 
-        # load the input files
-        self.stats = torch.load(self.io_dict['in']['input_stats_pt_path'],
-                                weights_only=False)
+        if input_stats is not None:
+            self.stats = input_stats
+        else:
+            self.stats = torch.load(
+                self.io_dict['in']['input_stats_pt_path'],
+                weights_only=False,
+            )
 
         # Check the properties
         self.check_properties(properties)

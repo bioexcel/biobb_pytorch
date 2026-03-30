@@ -1,5 +1,7 @@
 import os
+import warnings
 import torch
+from typing import Any, Dict, Optional, Union
 from torch.utils.data import DataLoader
 from biobb_common.tools.file_utils import launchlogger
 from biobb_common.tools import file_utils as fu
@@ -16,9 +18,9 @@ class EvaluateModel(BiobbObject):
     | Evaluates a PyTorch autoencoder from the given properties.
 
     Args:
-        input_model_pth_path (str): Path to the trained model file. File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pth>`_. Accepted formats: pth (edam:format_2333).
-        input_dataset_pt_path (str): Path to the input dataset file (.pt) to evaluate on. File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pt>`_. Accepted formats: pt (edam:format_2333).
-        output_results_npz_path (str): Path to the output evaluation results file (compressed NumPy archive). File type: output. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_results.npz>`_. Accepted formats: npz (edam:format_2333).
+        input_model_pth_path (str) (Optional): Path to the trained model file. File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pth>`_. Accepted formats: pth (edam:format_2333).
+        input_dataset_pt_path (str) (Optional): Path to the input dataset file (.pt) to evaluate on. File type: input. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_model.pt>`_. Accepted formats: pt (edam:format_2333).
+        output_results_npz_path (str) (Optional): Path to the output evaluation results file (compressed NumPy archive). File type: output. `Sample file <https://github.com/bioexcel/biobb_pytorch/raw/master/biobb_pytorch/test/reference/mdae/output_results.npz>`_. Accepted formats: npz (edam:format_2333).
         properties (dict - Python dictionary object containing the tool parameters, not input/output files):
             * **Dataset** (*dict*) - ({}) mlcolvar DictDataset / DataLoader options (e.g. batch_size, shuffle).
 
@@ -54,10 +56,12 @@ class EvaluateModel(BiobbObject):
 
     def __init__(
         self,
-        input_model_pth_path: str,
-        input_dataset_pt_path: str,
-        output_results_npz_path: str,
         properties: dict,
+        input_model_pth_path: str = None,
+        input_dataset_pt_path: str = None,
+        output_results_npz_path: str = None,
+        input_model: Optional[torch.nn.Module] = None,
+        input_dataset: Optional[Union[Dict[str, Any], DictDataset]] = None,
         **kwargs,
     ) -> None:
 
@@ -65,6 +69,8 @@ class EvaluateModel(BiobbObject):
 
         super().__init__(properties)
 
+        self._input_model = input_model
+        self._input_dataset = input_dataset
         self.input_model_pth_path = input_model_pth_path
         self.input_dataset_pt_path = input_dataset_pt_path
         self.output_results_npz_path = output_results_npz_path
@@ -90,10 +96,16 @@ class EvaluateModel(BiobbObject):
         self.check_arguments()
 
     def load_model(self):
+        if self._input_model is not None:
+            return self._input_model
         return torch.load(self.io_dict["in"]["input_model_pth_path"],
                           weights_only=False)
 
     def load_dataset(self):
+        if self._input_dataset is not None:
+            if isinstance(self._input_dataset, DictDataset):
+                return self._input_dataset
+            return DictDataset(self._input_dataset)
         dataset = torch.load(self.io_dict["in"]["input_dataset_pt_path"],
                              weights_only=False)
         return DictDataset(dataset)
@@ -116,13 +128,21 @@ class EvaluateModel(BiobbObject):
 
         model.eval()
         with torch.no_grad():
-            for batch_idx, batch in enumerate(dataloader):
-                result = model.evaluate_model(batch, batch_idx)
-                # Note: Consider replacing with model.validation_step(batch, batch_idx) or
-                # model.loss_fn(model(batch['data']), batch['data']) for eval-specific loss
-                batch_loss = model.training_step(batch, batch_idx)
-                all_results.append(result)
-                all_losses.append(batch_loss.item())  # Use .item() to get scalar
+            # training_step() calls self.log(); with an attached but idle trainer, Lightning
+            # raises MisconfigurationException. Clear the reference during evaluation and
+            # suppress the resulting rank-zero warnings; restore so training can resume.
+            prev_trainer = getattr(model, "_trainer", None)
+            model._trainer = None
+            try:
+                with warnings.catch_warnings():
+                    warnings.simplefilter("ignore")
+                    for batch_idx, batch in enumerate(dataloader):
+                        result = model.evaluate_model(batch, batch_idx)
+                        batch_loss = model.training_step(batch, batch_idx)
+                        all_results.append(result)
+                        all_losses.append(batch_loss.item())
+            finally:
+                model._trainer = prev_trainer
 
         # After all batches, collect per variable (assuming result is list/tuple of tensors)
         for i, var in enumerate(output_variables):
@@ -162,6 +182,18 @@ class EvaluateModel(BiobbObject):
                 all_reconstructions.append(reconstructions)
         return torch.cat(all_reconstructions, dim=0) if all_reconstructions else torch.tensor([])
 
+    def run_evaluation(self) -> dict:
+        """Load model and dataset, evaluate, and store NumPy results in ``self.results``.
+
+        Does not call :meth:`stage_files` or write files. Use from a notebook when
+        passing ``input_model`` / ``input_dataset`` in memory.
+        """
+        model = self.load_model()
+        dataset = self.load_dataset()
+        dataloader = self.create_dataloader(dataset)
+        self.results = self.evaluate_full_model(model, dataloader)
+        return self.results
+
     @launchlogger
     def launch(self) -> int:
         """
@@ -188,10 +220,7 @@ class EvaluateModel(BiobbObject):
 
         # create the dataloader
         fu.log('Start evaluating...', self.out_log)
-        dataloader = self.create_dataloader(dataset)
-
-        # evaluate the model
-        results = self.evaluate_full_model(model, dataloader)
+        results = self.run_evaluation()
 
         # Save the results
         np.savez_compressed(self.io_dict["out"]["output_results_npz_path"], **results)

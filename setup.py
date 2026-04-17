@@ -19,13 +19,21 @@ setuptools.setup(
     },
     packages=setuptools.find_packages(exclude=["docs", "test"]),
     package_data={"biobb_pytorch": ["py.typed"]},
-    install_requires=["biobb_common==5.2.2", "torch==2.5.0", "lightning==2.5.0", "mlcolvar==1.3.0", "mdtraj"],
+    install_requires=[
+        "biobb_common==5.2.2",
+        "torch==2.5.0",
+        "lightning==2.5.0",
+        "mlcolvar==1.3.0",
+        "mdtraj",
+        "optuna>=3.0",
+    ],
     python_requires=">=3.10",
     entry_points={
         "console_scripts": [
             "mdfeaturizer = biobb_pytorch.mdae.mdfeaturizer:main",
             "build_model = biobb_pytorch.mdae.build_model:main",
             "train_model = biobb_pytorch.mdae.train_model:main",
+            "hparam_tuning = biobb_pytorch.mdae.hparam_tuning:main",
             "decode_model = biobb_pytorch.mdae.decode_model:main",
             "encode_model = biobb_pytorch.mdae.encode_model:main",
             "evaluate_model = biobb_pytorch.mdae.evaluate_model:main",

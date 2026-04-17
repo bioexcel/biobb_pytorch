@@ -1,4 +1,5 @@
 from . import build_model
+from . import hparam_tuning
 from . import mdfeaturizer
 from . import train_model
 from . import evaluate_model
@@ -11,6 +12,7 @@ from .explainability import LRP
 name = 'mdae'
 __all__ = [
     'build_model',
+    'hparam_tuning',
     'mdfeaturizer',
     'train_model',
     'evaluate_model',

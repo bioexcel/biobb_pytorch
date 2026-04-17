@@ -46,7 +46,7 @@ def get_activation(activation: str):
         pass
     else:
         raise ValueError(
-            f"Unknown activation: {activation}. options: 'relu','elu','tanh','softplus','shifted_softplus','logsoftmax','linear'. "
+            f"Unknown activation: {activation}. options: 'relu','elu','tanh','softplus','shifted_softplus','logsoftmax','linear', 'sigmoid'."
         )
     return activ
 

@@ -21,7 +21,7 @@ class Featurizer:
         Path to a .npy file containing weights for each frame.
     """
 
-    def __init__(self, trajectory_file, topology_file, input_labels_npy_path=None, input_weights_npy_path=None):
+    def __init__(self, trajectory_file, topology_file, input_labels_npy_path=None, input_weights_npy_path=None, stride=None):
         """
         Initialize with an MDTraj Trajectory object.
 
@@ -31,11 +31,16 @@ class Featurizer:
             Path to the trajectory file (e.g., .dcd, .xtc).
         topology_file : str
             Path to the topology file (e.g., .pdb, .gro).
+        stride : int, optional
+            Step size for striding the trajectory (every Nth frame is kept).
         """
 
         # Load trajectory and topology
         trajectory = md.load(trajectory_file,
-                             top=topology_file)
+                             top=topology_file,
+                             stride=stride,
+                            )
+        self.stride = stride
 
         self.trajectory = trajectory
         self.topology = trajectory.topology
@@ -416,10 +421,10 @@ class Featurizer:
         stats = self.set_statistics(combined, feature_dict)
 
         if self.input_labels_npy_path:
-            labels = np.load(self.input_labels_npy_path)
+            labels = np.load(self.input_labels_npy_path)[::self.stride]
 
         if self.input_weights_npy_path:
-            weights = np.load(self.input_weights_npy_path)
+            weights = np.load(self.input_weights_npy_path)[::self.stride]
 
         if 'norm_in' in feature_dict.get('options', {}):
 

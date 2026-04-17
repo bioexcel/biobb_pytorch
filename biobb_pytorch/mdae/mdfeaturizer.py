@@ -28,7 +28,7 @@ class MDFeaturizer(BiobbObject):
             * **distances** (*dict*) - ({"selection": "name CA", "cutoff": 0.4, "periodic": True, "bonded": False}) Atom selection options for pairwise distance features (selection, cutoff, periodic, bonded, etc.).
             * **angles** (*dict*) - ({"selection": "backbone", "periodic": True, "bonded": True}) Atom selection options for angle features (selection, periodic, bonded, etc.).
             * **dihedrals** (*dict*) - ({"selection": "backbone", "periodic": True, "bonded": True}) Atom selection options for dihedral features (selection, periodic, bonded, etc.).
-            * **options** (*dict*) - ({"norm_in": {"mode": "min_max"}}) General processing options (e.g. timelag, norm_in).
+            * **options** (*dict*) - ({"norm_in": {"mode": "min_max"}}) General processing options (e.g. timelag, norm_in, stride).
 
     Examples:
         This is a use case of how to use the building block from Python::
@@ -48,7 +48,8 @@ class MDFeaturizer(BiobbObject):
                               'periodic': True,
                               'bonded': True},
                 'options': {'timelag': 10,
-                            'norm_in': {'mode': 'min_max'}
+                            'norm_in': {'mode': 'min_max'},
+                            'stride': 10
                            }
             }
 
@@ -155,10 +156,13 @@ class MDFeaturizer(BiobbObject):
     @launchlogger
     def featurize_trajectory(self) -> None:
 
+        self.stride = self.options.get('stride', None)
+
         self.featurizer = Featurizer(self.input_trajectory_path,
                                      self.input_topology_path,
                                      self.input_labels_npy_path,
                                      self.input_weights_npy_path,
+                                     stride=self.stride,
                                      )
 
         fu.log("Available Trajectory Properties:", self.out_log)
@@ -170,11 +174,11 @@ class MDFeaturizer(BiobbObject):
 
         if self.input_labels_npy_path:
             fu.log(f"Loading labels from {self.input_labels_npy_path}", self.out_log)
-            self.dataset['labels'] = np.load(self.input_labels_npy_path)
+            self.dataset['labels'] = np.load(self.input_labels_npy_path)[::self.stride]
 
         if self.input_weights_npy_path:
             fu.log(f"Loading weights from {self.input_weights_npy_path}", self.out_log)
-            self.dataset['weights'] = np.load(self.input_weights_npy_path)
+            self.dataset['weights'] = np.load(self.input_weights_npy_path)[::self.stride]
 
         fu.log("Features:", self.out_log)
         for feature_type in self.feature_types:
@@ -188,6 +192,7 @@ class MDFeaturizer(BiobbObject):
                 pass
 
         fu.log("Postprocessing:", self.out_log)
+        fu.log(f"   - Stride: {self.options.get('stride', None)}", self.out_log)
         fu.log(f"   - Normalization: {self.options.get('norm_in', {}).get('mode')}", self.out_log)
         fu.log(f"   - Timelag: {self.options.get('timelag', {})}", self.out_log)
         fu.log("Dataset Properties:", self.out_log)

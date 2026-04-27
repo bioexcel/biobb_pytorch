@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "http://bioexcel.eu/biobb_pytorch/json_schemas/1.0/mdfeaturizer",
-    "name": "biobb_pytorch MDFeaturePipeline",
+    "name": "biobb_pytorch mdfeaturizer",
     "title": "Obtain the Molecular Dynamics Features for PyTorch model training.",
     "description": "Obtain the Molecular Dynamics Features for PyTorch model training.",
     "type": "object",
@@ -137,7 +137,9 @@
                 "options": {
                     "type": "object",
                     "default": {
-                        "norm_in": "min_max"
+                        "norm_in": {
+                            "mode": "min_max"
+                        }
                     },
                     "wf_prop": false,
                     "description": "General processing options (e.g. timelag, norm_in)."

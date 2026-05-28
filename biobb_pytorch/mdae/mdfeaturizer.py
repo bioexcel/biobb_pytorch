@@ -213,7 +213,8 @@ class MDFeaturizer(BiobbObject):
         self.stage_files()
 
         torch.save(self.dataset,
-                   self.output_dataset_pt_path)
+                   self.output_dataset_pt_path,
+                   pickle_protocol=4)
 
         fu.log(f'Dataset saved in .pt format in {os.path.abspath(self.io_dict["out"]["output_dataset_pt_path"])}',
                self.out_log,

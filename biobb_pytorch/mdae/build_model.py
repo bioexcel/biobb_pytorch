@@ -5,7 +5,6 @@ from typing import Dict, Any, Type, Optional
 from biobb_pytorch.mdae.models import __all__ as AVAILABLE_MODELS
 from biobb_pytorch.mdae.utils.model_utils import assert_valid_kwargs
 from biobb_pytorch.mdae.utils.log_utils import get_size
-from biobb_common.tools.file_utils import launchlogger
 from biobb_common.tools import file_utils as fu
 from biobb_common.generic.biobb_object import BiobbObject
 
@@ -101,10 +100,6 @@ class BuildModel(BiobbObject):
         # load the input files
         self.stats = torch.load(self.io_dict['in']['input_stats_pt_path'],
                                 weights_only=False)
-
-        # Check the properties
-        self.check_properties(properties)
-        self.check_arguments()
 
         self._validate_props()
         self.model = self._build_model()
@@ -220,17 +215,10 @@ class BuildModel(BiobbObject):
         """Load a model serialized with save_full."""
         return torch.load(path, weights_only=False)
 
-    @launchlogger
-    def launch(self) -> int:
+    def run(self) -> int:
         """
         Execute the :class:`BuildModel <mdae.build_model.BuildModel>` object
         """
-
-        # Setup Biobb
-        if self.check_restart():
-            return 0
-
-        self.stage_files()
 
         if self.output_model_pth_path:
             self.save_full()

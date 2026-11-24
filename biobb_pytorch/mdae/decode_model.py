@@ -1,7 +1,6 @@
 import torch
 from torch.utils.data import DataLoader
 import os
-from biobb_common.tools.file_utils import launchlogger
 from biobb_common.tools import file_utils as fu
 from biobb_pytorch.mdae.utils.log_utils import get_size
 from biobb_common.generic.biobb_object import BiobbObject
@@ -84,10 +83,6 @@ class EvaluateDecoder(BiobbObject):
         self.Dataset = self.properties.get('Dataset', {})
         self.results = None
 
-        # Check the properties
-        self.check_properties(properties)
-        self.check_arguments()
-
     def load_model(self):
         return torch.load(self.io_dict["in"]["input_model_pth_path"],
                           weights_only=False)
@@ -114,19 +109,12 @@ class EvaluateDecoder(BiobbObject):
                 all_reconstructions.append(z)
         return {"xhat": torch.cat(all_reconstructions, dim=0)}
 
-    @launchlogger
-    def launch(self) -> int:
+    def run(self) -> int:
         """
         Execute the :class:`EvaluateDecoder <mdae.decode_model.EvaluateDecoder>` object.
         """
 
         fu.log('## BioBB Model Evaluator ##', self.out_log)
-
-        # Setup Biobb
-        if self.check_restart():
-            return 0
-
-        self.stage_files()
 
         # Start Pipeline
 

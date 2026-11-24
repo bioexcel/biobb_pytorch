@@ -2,7 +2,6 @@ import torch
 import numpy as np
 import os
 from typing import Optional
-from biobb_common.tools.file_utils import launchlogger
 from biobb_common.tools import file_utils as fu
 from biobb_pytorch.mdae.utils.log_utils import get_size
 from biobb_common.generic.biobb_object import BiobbObject
@@ -90,10 +89,6 @@ class LRP(BiobbObject):
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.results = None
 
-        # Check the properties
-        self.check_properties(properties)
-        self.check_arguments()
-
     def load_model(self):
         return torch.load(self.io_dict["in"]["input_model_pth_path"], weights_only=False)
 
@@ -152,19 +147,12 @@ class LRP(BiobbObject):
             "global_importance_raw": global_importance_raw,
         }
 
-    @launchlogger
-    def launch(self) -> int:
+    def run(self) -> int:
         """
         Execute the :class:`LRP` class and its `.launch()` method.
         """
 
         fu.log('## BioBB Layer-wise Relevance Propagation ##', self.out_log)
-
-        # Setup Biobb
-        if self.check_restart():
-            return 0
-
-        self.stage_files()
 
         # load the model
         fu.log(f'Load model from {os.path.abspath(self.io_dict["in"]["input_model_pth_path"])}', self.out_log)

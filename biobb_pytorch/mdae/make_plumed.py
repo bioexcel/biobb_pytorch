@@ -3,7 +3,6 @@ import torch
 from typing import Dict, Any, Optional, List
 import os
 from biobb_pytorch.mdae.utils.log_utils import get_size
-from biobb_common.tools.file_utils import launchlogger
 from biobb_common.tools import file_utils as fu
 from biobb_common.generic.biobb_object import BiobbObject
 
@@ -152,10 +151,6 @@ class GeneratePlumed(BiobbObject):
         self.pytorch_model = self.properties.get('pytorch_model', None)
         self.bias = self.properties.get('bias', [])
         self.prints = self.properties.get('prints', {'ARG': '*', 'STRIDE': 1, 'FILE': 'COLVAR'})
-
-        # Check the properties
-        self.check_properties(properties)
-        self.check_arguments()
 
         self.stats = self._load_stats()
         self.n_features = self.stats.get('shape', [None, None])[1]
@@ -373,15 +368,8 @@ class GeneratePlumed(BiobbObject):
 
         return lines
 
-    @launchlogger
-    def launch(self) -> int:
+    def run(self) -> int:
         """Execute the :class:`GeneratePlumed <mdae.make_plumed.GeneratePlumed>` object."""
-
-        # Setup Biobb
-        if self.check_restart():
-            return 0
-
-        self.stage_files()
 
         # Perform model conversion and feature generation after staging files
         self._convert_model_to_ptc()

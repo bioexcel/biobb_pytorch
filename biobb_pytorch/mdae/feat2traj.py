@@ -1,5 +1,4 @@
 from biobb_common.generic.biobb_object import BiobbObject
-from biobb_common.tools.file_utils import launchlogger
 import torch
 import numpy as np
 import mdtraj as md
@@ -82,11 +81,11 @@ class Feat2Traj(BiobbObject):
                 "output_top_path": output_top_path,
             },
         }
-        self.check_properties(properties)
-        self.check_arguments()
 
-    @launchlogger
-    def launch(self) -> int:
+    def stage_files(self) -> None:
+        """The block does not use the sandbox: there are no files to stage."""
+
+    def run(self) -> int:
         """
         Execute the :class:`Feat2Traj` class and its `.launch()` method.
         """

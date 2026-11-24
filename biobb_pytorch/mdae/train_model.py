@@ -1,7 +1,6 @@
 import torch
 import os
 from typing import Optional
-from biobb_common.tools.file_utils import launchlogger
 from biobb_common.tools import file_utils as fu
 from biobb_pytorch.mdae.utils.log_utils import get_size
 from biobb_common.generic.biobb_object import BiobbObject
@@ -110,10 +109,6 @@ class TrainModel(BiobbObject):
         self.Trainer = self.properties.get('Trainer', {})
         self.Dataset = self.properties.get('Dataset', {})
 
-        # Check the properties
-        self.check_properties(properties)
-        self.check_arguments()
-
     def get_callbacks(self):
         self.colvars_metrics = MetricsCallback()
         cbs_list = [self.colvars_metrics]
@@ -195,19 +190,12 @@ class TrainModel(BiobbObject):
         """Serialize the full model object (including architecture)."""
         torch.save(model, self.io_dict["out"]["output_model_pth_path"])
 
-    @launchlogger
-    def launch(self) -> int:
+    def run(self) -> int:
         """
         Execute the :class:`TrainModel <mdae.train_model.TrainModel>` object.
         """
 
         fu.log('## BioBB Model Trainer ##', self.out_log)
-
-        # Setup Biobb
-        if self.check_restart():
-            return 0
-
-        self.stage_files()
 
         # Start Pipeline
 

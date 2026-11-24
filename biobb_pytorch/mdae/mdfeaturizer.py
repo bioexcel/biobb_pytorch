@@ -6,7 +6,6 @@ from biobb_pytorch.mdae.featurization.topology_selector import MDTopologySelecto
 from biobb_pytorch.mdae.featurization.featurizer import Featurizer
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.tools import file_utils as fu
-from biobb_common.tools.file_utils import launchlogger
 import numpy as np
 from typing import Optional, Dict, Any
 from biobb_pytorch.mdae.utils.log_utils import get_size
@@ -115,17 +114,13 @@ class MDFeaturePipeline(BiobbObject):
         self.dihedrals: dict = properties.get("dihedrals", {"selection": "backbone", "periodic": True, "bonded": True})
         self.options: dict = properties.get("options", {"norm_in": {"mode": "min_max"}})
 
-        # Check the properties
-        self.check_properties(properties)
-        self.check_arguments()
+        with self.open_logs():
+            # Topology indices
+            self.topology_indices()
 
-        # Topology indices
-        self.topology_indices()
+            # Featurizer
+            self.featurize_trajectory()
 
-        # Featurizer
-        self.featurize_trajectory()
-
-    @launchlogger
     def topology_indices(self) -> Dict[str, Any]:
 
         fu.log("## BioBB Featurization - MDFeaturePipeline ##", self.out_log)
@@ -152,7 +147,6 @@ class MDFeaturePipeline(BiobbObject):
         except AttributeError:
             fu.log("  - Number of dihedrals: N/A", self.out_log)
 
-    @launchlogger
     def featurize_trajectory(self) -> None:
 
         self.featurizer = Featurizer(self.input_trajectory_path,
@@ -195,17 +189,10 @@ class MDFeaturePipeline(BiobbObject):
         fu.log(f"   - Number of frames: {self.dataset['data'].shape[0]}", self.out_log)
         fu.log(f"   - Number of features: {self.dataset['data'].shape[1]}", self.out_log)
 
-    @launchlogger
-    def launch(self) -> int:
+    def run(self) -> int:
         """
         Execute the :class:`MDFeaturePipeline <mdae.mdfeaturizer.MDFeaturePipeline>` object
         """
-
-        # Setup Biobb
-        if self.check_restart():
-            return 0
-
-        self.stage_files()
 
         torch.save(self.dataset,
                    self.output_dataset_pt_path)

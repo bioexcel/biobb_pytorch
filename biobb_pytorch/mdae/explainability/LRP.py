@@ -147,6 +147,9 @@ class LRP(BiobbObject):
             "global_importance_raw": global_importance_raw,
         }
 
+    def stage_files(self) -> None:
+        """The block does not use the sandbox: there are no files to stage."""
+
     def run(self) -> None:
         """
         Execute the :class:`LRP` class and its `.launch()` method.

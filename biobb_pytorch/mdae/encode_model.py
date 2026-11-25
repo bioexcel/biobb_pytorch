@@ -111,6 +111,9 @@ class EvaluateEncoder(BiobbObject):
                 z_all.append(z)
         return {"z": torch.cat(z_all, dim=0)}
 
+    def stage_files(self) -> None:
+        """The block does not use the sandbox: there are no files to stage."""
+
     def run(self) -> None:
         """
         Execute the :class:`EvaluateEncoder <mdae.encode_model.EvaluateEncoder>` object.

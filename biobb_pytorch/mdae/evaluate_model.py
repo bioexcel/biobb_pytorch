@@ -157,6 +157,9 @@ class EvaluateModel(BiobbObject):
                 all_reconstructions.append(reconstructions)
         return torch.cat(all_reconstructions, dim=0) if all_reconstructions else torch.tensor([])
 
+    def stage_files(self) -> None:
+        """The block does not use the sandbox: there are no files to stage."""
+
     def run(self) -> None:
         """
         Execute the :class:`EvaluateModel <mdae.evaluate_model.EvaluateModel>` object.

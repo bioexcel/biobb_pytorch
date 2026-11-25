@@ -189,6 +189,9 @@ class MDFeaturePipeline(BiobbObject):
         fu.log(f"   - Number of frames: {self.dataset['data'].shape[0]}", self.out_log)
         fu.log(f"   - Number of features: {self.dataset['data'].shape[1]}", self.out_log)
 
+    def stage_files(self) -> None:
+        """The block does not use the sandbox: there are no files to stage."""
+
     def run(self) -> None:
         """
         Execute the :class:`MDFeaturePipeline <mdae.mdfeaturizer.MDFeaturePipeline>` object

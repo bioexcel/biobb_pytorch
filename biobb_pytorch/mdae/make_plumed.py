@@ -368,6 +368,9 @@ class GeneratePlumed(BiobbObject):
 
         return lines
 
+    def stage_files(self) -> None:
+        """The block does not use the sandbox: there are no files to stage."""
+
     def run(self) -> None:
         """Execute the :class:`GeneratePlumed <mdae.make_plumed.GeneratePlumed>` object."""
 

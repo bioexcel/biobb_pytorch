@@ -109,6 +109,9 @@ class EvaluateDecoder(BiobbObject):
                 all_reconstructions.append(z)
         return {"xhat": torch.cat(all_reconstructions, dim=0)}
 
+    def stage_files(self) -> None:
+        """The block does not use the sandbox: there are no files to stage."""
+
     def run(self) -> None:
         """
         Execute the :class:`EvaluateDecoder <mdae.decode_model.EvaluateDecoder>` object.

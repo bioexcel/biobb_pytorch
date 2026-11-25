@@ -191,6 +191,9 @@ class TrainModel(BiobbObject):
         """Serialize the full model object (including architecture)."""
         torch.save(model, self.io_dict["out"]["output_model_pth_path"])
 
+    def stage_files(self) -> None:
+        """The block does not use the sandbox: there are no files to stage."""
+
     def run(self) -> None:
         """
         Execute the :class:`TrainModel <mdae.train_model.TrainModel>` object.

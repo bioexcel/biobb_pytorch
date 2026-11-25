@@ -217,6 +217,9 @@ class BuildModel(BiobbObject):
         """Load a model serialized with save_full."""
         return torch.load(path, weights_only=False)
 
+    def stage_files(self) -> None:
+        """The block does not use the sandbox: there are no files to stage."""
+
     def run(self) -> None:
         """
         Execute the :class:`BuildModel <mdae.build_model.BuildModel>` object

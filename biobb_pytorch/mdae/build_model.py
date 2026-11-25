@@ -75,7 +75,9 @@ class BuildModel(BiobbObject):
 
         self.input_stats_pt_path = input_stats_pt_path
         self.output_model_pth_path = output_model_pth_path
-        self.props = properties.copy()
+        # Documented defaults of the properties used to build the model
+        self.props = {'model_type': 'AutoEncoder', 'n_cvs': 1, 'encoder_layers': [16], 'decoder_layers': [16],
+                      'options': {'norm_in': {'mode': 'min_max'}}, **properties}
         self.locals_var_dict = locals().copy()
 
         # Input/Output files
@@ -107,12 +109,12 @@ class BuildModel(BiobbObject):
 
         # Store hyperparameters for reproducibility
         hparams = {
-            'model_type': properties['model_type'],
-            'n_cvs': properties['n_cvs'],
-            'encoder_layers': properties['encoder_layers'],
-            'decoder_layers': properties['decoder_layers'],
+            'model_type': self.props['model_type'],
+            'n_cvs': self.props['n_cvs'],
+            'encoder_layers': self.props['encoder_layers'],
+            'decoder_layers': self.props['decoder_layers'],
             'loss_function': self._hparams_loss_repr(),
-            'options': {k: v for k, v in properties['options'].items() if k != 'loss_function'}
+            'options': {k: v for k, v in self.props['options'].items() if k != 'loss_function'}
         }
         setattr(self.model, '_hparams', hparams)
 

@@ -205,7 +205,7 @@ class MDFeaturePipeline(BiobbObject):
                )
 
         torch.save(self.stats,
-                   os.path.splitext(self.output_stats_pt_path)[0] + ".pt")
+                   self.output_stats_pt_path)
 
         fu.log(f'Dataset statistics saved in .pt format in {os.path.abspath(self.io_dict["out"]["output_stats_pt_path"])}',
                self.out_log,

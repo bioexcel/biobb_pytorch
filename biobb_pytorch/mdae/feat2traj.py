@@ -98,11 +98,9 @@ class Feat2Traj(BiobbObject):
                            weights_only=False)
         cartesian_indices = None
         topology = None
-        if isinstance(stats, dict):
-            if 'cartesian_indices' in stats:
-                cartesian_indices = stats['cartesian_indices']
-                topology = stats['topology']
-
+        if isinstance(stats, dict) and 'cartesian_indices' in stats:
+            cartesian_indices = stats['cartesian_indices']
+            topology = stats.get('topology')
         else:
             raise ValueError('No cartesian indices found in stats file.')
         cartesian_indices = np.array(cartesian_indices)

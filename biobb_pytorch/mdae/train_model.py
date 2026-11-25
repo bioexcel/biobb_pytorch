@@ -150,7 +150,7 @@ class TrainModel(BiobbObject):
         return ProfilerClass(**profiler_params)
 
     def get_trainer(self):
-        train_params = {k: v for k, v in self.properties['Trainer'].items()
+        train_params = {k: v for k, v in self.Trainer.items()
                         if k not in ['callbacks', 'logger', 'profiler']}
         train_params['callbacks'] = self.get_callbacks()
         train_params['logger'] = self.get_logger()
@@ -167,19 +167,20 @@ class TrainModel(BiobbObject):
         return DictDataset(dataset)
 
     def create_datamodule(self, dataset):
-        ds_cfg = self.properties['Dataset']
+        ds_cfg = self.Dataset
+        split = ds_cfg.get('split', {})
 
-        lengths = [ds_cfg['split'].get('train_prop', 0.8),
-                   ds_cfg['split'].get('val_prop', 0.2)]
-        if ds_cfg['split'].get('test_prop', 0) > 0:
-            lengths.append(ds_cfg['split'].get('test_prop', 0))
+        lengths = [split.get('train_prop', 0.8),
+                   split.get('val_prop', 0.2)]
+        if split.get('test_prop', 0) > 0:
+            lengths.append(split.get('test_prop', 0))
 
         return DictModule(
             dataset,
             batch_size=ds_cfg.get('batch_size', 16),
             lengths=lengths,
-            shuffle=ds_cfg['split'].get('shuffle', True),
-            random_split=ds_cfg['split'].get('random_split', True)
+            shuffle=split.get('shuffle', True),
+            random_split=split.get('random_split', True)
         )
 
     def fit_model(self, trainer, model, datamodule):

@@ -116,33 +116,13 @@ class GeneratePlumed(BiobbObject):
         properties: Optional[Dict[str, Any]] = None,
         **kwargs,
     ) -> None:
-        properties = properties or {}
-
-        super().__init__(properties)
-        self.locals_var_dict = locals().copy()
-
-        # Input/Output files
-        self.io_dict = {
-            "in": {"input_model_pth_path": input_model_pth_path},
-            "out": {
-                "output_plumed_dat_path": output_plumed_dat_path,
-                "output_features_dat_path": output_features_dat_path,
-                "output_model_ptc_path": output_model_ptc_path
-            }
-        }
-        if input_stats_pt_path:
-            self.io_dict["in"]["input_stats_pt_path"] = input_stats_pt_path
-        if input_reference_pdb_path:
-            self.io_dict["in"]["input_reference_pdb_path"] = input_reference_pdb_path
-        if input_ndx_path:
-            self.io_dict["in"]["input_ndx_path"] = input_ndx_path
+        super().__init__(**locals())
 
         # Properties
         self.model_pth = input_model_pth_path
         self.stats_pt = input_stats_pt_path
         self.ref_pdb = input_reference_pdb_path
         self.ndx = input_ndx_path
-        self.properties = properties
 
         self.additional_actions = self.properties.get('additional_actions', [])
         self.group = self.properties.get('group', None)

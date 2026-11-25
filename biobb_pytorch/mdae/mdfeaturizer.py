@@ -78,10 +78,7 @@ class MDFeaturePipeline(BiobbObject):
         input_weights_npy_path: Optional[str] = None,
         **kwargs,
     ) -> None:
-
-        properties = properties or {}
-
-        super().__init__(properties)
+        super().__init__(**locals())
 
         self.input_trajectory_path = input_trajectory_path or input_topology_path
         self.input_topology_path = input_topology_path
@@ -89,8 +86,7 @@ class MDFeaturePipeline(BiobbObject):
         self.input_weights_npy_path = input_weights_npy_path
         self.output_dataset_pt_path = output_dataset_pt_path
         self.output_stats_pt_path = output_stats_pt_path
-        self.config = properties.copy()
-        self.locals_var_dict = locals().copy()
+        self.config = self.properties.copy()
 
         # Input/Output files
         self.io_dict = {
@@ -108,11 +104,6 @@ class MDFeaturePipeline(BiobbObject):
 
         # build the per-feature arguments
         self.feature_types = ["cartesian", "distances", "angles", "dihedrals"]
-        self.cartesian: dict = properties.get("cartesian", {"selection": "name CA"})
-        self.distances: dict = properties.get("distances", {"selection": "name CA", "cutoff": 0.4, "periodic": True, "bonded": False})
-        self.angles: dict = properties.get("angles", {"selection": "backbone", "periodic": True, "bonded": True})
-        self.dihedrals: dict = properties.get("dihedrals", {"selection": "backbone", "periodic": True, "bonded": True})
-        self.options: dict = properties.get("options", {"norm_in": {"mode": "min_max"}})
 
         with self.open_logs():
             # Topology indices

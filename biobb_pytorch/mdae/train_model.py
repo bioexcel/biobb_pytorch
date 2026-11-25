@@ -81,30 +81,12 @@ class TrainModel(BiobbObject):
         properties: dict = None,
         **kwargs,
     ) -> None:
-
-        properties = properties or {}
-
-        super().__init__(properties)
+        super().__init__(**locals())
 
         self.input_model_pth_path = input_model_pth_path
         self.input_dataset_pt_path = input_dataset_pt_path
         self.output_model_pth_path = output_model_pth_path
         self.output_metrics_npz_path = output_metrics_npz_path
-        self.properties = properties.copy()
-        self.locals_var_dict = locals().copy()
-
-        # Input/Output files
-        self.io_dict = {
-            "in": {
-                "input_model_pth_path": input_model_pth_path,
-                "input_dataset_pt_path": input_dataset_pt_path,
-            },
-            "out": {},
-        }
-        if output_model_pth_path:
-            self.io_dict["out"]["output_model_pth_path"] = output_model_pth_path
-        if output_metrics_npz_path:
-            self.io_dict["out"]["output_metrics_npz_path"] = output_metrics_npz_path
 
         self.Trainer = self.properties.get('Trainer', {})
         self.Dataset = self.properties.get('Dataset', {})

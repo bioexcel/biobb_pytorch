@@ -68,35 +68,17 @@ class BuildModel(BiobbObject):
         properties: dict = None,
         **kwargs,
     ) -> None:
-
-        properties = properties or {}
-
-        super().__init__(properties)
+        super().__init__(**locals())
 
         self.input_stats_pt_path = input_stats_pt_path
         self.output_model_pth_path = output_model_pth_path
         # Documented defaults of the properties used to build the model
         self.props = {'model_type': 'AutoEncoder', 'n_cvs': 1, 'encoder_layers': [16], 'decoder_layers': [16],
-                      'options': {'norm_in': {'mode': 'min_max'}}, **properties}
-        self.locals_var_dict = locals().copy()
-
-        # Input/Output files
-        self.io_dict = {
-            "in": {
-                "input_stats_pt_path": input_stats_pt_path,
-            },
-            "out": {}
-        }
-        if output_model_pth_path:
-            self.io_dict["out"]["output_model_pth_path"] = output_model_pth_path
+                      'options': {'norm_in': {'mode': 'min_max'}}, **self.properties}
 
         # build the per-feature arguments
-        self.options: dict = properties.get("options", {})
-        self.model_type: str = properties.get("model_type", "AutoEncoder")
-        self.n_cvs: int = properties.get("n_cvs", 1)
-        self.encoder_layers: list = properties.get("encoder_layers", [16])
-        self.decoder_layers: list = properties.get("decoder_layers", [16])
-        self.loss_function: Optional[dict] = properties.get("loss_function", None)
+        self.options: dict = self.properties.get("options", {})
+        self.loss_function: Optional[dict] = self.properties.get("loss_function", None)
         self.device = self.options['device'] if 'device' in self.options else 'cpu'
 
         # load the input files

@@ -60,27 +60,13 @@ class Feat2Traj(BiobbObject):
         properties: dict = None,
         **kwargs,
     ) -> None:
-        properties = properties or {}
-        super().__init__(properties)
+        super().__init__(**locals())
 
         self.input_results_npz_path = input_results_npz_path
         self.input_stats_pt_path = input_stats_pt_path
         self.input_topology_path = input_topology_path
         self.output_traj_path = output_traj_path
         self.output_top_path = output_top_path
-        self.properties = properties.copy()
-        self.locals_var_dict = locals().copy()
-        self.io_dict = {
-            "in": {
-                "input_results_npz_path": input_results_npz_path,
-                "input_stats_pt_path": input_stats_pt_path,
-                "input_topology_path": input_topology_path,
-            },
-            "out": {
-                "output_traj_path": output_traj_path,
-                "output_top_path": output_top_path,
-            },
-        }
 
     def stage_files(self) -> None:
         """The block does not use the sandbox: there are no files to stage."""

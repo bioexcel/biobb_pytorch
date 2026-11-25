@@ -62,28 +62,11 @@ class LRP(BiobbObject):
         properties: dict = None,
         **kwargs,
     ) -> None:
-
-        properties = properties or {}
-
-        super().__init__(properties)
+        super().__init__(**locals())
 
         self.input_model_pth_path = input_model_pth_path
         self.input_dataset_pt_path = input_dataset_pt_path
         self.output_results_npz_path = output_results_npz_path
-        self.properties = properties.copy()
-        self.locals_var_dict = locals().copy()
-
-        # Input/Output files
-        self.io_dict = {
-            "in": {
-                "input_model_pth_path": input_model_pth_path,
-                "input_dataset_pt_path": input_dataset_pt_path,
-            },
-            "out": {},
-        }
-
-        if output_results_npz_path:
-            self.io_dict["out"]["output_results_npz_path"] = output_results_npz_path
 
         self.Dataset = self.properties.get('Dataset', {})
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

@@ -153,7 +153,7 @@ class GeneratePlumed(BiobbObject):
         self.prints = self.properties.get('prints', {'ARG': '*', 'STRIDE': 1, 'FILE': 'COLVAR'})
 
         self.stats = self._load_stats()
-        self.n_features = self.stats.get('shape', [None, None])[1]
+        self.n_features = self.stats.get('shape', [None, None])[1] if self.stats else None
 
     def _load_stats(self) -> Optional[Dict[str, Any]]:
         """Load stats.pt if provided."""

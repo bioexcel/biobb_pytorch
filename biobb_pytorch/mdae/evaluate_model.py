@@ -94,7 +94,7 @@ class EvaluateModel(BiobbObject):
         return DictDataset(dataset)
 
     def create_dataloader(self, dataset):
-        ds_cfg = self.properties['Dataset']
+        ds_cfg = self.Dataset
         return DataLoader(
             dataset,
             batch_size=ds_cfg.get('batch_size', 16),

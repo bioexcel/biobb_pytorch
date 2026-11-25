@@ -191,7 +191,7 @@ class TrainModel(BiobbObject):
         """Serialize the full model object (including architecture)."""
         torch.save(model, self.io_dict["out"]["output_model_pth_path"])
 
-    def run(self) -> int:
+    def run(self) -> None:
         """
         Execute the :class:`TrainModel <mdae.train_model.TrainModel>` object.
         """
@@ -232,17 +232,6 @@ class TrainModel(BiobbObject):
             self.save_full(self.model)
             fu.log(f'Trained Model saved to {os.path.abspath(self.io_dict["out"]["output_model_pth_path"])}', self.out_log)
             fu.log(f'File size: {get_size(self.io_dict["out"]["output_model_pth_path"])}', self.out_log)
-
-        # Copy files to host
-        self.copy_to_host()
-
-        # Remove temporal files
-        self.remove_tmp_files()
-
-        output_created = bool(self.output_model_pth_path or self.output_metrics_npz_path)
-        self.check_arguments(output_files_created=output_created, raise_exception=False)
-
-        return 0
 
 
 def train_model(

@@ -147,7 +147,7 @@ class LRP(BiobbObject):
             "global_importance_raw": global_importance_raw,
         }
 
-    def run(self) -> int:
+    def run(self) -> None:
         """
         Execute the :class:`LRP` class and its `.launch()` method.
         """
@@ -174,17 +174,6 @@ class LRP(BiobbObject):
             np.savez_compressed(self.io_dict["out"]["output_results_npz_path"], **self.results)
             fu.log(f'Results saved to {os.path.abspath(self.io_dict["out"]["output_results_npz_path"])}', self.out_log)
             fu.log(f'File size: {get_size(self.io_dict["out"]["output_results_npz_path"])}', self.out_log)
-
-        # Copy files to host
-        self.copy_to_host()
-
-        # Remove temporal files
-        self.remove_tmp_files()
-
-        output_created = bool(self.output_results_npz_path)
-        self.check_arguments(output_files_created=output_created, raise_exception=False)
-
-        return 0
 
 
 def relevance_propagation(

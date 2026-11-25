@@ -189,7 +189,7 @@ class MDFeaturePipeline(BiobbObject):
         fu.log(f"   - Number of frames: {self.dataset['data'].shape[0]}", self.out_log)
         fu.log(f"   - Number of features: {self.dataset['data'].shape[1]}", self.out_log)
 
-    def run(self) -> int:
+    def run(self) -> None:
         """
         Execute the :class:`MDFeaturePipeline <mdae.mdfeaturizer.MDFeaturePipeline>` object
         """
@@ -213,16 +213,6 @@ class MDFeaturePipeline(BiobbObject):
         fu.log(f'File size: {get_size(self.io_dict["out"]["output_stats_pt_path"])}',
                self.out_log,
                )
-
-        # Copy files to host
-        self.copy_to_host()
-
-        # Remove temporal files
-        self.remove_tmp_files()
-
-        self.check_arguments(output_files_created=True, raise_exception=False)
-
-        return 0
 
 
 def mdfeaturizer(

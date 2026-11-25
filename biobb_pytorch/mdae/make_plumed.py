@@ -368,7 +368,7 @@ class GeneratePlumed(BiobbObject):
 
         return lines
 
-    def run(self) -> int:
+    def run(self) -> None:
         """Execute the :class:`GeneratePlumed <mdae.make_plumed.GeneratePlumed>` object."""
 
         # Perform model conversion and feature generation after staging files
@@ -391,16 +391,6 @@ class GeneratePlumed(BiobbObject):
             f.write('\n'.join(plumed_lines) + '\n')
         fu.log(f'Generated PLUMED file at {os.path.abspath(self.io_dict["out"]["output_plumed_dat_path"])}', self.out_log)
         fu.log(f'File size: {get_size(self.io_dict["out"]["output_plumed_dat_path"])}', self.out_log)
-
-        # Copy files to host
-        self.copy_to_host()
-
-        # Remove temporal files
-        self.remove_tmp_files()
-
-        self.check_arguments(output_files_created=True, raise_exception=False)
-
-        return 0
 
 
 def make_plumed(

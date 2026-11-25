@@ -217,7 +217,7 @@ class BuildModel(BiobbObject):
         """Load a model serialized with save_full."""
         return torch.load(path, weights_only=False)
 
-    def run(self) -> int:
+    def run(self) -> None:
         """
         Execute the :class:`BuildModel <mdae.build_model.BuildModel>` object
         """
@@ -254,16 +254,6 @@ class BuildModel(BiobbObject):
                    f'{get_size(self.io_dict["out"]["output_model_pth_path"])}',
                    self.out_log,
                    )
-
-        # Copy files to host
-        self.copy_to_host()
-
-        # Remove temporal files
-        self.remove_tmp_files()
-
-        self.check_arguments(output_files_created=bool(self.output_model_pth_path), raise_exception=False)
-
-        return 0
 
 
 def build_model(

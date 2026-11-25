@@ -85,7 +85,7 @@ class Feat2Traj(BiobbObject):
     def stage_files(self) -> None:
         """The block does not use the sandbox: there are no files to stage."""
 
-    def run(self) -> int:
+    def run(self) -> None:
         """
         Execute the :class:`Feat2Traj` class and its `.launch()` method.
         """
@@ -151,7 +151,6 @@ class Feat2Traj(BiobbObject):
                 traj.save_pdb(self.output_traj_path)
             else:
                 raise ValueError(f'Unknown trajectory extension: {ext}')
-        return 0
 
 
 def feat2traj(

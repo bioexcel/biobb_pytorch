@@ -157,7 +157,7 @@ class EvaluateModel(BiobbObject):
                 all_reconstructions.append(reconstructions)
         return torch.cat(all_reconstructions, dim=0) if all_reconstructions else torch.tensor([])
 
-    def run(self) -> int:
+    def run(self) -> None:
         """
         Execute the :class:`EvaluateModel <mdae.evaluate_model.EvaluateModel>` object.
         """
@@ -185,16 +185,6 @@ class EvaluateModel(BiobbObject):
         np.savez_compressed(self.io_dict["out"]["output_results_npz_path"], **results)
         fu.log(f'Evaluation Results saved to {os.path.abspath(self.io_dict["out"]["output_results_npz_path"])}', self.out_log)
         fu.log(f'File size: {get_size(self.io_dict["out"]["output_results_npz_path"])}', self.out_log)
-
-        # Copy files to host
-        self.copy_to_host()
-
-        # Remove temporal files
-        self.remove_tmp_files()
-
-        self.check_arguments(output_files_created=True, raise_exception=False)
-
-        return 0
 
 
 def evaluate_model(

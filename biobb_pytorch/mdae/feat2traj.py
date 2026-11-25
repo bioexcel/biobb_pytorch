@@ -141,10 +141,12 @@ class Feat2Traj(BiobbObject):
             ext = os.path.splitext(self.output_traj_path)[1]
             if ext == '.xtc':
                 traj.save_xtc(self.output_traj_path)
-                traj[0].save_pdb(self.output_top_path)
+                if self.output_top_path:
+                    traj[0].save_pdb(self.output_top_path)
             elif ext == '.dcd':
                 traj.save_dcd(self.output_traj_path)
-                traj[0].save_pdb(self.output_top_path)
+                if self.output_top_path:
+                    traj[0].save_pdb(self.output_top_path)
             elif ext == '.pdb':
                 traj.save_pdb(self.output_traj_path)
             else:

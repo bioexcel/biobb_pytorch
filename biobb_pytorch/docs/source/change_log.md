@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changes
 
+* [FIX] mdfeaturizer and make_plumed featurize the trajectory and load the statistics when the block runs, after the input and restart checks, not when it is created: with `restart`, existing outputs are no longer featurized again.
 * [FIX] LRP works on machines with a GPU: the data were moved to the GPU but the model stayed on the CPU, and the block failed.
 
 ## What's new in version [5.3.0](https://github.com/bioexcel/biobb_amber/releases/tag/v5.3.0)?

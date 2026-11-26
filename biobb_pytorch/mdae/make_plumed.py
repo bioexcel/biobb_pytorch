@@ -132,9 +132,6 @@ class GeneratePlumed(BiobbObject):
         self.bias = self.properties.get('bias', [])
         self.prints = self.properties.get('prints', {'ARG': '*', 'STRIDE': 1, 'FILE': 'COLVAR'})
 
-        self.stats = self._load_stats()
-        self.n_features = self.stats.get('shape', [None, None])[1] if self.stats else None
-
     def _load_stats(self) -> Optional[Dict[str, Any]]:
         """Load stats.pt if provided."""
         if self.stats_pt:
@@ -353,6 +350,8 @@ class GeneratePlumed(BiobbObject):
 
     def run(self) -> None:
         """Execute the :class:`GeneratePlumed <mdae.make_plumed.GeneratePlumed>` object."""
+        self.stats = self._load_stats()
+        self.n_features = self.stats.get('shape', [None, None])[1] if self.stats else None
 
         # Perform model conversion and feature generation after staging files
         self._convert_model_to_ptc()

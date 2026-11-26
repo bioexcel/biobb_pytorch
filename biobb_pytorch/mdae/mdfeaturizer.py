@@ -105,13 +105,6 @@ class MDFeaturePipeline(BiobbObject):
         # build the per-feature arguments
         self.feature_types = ["cartesian", "distances", "angles", "dihedrals"]
 
-        with self.open_logs():
-            # Topology indices
-            self.topology_indices()
-
-            # Featurizer
-            self.featurize_trajectory()
-
     def topology_indices(self) -> Dict[str, Any]:
 
         fu.log("## BioBB Featurization - MDFeaturePipeline ##", self.out_log)
@@ -187,6 +180,11 @@ class MDFeaturePipeline(BiobbObject):
         """
         Execute the :class:`MDFeaturePipeline <mdae.mdfeaturizer.MDFeaturePipeline>` object
         """
+        # Topology indices
+        self.topology_indices()
+
+        # Featurizer
+        self.featurize_trajectory()
 
         torch.save(self.dataset,
                    self.output_dataset_pt_path)

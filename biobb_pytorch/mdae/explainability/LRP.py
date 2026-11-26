@@ -164,6 +164,8 @@ class LRP(BiobbObject):
 
 
 relevance_propagation = launcher(LRP)
+# launcher() names it after the module, LRP like the class: its own name, so it can be pickled
+relevance_propagation.__name__ = relevance_propagation.__qualname__ = "relevance_propagation"
 
 
 if __name__ == "__main__":

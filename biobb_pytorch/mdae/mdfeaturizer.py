@@ -4,7 +4,7 @@ import os
 import torch
 from biobb_pytorch.mdae.featurization.topology_selector import MDTopologySelector
 from biobb_pytorch.mdae.featurization.featurizer import Featurizer
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 from biobb_common.tools import file_utils as fu
 import numpy as np
 from typing import Optional, Dict, Any
@@ -209,23 +209,7 @@ class MDFeaturePipeline(BiobbObject):
                )
 
 
-def mdfeaturizer(
-    input_topology_path: str,
-    output_dataset_pt_path: str,
-    output_stats_pt_path: str,
-    properties: dict,
-    input_trajectory_path: Optional[str] = None,
-    input_labels_npy_path: Optional[str] = None,
-    input_weights_npy_path: Optional[str] = None,
-    **kwargs,
-) -> int:
-    """Create the :class:`MDFeaturePipeline <mdae.mdfeaturizer.MDFeaturePipeline>` class and
-    execute the :meth:`launch() <mdae.mdfeaturizer.MDFeaturePipeline.launch>` method."""
-    return MDFeaturePipeline(**dict(locals())).launch()
-
-
-mdfeaturizer.__doc__ = MDFeaturePipeline.__doc__
-main = MDFeaturePipeline.get_main(mdfeaturizer, "Obtain the Molecular Dynamics Features for PyTorch model training.")
+mdfeaturizer = launcher(MDFeaturePipeline)
 
 if __name__ == "__main__":
-    main()
+    MDFeaturePipeline.main()

@@ -3,7 +3,7 @@ from torch.utils.data import DataLoader
 import os
 from biobb_common.tools import file_utils as fu
 from biobb_pytorch.mdae.utils.log_utils import get_size
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 import numpy as np
 
 
@@ -126,20 +126,7 @@ class EvaluateDecoder(BiobbObject):
         fu.log(f'File size: {get_size(self.io_dict["out"]["output_results_npz_path"])}', self.out_log)
 
 
-def decode_model(
-    properties: dict,
-    input_model_pth_path: str,
-    input_dataset_npy_path: str,
-    output_results_npz_path: str,
-    **kwargs,
-) -> int:
-    """Create the :class:`EvaluateDecoder <mdae.decode_model.EvaluateDecoder>` class and
-    execute the :meth:`launch() <mdae.decode_model.EvaluateDecoder.launch>` method."""
-    return EvaluateDecoder(**dict(locals())).launch()
-
-
-decode_model.__doc__ = EvaluateDecoder.__doc__
-main = EvaluateDecoder.get_main(decode_model, "Evaluates a PyTorch autoencoder from the given properties.")
+decode_model = launcher(EvaluateDecoder)
 
 if __name__ == "__main__":
-    main()
+    EvaluateDecoder.main()

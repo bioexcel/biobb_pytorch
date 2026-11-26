@@ -1,4 +1,4 @@
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 import torch
 import numpy as np
 import mdtraj as md
@@ -139,22 +139,7 @@ class Feat2Traj(BiobbObject):
                 raise ValueError(f'Unknown trajectory extension: {ext}')
 
 
-def feat2traj(
-    input_results_npz_path: str,
-    input_stats_pt_path: str,
-    input_topology_path: str = None,
-    output_traj_path: str = None,
-    output_top_path: str = None,
-    properties: dict = None,
-    **kwargs,
-) -> int:
-    """Create the :class:`Feat2Traj <Feat2Traj.Feat2Traj>` class and
-    execute the :meth:`launch() <Feat2Traj.feat2traj.launch>` method."""
-    return Feat2Traj(**dict(locals())).launch()
-
-
-feat2traj.__doc__ = Feat2Traj.__doc__
-main = Feat2Traj.get_main(feat2traj, "Converts a .pt file (features) to a trajectory using cartesian indices and topology from the stats file.")
+feat2traj = launcher(Feat2Traj)
 
 if __name__ == "__main__":
-    main()
+    Feat2Traj.main()

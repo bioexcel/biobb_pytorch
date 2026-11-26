@@ -4,7 +4,7 @@ import os
 from typing import Optional
 from biobb_common.tools import file_utils as fu
 from biobb_pytorch.mdae.utils.log_utils import get_size
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 from torch.utils.data import DataLoader
 from mlcolvar.data import DictDataset
 from biobb_pytorch.mdae.explainability.layerwise_relevance_prop import lrp_encoder
@@ -162,21 +162,8 @@ class LRP(BiobbObject):
             fu.log(f'File size: {get_size(self.io_dict["out"]["output_results_npz_path"])}', self.out_log)
 
 
-def relevance_propagation(
-    properties: dict,
-    input_model_pth_path: str,
-    input_dataset_pt_path: str,
-    output_results_npz_path: Optional[str] = None,
-    **kwargs,
-) -> int:
-    """Create the :class:`LRP <LRP>` class and
-    execute the :meth:`launch() <LRP.launch>` method."""
-    return LRP(**dict(locals())).launch()
-
-
-relevance_propagation.__doc__ = LRP.__doc__
-main = LRP.get_main(relevance_propagation, "Performs Layer-wise Relevance Propagation on a trained autoencoder encoder.")
+relevance_propagation = launcher(LRP)
 
 
 if __name__ == "__main__":
-    main()
+    LRP.main()

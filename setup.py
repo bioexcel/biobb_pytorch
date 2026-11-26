@@ -23,15 +23,15 @@ setuptools.setup(
     python_requires=">=3.10",
     entry_points={
         "console_scripts": [
-            "mdfeaturizer = biobb_pytorch.mdae.mdfeaturizer:main",
-            "build_model = biobb_pytorch.mdae.build_model:main",
-            "train_model = biobb_pytorch.mdae.train_model:main",
-            "decode_model = biobb_pytorch.mdae.decode_model:main",
-            "encode_model = biobb_pytorch.mdae.encode_model:main",
-            "evaluate_model = biobb_pytorch.mdae.evaluate_model:main",
-            "make_plumed = biobb_pytorch.mdae.make_plumed:main",
-            "feat2traj = biobb_pytorch.mdae.feat2traj:main",
-            "LRP = biobb_pytorch.mdae.explainability.LRP:main",
+            "mdfeaturizer = biobb_pytorch.mdae.mdfeaturizer:MDFeaturePipeline.main",
+            "build_model = biobb_pytorch.mdae.build_model:BuildModel.main",
+            "train_model = biobb_pytorch.mdae.train_model:TrainModel.main",
+            "decode_model = biobb_pytorch.mdae.decode_model:EvaluateDecoder.main",
+            "encode_model = biobb_pytorch.mdae.encode_model:EvaluateEncoder.main",
+            "evaluate_model = biobb_pytorch.mdae.evaluate_model:EvaluateModel.main",
+            "make_plumed = biobb_pytorch.mdae.make_plumed:GeneratePlumed.main",
+            "feat2traj = biobb_pytorch.mdae.feat2traj:Feat2Traj.main",
+            "LRP = biobb_pytorch.mdae.explainability.LRP:LRP.main",
         ]
     },
     classifiers=[

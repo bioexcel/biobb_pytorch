@@ -3,7 +3,7 @@ import os
 from typing import Optional
 from biobb_common.tools import file_utils as fu
 from biobb_pytorch.mdae.utils.log_utils import get_size
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 import lightning.pytorch.callbacks as _cbs
 import lightning.pytorch.loggers as _loggers
 import lightning.pytorch.profilers as _profiler
@@ -219,21 +219,7 @@ class TrainModel(BiobbObject):
             fu.log(f'File size: {get_size(self.io_dict["out"]["output_model_pth_path"])}', self.out_log)
 
 
-def train_model(
-    properties: dict,
-    input_model_pth_path: str,
-    input_dataset_pt_path: str,
-    output_model_pth_path: Optional[str] = None,
-    output_metrics_npz_path: Optional[str] = None,
-    **kwargs,
-) -> int:
-    """Create the :class:`TrainModel <mdae.train_model.TrainModel>` class and
-    execute the :meth:`launch() <mdae.train_model.TrainModel.launch>` method."""
-    return TrainModel(**dict(locals())).launch()
-
-
-train_model.__doc__ = TrainModel.__doc__
-main = TrainModel.get_main(train_model, "Trains a PyTorch autoencoder using the given properties.")
+train_model = launcher(TrainModel)
 
 if __name__ == "__main__":
-    main()
+    TrainModel.main()

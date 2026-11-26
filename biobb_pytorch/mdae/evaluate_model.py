@@ -3,7 +3,7 @@ import torch
 from torch.utils.data import DataLoader
 from biobb_common.tools import file_utils as fu
 from biobb_pytorch.mdae.utils.log_utils import get_size
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 from mlcolvar.data import DictDataset
 import numpy as np
 
@@ -174,20 +174,7 @@ class EvaluateModel(BiobbObject):
         fu.log(f'File size: {get_size(self.io_dict["out"]["output_results_npz_path"])}', self.out_log)
 
 
-def evaluate_model(
-    properties: dict,
-    input_model_pth_path: str,
-    input_dataset_pt_path: str,
-    output_results_npz_path: str,
-    **kwargs,
-) -> int:
-    """Create the :class:`EvaluateModel <mdae.evaluate_model.EvaluateModel>` class and
-    execute the :meth:`launch() <mdae.evaluate_model.EvaluateModel.launch>` method."""
-    return EvaluateModel(**dict(locals())).launch()
-
-
-evaluate_model.__doc__ = EvaluateModel.__doc__
-main = EvaluateModel.get_main(evaluate_model, "Evaluate a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.")
+evaluate_model = launcher(EvaluateModel)
 
 if __name__ == "__main__":
-    main()
+    EvaluateModel.main()

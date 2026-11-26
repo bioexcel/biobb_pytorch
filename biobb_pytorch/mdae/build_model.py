@@ -6,7 +6,7 @@ from biobb_pytorch.mdae.models import __all__ as AVAILABLE_MODELS
 from biobb_pytorch.mdae.utils.model_utils import assert_valid_kwargs
 from biobb_pytorch.mdae.utils.log_utils import get_size
 from biobb_common.tools import file_utils as fu
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 
 
 class BuildModel(BiobbObject):
@@ -241,23 +241,11 @@ class BuildModel(BiobbObject):
                    )
 
 
-def build_model(
-    properties: dict,
-    input_stats_pt_path: str,
-    output_model_pth_path: Optional[str] = None,
-    **kwargs,
-) -> int:
-    """Create the :class:`BuildModel <mdae.build_model.BuildModel>` class and
-    execute the :meth:`launch() <mdae.build_model.BuildModel.launch>` method."""
-    return BuildModel(**dict(locals())).launch()
-
-
-build_model.__doc__ = BuildModel.__doc__
-main = BuildModel.get_main(build_model, "Build a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.")
+build_model = launcher(BuildModel)
 
 
 if __name__ == "__main__":
-    main()
+    BuildModel.main()
 
 # Example usage:
 

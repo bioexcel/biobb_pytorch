@@ -4,7 +4,7 @@ from typing import Dict, Any, Optional, List
 import os
 from biobb_pytorch.mdae.utils.log_utils import get_size
 from biobb_common.tools import file_utils as fu
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 
 
 class GeneratePlumed(BiobbObject):
@@ -376,24 +376,7 @@ class GeneratePlumed(BiobbObject):
         fu.log(f'File size: {get_size(self.io_dict["out"]["output_plumed_dat_path"])}', self.out_log)
 
 
-def make_plumed(
-    input_model_pth_path: str,
-    input_stats_pt_path: Optional[str] = None,
-    input_reference_pdb_path: Optional[str] = None,
-    input_ndx_path: Optional[str] = None,
-    output_plumed_dat_path: str = 'plumed.dat',
-    output_features_dat_path: str = 'features.dat',
-    output_model_ptc_path: str = 'model.ptc',
-    properties: Optional[Dict[str, Any]] = None,
-    **kwargs,
-) -> int:
-    """Create the :class:`GeneratePlumed <mdae.make_plumed.GeneratePlumed>` class and
-    execute the :meth:`launch() <mdae.make_plumed.GeneratePlumed.launch>` method."""
-    return GeneratePlumed(**dict(locals())).launch()
-
-
-make_plumed.__doc__ = GeneratePlumed.__doc__
-main = GeneratePlumed.get_main(make_plumed, "Generate PLUMED input for biased dynamics using an MDAE model.")
+make_plumed = launcher(GeneratePlumed)
 
 if __name__ == "__main__":
-    main()
+    GeneratePlumed.main()

@@ -104,6 +104,7 @@ class LRP(BiobbObject):
         )
 
     def compute_global_importance(self, model, dataloader, latent_index=None):
+        model.to(self.device)
         all_R0 = []
         for batch in dataloader:
             X_batch = batch['data'].to(self.device)  # Assuming DictDataset with 'data' key

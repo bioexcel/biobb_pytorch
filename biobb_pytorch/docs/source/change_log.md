@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Changes
+
+* [FIX] LRP works on machines with a GPU: the data were moved to the GPU but the model stayed on the CPU, and the block failed.
+
 ## What's new in version [5.3.0](https://github.com/bioexcel/biobb_amber/releases/tag/v5.3.0)?
 
 ### Changes

@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="biobb_pytorch",
-    version="5.3.0",
+    version="5.4.0",
     author="Biobb developers",
     author_email="pieter.zanders@bsc.es",
     description="biobb_pytorch is the Biobb module collection to create and train ML & DL models.",
@@ -19,7 +19,7 @@ setuptools.setup(
     },
     packages=setuptools.find_packages(exclude=["docs", "test"]),
     package_data={"biobb_pytorch": ["py.typed"]},
-    install_requires=["biobb_common==5.3.1", "torch==2.5.0", "lightning==2.5.0", "mlcolvar==1.3.0", "mdtraj"],
+    install_requires=["biobb_common==5.4.0", "torch==2.5.0", "lightning==2.5.0", "mlcolvar==1.3.0", "mdtraj"],
     python_requires=">=3.11",
     entry_points={
         "console_scripts": [

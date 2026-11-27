@@ -2,12 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## [Unreleased]
+
+## What's new in version [5.4.0](https://github.com/bioexcel/biobb_pytorch/releases/tag/v5.4.0)?
 
 ### Changes
 
+* [UPDATE] Update to biobb_common 5.4.0.
 * [FIX] mdfeaturizer and make_plumed featurize the trajectory and load the statistics when the block runs, after the input and restart checks, not when it is created: with `restart`, existing outputs are no longer featurized again.
 * [FIX] LRP works on machines with a GPU: the data were moved to the GPU but the model stayed on the CPU, and the block failed.
+* [FIX] `build_model`: `model_type`, `n_cvs`, `encoder_layers`, `decoder_layers` and `options` take their documented defaults when they are not given (they were required: "Missing required properties").
+* [FIX] `train_model`, `evaluate_model`, `encode_model` and `decode_model`: the `Trainer` and `Dataset` properties, and the `split` of `Dataset`, can be left out, as documented (a `KeyError` before).
+* [FIX] `feat2traj`: `output_top_path` is optional, as documented: an XTC or DCD trajectory without it no longer fails. A statistics file without cartesian indices stops with "No cartesian indices found in stats file.".
+* [FIX] `mdfeaturizer`: the statistics are saved to the given `output_stats_pt_path` (its extension was replaced by `.pt`).
+* [FIX] `make_plumed`: without `input_stats_pt_path` it no longer fails with an `AttributeError` when it is created.
+* [UPDATE] Python 3.11 to 3.13.
 
 ## What's new in version [5.3.0](https://github.com/bioexcel/biobb_amber/releases/tag/v5.3.0)?
 

@@ -2,10 +2,9 @@ import torch
 import numpy as np
 import os
 from typing import Optional
-from biobb_common.tools.file_utils import launchlogger
 from biobb_common.tools import file_utils as fu
 from biobb_pytorch.mdae.utils.log_utils import get_size
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 from torch.utils.data import DataLoader
 from mlcolvar.data import DictDataset
 from biobb_pytorch.mdae.explainability.layerwise_relevance_prop import lrp_encoder
@@ -63,36 +62,15 @@ class LRP(BiobbObject):
         properties: dict = None,
         **kwargs,
     ) -> None:
-
-        properties = properties or {}
-
-        super().__init__(properties)
+        super().__init__(**locals())
 
         self.input_model_pth_path = input_model_pth_path
         self.input_dataset_pt_path = input_dataset_pt_path
         self.output_results_npz_path = output_results_npz_path
-        self.properties = properties.copy()
-        self.locals_var_dict = locals().copy()
-
-        # Input/Output files
-        self.io_dict = {
-            "in": {
-                "input_model_pth_path": input_model_pth_path,
-                "input_dataset_pt_path": input_dataset_pt_path,
-            },
-            "out": {},
-        }
-
-        if output_results_npz_path:
-            self.io_dict["out"]["output_results_npz_path"] = output_results_npz_path
 
         self.Dataset = self.properties.get('Dataset', {})
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.results = None
-
-        # Check the properties
-        self.check_properties(properties)
-        self.check_arguments()
 
     def load_model(self):
         return torch.load(self.io_dict["in"]["input_model_pth_path"], weights_only=False)
@@ -126,6 +104,7 @@ class LRP(BiobbObject):
         )
 
     def compute_global_importance(self, model, dataloader, latent_index=None):
+        model.to(self.device)
         all_R0 = []
         for batch in dataloader:
             X_batch = batch['data'].to(self.device)  # Assuming DictDataset with 'data' key
@@ -152,19 +131,15 @@ class LRP(BiobbObject):
             "global_importance_raw": global_importance_raw,
         }
 
-    @launchlogger
-    def launch(self) -> int:
+    def stage_files(self) -> None:
+        """The block does not use the sandbox: there are no files to stage."""
+
+    def run(self) -> None:
         """
         Execute the :class:`LRP` class and its `.launch()` method.
         """
 
         fu.log('## BioBB Layer-wise Relevance Propagation ##', self.out_log)
-
-        # Setup Biobb
-        if self.check_restart():
-            return 0
-
-        self.stage_files()
 
         # load the model
         fu.log(f'Load model from {os.path.abspath(self.io_dict["in"]["input_model_pth_path"])}', self.out_log)
@@ -187,33 +162,11 @@ class LRP(BiobbObject):
             fu.log(f'Results saved to {os.path.abspath(self.io_dict["out"]["output_results_npz_path"])}', self.out_log)
             fu.log(f'File size: {get_size(self.io_dict["out"]["output_results_npz_path"])}', self.out_log)
 
-        # Copy files to host
-        self.copy_to_host()
 
-        # Remove temporal files
-        self.remove_tmp_files()
-
-        output_created = bool(self.output_results_npz_path)
-        self.check_arguments(output_files_created=output_created, raise_exception=False)
-
-        return 0
-
-
-def relevance_propagation(
-    properties: dict,
-    input_model_pth_path: str,
-    input_dataset_pt_path: str,
-    output_results_npz_path: Optional[str] = None,
-    **kwargs,
-) -> int:
-    """Create the :class:`LRP <LRP>` class and
-    execute the :meth:`launch() <LRP.launch>` method."""
-    return LRP(**dict(locals())).launch()
-
-
-relevance_propagation.__doc__ = LRP.__doc__
-main = LRP.get_main(relevance_propagation, "Performs Layer-wise Relevance Propagation on a trained autoencoder encoder.")
+relevance_propagation = launcher(LRP)
+# launcher() names it after the module, LRP like the class: its own name, so it can be pickled
+relevance_propagation.__name__ = relevance_propagation.__qualname__ = "relevance_propagation"
 
 
 if __name__ == "__main__":
-    main()
+    LRP.main()

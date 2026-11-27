@@ -1,10 +1,9 @@
 import torch
 from torch.utils.data import DataLoader
 import os
-from biobb_common.tools.file_utils import launchlogger
 from biobb_common.tools import file_utils as fu
 from biobb_pytorch.mdae.utils.log_utils import get_size
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 import numpy as np
 
 
@@ -59,34 +58,14 @@ class EvaluateDecoder(BiobbObject):
         properties: dict,
         **kwargs,
     ) -> None:
-
-        properties = properties or {}
-
-        super().__init__(properties)
+        super().__init__(**locals())
 
         self.input_model_pth_path = input_model_pth_path
         self.input_dataset_npy_path = input_dataset_npy_path
         self.output_results_npz_path = output_results_npz_path
-        self.properties = properties.copy()
-        self.locals_var_dict = locals().copy()
-
-        # Input/Output files
-        self.io_dict = {
-            "in": {
-                "input_model_pth_path": input_model_pth_path,
-                "input_dataset_npy_path": input_dataset_npy_path,
-            },
-            "out": {
-                "output_results_npz_path": output_results_npz_path,
-            },
-        }
 
         self.Dataset = self.properties.get('Dataset', {})
         self.results = None
-
-        # Check the properties
-        self.check_properties(properties)
-        self.check_arguments()
 
     def load_model(self):
         return torch.load(self.io_dict["in"]["input_model_pth_path"],
@@ -97,7 +76,7 @@ class EvaluateDecoder(BiobbObject):
         return dataset.float()
 
     def create_dataloader(self, dataset):
-        ds_cfg = self.properties['Dataset']
+        ds_cfg = self.Dataset
         return DataLoader(
             dataset,
             batch_size=ds_cfg.get('batch_size', 16),
@@ -114,19 +93,15 @@ class EvaluateDecoder(BiobbObject):
                 all_reconstructions.append(z)
         return {"xhat": torch.cat(all_reconstructions, dim=0)}
 
-    @launchlogger
-    def launch(self) -> int:
+    def stage_files(self) -> None:
+        """The block does not use the sandbox: there are no files to stage."""
+
+    def run(self) -> None:
         """
         Execute the :class:`EvaluateDecoder <mdae.decode_model.EvaluateDecoder>` object.
         """
 
         fu.log('## BioBB Model Evaluator ##', self.out_log)
-
-        # Setup Biobb
-        if self.check_restart():
-            return 0
-
-        self.stage_files()
 
         # Start Pipeline
 
@@ -150,31 +125,8 @@ class EvaluateDecoder(BiobbObject):
         fu.log(f'Evaluation Results saved to {os.path.abspath(self.io_dict["out"]["output_results_npz_path"])}', self.out_log)
         fu.log(f'File size: {get_size(self.io_dict["out"]["output_results_npz_path"])}', self.out_log)
 
-        # Copy files to host
-        self.copy_to_host()
 
-        # Remove temporal files
-        self.remove_tmp_files()
-
-        self.check_arguments(output_files_created=True, raise_exception=False)
-
-        return 0
-
-
-def decode_model(
-    properties: dict,
-    input_model_pth_path: str,
-    input_dataset_npy_path: str,
-    output_results_npz_path: str,
-    **kwargs,
-) -> int:
-    """Create the :class:`EvaluateDecoder <mdae.decode_model.EvaluateDecoder>` class and
-    execute the :meth:`launch() <mdae.decode_model.EvaluateDecoder.launch>` method."""
-    return EvaluateDecoder(**dict(locals())).launch()
-
-
-decode_model.__doc__ = EvaluateDecoder.__doc__
-main = EvaluateDecoder.get_main(decode_model, "Evaluates a PyTorch autoencoder from the given properties.")
+decode_model = launcher(EvaluateDecoder)
 
 if __name__ == "__main__":
-    main()
+    EvaluateDecoder.main()

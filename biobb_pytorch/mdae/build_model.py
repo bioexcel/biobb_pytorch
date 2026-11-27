@@ -5,9 +5,8 @@ from typing import Dict, Any, Type, Optional
 from biobb_pytorch.mdae.models import __all__ as AVAILABLE_MODELS
 from biobb_pytorch.mdae.utils.model_utils import assert_valid_kwargs
 from biobb_pytorch.mdae.utils.log_utils import get_size
-from biobb_common.tools.file_utils import launchlogger
 from biobb_common.tools import file_utils as fu
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 
 
 class BuildModel(BiobbObject):
@@ -69,42 +68,22 @@ class BuildModel(BiobbObject):
         properties: dict = None,
         **kwargs,
     ) -> None:
-
-        properties = properties or {}
-
-        super().__init__(properties)
+        super().__init__(**locals())
 
         self.input_stats_pt_path = input_stats_pt_path
         self.output_model_pth_path = output_model_pth_path
-        self.props = properties.copy()
-        self.locals_var_dict = locals().copy()
-
-        # Input/Output files
-        self.io_dict = {
-            "in": {
-                "input_stats_pt_path": input_stats_pt_path,
-            },
-            "out": {}
-        }
-        if output_model_pth_path:
-            self.io_dict["out"]["output_model_pth_path"] = output_model_pth_path
+        # Documented defaults of the properties used to build the model
+        self.props = {'model_type': 'AutoEncoder', 'n_cvs': 1, 'encoder_layers': [16], 'decoder_layers': [16],
+                      'options': {'norm_in': {'mode': 'min_max'}}, **self.properties}
 
         # build the per-feature arguments
-        self.options: dict = properties.get("options", {})
-        self.model_type: str = properties.get("model_type", "AutoEncoder")
-        self.n_cvs: int = properties.get("n_cvs", 1)
-        self.encoder_layers: list = properties.get("encoder_layers", [16])
-        self.decoder_layers: list = properties.get("decoder_layers", [16])
-        self.loss_function: Optional[dict] = properties.get("loss_function", None)
+        self.options: dict = self.properties.get("options", {})
+        self.loss_function: Optional[dict] = self.properties.get("loss_function", None)
         self.device = self.options['device'] if 'device' in self.options else 'cpu'
 
         # load the input files
         self.stats = torch.load(self.io_dict['in']['input_stats_pt_path'],
                                 weights_only=False)
-
-        # Check the properties
-        self.check_properties(properties)
-        self.check_arguments()
 
         self._validate_props()
         self.model = self._build_model()
@@ -112,12 +91,12 @@ class BuildModel(BiobbObject):
 
         # Store hyperparameters for reproducibility
         hparams = {
-            'model_type': properties['model_type'],
-            'n_cvs': properties['n_cvs'],
-            'encoder_layers': properties['encoder_layers'],
-            'decoder_layers': properties['decoder_layers'],
+            'model_type': self.props['model_type'],
+            'n_cvs': self.props['n_cvs'],
+            'encoder_layers': self.props['encoder_layers'],
+            'decoder_layers': self.props['decoder_layers'],
             'loss_function': self._hparams_loss_repr(),
-            'options': {k: v for k, v in properties['options'].items() if k != 'loss_function'}
+            'options': {k: v for k, v in self.props['options'].items() if k != 'loss_function'}
         }
         setattr(self.model, '_hparams', hparams)
 
@@ -220,17 +199,13 @@ class BuildModel(BiobbObject):
         """Load a model serialized with save_full."""
         return torch.load(path, weights_only=False)
 
-    @launchlogger
-    def launch(self) -> int:
+    def stage_files(self) -> None:
+        """The block does not use the sandbox: there are no files to stage."""
+
+    def run(self) -> None:
         """
         Execute the :class:`BuildModel <mdae.build_model.BuildModel>` object
         """
-
-        # Setup Biobb
-        if self.check_restart():
-            return 0
-
-        self.stage_files()
 
         if self.output_model_pth_path:
             self.save_full()
@@ -265,34 +240,12 @@ class BuildModel(BiobbObject):
                    self.out_log,
                    )
 
-        # Copy files to host
-        self.copy_to_host()
 
-        # Remove temporal files
-        self.remove_tmp_files()
-
-        self.check_arguments(output_files_created=bool(self.output_model_pth_path), raise_exception=False)
-
-        return 0
-
-
-def build_model(
-    properties: dict,
-    input_stats_pt_path: str,
-    output_model_pth_path: Optional[str] = None,
-    **kwargs,
-) -> int:
-    """Create the :class:`BuildModel <mdae.build_model.BuildModel>` class and
-    execute the :meth:`launch() <mdae.build_model.BuildModel.launch>` method."""
-    return BuildModel(**dict(locals())).launch()
-
-
-build_model.__doc__ = BuildModel.__doc__
-main = BuildModel.get_main(build_model, "Build a Molecular Dynamics AutoEncoder (MDAE) PyTorch model.")
+build_model = launcher(BuildModel)
 
 
 if __name__ == "__main__":
-    main()
+    BuildModel.main()
 
 # Example usage:
 

@@ -1,10 +1,9 @@
 import torch
 import os
 from typing import Optional
-from biobb_common.tools.file_utils import launchlogger
 from biobb_common.tools import file_utils as fu
 from biobb_pytorch.mdae.utils.log_utils import get_size
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 import lightning.pytorch.callbacks as _cbs
 import lightning.pytorch.loggers as _loggers
 import lightning.pytorch.profilers as _profiler
@@ -82,37 +81,15 @@ class TrainModel(BiobbObject):
         properties: dict = None,
         **kwargs,
     ) -> None:
-
-        properties = properties or {}
-
-        super().__init__(properties)
+        super().__init__(**locals())
 
         self.input_model_pth_path = input_model_pth_path
         self.input_dataset_pt_path = input_dataset_pt_path
         self.output_model_pth_path = output_model_pth_path
         self.output_metrics_npz_path = output_metrics_npz_path
-        self.properties = properties.copy()
-        self.locals_var_dict = locals().copy()
-
-        # Input/Output files
-        self.io_dict = {
-            "in": {
-                "input_model_pth_path": input_model_pth_path,
-                "input_dataset_pt_path": input_dataset_pt_path,
-            },
-            "out": {},
-        }
-        if output_model_pth_path:
-            self.io_dict["out"]["output_model_pth_path"] = output_model_pth_path
-        if output_metrics_npz_path:
-            self.io_dict["out"]["output_metrics_npz_path"] = output_metrics_npz_path
 
         self.Trainer = self.properties.get('Trainer', {})
         self.Dataset = self.properties.get('Dataset', {})
-
-        # Check the properties
-        self.check_properties(properties)
-        self.check_arguments()
 
     def get_callbacks(self):
         self.colvars_metrics = MetricsCallback()
@@ -155,7 +132,7 @@ class TrainModel(BiobbObject):
         return ProfilerClass(**profiler_params)
 
     def get_trainer(self):
-        train_params = {k: v for k, v in self.properties['Trainer'].items()
+        train_params = {k: v for k, v in self.Trainer.items()
                         if k not in ['callbacks', 'logger', 'profiler']}
         train_params['callbacks'] = self.get_callbacks()
         train_params['logger'] = self.get_logger()
@@ -172,19 +149,20 @@ class TrainModel(BiobbObject):
         return DictDataset(dataset)
 
     def create_datamodule(self, dataset):
-        ds_cfg = self.properties['Dataset']
+        ds_cfg = self.Dataset
+        split = ds_cfg.get('split', {})
 
-        lengths = [ds_cfg['split'].get('train_prop', 0.8),
-                   ds_cfg['split'].get('val_prop', 0.2)]
-        if ds_cfg['split'].get('test_prop', 0) > 0:
-            lengths.append(ds_cfg['split'].get('test_prop', 0))
+        lengths = [split.get('train_prop', 0.8),
+                   split.get('val_prop', 0.2)]
+        if split.get('test_prop', 0) > 0:
+            lengths.append(split.get('test_prop', 0))
 
         return DictModule(
             dataset,
             batch_size=ds_cfg.get('batch_size', 16),
             lengths=lengths,
-            shuffle=ds_cfg['split'].get('shuffle', True),
-            random_split=ds_cfg['split'].get('random_split', True)
+            shuffle=split.get('shuffle', True),
+            random_split=split.get('random_split', True)
         )
 
     def fit_model(self, trainer, model, datamodule):
@@ -195,19 +173,15 @@ class TrainModel(BiobbObject):
         """Serialize the full model object (including architecture)."""
         torch.save(model, self.io_dict["out"]["output_model_pth_path"])
 
-    @launchlogger
-    def launch(self) -> int:
+    def stage_files(self) -> None:
+        """The block does not use the sandbox: there are no files to stage."""
+
+    def run(self) -> None:
         """
         Execute the :class:`TrainModel <mdae.train_model.TrainModel>` object.
         """
 
         fu.log('## BioBB Model Trainer ##', self.out_log)
-
-        # Setup Biobb
-        if self.check_restart():
-            return 0
-
-        self.stage_files()
 
         # Start Pipeline
 
@@ -244,33 +218,8 @@ class TrainModel(BiobbObject):
             fu.log(f'Trained Model saved to {os.path.abspath(self.io_dict["out"]["output_model_pth_path"])}', self.out_log)
             fu.log(f'File size: {get_size(self.io_dict["out"]["output_model_pth_path"])}', self.out_log)
 
-        # Copy files to host
-        self.copy_to_host()
 
-        # Remove temporal files
-        self.remove_tmp_files()
-
-        output_created = bool(self.output_model_pth_path or self.output_metrics_npz_path)
-        self.check_arguments(output_files_created=output_created, raise_exception=False)
-
-        return 0
-
-
-def train_model(
-    properties: dict,
-    input_model_pth_path: str,
-    input_dataset_pt_path: str,
-    output_model_pth_path: Optional[str] = None,
-    output_metrics_npz_path: Optional[str] = None,
-    **kwargs,
-) -> int:
-    """Create the :class:`TrainModel <mdae.train_model.TrainModel>` class and
-    execute the :meth:`launch() <mdae.train_model.TrainModel.launch>` method."""
-    return TrainModel(**dict(locals())).launch()
-
-
-train_model.__doc__ = TrainModel.__doc__
-main = TrainModel.get_main(train_model, "Trains a PyTorch autoencoder using the given properties.")
+train_model = launcher(TrainModel)
 
 if __name__ == "__main__":
-    main()
+    TrainModel.main()

@@ -4,9 +4,8 @@ import os
 import torch
 from biobb_pytorch.mdae.featurization.topology_selector import MDTopologySelector
 from biobb_pytorch.mdae.featurization.featurizer import Featurizer
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 from biobb_common.tools import file_utils as fu
-from biobb_common.tools.file_utils import launchlogger
 import numpy as np
 from typing import Optional, Dict, Any
 from biobb_pytorch.mdae.utils.log_utils import get_size
@@ -79,10 +78,7 @@ class MDFeaturePipeline(BiobbObject):
         input_weights_npy_path: Optional[str] = None,
         **kwargs,
     ) -> None:
-
-        properties = properties or {}
-
-        super().__init__(properties)
+        super().__init__(**locals())
 
         self.input_trajectory_path = input_trajectory_path or input_topology_path
         self.input_topology_path = input_topology_path
@@ -90,8 +86,7 @@ class MDFeaturePipeline(BiobbObject):
         self.input_weights_npy_path = input_weights_npy_path
         self.output_dataset_pt_path = output_dataset_pt_path
         self.output_stats_pt_path = output_stats_pt_path
-        self.config = properties.copy()
-        self.locals_var_dict = locals().copy()
+        self.config = self.properties.copy()
 
         # Input/Output files
         self.io_dict = {
@@ -109,23 +104,7 @@ class MDFeaturePipeline(BiobbObject):
 
         # build the per-feature arguments
         self.feature_types = ["cartesian", "distances", "angles", "dihedrals"]
-        self.cartesian: dict = properties.get("cartesian", {"selection": "name CA"})
-        self.distances: dict = properties.get("distances", {"selection": "name CA", "cutoff": 0.4, "periodic": True, "bonded": False})
-        self.angles: dict = properties.get("angles", {"selection": "backbone", "periodic": True, "bonded": True})
-        self.dihedrals: dict = properties.get("dihedrals", {"selection": "backbone", "periodic": True, "bonded": True})
-        self.options: dict = properties.get("options", {"norm_in": {"mode": "min_max"}})
 
-        # Check the properties
-        self.check_properties(properties)
-        self.check_arguments()
-
-        # Topology indices
-        self.topology_indices()
-
-        # Featurizer
-        self.featurize_trajectory()
-
-    @launchlogger
     def topology_indices(self) -> Dict[str, Any]:
 
         fu.log("## BioBB Featurization - MDFeaturePipeline ##", self.out_log)
@@ -152,7 +131,6 @@ class MDFeaturePipeline(BiobbObject):
         except AttributeError:
             fu.log("  - Number of dihedrals: N/A", self.out_log)
 
-    @launchlogger
     def featurize_trajectory(self) -> None:
 
         self.featurizer = Featurizer(self.input_trajectory_path,
@@ -195,17 +173,18 @@ class MDFeaturePipeline(BiobbObject):
         fu.log(f"   - Number of frames: {self.dataset['data'].shape[0]}", self.out_log)
         fu.log(f"   - Number of features: {self.dataset['data'].shape[1]}", self.out_log)
 
-    @launchlogger
-    def launch(self) -> int:
+    def stage_files(self) -> None:
+        """The block does not use the sandbox: there are no files to stage."""
+
+    def run(self) -> None:
         """
         Execute the :class:`MDFeaturePipeline <mdae.mdfeaturizer.MDFeaturePipeline>` object
         """
+        # Topology indices
+        self.topology_indices()
 
-        # Setup Biobb
-        if self.check_restart():
-            return 0
-
-        self.stage_files()
+        # Featurizer
+        self.featurize_trajectory()
 
         torch.save(self.dataset,
                    self.output_dataset_pt_path)
@@ -218,7 +197,7 @@ class MDFeaturePipeline(BiobbObject):
                )
 
         torch.save(self.stats,
-                   os.path.splitext(self.output_stats_pt_path)[0] + ".pt")
+                   self.output_stats_pt_path)
 
         fu.log(f'Dataset statistics saved in .pt format in {os.path.abspath(self.io_dict["out"]["output_stats_pt_path"])}',
                self.out_log,
@@ -227,34 +206,8 @@ class MDFeaturePipeline(BiobbObject):
                self.out_log,
                )
 
-        # Copy files to host
-        self.copy_to_host()
 
-        # Remove temporal files
-        self.remove_tmp_files()
-
-        self.check_arguments(output_files_created=True, raise_exception=False)
-
-        return 0
-
-
-def mdfeaturizer(
-    input_topology_path: str,
-    output_dataset_pt_path: str,
-    output_stats_pt_path: str,
-    properties: dict,
-    input_trajectory_path: Optional[str] = None,
-    input_labels_npy_path: Optional[str] = None,
-    input_weights_npy_path: Optional[str] = None,
-    **kwargs,
-) -> int:
-    """Create the :class:`MDFeaturePipeline <mdae.mdfeaturizer.MDFeaturePipeline>` class and
-    execute the :meth:`launch() <mdae.mdfeaturizer.MDFeaturePipeline.launch>` method."""
-    return MDFeaturePipeline(**dict(locals())).launch()
-
-
-mdfeaturizer.__doc__ = MDFeaturePipeline.__doc__
-main = MDFeaturePipeline.get_main(mdfeaturizer, "Obtain the Molecular Dynamics Features for PyTorch model training.")
+mdfeaturizer = launcher(MDFeaturePipeline)
 
 if __name__ == "__main__":
-    main()
+    MDFeaturePipeline.main()

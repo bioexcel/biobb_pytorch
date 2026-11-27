@@ -1,5 +1,4 @@
-from biobb_common.generic.biobb_object import BiobbObject
-from biobb_common.tools.file_utils import launchlogger
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 import torch
 import numpy as np
 import mdtraj as md
@@ -61,32 +60,18 @@ class Feat2Traj(BiobbObject):
         properties: dict = None,
         **kwargs,
     ) -> None:
-        properties = properties or {}
-        super().__init__(properties)
+        super().__init__(**locals())
 
         self.input_results_npz_path = input_results_npz_path
         self.input_stats_pt_path = input_stats_pt_path
         self.input_topology_path = input_topology_path
         self.output_traj_path = output_traj_path
         self.output_top_path = output_top_path
-        self.properties = properties.copy()
-        self.locals_var_dict = locals().copy()
-        self.io_dict = {
-            "in": {
-                "input_results_npz_path": input_results_npz_path,
-                "input_stats_pt_path": input_stats_pt_path,
-                "input_topology_path": input_topology_path,
-            },
-            "out": {
-                "output_traj_path": output_traj_path,
-                "output_top_path": output_top_path,
-            },
-        }
-        self.check_properties(properties)
-        self.check_arguments()
 
-    @launchlogger
-    def launch(self) -> int:
+    def stage_files(self) -> None:
+        """The block does not use the sandbox: there are no files to stage."""
+
+    def run(self) -> None:
         """
         Execute the :class:`Feat2Traj` class and its `.launch()` method.
         """
@@ -99,11 +84,9 @@ class Feat2Traj(BiobbObject):
                            weights_only=False)
         cartesian_indices = None
         topology = None
-        if isinstance(stats, dict):
-            if 'cartesian_indices' in stats:
-                cartesian_indices = stats['cartesian_indices']
-                topology = stats['topology']
-
+        if isinstance(stats, dict) and 'cartesian_indices' in stats:
+            cartesian_indices = stats['cartesian_indices']
+            topology = stats.get('topology')
         else:
             raise ValueError('No cartesian indices found in stats file.')
         cartesian_indices = np.array(cartesian_indices)
@@ -144,33 +127,19 @@ class Feat2Traj(BiobbObject):
             ext = os.path.splitext(self.output_traj_path)[1]
             if ext == '.xtc':
                 traj.save_xtc(self.output_traj_path)
-                traj[0].save_pdb(self.output_top_path)
+                if self.output_top_path:
+                    traj[0].save_pdb(self.output_top_path)
             elif ext == '.dcd':
                 traj.save_dcd(self.output_traj_path)
-                traj[0].save_pdb(self.output_top_path)
+                if self.output_top_path:
+                    traj[0].save_pdb(self.output_top_path)
             elif ext == '.pdb':
                 traj.save_pdb(self.output_traj_path)
             else:
                 raise ValueError(f'Unknown trajectory extension: {ext}')
-        return 0
 
 
-def feat2traj(
-    input_results_npz_path: str,
-    input_stats_pt_path: str,
-    input_topology_path: str = None,
-    output_traj_path: str = None,
-    output_top_path: str = None,
-    properties: dict = None,
-    **kwargs,
-) -> int:
-    """Create the :class:`Feat2Traj <Feat2Traj.Feat2Traj>` class and
-    execute the :meth:`launch() <Feat2Traj.feat2traj.launch>` method."""
-    return Feat2Traj(**dict(locals())).launch()
-
-
-feat2traj.__doc__ = Feat2Traj.__doc__
-main = Feat2Traj.get_main(feat2traj, "Converts a .pt file (features) to a trajectory using cartesian indices and topology from the stats file.")
+feat2traj = launcher(Feat2Traj)
 
 if __name__ == "__main__":
-    main()
+    Feat2Traj.main()

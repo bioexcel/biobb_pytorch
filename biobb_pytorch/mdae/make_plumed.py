@@ -3,9 +3,8 @@ import torch
 from typing import Dict, Any, Optional, List
 import os
 from biobb_pytorch.mdae.utils.log_utils import get_size
-from biobb_common.tools.file_utils import launchlogger
 from biobb_common.tools import file_utils as fu
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 
 
 class GeneratePlumed(BiobbObject):
@@ -117,33 +116,13 @@ class GeneratePlumed(BiobbObject):
         properties: Optional[Dict[str, Any]] = None,
         **kwargs,
     ) -> None:
-        properties = properties or {}
-
-        super().__init__(properties)
-        self.locals_var_dict = locals().copy()
-
-        # Input/Output files
-        self.io_dict = {
-            "in": {"input_model_pth_path": input_model_pth_path},
-            "out": {
-                "output_plumed_dat_path": output_plumed_dat_path,
-                "output_features_dat_path": output_features_dat_path,
-                "output_model_ptc_path": output_model_ptc_path
-            }
-        }
-        if input_stats_pt_path:
-            self.io_dict["in"]["input_stats_pt_path"] = input_stats_pt_path
-        if input_reference_pdb_path:
-            self.io_dict["in"]["input_reference_pdb_path"] = input_reference_pdb_path
-        if input_ndx_path:
-            self.io_dict["in"]["input_ndx_path"] = input_ndx_path
+        super().__init__(**locals())
 
         # Properties
         self.model_pth = input_model_pth_path
         self.stats_pt = input_stats_pt_path
         self.ref_pdb = input_reference_pdb_path
         self.ndx = input_ndx_path
-        self.properties = properties
 
         self.additional_actions = self.properties.get('additional_actions', [])
         self.group = self.properties.get('group', None)
@@ -152,13 +131,6 @@ class GeneratePlumed(BiobbObject):
         self.pytorch_model = self.properties.get('pytorch_model', None)
         self.bias = self.properties.get('bias', [])
         self.prints = self.properties.get('prints', {'ARG': '*', 'STRIDE': 1, 'FILE': 'COLVAR'})
-
-        # Check the properties
-        self.check_properties(properties)
-        self.check_arguments()
-
-        self.stats = self._load_stats()
-        self.n_features = self.stats.get('shape', [None, None])[1]
 
     def _load_stats(self) -> Optional[Dict[str, Any]]:
         """Load stats.pt if provided."""
@@ -373,15 +345,13 @@ class GeneratePlumed(BiobbObject):
 
         return lines
 
-    @launchlogger
-    def launch(self) -> int:
+    def stage_files(self) -> None:
+        """The block does not use the sandbox: there are no files to stage."""
+
+    def run(self) -> None:
         """Execute the :class:`GeneratePlumed <mdae.make_plumed.GeneratePlumed>` object."""
-
-        # Setup Biobb
-        if self.check_restart():
-            return 0
-
-        self.stage_files()
+        self.stats = self._load_stats()
+        self.n_features = self.stats.get('shape', [None, None])[1] if self.stats else None
 
         # Perform model conversion and feature generation after staging files
         self._convert_model_to_ptc()
@@ -404,35 +374,8 @@ class GeneratePlumed(BiobbObject):
         fu.log(f'Generated PLUMED file at {os.path.abspath(self.io_dict["out"]["output_plumed_dat_path"])}', self.out_log)
         fu.log(f'File size: {get_size(self.io_dict["out"]["output_plumed_dat_path"])}', self.out_log)
 
-        # Copy files to host
-        self.copy_to_host()
 
-        # Remove temporal files
-        self.remove_tmp_files()
-
-        self.check_arguments(output_files_created=True, raise_exception=False)
-
-        return 0
-
-
-def make_plumed(
-    input_model_pth_path: str,
-    input_stats_pt_path: Optional[str] = None,
-    input_reference_pdb_path: Optional[str] = None,
-    input_ndx_path: Optional[str] = None,
-    output_plumed_dat_path: str = 'plumed.dat',
-    output_features_dat_path: str = 'features.dat',
-    output_model_ptc_path: str = 'model.ptc',
-    properties: Optional[Dict[str, Any]] = None,
-    **kwargs,
-) -> int:
-    """Create the :class:`GeneratePlumed <mdae.make_plumed.GeneratePlumed>` class and
-    execute the :meth:`launch() <mdae.make_plumed.GeneratePlumed.launch>` method."""
-    return GeneratePlumed(**dict(locals())).launch()
-
-
-make_plumed.__doc__ = GeneratePlumed.__doc__
-main = GeneratePlumed.get_main(make_plumed, "Generate PLUMED input for biased dynamics using an MDAE model.")
+make_plumed = launcher(GeneratePlumed)
 
 if __name__ == "__main__":
-    main()
+    GeneratePlumed.main()
